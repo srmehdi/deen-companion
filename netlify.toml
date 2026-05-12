@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = "dist/islamic-app/browser"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+  [dev]
+  command = "npm run start"
+  targetPort = 4200
+  port = 8888

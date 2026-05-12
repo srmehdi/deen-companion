@@ -1,0 +1,44 @@
+{
+  "success": true,
+  "service": "prayer-times",
+  "data": {
+    "date": "2026-05-02",
+    "timezone": "Asia/Kolkata",
+    "location": {
+      "latitude": 22.574021767310924,
+      "longitude": 88.50780785676298
+    },
+    "calculation_method": "MuslimWorldLeague",
+    "madhab": "Shafi",
+    "prayer_times": {
+      "imsak": "03:33",
+      "fajr": "03:43",
+      "sunrise": "05:03",
+      "dhuhr": "11:34",
+      "asr": "14:57",
+      "maghrib": "18:03",
+      "isha": "19:18"
+    },
+    "islamic_info": {
+      "prayer_names": {
+        "fajr": "Fajr (Dawn Prayer)",
+        "dhuhr": "Dhuhr (Noon Prayer)",
+        "asr": "Asr (Afternoon Prayer)",
+        "maghrib": "Maghrib (Sunset Prayer)",
+        "isha": "Isha (Night Prayer)"
+      },
+      "note": "Times are calculated using astronomical methods. Local mosque times may vary slightly."
+    },
+    "current_status": {
+      "current_prayer": "isha",
+      "next_prayer": "fajr",
+      "time_until_next": "2 hours",
+      "minutes_until_next": 146
+    }
+  },
+  "timestamp": "2026-05-02T10:06:21.566Z",
+  "api_info": {
+    "sadaqah_jariah": "This API is provided as sadaqah jariah for the Muslim ummah",
+    "usage": "Free for everyone"
+  }
+}

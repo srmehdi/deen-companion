@@ -1,0 +1,95 @@
+@if (state()) {
+  <div
+    class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-md transition-all duration-500"
+    aria-modal="true"
+    role="dialog"
+  >
+    <div
+      class="relative w-full max-w-[450px] max-md:m-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 px-8 py-12 text-center shadow-2xl overflow-hidden animate-in zoom-in duration-300"
+    >
+      <div
+        class="absolute -top-10 -left-10 w-40 h-40 bg-accent/10 dark:bg-accent/20 blur-[60px] rounded-full"
+      ></div>
+
+      <div class="mb-8 flex justify-center h-20 items-center">
+        @if (state() === 'loading') {
+          <svg class="w-20 h-20 animate-star-breathe" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#D4AF37" />
+                <stop offset="100%" stop-color="#F9E076" />
+              </linearGradient>
+            </defs>
+            <path
+              fill="url(#goldGrad)"
+              d="M50 0L61.2 38.8L100 50L61.2 61.2L50 100L38.8 61.2L0 50L38.8 38.8L50 0Z"
+            />
+          </svg>
+        } @else if (state() === 'success') {
+          <div
+            class="w-16 h-16 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center"
+          >
+            <svg
+              class="w-8 h-8 text-emerald-600 dark:text-emerald-500"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 24 24"
+            >
+              <path d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+        } @else {
+          <div
+            class="w-16 h-16 rounded-full bg-red-500/10 dark:bg-red-500/20 border border-red-500/50 flex items-center justify-center"
+          >
+            <svg
+              class="w-8 h-8 text-red-600 dark:text-red-500"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+        }
+      </div>
+
+      <h2 class="mb-2 text-xl font-bold tracking-[0.2em] uppercase text-gray-900 dark:text-white">
+        {{
+          state() === 'loading'
+            ? 'Bismillah'
+            : state() === 'success'
+              ? 'Alhamdulillah'
+              : 'Astaghfirullah'
+        }}
+      </h2>
+
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wide leading-relaxed">
+        {{ message() }}
+      </p>
+
+      @if (state() === 'error' || state() === 'success') {
+        <div class="mt-10 flex justify-center">
+          <button
+            class="w-[160px] py-3 rounded-md shadow-sm transition-all duration-300 cursor-pointer text-[0.65rem] tracking-[0.25em] font-black uppercase /* Light Mode Colors */ bg-gray-900 text-white border border-gray-800 hover:bg-gray-700 /* Dark Mode Colors */ dark:bg-white/5 dark:text-white dark:border-white/20 dark:hover:bg-accent/20 dark:hover:border-accent/40 dark:hover:text-white"
+            (click)="close()"
+          >
+            Continue
+          </button>
+        </div>
+      } @else {
+        <div class="flex space-x-2 mt-10 justify-center">
+          <div
+            class="w-1.5 h-1.5 bg-accent/40 rounded-full animate-bounce [animation-delay:-0.3s]"
+          ></div>
+          <div
+            class="w-1.5 h-1.5 bg-accent/40 rounded-full animate-bounce [animation-delay:-0.15s]"
+          ></div>
+          <div class="w-1.5 h-1.5 bg-accent/40 rounded-full animate-bounce"></div>
+        </div>
+      }
+    </div>
+  </div>
+}

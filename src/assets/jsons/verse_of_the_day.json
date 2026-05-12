@@ -1,0 +1,86 @@
+{
+  "success": true,
+  "service": "quran-random",
+  "data": {
+    "surah": {
+      "number": 114,
+      "name_arabic": "الناس",
+      "name_english": "An-Nas",
+      "name_translation": "Mankind"
+    },
+    "verse": {
+      "verse_key": "114:4",
+      "ayah": 4,
+      "arabic": "مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ",
+      "transliteration": "Min sharri alwaswasi alkhannas",
+      "translations": {
+        "sahih_international": "From the evil of the retreating whisperer1 -",
+        "pickthall": "From the evil of the sneaking whisperer,",
+        "yusuf_ali": "From the mischief of the Whisperer (of Evil), who withdraws (after his whisper),-"
+      }
+    },
+    "audio": [
+      {
+        "reciter_id": 1,
+        "reciter": "Mishary Rashid Alafasy",
+        "style": "Murattal",
+        "surah_audio": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/114.mp3",
+        "ayah_audio": "https://everyayah.com/data/Alafasy_128kbps/114004.mp3"
+      },
+      {
+        "reciter_id": 2,
+        "reciter": "Abdul Rahman Al-Sudais",
+        "style": "Murattal",
+        "surah_audio": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudais/114.mp3",
+        "ayah_audio": "https://everyayah.com/data/Abdurrahmaan_As-Sudais_192kbps/114004.mp3"
+      },
+      {
+        "reciter_id": 3,
+        "reciter": "Abdul Basit Abdul Samad",
+        "style": "Murattal",
+        "surah_audio": "https://download.quranicaudio.com/quran/abdul_basit_murattal/114.mp3",
+        "ayah_audio": "https://everyayah.com/data/Abdul_Basit_Murattal_192kbps/114004.mp3"
+      },
+      {
+        "reciter_id": 4,
+        "reciter": "Abdul Basit Abdul Samad (Mujawwad)",
+        "style": "Mujawwad",
+        "surah_audio": "https://download.quranicaudio.com/quran/abdul_basit_mujawwad/114.mp3",
+        "ayah_audio": "https://everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/114004.mp3"
+      },
+      {
+        "reciter_id": 5,
+        "reciter": "Maher Al Muaiqly",
+        "style": "Murattal",
+        "surah_audio": "https://download.quranicaudio.com/quran/maher_al_muaiqly/114.mp3",
+        "ayah_audio": "https://everyayah.com/data/MauroAuad-AlMuaiqly_128kbps/114004.mp3"
+      },
+      {
+        "reciter_id": 6,
+        "reciter": "Saad Al-Ghamdi",
+        "style": "Murattal",
+        "surah_audio": "https://download.quranicaudio.com/quran/sa3d_al-ghaamidi/114.mp3",
+        "ayah_audio": "https://everyayah.com/data/Saad_Al-Ghamdi_64kbps/114004.mp3"
+      },
+      {
+        "reciter_id": 7,
+        "reciter": "Hani Ar-Rifai",
+        "style": "Murattal",
+        "surah_audio": "https://download.quranicaudio.com/quran/hani_ar-rifai/114.mp3",
+        "ayah_audio": "https://everyayah.com/data/Hani_Rifai_192kbps/114004.mp3"
+      },
+      {
+        "reciter_id": 8,
+        "reciter": "Abu Bakr Al Shatri",
+        "style": "Murattal",
+        "surah_audio": "https://download.quranicaudio.com/quran/abu_bakr_ash-shaatree/114.mp3",
+        "ayah_audio": "https://everyayah.com/data/Abu_Bakr_Ash-Shaatree_128kbps/114004.mp3"
+      }
+    ],
+    "total_verses_in_quran": 6236
+  },
+  "timestamp": "2026-05-04T06:56:41.643Z",
+  "api_info": {
+    "sadaqah_jariah": "This API is provided as sadaqah jariah for the Muslim ummah"
+  }
+}

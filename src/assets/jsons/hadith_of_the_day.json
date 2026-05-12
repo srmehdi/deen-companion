@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "service": "hadith-random",
+  "data": {
+    "id": "bukhari-1580",
+    "collection": "bukhari",
+    "collection_name": "Sahih al-Bukhari",
+    "hadithnumber": 1580,
+    "arabic": "حَدَّثَنَا عَبْدُ اللَّهِ بْنُ عَبْدِ الْوَهَّابِ، حَدَّثَنَا حَاتِمٌ، عَنْ هِشَامٍ، عَنْ عُرْوَةَ، دَخَلَ النَّبِيُّ صلى الله عليه وسلم عَامَ الْفَتْحِ مِنْ كَدَاءٍ مِنْ أَعْلَى مَكَّةَ‏.‏ وَكَانَ عُرْوَةُ أَكْثَرَ مَا يَدْخُلُ مِنْ كَدَاءٍ وَكَانَ أَقْرَبَهُمَا إِلَى مَنْزِلِهِ‏.‏",
+    "english": "Narrated Hisham:`Urwa said, \"The Prophet (ﷺ) entered Mecca in the year of the conquest of Mecca from the side of Kada' which is at the higher part of Mecca.\" `Urwa often entered from Kada' which was nearer of the two to his dwelling place",
+    "grade": null
+  },
+  "timestamp": "2026-05-03T16:21:35.365Z"
+}

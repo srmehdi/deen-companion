@@ -1,0 +1,33 @@
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--color-sacred-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+  transition: transform 0.2s ease;
+}
+
+input[type='range']::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.dark input[type='range'] {
+  background: #334155; /* Slate 700 */
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+p:not(.line-clamp-4) {
+  mask-image: none;
+}
+.no-mask-image {
+  mask-image: none;
+}

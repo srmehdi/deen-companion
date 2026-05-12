@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "service": "duas-random",
+  "data": {
+    "id": 43,
+    "category": "wudu",
+    "title": "Complete After-Wudu Dua",
+    "arabic": "اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ",
+    "transliteration": "Allahumma-j'alni minat-tawwabina waj'alni minal-mutatahhirin",
+    "translation": "O Allah, make me among those who repent and make me among those who purify themselves.",
+    "source": "At-Tirmidhi 1:78",
+    "repeat": 1,
+    "category_info": {
+      "id": "wudu",
+      "name": "Wudu & Purification",
+      "description": "Supplications for ablution and purification"
+    },
+    "total_duas": 126
+  },
+  "timestamp": "2026-05-03T18:00:55.212Z",
+  "api_info": {
+    "sadaqah_jariah": "This API is provided as sadaqah jariah for the Muslim ummah"
+  }
+}

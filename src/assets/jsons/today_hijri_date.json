@@ -1,0 +1,34 @@
+{
+  "success": true,
+  "service": "today-hijri",
+  "data": {
+    "gregorian": {
+      "date": "2026-05-03",
+      "formatted": "Sunday, May 03, 2026",
+      "day_of_week": "Sunday",
+      "day": 3,
+      "month": 5,
+      "month_name": "May",
+      "year": 2026
+    },
+    "hijri": {
+      "date": "1447-11-16",
+      "formatted": "16 ذو القعدة 1447 AH",
+      "day": 16,
+      "month": 11,
+      "month_name": "Dhu al-Qi'dah",
+      "month_name_arabic": "ذُو الْقَعْدَة",
+      "year": 1447,
+      "era": "AH (After Hijra)"
+    },
+    "islamic_info": {
+      "hijri_era_start": "July 16, 622 CE - Migration of Prophet Muhammad (PBUH) from Mecca to Medina",
+      "calendar_type": "Lunar calendar based on moon phases",
+      "note": "Islamic dates may vary by 1-2 days depending on moon sighting"
+    }
+  },
+  "timestamp": "2026-05-03T05:48:35.155Z",
+  "api_info": {
+    "sadaqah_jariah": "This API is provided as sadaqah jariah for the Muslim ummah"
+  }
+}
