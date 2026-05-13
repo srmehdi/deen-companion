@@ -7,3 +7,22 @@
     </app-premium-card>
   </main>
 </div>
+
+<div class="fam-dock">
+  <div class="dock-content">
+    <span class="icon-small">A</span>
+    <input
+      type="range"
+      min="80"
+      max="180"
+      [value]="fontSize"
+      (input)="onSliderChange($event)"
+      aria-label="Font Size Slider"
+    />
+    <span class="icon-large">A</span>
+    <span class="percentage-label">{{ fontSize }}%</span>
+    <button class="reset-btn" (click)="resetFontSize()" title="Reset to Default">
+      <span class="reset-icon">↺</span>
+    </button>
+  </div>
+</div>

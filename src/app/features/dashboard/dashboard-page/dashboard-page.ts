@@ -2,15 +2,16 @@ import { Component, computed, signal, ViewChild } from '@angular/core';
 import { PremiumCard } from '../../../shared/components/premium-card/premium-card';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../core/services/api-service/api-service';
-import { forkJoin, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, forkJoin, Subject, switchMap } from 'rxjs';
 import { AudioService } from '../../../core/services/audio-service/audio-service';
 import { OverflowCheck } from '../../../shared/directives/overflow-check/overflow-check';
 import { ThemeService } from '../../../core/services/theme-service/theme-service';
 import { StatusModal } from '../../../shared/modals/status-modal/status-modal';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [PremiumCard, CommonModule, OverflowCheck, StatusModal],
+  imports: [PremiumCard, CommonModule, OverflowCheck, StatusModal, FormsModule],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
@@ -26,10 +27,7 @@ export class DashboardPage {
       this.isCardClicked.set(false);
       this.audioService.isPlaying.set(false);
     };
-  }
 
-  currentTime = signal(new Date());
-  ngOnInit() {
     setInterval(() => {
       this.currentTime.set(new Date());
     }, 1000);
@@ -38,6 +36,26 @@ export class DashboardPage {
         this.getPrayerTimes(0);
       }
     }, 60000);
+  }
+
+  currentTime = signal(new Date());
+  ngOnInit() {
+    // setInterval(() => {
+    //   this.currentTime.set(new Date());
+    // }, 1000);
+    // setInterval(() => {
+    //   if (this.prayer_times_data()) {
+    //     this.getPrayerTimes(0);
+    //   }
+    // }, 60000);
+
+    this.searchSubject
+      .pipe(
+        debounceTime(100),
+        distinctUntilChanged(),
+        switchMap((query) => (query.length > 2 ? this.api.searchCity(query) : [])),
+      )
+      .subscribe((data) => (this.results = data));
   }
   ngAfterViewInit() {
     this.getPrayerTimes(1);
@@ -63,25 +81,39 @@ export class DashboardPage {
       ? this.isPrayerTimeLoading.set(true)
       : this.isPrayerTimeLoading.set(false);
     // this.modal.showLoading();
-    const $destroyed: Subject<void> = new Subject();
-    navigator.geolocation.getCurrentPosition((pos) => {
-      this.api.getPrayerTimes<any>(pos.coords.latitude, pos.coords.longitude).subscribe({
-        next: (res) => {
-          this.isPrayerTimeLoading.set(false);
-          this.prayer_times_data.set(res.data);
-          this.theme.applyPrayerTheme(res);
-          // this.modal.close();
-        },
-        error: (err) => {
-          console.log(err);
-          this.modal.showError({ message: 'Something went wrong.' });
-        },
-        complete: () => {
-          $destroyed.next();
-          $destroyed.complete();
-        },
-      });
-    });
+    // const $destroyed: Subject<void> = new Subject();
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        this.prayerTimesApiCall(pos.coords.latitude, pos.coords.longitude);
+        // this.api.getPrayerTimes<any>(pos.coords.latitude, pos.coords.longitude).subscribe({
+        //   next: (res) => {
+        //     this.isPrayerTimeLoading.set(false);
+        //     this.prayer_times_data.set(res.data);
+        //     this.theme.applyPrayerTheme(res);
+        //     // this.modal.close();
+        //   },
+        //   error: (err) => {
+        //     console.log(err);
+        //     this.modal.showError({ message: 'Something went wrong.' });
+        //   },
+        //   complete: () => {
+        //     $destroyed.next();
+        //     $destroyed.complete();
+        //   },
+        // });
+      },
+      (error) => {
+        if (localStorage.getItem('user-lat') && localStorage.getItem('user-lng')) {
+          this.prayerTimesApiCall(
+            parseFloat(localStorage.getItem('user-lat')!),
+            parseFloat(localStorage.getItem('user-lng')!),
+          );
+        } else {
+          console.error('Error detecting location', error);
+          alert('Unable to retrieve your location. Please search manually.');
+        }
+      },
+    );
   }
   todayHijriDate = signal<any>(null);
   getTodayHijriDate() {
@@ -225,5 +257,76 @@ export class DashboardPage {
 
   isExpanded(id: number): boolean {
     return this.expandedItems().has(id);
+  }
+
+  results: any[] = [];
+  searchQuery: string = '';
+  private searchSubject = new Subject<string>();
+
+  onSearch(event: any) {
+    this.searchSubject.next(event.target.value);
+  }
+
+  selectCity(city: any) {
+    this.isPrayerTimeLoading.set(true);
+    const lat = city.lat;
+    const lng = city.lon;
+
+    localStorage.setItem('user-lat', lat);
+    localStorage.setItem('user-lng', lng);
+    localStorage.setItem('user-city-name', city.display_name.split(',')[0]);
+
+    this.results = [];
+    this.searchQuery = city.display_name;
+
+    this.prayerTimesApiCall(lat, lng);
+  }
+  detectLocation() {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser');
+      return;
+    }
+    this.isPrayerTimeLoading.set(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        localStorage.setItem('user-lat', lat.toString());
+        localStorage.setItem('user-lng', lng.toString());
+
+        this.prayerTimesApiCall(lat, lng);
+
+        this.searchQuery = 'Current Location';
+      },
+      (error) => {
+        console.error('Error detecting location', error);
+        alert('Unable to retrieve your location. Please search manually.');
+      },
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
+    );
+  }
+  prayerTimesApiCall(lat: number, lng: number) {
+    const $destroyed: Subject<void> = new Subject();
+    this.api.getPrayerTimes<any>(lat, lng).subscribe({
+      next: (res) => {
+        this.isPrayerTimeLoading.set(false);
+        this.prayer_times_data.set(res.data);
+        this.theme.applyPrayerTheme(res);
+        // this.modal.close();
+      },
+      error: (err) => {
+        console.log(err);
+        this.modal.showError({ message: 'Something went wrong.' });
+      },
+      complete: () => {
+        $destroyed.next();
+        $destroyed.complete();
+      },
+    });
+  }
+  clearSearch() {
+    this.searchQuery = '';
+    this.results = [];
   }
 }

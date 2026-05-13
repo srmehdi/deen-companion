@@ -1,0 +1,109 @@
+.fam-dock {
+  position: fixed;
+  bottom: 4rem;
+  right: 46px;
+  z-index: 1000;
+  /* background: rgba(255, 255, 255, 0.7); */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  padding: 6px 12px;
+  border-radius: 50px;
+  /* border: 1px solid rgba(255, 255, 255, 0.4); */
+  border: 1px solid var(--color-emerald-500);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+    /* background: rgba(255, 255, 255, 0.9); */
+  }
+}
+
+.dock-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+
+  .icon-small {
+    font-size: 0.75rem;
+    color: #555;
+    font-weight: 700;
+  }
+  .icon-large {
+    font-size: 1.2rem;
+    color: #555;
+    font-weight: 700;
+  }
+
+  .percentage-label {
+    font-size: 0.85rem;
+    /* color: #3f51b5; */
+    color: var(--color-sacred-gold);
+    font-weight: 700;
+    /* min-width: 42px; */
+    text-align: right;
+  }
+
+  input[type='range'] {
+    width: 100px;
+    cursor: pointer;
+    /* accent-color: #3f51b5; */
+    accent-color: var(--color-sacred-gold);
+    /* -webkit-appearance: none; */
+    background: transparent;
+
+    &::-webkit-slider-runnable-track {
+      height: 16px;
+      /* background: rgba(0, 0, 0, 0.1); */
+      border-radius: 2px;
+    }
+  }
+}
+
+.reset-btn {
+  background: none;
+  border: none;
+  /* color: #3f51b5; */
+  color: var(--color-sacred-gold);
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+  /* margin-left: 4px; */
+
+  .reset-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  &:hover {
+    background: rgba(63, 81, 181, 0.1);
+    transform: rotate(-30deg);
+  }
+
+  &:active {
+    transform: scale(0.9) rotate(-90deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .fam-dock {
+    /* bottom: 10px; */
+    right: 16px;
+    /* padding: 8px 15px; */
+  }
+  .dock-content input[type='range'] {
+    width: 80px;
+  }
+}

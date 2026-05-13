@@ -51,4 +51,14 @@ export class ApiService {
       .pipe(catchError(() => throwError(() => 'API error')));
     // return this.http.get<T>('./assets/jsons/verse_of_the_day.json');
   }
+  searchCity(query: string) {
+    const nominatimUrl = Endpoints.NOMINATIM_SEARCH;
+    const params = {
+      q: query,
+      format: 'json',
+      addressdetails: '1',
+      limit: '5',
+    };
+    return this.http.get<any[]>(nominatimUrl, { params });
+  }
 }
