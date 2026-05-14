@@ -23,7 +23,8 @@ export class ApiService {
     //       `?lat=${lat}&lng=${lng}&madhab=${'Hanafi'}&apikey=${this.api_key}`,
     //   )
     //   .pipe(catchError(() => throwError(() => 'API error')));
-    const payload = { lat: lat, lang: lng, madhab: 'Hanafi' };
+    // const payload = { lat: lat, lang: lng, madhab: 'Hanafi' };
+    const payload = { lat: lat, lang: lng, madhab: 'Shafi' };
     return this.http.post<any>('/api/getPrayerTimes', payload);
     // return this.http.get<T>('./assets/jsons/prayer_times.json');
   }
@@ -60,5 +61,11 @@ export class ApiService {
       limit: '5',
     };
     return this.http.get<any[]>(nominatimUrl, { params });
+  }
+  sendPing(visitorId: { visitorId: string }) {
+    return this.http.post<any>(Endpoints.HEART_BEAT, visitorId);
+  }
+  getActivityStats() {
+    return this.http.get<any>(Endpoints.ACTIVITY_STATS);
   }
 }

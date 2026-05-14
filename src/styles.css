@@ -30,6 +30,14 @@
   --color-uw-gold: #f5c030;
   --color-uw-accent: #34d399;
   --color-uw-highlight: rgba(245, 192, 48, 0.12);
+  --color-hover-background: rgba(63, 81, 181, 0.1);
+  --color-cream-bg: #f5efe1;
+  --color-cream-highlight: rgba(138, 111, 58, 0.1);
+  --color-cream-dark: #9c8866;
+  --color-cream-darker: #6b5a3e;
+  --color-cream-darkest: #3a2e1a;
+  --color-cream-surface: #faf5ea;
+  --color-cream-border: #e0d4ba;
 }
 
 @variant dark (&:where(.dark, .dark *));

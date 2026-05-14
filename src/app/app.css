@@ -50,7 +50,8 @@
   }
 
   input[type='range'] {
-    width: 100px;
+    /* width: 100px; */
+    width: 120px;
     cursor: pointer;
     /* accent-color: #3f51b5; */
     accent-color: var(--color-sacred-gold);
@@ -104,6 +105,6 @@
     /* padding: 8px 15px; */
   }
   .dock-content input[type='range'] {
-    width: 80px;
+    /* width: 80px; */
   }
 }

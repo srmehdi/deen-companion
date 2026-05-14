@@ -1,94 +1,98 @@
-<div class="grid md:grid-cols-3 md:gap-4">
-  <app-premium-card class="mb-4">
-    <div class="fitems-center mb-1 pb-4 border-b border-gray-700">
-      <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Today's Time & Date</h1>
-      <div class="flex items-center gap-1.5">
-        <span class="relative flex h-2 w-2">
-          <span
-            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sacred-gold opacity-75"
-          ></span>
-          <span class="relative inline-flex rounded-full h-2 w-2 bg-sacred-gold"></span>
-        </span>
-        <span class="text-[0.6rem] tracking-widest text-gray-400">Live</span>
-      </div>
-    </div>
-    <div class="text-center">
-      <div class="mb-1 pb-2 border-b border-gray-700">
-        <div class="text-4xl font-light tracking-tight">
-          <span class="ml-3">{{ currentTime() | date: 'HH:mm' }}</span
-          ><span class="text-sm ml-1 text-gray-400">{{ currentTime() | date: 'ss' }}</span>
+<div class="min-h-screen transition-colors">
+  <app-header></app-header>
+  <main class="px-4 pt-4 pb-20 max-w-6xl mx-auto">
+    <router-outlet />
+    <div class="grid md:grid-cols-3 md:gap-4">
+      <app-premium-card class="mb-4">
+        <div class="fitems-center mb-1 pb-4 border-b border-gray-700">
+          <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Today's Time & Date</h1>
+          <div class="flex items-center gap-1.5">
+            <span class="relative flex h-2 w-2">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sacred-gold opacity-75"
+              ></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-sacred-gold"></span>
+            </span>
+            <span class="text-[0.6rem] tracking-widest text-gray-400">Live</span>
+          </div>
         </div>
-        <div class="text-[0.5rem] uppercase tracking-[0.2em] text-sacred-gold/80 font-medium">
-          Standard Time
+        <div class="text-center">
+          <div class="mb-1 pb-2 border-b border-gray-700">
+            <div class="text-4xl font-light tracking-tight">
+              <span class="ml-3">{{ currentTime() | date: 'HH:mm' }}</span
+              ><span class="text-sm ml-1 text-gray-400">{{ currentTime() | date: 'ss' }}</span>
+            </div>
+            <div class="text-[0.5rem] uppercase tracking-[0.2em] text-sacred-gold/80 font-medium">
+              Standard Time
+            </div>
+          </div>
+          <div class="text-4xl font-extrabold text-sacred-gold">
+            {{ todayHijriDate()?.hijri.day }}
+          </div>
+          <div class="text-xs text-uw-text2 mb-2 mt-1">
+            {{ todayHijriDate()?.hijri.month_name }} {{ todayHijriDate()?.hijri.year }}
+            {{ todayHijriDate()?.hijri.era }}
+          </div>
+          <div class="font-arabic text-uw-text3">
+            {{ todayHijriDate()?.hijri.month_name_arabic }} {{ todayHijriDate()?.hijri.year }}
+          </div>
+          <div class="">({{ todayHijriDate()?.hijri.date | date: 'dd-MM-yyyy' }})</div>
+          <div class="border-t border-gray-700 text-uw-text2 mt-2 pb-1">
+            {{ todayHijriDate()?.gregorian.formatted }}
+          </div>
         </div>
-      </div>
-      <div class="text-4xl font-extrabold text-sacred-gold">
-        {{ todayHijriDate()?.hijri.day }}
-      </div>
-      <div class="text-xs text-uw-text2 mb-2 mt-1">
-        {{ todayHijriDate()?.hijri.month_name }} {{ todayHijriDate()?.hijri.year }}
-        {{ todayHijriDate()?.hijri.era }}
-      </div>
-      <div class="font-arabic text-uw-text3">
-        {{ todayHijriDate()?.hijri.month_name_arabic }} {{ todayHijriDate()?.hijri.year }}
-      </div>
-      <div class="">({{ todayHijriDate()?.hijri.date | date: 'dd-MM-yyyy' }})</div>
-      <div class="border-t border-gray-700 text-uw-text2 mt-2 pb-1">
-        {{ todayHijriDate()?.gregorian.formatted }}
-      </div>
-    </div>
-    <div class="border-t border-gray-700"></div>
+        <div class="border-t border-gray-700"></div>
 
-    <div class="pt-2 font-extralight text-[0.6rem] tracking-[0.06em] opacity-60">
-      <span>*</span><strong>Note:</strong> {{ todayHijriDate()?.islamic_info.note }}
-    </div>
-  </app-premium-card>
-  <app-premium-card class="md:col-span-2 mb-4">
-    <div class="relative w-full max-w-sm mx-auto mb-2">
-      <div class="flex items-center gap-2">
-        <div
-          class="flex-1 flex items-center px-2 py-2 transition-all duration-300 border shadow-sm rounded-xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border-white/40 dark:border-slate-700/50 focus-within:ring-2 focus-within:ring-indigo-500/50"
-        >
-          <span class="text-slate-400">🔍</span>
-          <input
-            type="text"
-            placeholder="Search city..."
-            class="w-full ml-1 bg-transparent border-none outline-none text-[0.8rem] text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
-            (input)="onSearch($event)"
-            [(ngModel)]="searchQuery"
-          />
-          <button
-            *ngIf="searchQuery.length > 0"
-            (click)="clearSearch()"
-            class="px-1 rounded-full cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
-          >
-            <span class="text-xs font-bold leading-none">✕</span>
-          </button>
+        <div class="pt-2 font-extralight text-[0.6rem] tracking-[0.06em] opacity-60">
+          <span>*</span><strong>Note:</strong> {{ todayHijriDate()?.islamic_info.note }}
         </div>
-        <button
-          (click)="detectLocation()"
-          class="flex items-center justify-center p-2 transition-all bg-indigo-600 rounded-xl hover:bg-indigo-700 active:scale-95 shadow-md shadow-indigo-200 dark:shadow-none group"
-          title="Use Current Location"
-        >
-          <span class="text-white group-hover:animate-pulse">📍</span>
-        </button>
-      </div>
-      <ul
-        *ngIf="results.length > 0 && searchQuery.length > 0"
-        class="absolute w-full mt-2 overflow-hidden border shadow-2xl rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-white/20 dark:border-slate-800/50 z-[2000]"
-      >
-        <li
-          *ngFor="let city of results"
-          (click)="selectCity(city)"
-          class="px-5 py-3 cursor-pointer hover:bg-indigo-500/10 text-[0.8rem] text-slate-800 dark:text-slate-100 border-b border-slate-100 dark:border-slate-800 last:border-none"
-        >
-          {{ city.display_name }}
-        </li>
-      </ul>
-    </div>
-    @if (isPrayerTimeLoading()) {
-      <!-- <app-premium-card class="md:col-span-2 mb-4"> -->
-      <!-- <div class="mb-4 pb-4 border-b border-gray-700">
+      </app-premium-card>
+      <app-premium-card class="md:col-span-2 mb-4">
+        <div class="relative w-full max-w-sm mx-auto mb-2">
+          <div class="flex items-center gap-2">
+            <div
+              class="flex-1 flex items-center px-2 py-2 transition-all duration-300 border shadow-sm rounded-xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border-white/40 dark:border-slate-700/50 focus-within:ring-2 focus-within:ring-indigo-500/50"
+            >
+              <span class="text-slate-400">🔍</span>
+              <input
+                type="text"
+                placeholder="Search city..."
+                class="w-full ml-1 bg-transparent border-none outline-none text-[0.8rem] text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
+                (input)="onSearch($event)"
+                [(ngModel)]="searchQuery"
+              />
+              <button
+                *ngIf="searchQuery.length > 0"
+                (click)="clearSearch()"
+                class="px-1 rounded-full cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+              >
+                <span class="text-xs font-bold leading-none">✕</span>
+              </button>
+            </div>
+            <button
+              (click)="detectLocation()"
+              class="flex items-center justify-center p-2 transition-all bg-indigo-600 rounded-xl hover:bg-indigo-700 active:scale-95 shadow-md shadow-indigo-200 dark:shadow-none group"
+              title="Use Current Location"
+            >
+              <span class="text-white group-hover:animate-pulse">📍</span>
+            </button>
+          </div>
+          <ul
+            *ngIf="results.length > 0 && searchQuery.length > 0"
+            class="absolute w-full mt-2 overflow-hidden border shadow-2xl rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-white/20 dark:border-slate-800/50 z-[2000]"
+          >
+            <li
+              *ngFor="let city of results"
+              (click)="selectCity(city)"
+              class="px-5 py-3 cursor-pointer hover:bg-indigo-500/10 text-[0.8rem] text-slate-800 dark:text-slate-100 border-b border-slate-100 dark:border-slate-800 last:border-none"
+            >
+              {{ city.display_name }}
+            </li>
+          </ul>
+        </div>
+        @if (isPrayerTimeLoading()) {
+          <!-- <app-premium-card class="md:col-span-2 mb-4"> -->
+          <!-- <div class="mb-4 pb-4 border-b border-gray-700">
         <div
           class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-4 w-32 mb-3"
         ></div>
@@ -96,569 +100,614 @@
           class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-32"
         ></div>
       </div> -->
-      <div class="items-center mb-4 pb-4 border-b border-gray-700">
-        <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Prayer Times</h1>
-        <div
-          class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-32"
-        ></div>
-      </div>
-
-      <div class="md:columns-2">
-        <div class="mb-4 md:border-r border-gray-700">
-          <div
-            class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-20 mb-2"
-          ></div>
-          <div
-            class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-6 w-32"
-          ></div>
-        </div>
-        <div class="mb-4">
-          <div
-            class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-20 mb-2"
-          ></div>
-          <div
-            class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-6 w-32"
-          ></div>
-        </div>
-      </div>
-
-      <div class="border-t border-gray-700 mb-4"></div>
-
-      <div
-        class="flex flex-col gap-2 md:grid md:grid-cols-5 md:gap-4 border-b border-gray-700 pb-4"
-      >
-        @for (item of [1, 2, 3, 4, 5]; track $index) {
-          <div
-            class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-4 md:h-16 rounded-xl"
-          ></div>
-        }
-      </div>
-      <div
-        class="mt-4 shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-full"
-      ></div>
-      <!-- </app-premium-card> -->
-    } @else {
-      <!-- <app-premium-card class="md:col-span-2 mb-4"> -->
-      <div class="items-center mb-4 pb-4 border-b border-gray-700">
-        <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Prayer Times</h1>
-        <div class="text-[0.6rem] text-gray-400">
-          <span class="">{{ prayer_times_data()?.date | date: 'fullDate' }} | </span>
-          <span class="">
-            {{ prayer_times_data()?.timezone }}
-          </span>
-        </div>
-      </div>
-      <div class="md:columns-2">
-        <div class="mb-4 md:border-r border-gray-700 h-[stretch]">
-          <p class="text-xs text-gray-400">Current Prayer</p>
-          <h2 class="text-lg font-bold text-accent">
-            {{ prayer_times_data()?.islamic_info.prayer_names[currentPrayer()] ?? 'N/A' }}
-          </h2>
-        </div>
-        <div class="mb-4">
-          <p class="text-xs text-gray-400">Next Prayer</p>
-          @if (prayer_times_data()?.islamic_info.prayer_names[nextPrayer()]) {
-            <h2 class="text-lg">
-              {{ prayer_times_data()?.islamic_info.prayer_names[nextPrayer()] ?? 'N/A' }} in
-              {{ prayer_times_data()?.current_status.minutes_until_next ?? 'N/A' }} minute(s)
-            </h2>
-          } @else {
-            <h2 class="text-lg">
-              {{ 'N/A' }}
-            </h2>
-          }
-        </div>
-      </div>
-      <div class="border-t border-gray-700 mb-4"></div>
-
-      <div
-        class="flex flex-col gap-2 md:grid md:grid-cols-5 md:gap-4 border-b border-gray-700 pb-4"
-      >
-        <div
-          *ngFor="let p of prayers"
-          class="flex justify-between items-center px-4 py-1.5 rounded-xl md:flex-col md:justify-center md:p-2.5"
-          [ngClass]="{
-            'bg-accent text-black font-bold shadow-lg': p.key === currentPrayer(),
-            'bg-gray-400 dark:bg-gray-800 text-gray-900 dark:text-gray-100':
-              p.key !== currentPrayer(),
-          }"
-        >
-          <p class="text-sm font-medium uppercase tracking-wider dark:opacity-80 md:mb-0.5">
-            {{ p.name }}
-          </p>
-          <p class="text-sm tracking-wider dark:opacity-80 md:text-lg font-bold">
-            {{ prayer_times_data()?.prayer_times[p.key] }}
-          </p>
-        </div>
-      </div>
-      <div class="pt-4 font-extralight text-[0.6rem] tracking-[0.08em] opacity-60">
-        <span>*</span><strong>Note:</strong> {{ prayer_times_data()?.islamic_info.note }}
-      </div>
-      <!-- </app-premium-card> -->
-    }
-  </app-premium-card>
-</div>
-
-<div class="grid md:grid-cols-3 md:gap-4">
-  <div class="mb-4">
-    <app-premium-card class="">
-      <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
-        <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Verse of the Day</h1>
-        <div>
-          <span class="text-xs text-gray-400"
-            >{{ verseOfTheDay()?.surah.name_english }} ({{
-              verseOfTheDay()?.surah.name_translation
-            }})
-          </span>
-        </div>
-      </div>
-      <div class="text-center">
-        <div
-          appOverflowCheck
-          (hasOverflow)="handleOverflow(verseOfTheDay()?.surah.number + 1, $event)"
-          [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah.number + 1)"
-          [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah.number + 1)"
-          class="font-arabic text-[1.1rem] leading-[1.9] text-justify antialiased mb-4"
-          dir="rtl"
-        >
-          {{ verseOfTheDay()?.verse.arabic }}
-        </div>
-        @if (
-          needsReadMore().has(verseOfTheDay()?.surah.number + 1) ||
-          isExpanded(verseOfTheDay()?.surah.number + 1)
-        ) {
-          <button
-            (click)="toggleExpand(verseOfTheDay()?.surah.number + 1)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-white transition-colors flex items-center gap-1"
-          >
-            {{ isExpanded(verseOfTheDay()?.surah.number + 1) ? 'Show Less' : 'Read Full Verse' }}
-            <span
-              [class.rotate-180]="isExpanded(verseOfTheDay()?.surah.number + 1)"
-              class="transition-transform duration-300"
-            >
-              ▼
-            </span>
-          </button>
-        }
-        <div
-          appOverflowCheck
-          (hasOverflow)="handleOverflow(verseOfTheDay()?.surah.number + 2, $event)"
-          [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah.number + 2)"
-          [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah.number + 2)"
-          class="italic text-xs text-uw-text2 text-justify antialiased mb-4"
-        >
-          {{ verseOfTheDay()?.verse.transliteration }}
-        </div>
-        @if (
-          needsReadMore().has(verseOfTheDay()?.surah.number + 2) ||
-          isExpanded(verseOfTheDay()?.surah.number + 2)
-        ) {
-          <button
-            (click)="toggleExpand(verseOfTheDay()?.surah.number + 2)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-white transition-colors flex items-center gap-1"
-          >
-            {{
-              isExpanded(verseOfTheDay()?.surah.number + 2)
-                ? 'Show Less'
-                : 'Read Full Transliteration'
-            }}
-            <span
-              [class.rotate-180]="isExpanded(verseOfTheDay()?.surah.number + 2)"
-              class="transition-transform duration-300"
-            >
-              ▼
-            </span>
-          </button>
-        }
-        <div
-          appOverflowCheck
-          (hasOverflow)="handleOverflow(verseOfTheDay()?.surah.number + 3, $event)"
-          [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah.number + 3)"
-          [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah.number + 3)"
-          class="text-xs text-justify antialiased mb-4"
-        >
-          {{ verseOfTheDay()?.verse.translations.sahih_international }}
-        </div>
-        @if (
-          needsReadMore().has(verseOfTheDay()?.surah.number + 3) ||
-          isExpanded(verseOfTheDay()?.surah.number + 3)
-        ) {
-          <button
-            (click)="toggleExpand(verseOfTheDay()?.surah.number + 3)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-white transition-colors flex items-center gap-1"
-          >
-            {{
-              isExpanded(verseOfTheDay()?.surah.number + 3) ? 'Show Less' : 'Read Full Translation'
-            }}
-            <span
-              [class.rotate-180]="isExpanded(verseOfTheDay()?.surah.number + 3)"
-              class="transition-transform duration-300"
-            >
-              ▼
-            </span>
-          </button>
-        }
-      </div>
-      <div class="border-t border-gray-700 mb-4"></div>
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div class="space-y-1 text-xs">
-          <div class="flex gap-1 md:gap-2">
-            <span class="text-slate-500 font-bold uppercase">Reference</span>
-            <span class="text-emerald-500"
-              >: Surah {{ verseOfTheDay()?.surah.name_english }}
-              {{ verseOfTheDay()?.verse.verse_key }}</span
-            >
+          <div class="items-center mb-4 pb-4 border-b border-gray-700">
+            <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Prayer Times</h1>
+            <div
+              class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-32"
+            ></div>
           </div>
-        </div>
-      </div>
-      <div class="border-t border-gray-700 my-4"></div>
-      <div class="text-xs columns-2 divide-x divide-gray-700">
-        <div class="flex justify-between h-[stretch] pr-2">
-          <div class="flex items-center justify-center">
-            Listen to Surah {{ verseOfTheDay()?.surah.number }}
+
+          <div class="md:columns-2">
+            <div class="mb-4 md:border-r border-gray-700">
+              <div
+                class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-20 mb-2"
+              ></div>
+              <div
+                class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-6 w-32"
+              ></div>
+            </div>
+            <div class="mb-4">
+              <div
+                class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-20 mb-2"
+              ></div>
+              <div
+                class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-6 w-32"
+              ></div>
+            </div>
           </div>
-          <div class="flex items-center justify-center">
-            <button
-              (click)="
-                audioService.toggleAudio(verseOfTheDay()?.audio[0].surah_audio);
-                audioService.isPlaying() &&
-                audioService.currentUrl() === verseOfTheDay()?.audio[0].surah_audio
-                  ? isCardClicked.set(true)
-                  : isCardClicked.set(false)
-              "
-              class="cursor-pointer group relative w-6 h-6 rounded-full bg-slate-900/80 backdrop-blur-md border border-sacred-gold/30 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl"
-            >
-              @if (
-                audioService.isPlaying() &&
-                audioService.currentUrl() === verseOfTheDay()?.audio[0].surah_audio
-              ) {
-                <div
-                  class="absolute inset-0 rounded-full bg-sacred-gold/70 dark:bg-sacred-gold/20 animate-ping"
-                ></div>
+
+          <div class="border-t border-gray-700 mb-4"></div>
+
+          <div
+            class="flex flex-col gap-2 md:grid md:grid-cols-5 md:gap-4 border-b border-gray-700 pb-4"
+          >
+            @for (item of [1, 2, 3, 4, 5]; track $index) {
+              <div
+                class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-4 md:h-16 rounded-xl"
+              ></div>
+            }
+          </div>
+          <div
+            class="mt-4 shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-full"
+          ></div>
+          <!-- </app-premium-card> -->
+        } @else {
+          <!-- <app-premium-card class="md:col-span-2 mb-4"> -->
+          <div class="items-center mb-4 pb-4 border-b border-gray-700">
+            <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Prayer Times</h1>
+            <div class="text-[0.6rem] text-gray-400">
+              <span class="">{{ prayer_times_data()?.date | date: 'fullDate' }} | </span>
+              <!-- <span class="">{{ currentTimeAtSelectedCity() ?? 'N/A' }} | </span> -->
+              <span class=""> {{ prayer_times_data()?.timezone }}</span>
+            </div>
+          </div>
+          <div class="md:columns-2">
+            <div class="mb-4 md:border-r border-gray-700 h-[stretch]">
+              <p class="text-xs text-gray-400">Current Prayer</p>
+              <h2 class="text-lg font-bold text-accent">
+                {{ prayer_times_data()?.islamic_info.prayer_names[currentPrayer()] ?? 'N/A' }}
+              </h2>
+            </div>
+            <div class="mb-4">
+              <p class="text-xs text-gray-400">Next Prayer</p>
+              @if (prayer_times_data()?.islamic_info.prayer_names[nextPrayer()]) {
+                <h2 class="text-lg">
+                  {{ prayer_times_data()?.islamic_info.prayer_names[nextPrayer()] ?? 'N/A' }} in
+                  {{ prayer_times_data()?.current_status.minutes_until_next ?? 'N/A' }} minute(s)
+                </h2>
+              } @else {
+                <h2 class="text-lg">
+                  {{ 'N/A' }}
+                </h2>
               }
+            </div>
+          </div>
+          <div class="border-t border-gray-700 mb-4"></div>
 
-              <span class="text-xs transition-transform group-hover:rotate-12">
-                {{
-                  audioService.isPlaying() &&
-                  audioService.currentUrl() === verseOfTheDay()?.audio[0].surah_audio
-                    ? '⏸️'
-                    : '▶️'
-                }}
+          <div
+            class="flex flex-col gap-2 md:grid md:grid-cols-5 md:gap-4 border-b border-gray-700 pb-4"
+          >
+            <div
+              *ngFor="let p of prayers"
+              class="flex justify-between items-center px-4 py-1.5 rounded-xl md:flex-col md:justify-center md:p-2.5"
+              [ngClass]="{
+                'bg-accent text-black font-bold shadow-lg': p.key === currentPrayer(),
+                'bg-cream-highlight dark:bg-gray-800 text-gray-900 dark:text-gray-100':
+                  p.key !== currentPrayer(),
+              }"
+            >
+              <p class="text-sm font-medium uppercase tracking-wider dark:opacity-80 md:mb-0.5">
+                {{ p.name }}
+              </p>
+              <p class="text-sm tracking-wider dark:opacity-80 md:text-lg font-bold">
+                {{ prayer_times_data()?.prayer_times[p.key] }}
+              </p>
+            </div>
+          </div>
+          <div class="pt-4 font-extralight text-[0.6rem] tracking-[0.08em] opacity-60">
+            <span>*</span><strong>Note:</strong> {{ prayer_times_data()?.islamic_info.note }}
+          </div>
+          <!-- </app-premium-card> -->
+        }
+      </app-premium-card>
+    </div>
+
+    <div class="grid md:grid-cols-3 md:gap-4">
+      <div class="mb-4">
+        <app-premium-card class="">
+          <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
+            <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Verse of the Day</h1>
+            <div>
+              <span class="text-xs text-gray-400"
+                >{{ verseOfTheDay()?.surah.name_english }} ({{
+                  verseOfTheDay()?.surah.name_translation
+                }})
               </span>
-            </button>
+            </div>
           </div>
-        </div>
-        <div class="flex justify-between pr-2">
-          <div class="flex items-center justify-center">
-            Listen to Ayah {{ verseOfTheDay()?.verse.ayah }}
-          </div>
-          <div class="flex items-center justify-center">
-            <button
-              (click)="
-                audioService.toggleAudio(verseOfTheDay()?.audio[0].ayah_audio);
-                audioService.isPlaying() &&
-                audioService.currentUrl() === verseOfTheDay()?.audio[0].ayah_audio
-                  ? isCardClicked.set(true)
-                  : isCardClicked.set(false)
-              "
-              class="cursor-pointer group relative w-6 h-6 rounded-full bg-slate-900/80 backdrop-blur-md border border-sacred-gold/30 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl"
+          <div class="text-center">
+            <div
+              appOverflowCheck
+              (hasOverflow)="handleOverflow(verseOfTheDay()?.surah.number + 1, $event)"
+              [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah.number + 1)"
+              [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah.number + 1)"
+              class="font-arabic text-[1.1rem] leading-[1.9] text-justify antialiased mb-4"
+              dir="rtl"
             >
-              @if (
-                audioService.isPlaying() &&
-                audioService.currentUrl() === verseOfTheDay()?.audio[0].ayah_audio
-              ) {
-                <div
-                  class="absolute inset-0 rounded-full bg-sacred-gold/70 dark:bg-sacred-gold/20 animate-ping"
-                ></div>
-              }
-
-              <span class="text-xs transition-transform group-hover:rotate-12">
-                {{
-                  audioService.isPlaying() &&
-                  audioService.currentUrl() === verseOfTheDay()?.audio[0].ayah_audio
-                    ? '⏸️'
-                    : '▶️'
-                }}
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </app-premium-card>
-  </div>
-  <div class="mb-4">
-    <app-premium-card class="">
-      <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
-        <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Hadith of the Day</h1>
-      </div>
-      <div class="text-center">
-        <div
-          appOverflowCheck
-          (hasOverflow)="handleOverflow(hadithOfTheDay()?.id + 1, $event)"
-          [class.line-clamp-4]="!isExpanded(hadithOfTheDay()?.id + 1)"
-          [class.no-mask-image]="!needsReadMore().has(hadithOfTheDay()?.id + 1)"
-          class="mb-2 font-arabic text-[1.1rem] leading-[1.9] text-justify antialiased"
-          dir="rtl"
-        >
-          {{ hadithOfTheDay()?.arabic }}
-        </div>
-        @if (
-          needsReadMore().has(hadithOfTheDay()?.id + 1) || isExpanded(hadithOfTheDay()?.id + 1)
-        ) {
-          <button
-            (click)="toggleExpand(hadithOfTheDay()?.id + 1)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-white transition-colors flex items-center gap-1"
-          >
-            {{ isExpanded(hadithOfTheDay()?.id + 1) ? 'Show Less' : 'Read Full Hadees' }}
-            <span
-              [class.rotate-180]="isExpanded(hadithOfTheDay()?.id + 1)"
-              class="transition-transform duration-300"
-            >
-              ▼
-            </span>
-          </button>
-        }
-        <div
-          appOverflowCheck
-          (hasOverflow)="handleOverflow(hadithOfTheDay()?.id + 2, $event)"
-          [class.line-clamp-4]="!isExpanded(hadithOfTheDay()?.id + 2)"
-          [class.no-mask-image]="!needsReadMore().has(hadithOfTheDay()?.id + 2)"
-          class="mb-2 text-xs text-justify antialiased"
-        >
-          {{ hadithOfTheDay()?.english }}
-        </div>
-        @if (
-          needsReadMore().has(hadithOfTheDay()?.id + 2) || isExpanded(hadithOfTheDay()?.id + 2)
-        ) {
-          <button
-            (click)="toggleExpand(hadithOfTheDay()?.id + 2)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-white transition-colors flex items-center gap-1"
-          >
-            {{ isExpanded(hadithOfTheDay()?.id + 2) ? 'Show Less' : 'Read Full Translation' }}
-            <span
-              [class.rotate-180]="isExpanded(hadithOfTheDay()?.id + 2)"
-              class="transition-transform duration-300"
-            >
-              ▼
-            </span>
-          </button>
-        }
-      </div>
-      <div class="border-t border-gray-700 mb-4"></div>
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div class="space-y-1 text-xs">
-          <div class="flex gap-1 md:gap-2">
-            <span class="text-slate-500 font-bold uppercase">Reference</span>
-            <span class="text-emerald-500"
-              >: {{ hadithOfTheDay()?.collection_name }} {{ hadithOfTheDay()?.hadithnumber }}</span
-            >
-          </div>
-        </div>
-      </div>
-    </app-premium-card>
-  </div>
-
-  <div class="mb-4">
-    <app-premium-card class="">
-      <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
-        <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Dua of the Day</h1>
-        <div>
-          <span class="text-xs text-gray-400">{{ duaOfTheDay()?.category_info.name }} </span>
-        </div>
-      </div>
-      <div class="text-center">
-        <div class="text-[0.92rem] font-bold text-justify antialiased mb-4">
-          {{ duaOfTheDay()?.title }}
-        </div>
-        <div
-          appOverflowCheck
-          (hasOverflow)="handleOverflow(duaOfTheDay()?.id + 1, $event)"
-          [class.line-clamp-4]="!isExpanded(duaOfTheDay()?.id + 1)"
-          [class.no-mask-image]="!needsReadMore().has(duaOfTheDay()?.id + 1)"
-          class="font-arabic text-[1.1rem] leading-[1.9] text-justify antialiased mb-4"
-          dir="rtl"
-        >
-          {{ duaOfTheDay()?.arabic }}
-        </div>
-        @if (needsReadMore().has(duaOfTheDay()?.id + 1) || isExpanded(duaOfTheDay()?.id + 1)) {
-          <button
-            (click)="toggleExpand(duaOfTheDay()?.id + 1)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-white transition-colors flex items-center gap-1"
-          >
-            {{ isExpanded(duaOfTheDay()?.id + 1) ? 'Show Less' : 'Read Full Dua' }}
-            <span
-              [class.rotate-180]="isExpanded(duaOfTheDay()?.id + 1)"
-              class="transition-transform duration-300"
-            >
-              ▼
-            </span>
-          </button>
-        }
-        <div
-          appOverflowCheck
-          (hasOverflow)="handleOverflow(duaOfTheDay()?.id + 2, $event)"
-          [class.line-clamp-4]="!isExpanded(duaOfTheDay()?.id + 2)"
-          [class.no-mask-image]="!needsReadMore().has(duaOfTheDay()?.id + 2)"
-          class="italic text-xs text-uw-text2 text-justify antialiased mb-4"
-        >
-          {{ duaOfTheDay()?.transliteration }}
-        </div>
-        @if (needsReadMore().has(duaOfTheDay()?.id + 2) || isExpanded(duaOfTheDay()?.id + 2)) {
-          <button
-            (click)="toggleExpand(duaOfTheDay()?.id + 2)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-white transition-colors flex items-center gap-1"
-          >
-            {{ isExpanded(duaOfTheDay()?.id + 2) ? 'Show Less' : 'Read Full Transliteration' }}
-            <span
-              [class.rotate-180]="isExpanded(duaOfTheDay()?.id + 2)"
-              class="transition-transform duration-300"
-            >
-              ▼
-            </span>
-          </button>
-        }
-        <div
-          appOverflowCheck
-          (hasOverflow)="handleOverflow(duaOfTheDay()?.id + 3, $event)"
-          [class.line-clamp-4]="!isExpanded(duaOfTheDay()?.id + 3)"
-          [class.no-mask-image]="!needsReadMore().has(duaOfTheDay()?.id + 3)"
-          class="text-xs text-justify antialiased mb-4"
-        >
-          {{ duaOfTheDay()?.translation }}
-        </div>
-        @if (needsReadMore().has(duaOfTheDay()?.id + 3) || isExpanded(duaOfTheDay()?.id + 3)) {
-          <button
-            (click)="toggleExpand(duaOfTheDay()?.id + 3)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-white transition-colors flex items-center gap-1"
-          >
-            {{ isExpanded(duaOfTheDay()?.id + 3) ? 'Show Less' : 'Read Full Translation' }}
-            <span
-              [class.rotate-180]="isExpanded(duaOfTheDay()?.id + 3)"
-              class="transition-transform duration-300"
-            >
-              ▼
-            </span>
-          </button>
-        }
-      </div>
-      <div class="border-t border-gray-700 mb-4"></div>
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div class="space-y-1 text-xs">
-          <div class="flex gap-1 md:gap-2">
-            <span class="text-slate-500 font-bold uppercase">Reference</span>
-            <span class="text-emerald-500">: {{ duaOfTheDay()?.source }}</span>
-          </div>
-        </div>
-      </div>
-    </app-premium-card>
-  </div>
-</div>
-@if (isCardClicked()) {
-  <footer
-    class="p-0 left-0 right-0 w-full fixed bottom-0 z-50 backdrop-blur-md py-2.5 border-t bg-sand-mist/80 border-sacred-gold/80 dark:bg-slate-950/80 dark:border-white/15 overflow-x-auto"
-  >
-    <div class="max-w-5xl mx-auto">
-      <div class="text-xs mx-4">
-        <div class="flex items-center justify-between h-[stretch] pr-2">
-          <div class="flex items-center justify-center">
-            <div class="flex items-center justify-center">
+              {{ verseOfTheDay()?.verse.arabic }}
+            </div>
+            @if (
+              needsReadMore().has(verseOfTheDay()?.surah.number + 1) ||
+              isExpanded(verseOfTheDay()?.surah.number + 1)
+            ) {
               <button
-                (click)="
-                  audioService.toggleAudio(audioService.currentUrl()!); isCardClicked.set(true)
-                "
-                class="cursor-pointer group relative w-7 h-7 rounded-full bg-slate-900/80 backdrop-blur-md border border-sacred-gold/30 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl"
+                (click)="toggleExpand(verseOfTheDay()?.surah.number + 1)"
+                class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
               >
-                @if (audioService.isPlaying()) {
-                  <div
-                    class="absolute inset-0 rounded-full bg-sacred-gold/70 dark:bg-sacred-gold/20 animate-ping"
-                  ></div>
-                }
-
-                <span class="text-xs transition-transform group-hover:rotate-12">
-                  {{ audioService.isPlaying() ? '⏸️' : '▶️' }}
+                {{
+                  isExpanded(verseOfTheDay()?.surah.number + 1) ? 'Show Less' : 'Read Full Verse'
+                }}
+                <span
+                  [class.rotate-180]="isExpanded(verseOfTheDay()?.surah.number + 1)"
+                  class="transition-transform duration-300"
+                >
+                  ▼
                 </span>
               </button>
-            </div>
+            }
             <div
-              class="pl-4 flex flex-col justify-center max-sm:whitespace-nowrap max-sm:overflow-x-scroll max-sm:w-44"
+              appOverflowCheck
+              (hasOverflow)="handleOverflow(verseOfTheDay()?.surah.number + 2, $event)"
+              [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah.number + 2)"
+              [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah.number + 2)"
+              class="italic text-xs text-uw-text2 text-justify antialiased mb-4"
             >
-              <div
-                class="flex items-center text-[0.5rem] text-sacred-gold uppercase tracking-[0.2em] font-bold animate-pulse"
+              {{ verseOfTheDay()?.verse.transliteration }}
+            </div>
+            @if (
+              needsReadMore().has(verseOfTheDay()?.surah.number + 2) ||
+              isExpanded(verseOfTheDay()?.surah.number + 2)
+            ) {
+              <button
+                (click)="toggleExpand(verseOfTheDay()?.surah.number + 2)"
+                class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
               >
-                @if (audioService.isPlaying()) {
-                  Now Reciting...
-                } @else {
-                  Paused.
-                }
-              </div>
-              <div class="text-xs md:text-sm">
-                @if (audioService.currentUrl() === verseOfTheDay()?.audio[0].surah_audio) {
-                  <span class=""
-                    >Surah {{ verseOfTheDay()?.surah.name_english }} | Surah No.
-                    {{ verseOfTheDay()?.surah.number }}
-                  </span>
-                } @else {
-                  <span class=""
-                    >Surah {{ verseOfTheDay()?.surah.name_english }} | Ayah No.
-                    {{ verseOfTheDay()?.verse.ayah }}
-                  </span>
-                }
-                <span class="max-md:block">(By {{ verseOfTheDay()?.audio[0].reciter }}) </span>
+                {{
+                  isExpanded(verseOfTheDay()?.surah.number + 2)
+                    ? 'Show Less'
+                    : 'Read Full Transliteration'
+                }}
+                <span
+                  [class.rotate-180]="isExpanded(verseOfTheDay()?.surah.number + 2)"
+                  class="transition-transform duration-300"
+                >
+                  ▼
+                </span>
+              </button>
+            }
+            <div
+              appOverflowCheck
+              (hasOverflow)="handleOverflow(verseOfTheDay()?.surah.number + 3, $event)"
+              [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah.number + 3)"
+              [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah.number + 3)"
+              class="text-xs text-justify antialiased mb-4"
+            >
+              {{ verseOfTheDay()?.verse.translations.sahih_international }}
+            </div>
+            @if (
+              needsReadMore().has(verseOfTheDay()?.surah.number + 3) ||
+              isExpanded(verseOfTheDay()?.surah.number + 3)
+            ) {
+              <button
+                (click)="toggleExpand(verseOfTheDay()?.surah.number + 3)"
+                class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+              >
+                {{
+                  isExpanded(verseOfTheDay()?.surah.number + 3)
+                    ? 'Show Less'
+                    : 'Read Full Translation'
+                }}
+                <span
+                  [class.rotate-180]="isExpanded(verseOfTheDay()?.surah.number + 3)"
+                  class="transition-transform duration-300"
+                >
+                  ▼
+                </span>
+              </button>
+            }
+          </div>
+          <div class="border-t border-gray-700 mb-4"></div>
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div class="space-y-1 text-xs">
+              <div class="flex gap-1 md:gap-2">
+                <span class="text-slate-500 font-bold uppercase">Reference</span>
+                <span class="text-emerald-500"
+                  >: Surah {{ verseOfTheDay()?.surah.name_english }}
+                  {{ verseOfTheDay()?.verse.verse_key }}</span
+                >
               </div>
             </div>
           </div>
-          <div class="md:flex items-center justify-center">
-            <div
-              class="pl-4 h-9 flex items-end justify-center gap-1 overflow-hidden pointer-events-none opacity-90 dark:opacity-45"
-            >
-              @if (audioService.isPlaying()) {
-                @for (
-                  bar of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-                  track $index
-                ) {
-                  <div
-                    class="w-0.5 bg-sacred-gold rounded-t-full animate-visualizer"
-                    [style.animation-delay]="$index * 0.1 + 's'"
-                    [style.height]="12 + bar * 3 + '%'"
-                  ></div>
-                }
-              }
+          <div class="border-t border-gray-700 my-4"></div>
+          <div class="text-xs columns-2 divide-x divide-gray-700">
+            <div class="flex justify-between h-[stretch] pr-2">
+              <div class="flex items-center justify-center">
+                Listen to Surah {{ verseOfTheDay()?.surah.number }}
+              </div>
+              <div class="flex items-center justify-center">
+                <button
+                  (click)="
+                    audioService.toggleAudio(verseOfTheDay()?.audio[0].surah_audio);
+                    audioService.isPlaying() &&
+                    audioService.currentUrl() === verseOfTheDay()?.audio[0].surah_audio
+                      ? isCardClicked.set(true)
+                      : isCardClicked.set(false)
+                  "
+                  class="cursor-pointer group relative w-6 h-6 rounded-full bg-slate-900/80 backdrop-blur-md border border-sacred-gold/30 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl"
+                >
+                  @if (
+                    audioService.isPlaying() &&
+                    audioService.currentUrl() === verseOfTheDay()?.audio[0].surah_audio
+                  ) {
+                    <div
+                      class="absolute inset-0 rounded-full bg-sacred-gold/70 dark:bg-sacred-gold/20 animate-ping"
+                    ></div>
+                  }
+
+                  <span class="text-xs transition-transform group-hover:rotate-12">
+                    {{
+                      audioService.isPlaying() &&
+                      audioService.currentUrl() === verseOfTheDay()?.audio[0].surah_audio
+                        ? '⏸️'
+                        : '▶️'
+                    }}
+                  </span>
+                </button>
+              </div>
             </div>
+            <div class="flex justify-between pr-2">
+              <div class="flex items-center justify-center">
+                Listen to Ayah {{ verseOfTheDay()?.verse.ayah }}
+              </div>
+              <div class="flex items-center justify-center">
+                <button
+                  (click)="
+                    audioService.toggleAudio(verseOfTheDay()?.audio[0].ayah_audio);
+                    audioService.isPlaying() &&
+                    audioService.currentUrl() === verseOfTheDay()?.audio[0].ayah_audio
+                      ? isCardClicked.set(true)
+                      : isCardClicked.set(false)
+                  "
+                  class="cursor-pointer group relative w-6 h-6 rounded-full bg-slate-900/80 backdrop-blur-md border border-sacred-gold/30 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl"
+                >
+                  @if (
+                    audioService.isPlaying() &&
+                    audioService.currentUrl() === verseOfTheDay()?.audio[0].ayah_audio
+                  ) {
+                    <div
+                      class="absolute inset-0 rounded-full bg-sacred-gold/70 dark:bg-sacred-gold/20 animate-ping"
+                    ></div>
+                  }
 
-            <div class="pl-4 flex items-center gap-1 group/volume relative">
+                  <span class="text-xs transition-transform group-hover:rotate-12">
+                    {{
+                      audioService.isPlaying() &&
+                      audioService.currentUrl() === verseOfTheDay()?.audio[0].ayah_audio
+                        ? '⏸️'
+                        : '▶️'
+                    }}
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </app-premium-card>
+      </div>
+      <div class="mb-4">
+        <app-premium-card class="">
+          <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
+            <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Hadith of the Day</h1>
+          </div>
+          <div class="text-center">
+            <div
+              appOverflowCheck
+              (hasOverflow)="handleOverflow(hadithOfTheDay()?.id + 1, $event)"
+              [class.line-clamp-4]="!isExpanded(hadithOfTheDay()?.id + 1)"
+              [class.no-mask-image]="!needsReadMore().has(hadithOfTheDay()?.id + 1)"
+              class="mb-2 font-arabic text-[1.1rem] leading-[1.9] text-justify antialiased"
+              dir="rtl"
+            >
+              {{ hadithOfTheDay()?.arabic }}
+            </div>
+            @if (
+              needsReadMore().has(hadithOfTheDay()?.id + 1) || isExpanded(hadithOfTheDay()?.id + 1)
+            ) {
               <button
-                (click)="audioService.toggleMute()"
-                class="text-slate-500 hover:text-sacred-gold transition-colors p-1 rounded-md hover:bg-slate-800/50 cursor-pointer"
-                title="Toggle Mute"
+                (click)="toggleExpand(hadithOfTheDay()?.id + 1)"
+                class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
               >
-                @if (audioService.volume() === 0) {
-                  🔇
-                } @else if (audioService.volume() < 0.5) {
-                  🔉
-                } @else {
-                  🔊
-                }
+                {{ isExpanded(hadithOfTheDay()?.id + 1) ? 'Show Less' : 'Read Full Hadees' }}
+                <span
+                  [class.rotate-180]="isExpanded(hadithOfTheDay()?.id + 1)"
+                  class="transition-transform duration-300"
+                >
+                  ▼
+                </span>
               </button>
+            }
+            <div
+              appOverflowCheck
+              (hasOverflow)="handleOverflow(hadithOfTheDay()?.id + 2, $event)"
+              [class.line-clamp-4]="!isExpanded(hadithOfTheDay()?.id + 2)"
+              [class.no-mask-image]="!needsReadMore().has(hadithOfTheDay()?.id + 2)"
+              class="mb-2 text-xs text-justify antialiased"
+            >
+              {{ hadithOfTheDay()?.english }}
+            </div>
+            @if (
+              needsReadMore().has(hadithOfTheDay()?.id + 2) || isExpanded(hadithOfTheDay()?.id + 2)
+            ) {
+              <button
+                (click)="toggleExpand(hadithOfTheDay()?.id + 2)"
+                class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+              >
+                {{ isExpanded(hadithOfTheDay()?.id + 2) ? 'Show Less' : 'Read Full Translation' }}
+                <span
+                  [class.rotate-180]="isExpanded(hadithOfTheDay()?.id + 2)"
+                  class="transition-transform duration-300"
+                >
+                  ▼
+                </span>
+              </button>
+            }
+          </div>
+          <div class="border-t border-gray-700 mb-4"></div>
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div class="space-y-1 text-xs">
+              <div class="flex gap-1 md:gap-2">
+                <span class="text-slate-500 font-bold uppercase">Reference</span>
+                <span class="text-emerald-500"
+                  >: {{ hadithOfTheDay()?.collection_name }}
+                  {{ hadithOfTheDay()?.hadithnumber }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </app-premium-card>
+      </div>
 
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                [value]="audioService.volume()"
-                (input)="updateVolume($event)"
-                [class.opacity-30]="audioService.volume() === 0"
-                class="w-20 h-2 bg-slate-700 rounded-lg cursor-pointer accent-sacred-gold transition-all group-hover/volume:w-28"
-              />
+      <div class="mb-4">
+        <app-premium-card class="">
+          <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
+            <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Dua of the Day</h1>
+            <div>
+              <span class="text-xs text-gray-400">{{ duaOfTheDay()?.category_info.name }} </span>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="text-[0.92rem] font-bold text-justify antialiased mb-4">
+              {{ duaOfTheDay()?.title }}
+            </div>
+            <div
+              appOverflowCheck
+              (hasOverflow)="handleOverflow(duaOfTheDay()?.id + 1, $event)"
+              [class.line-clamp-4]="!isExpanded(duaOfTheDay()?.id + 1)"
+              [class.no-mask-image]="!needsReadMore().has(duaOfTheDay()?.id + 1)"
+              class="font-arabic text-[1.1rem] leading-[1.9] text-justify antialiased mb-4"
+              dir="rtl"
+            >
+              {{ duaOfTheDay()?.arabic }}
+            </div>
+            @if (needsReadMore().has(duaOfTheDay()?.id + 1) || isExpanded(duaOfTheDay()?.id + 1)) {
+              <button
+                (click)="toggleExpand(duaOfTheDay()?.id + 1)"
+                class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+              >
+                {{ isExpanded(duaOfTheDay()?.id + 1) ? 'Show Less' : 'Read Full Dua' }}
+                <span
+                  [class.rotate-180]="isExpanded(duaOfTheDay()?.id + 1)"
+                  class="transition-transform duration-300"
+                >
+                  ▼
+                </span>
+              </button>
+            }
+            <div
+              appOverflowCheck
+              (hasOverflow)="handleOverflow(duaOfTheDay()?.id + 2, $event)"
+              [class.line-clamp-4]="!isExpanded(duaOfTheDay()?.id + 2)"
+              [class.no-mask-image]="!needsReadMore().has(duaOfTheDay()?.id + 2)"
+              class="italic text-xs text-uw-text2 text-justify antialiased mb-4"
+            >
+              {{ duaOfTheDay()?.transliteration }}
+            </div>
+            @if (needsReadMore().has(duaOfTheDay()?.id + 2) || isExpanded(duaOfTheDay()?.id + 2)) {
+              <button
+                (click)="toggleExpand(duaOfTheDay()?.id + 2)"
+                class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+              >
+                {{ isExpanded(duaOfTheDay()?.id + 2) ? 'Show Less' : 'Read Full Transliteration' }}
+                <span
+                  [class.rotate-180]="isExpanded(duaOfTheDay()?.id + 2)"
+                  class="transition-transform duration-300"
+                >
+                  ▼
+                </span>
+              </button>
+            }
+            <div
+              appOverflowCheck
+              (hasOverflow)="handleOverflow(duaOfTheDay()?.id + 3, $event)"
+              [class.line-clamp-4]="!isExpanded(duaOfTheDay()?.id + 3)"
+              [class.no-mask-image]="!needsReadMore().has(duaOfTheDay()?.id + 3)"
+              class="text-xs text-justify antialiased mb-4"
+            >
+              {{ duaOfTheDay()?.translation }}
+            </div>
+            @if (needsReadMore().has(duaOfTheDay()?.id + 3) || isExpanded(duaOfTheDay()?.id + 3)) {
+              <button
+                (click)="toggleExpand(duaOfTheDay()?.id + 3)"
+                class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+              >
+                {{ isExpanded(duaOfTheDay()?.id + 3) ? 'Show Less' : 'Read Full Translation' }}
+                <span
+                  [class.rotate-180]="isExpanded(duaOfTheDay()?.id + 3)"
+                  class="transition-transform duration-300"
+                >
+                  ▼
+                </span>
+              </button>
+            }
+          </div>
+          <div class="border-t border-gray-700 mb-4"></div>
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div class="space-y-1 text-xs">
+              <div class="flex gap-1 md:gap-2">
+                <span class="text-slate-500 font-bold uppercase">Reference</span>
+                <span class="text-emerald-500">: {{ duaOfTheDay()?.source }}</span>
+              </div>
+            </div>
+          </div>
+        </app-premium-card>
+      </div>
+    </div>
+    @if (isCardClicked()) {
+      <footer
+        class="p-0 left-0 right-0 w-full fixed bottom-0 z-50 backdrop-blur-md py-2.5 border-t bg-sand-mist/80 border-sacred-gold/80 dark:bg-slate-950/80 dark:border-white/15 overflow-x-auto"
+      >
+        <div class="max-w-5xl mx-auto">
+          <div class="text-xs mx-4">
+            <div class="flex items-center justify-between h-[stretch] pr-2">
+              <div class="flex items-center justify-center">
+                <div class="flex items-center justify-center">
+                  <button
+                    (click)="
+                      audioService.toggleAudio(audioService.currentUrl()!); isCardClicked.set(true)
+                    "
+                    class="cursor-pointer group relative w-7 h-7 rounded-full bg-slate-900/80 backdrop-blur-md border border-sacred-gold/30 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl"
+                  >
+                    @if (audioService.isPlaying()) {
+                      <div
+                        class="absolute inset-0 rounded-full bg-sacred-gold/70 dark:bg-sacred-gold/20 animate-ping"
+                      ></div>
+                    }
 
-              <span class="text-[0.625rem] text-slate-500 font-mono w-6">
-                {{ (audioService.volume() * 100).toFixed(0) }}%
-              </span>
+                    <span class="text-xs transition-transform group-hover:rotate-12">
+                      {{ audioService.isPlaying() ? '⏸️' : '▶️' }}
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="pl-4 flex flex-col justify-center max-sm:whitespace-nowrap max-sm:overflow-x-scroll max-sm:w-44"
+                >
+                  <div
+                    class="flex items-center text-[0.5rem] text-sacred-gold uppercase tracking-[0.2em] font-bold animate-pulse"
+                  >
+                    @if (audioService.isPlaying()) {
+                      Now Reciting...
+                    } @else {
+                      Paused.
+                    }
+                  </div>
+                  <div class="text-xs md:text-sm">
+                    @if (audioService.currentUrl() === verseOfTheDay()?.audio[0].surah_audio) {
+                      <span class=""
+                        >Surah {{ verseOfTheDay()?.surah.name_english }} | Surah No.
+                        {{ verseOfTheDay()?.surah.number }}
+                      </span>
+                    } @else {
+                      <span class=""
+                        >Surah {{ verseOfTheDay()?.surah.name_english }} | Ayah No.
+                        {{ verseOfTheDay()?.verse.ayah }}
+                      </span>
+                    }
+                    <span class="max-md:block">(By {{ verseOfTheDay()?.audio[0].reciter }}) </span>
+                  </div>
+                </div>
+              </div>
+              <div class="md:flex items-center justify-center">
+                <div
+                  class="pl-4 h-9 flex items-end justify-center gap-1 overflow-hidden pointer-events-none opacity-90 dark:opacity-45"
+                >
+                  @if (audioService.isPlaying()) {
+                    @for (
+                      bar of [
+                        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                      ];
+                      track $index
+                    ) {
+                      <div
+                        class="w-0.5 bg-sacred-gold rounded-t-full animate-visualizer"
+                        [style.animation-delay]="$index * 0.1 + 's'"
+                        [style.height]="12 + bar * 3 + '%'"
+                      ></div>
+                    }
+                  }
+                </div>
+
+                <div class="pl-4 flex items-center gap-1 group/volume relative">
+                  <button
+                    (click)="audioService.toggleMute()"
+                    class="text-slate-500 hover:text-sacred-gold transition-colors p-1 rounded-md hover:bg-slate-800/50 cursor-pointer"
+                    title="Toggle Mute"
+                  >
+                    @if (audioService.volume() === 0) {
+                      🔇
+                    } @else if (audioService.volume() < 0.5) {
+                      🔉
+                    } @else {
+                      🔊
+                    }
+                  </button>
+
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    [value]="audioService.volume()"
+                    (input)="updateVolume($event)"
+                    [class.opacity-30]="audioService.volume() === 0"
+                    class="w-20 h-2 bg-slate-700 rounded-lg cursor-pointer accent-sacred-gold transition-all group-hover/volume:w-28"
+                  />
+
+                  <span class="text-[0.625rem] text-slate-500 font-mono w-6">
+                    {{ (audioService.volume() * 100).toFixed(0) }}%
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </footer>
-}
+      </footer>
+    }
+    <app-premium-card class="mt-4">
+      <app-footer></app-footer>
+    </app-premium-card>
+  </main>
+</div>
+
+<div class="fam-dock">
+  <div class="dock-content">
+    <!-- <span class="icon-small">A</span> -->
+    <button
+      (click)="decreaseFontSize()"
+      [disabled]="fontSize <= 80"
+      class="px-1 rounded-full hover:bg-hover-background disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
+    >
+      <span class="flex text-[0.75rem] font-bold">A</span>
+    </button>
+    <input
+      type="range"
+      min="80"
+      max="180"
+      [value]="fontSize"
+      (input)="onSliderChange($event)"
+      aria-label="Font Size Slider"
+    />
+    <!-- <span class="icon-large">A</span> -->
+    <button
+      (click)="increaseFontSize()"
+      [disabled]="fontSize >= 180"
+      class="px-1 rounded-full hover:bg-hover-background disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
+    >
+      <span class="flex text-[1.2rem] font-bold">A</span>
+    </button>
+    <span class="percentage-label">{{ fontSize }}%</span>
+    <button class="reset-btn" (click)="resetFontSize()" title="Reset to Default">
+      <span class="reset-icon">↺</span>
+    </button>
+  </div>
+</div>
+
 <app-status-modal #modal />

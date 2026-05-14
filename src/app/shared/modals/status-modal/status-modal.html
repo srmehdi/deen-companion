@@ -1,11 +1,11 @@
 @if (state()) {
   <div
-    class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-md transition-all duration-500"
+    class="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 backdrop-blur-md transition-all duration-500"
     aria-modal="true"
     role="dialog"
   >
     <div
-      class="relative w-full max-w-[450px] max-md:m-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 px-8 py-12 text-center shadow-2xl overflow-hidden animate-in zoom-in duration-300"
+      class="relative w-full max-w-112.5 max-md:m-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 px-8 py-12 text-center shadow-2xl overflow-hidden animate-in zoom-in duration-300"
     >
       <div
         class="absolute -top-10 -left-10 w-40 h-40 bg-accent/10 dark:bg-accent/20 blur-[60px] rounded-full"
@@ -57,7 +57,7 @@
       </div>
 
       <h2
-        class="mb-2 text-sm sm:text-xl font-bold tracking-[0.2em] uppercase text-gray-900 dark:text-white"
+        class="mb-2 text-sm sm:text-xl font-bold tracking-[0.2em] uppercase text-gray-900 dark:text-white wrap-break-word"
       >
         {{
           state() === 'loading'
@@ -77,7 +77,7 @@
       @if (state() === 'error' || state() === 'success') {
         <div class="mt-2 sm:mt-10 flex justify-center">
           <button
-            class="w-[160px] py-3 rounded-md shadow-sm transition-all duration-300 cursor-pointer text-[0.65rem] tracking-[0.25em] font-black uppercase /* Light Mode Colors */ bg-gray-900 text-white border border-gray-800 hover:bg-gray-700 /* Dark Mode Colors */ dark:bg-white/5 dark:text-white dark:border-white/20 dark:hover:bg-accent/20 dark:hover:border-accent/40 dark:hover:text-white"
+            class="w-40 py-3 rounded-md shadow-sm transition-all duration-300 cursor-pointer text-[0.65rem] tracking-[0.25em] font-black uppercase /* Light Mode Colors */ bg-gray-900 text-white border border-gray-800 hover:bg-gray-700 /* Dark Mode Colors */ dark:bg-white/5 dark:text-white dark:border-white/20 dark:hover:bg-accent/20 dark:hover:border-accent/40 dark:hover:text-white"
             (click)="close()"
           >
             Continue

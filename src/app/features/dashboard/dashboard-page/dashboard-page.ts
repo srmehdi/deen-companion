@@ -1,4 +1,4 @@
-import { Component, computed, signal, ViewChild } from '@angular/core';
+import { Component, computed, DOCUMENT, Inject, signal, ViewChild } from '@angular/core';
 import { PremiumCard } from '../../../shared/components/premium-card/premium-card';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../core/services/api-service/api-service';
@@ -8,10 +8,23 @@ import { OverflowCheck } from '../../../shared/directives/overflow-check/overflo
 import { ThemeService } from '../../../core/services/theme-service/theme-service';
 import { StatusModal } from '../../../shared/modals/status-modal/status-modal';
 import { FormsModule } from '@angular/forms';
+import { Activity } from '../../../core/services/activity/activity';
+import { Header } from '../../header/header';
+import { RouterOutlet } from '@angular/router';
+import { Footer } from '../../footer/footer';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [PremiumCard, CommonModule, OverflowCheck, StatusModal, FormsModule],
+  imports: [
+    PremiumCard,
+    CommonModule,
+    OverflowCheck,
+    StatusModal,
+    FormsModule,
+    Header,
+    RouterOutlet,
+    Footer,
+  ],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
@@ -22,6 +35,8 @@ export class DashboardPage {
     private api: ApiService,
     public audioService: AudioService,
     public theme: ThemeService,
+    @Inject(DOCUMENT) private document: Document,
+    private activity: Activity,
   ) {
     this.audioService.audio.onended = () => {
       this.isCardClicked.set(false);
@@ -33,11 +48,20 @@ export class DashboardPage {
     }, 1000);
     setInterval(() => {
       if (this.prayer_times_data()) {
-        this.getPrayerTimes(0);
+        if (localStorage.getItem('user-lat') && localStorage.getItem('user-lng')) {
+          this.prayerTimesApiCall(
+            parseFloat(localStorage.getItem('user-lat')!),
+            parseFloat(localStorage.getItem('user-lng')!),
+          );
+        } else {
+          this.getPrayerTimes(0);
+        }
+        // this.getPrayerTimes(0);
       }
     }, 60000);
   }
 
+  fontSize: number = 100;
   currentTime = signal(new Date());
   ngOnInit() {
     // setInterval(() => {
@@ -48,7 +72,12 @@ export class DashboardPage {
     //     this.getPrayerTimes(0);
     //   }
     // }, 60000);
-
+    const saved = localStorage.getItem('user-font-size');
+    if (saved) {
+      this.fontSize = parseInt(saved, 10);
+      this.applyFontSize(+this.fontSize);
+    }
+    this.activity.startTracking();
     this.searchSubject
       .pipe(
         debounceTime(100),
@@ -84,6 +113,8 @@ export class DashboardPage {
     // const $destroyed: Subject<void> = new Subject();
     navigator.geolocation.getCurrentPosition(
       (pos) => {
+        localStorage.setItem('user-lat', pos.coords.latitude.toString());
+        localStorage.setItem('user-lng', pos.coords.longitude.toString());
         this.prayerTimesApiCall(pos.coords.latitude, pos.coords.longitude);
         // this.api.getPrayerTimes<any>(pos.coords.latitude, pos.coords.longitude).subscribe({
         //   next: (res) => {
@@ -109,7 +140,7 @@ export class DashboardPage {
             parseFloat(localStorage.getItem('user-lng')!),
           );
         } else {
-          console.error('Error detecting location', error);
+          console.log('Error detecting location', error);
           alert('Unable to retrieve your location. Please search manually.');
         }
       },
@@ -206,6 +237,7 @@ export class DashboardPage {
           this.duaOfTheDay.set(res[2].data);
           this.verseOfTheDay.set(res[3].data);
           this.modal.close();
+          // this.getPrayerTimes(1);
         } else if (!res[0].success) {
           this.modal.showError({ message: 'Error in todayHijriDate api' });
         } else if (!res[1].success) {
@@ -300,18 +332,22 @@ export class DashboardPage {
         this.searchQuery = 'Current Location';
       },
       (error) => {
-        console.error('Error detecting location', error);
+        console.log('Error detecting location', error);
         alert('Unable to retrieve your location. Please search manually.');
       },
       { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
     );
   }
+  currentTimeAtSelectedCity = signal<string | null>(null);
   prayerTimesApiCall(lat: number, lng: number) {
     const $destroyed: Subject<void> = new Subject();
     this.api.getPrayerTimes<any>(lat, lng).subscribe({
       next: (res) => {
         this.isPrayerTimeLoading.set(false);
         this.prayer_times_data.set(res.data);
+        // const time =
+        //   new Date(res.timestamp).getUTCHours() + ':' + new Date(res.timestamp).getUTCMinutes();
+        // this.currentTimeAtSelectedCity.set(time);
         this.theme.applyPrayerTheme(res);
         // this.modal.close();
       },
@@ -328,5 +364,32 @@ export class DashboardPage {
   clearSearch() {
     this.searchQuery = '';
     this.results = [];
+  }
+
+  onSliderChange(event: any) {
+    this.fontSize = event.target.value;
+    this.applyFontSize(+this.fontSize);
+  }
+
+  private applyFontSize(value: number) {
+    document.documentElement.style.setProperty('--base-font-size', `${value}%`);
+    localStorage.setItem('user-font-size', value.toString());
+  }
+  resetFontSize() {
+    this.fontSize = 100;
+    this.applyFontSize(+this.fontSize);
+  }
+  increaseFontSize() {
+    if (+this.fontSize < 180) {
+      this.fontSize = Math.min(+this.fontSize + 10, 180);
+      this.applyFontSize(+this.fontSize);
+    }
+  }
+
+  decreaseFontSize() {
+    if (+this.fontSize > 80) {
+      this.fontSize = Math.max(+this.fontSize - 10, 80);
+      this.applyFontSize(+this.fontSize);
+    }
   }
 }
