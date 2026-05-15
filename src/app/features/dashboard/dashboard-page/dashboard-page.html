@@ -147,12 +147,12 @@
             <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Prayer Times</h1>
             <div class="text-[0.6rem] text-gray-400">
               <span class="">{{ prayer_times_data()?.date | date: 'fullDate' }} | </span>
-              <!-- <span class="">{{ currentTimeAtSelectedCity() ?? 'N/A' }} | </span> -->
+              <span class="">{{ currentTimeAtSelectedCity() ?? 'N/A' }} | </span>
               <span class=""> {{ prayer_times_data()?.timezone }}</span>
             </div>
           </div>
           <div class="md:columns-2">
-            <div class="mb-4 md:border-r border-gray-700 h-[stretch]">
+            <div class="mb-4 md:border-r border-gray-700">
               <p class="text-xs text-gray-400">Current Prayer</p>
               <h2 class="text-lg font-bold text-accent">
                 {{ prayer_times_data()?.islamic_info.prayer_names[currentPrayer()] ?? 'N/A' }}
@@ -320,7 +320,7 @@
           </div>
           <div class="border-t border-gray-700 my-4"></div>
           <div class="text-xs columns-2 divide-x divide-gray-700">
-            <div class="flex justify-between h-[stretch] pr-2">
+            <div class="flex justify-between pr-2">
               <div class="flex items-center justify-center">
                 Listen to Surah {{ verseOfTheDay()?.surah.number }}
               </div>
@@ -567,7 +567,7 @@
       >
         <div class="max-w-5xl mx-auto">
           <div class="text-xs mx-4">
-            <div class="flex items-center justify-between h-[stretch] pr-2">
+            <div class="flex items-center justify-between pr-2">
               <div class="flex items-center justify-center">
                 <div class="flex items-center justify-center">
                   <button
@@ -587,9 +587,7 @@
                     </span>
                   </button>
                 </div>
-                <div
-                  class="pl-4 flex flex-col justify-center max-sm:whitespace-nowrap max-sm:overflow-x-scroll max-sm:w-44"
-                >
+                <div class="pl-4 flex flex-col justify-center max-lg:whitespace-nowrap">
                   <div
                     class="flex items-center text-[0.5rem] text-sacred-gold uppercase tracking-[0.2em] font-bold animate-pulse"
                   >

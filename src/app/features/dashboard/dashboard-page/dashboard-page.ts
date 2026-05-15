@@ -348,6 +348,7 @@ export class DashboardPage {
         // const time =
         //   new Date(res.timestamp).getUTCHours() + ':' + new Date(res.timestamp).getUTCMinutes();
         // this.currentTimeAtSelectedCity.set(time);
+        this.getCurrentTimeAtSelectedCity(res);
         this.theme.applyPrayerTheme(res);
         // this.modal.close();
       },
@@ -391,5 +392,15 @@ export class DashboardPage {
       this.fontSize = Math.max(+this.fontSize - 10, 80);
       this.applyFontSize(+this.fontSize);
     }
+  }
+  getCurrentTimeAtSelectedCity(res: any) {
+    const time = new Intl.DateTimeFormat('en-US', {
+      timeZone: res.data.timezone,
+      hour: '2-digit',
+      minute: '2-digit',
+      // second: '2-digit',
+      hour12: false,
+    }).format(new Date(res.timestamp));
+    this.currentTimeAtSelectedCity.set(time);
   }
 }
