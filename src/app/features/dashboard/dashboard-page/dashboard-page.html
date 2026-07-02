@@ -658,37 +658,69 @@
     </div>
   </footer>
 }
-<div class="fam-dock">
-  <div class="dock-content">
-    <!-- <span class="icon-small">A</span> -->
+
+<div
+  class="fixed bottom-[24px] left-1/2 -translate-x-1/2 z-50 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 shadow-xl overflow-hidden transition-all duration-300"
+  [class.w-[60px]]="!isDockOpen"
+  [class.w-[340px]]="isDockOpen"
+>
+  <div class="flex items-center justify-center h-[56px]">
+    <!-- Toggle -->
     <button
-      (click)="decreaseFontSize()"
-      [disabled]="fontSize <= 80"
-      class="px-1 rounded-full hover:bg-hover-background disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
+      (click)="toggleDock()"
+      class="p-[6px] rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition cursor-pointer"
+      [class.w-full]="!isDockOpen"
+      [class.h-full]="!isDockOpen"
+      [class.m-[6px]]="isDockOpen"
     >
-      <span class="flex text-[0.75rem] font-bold">A</span>
+      Aa
     </button>
-    <input
-      type="range"
-      min="80"
-      max="180"
-      [value]="fontSize"
-      (input)="onSliderChange($event)"
-      aria-label="Font Size Slider"
-    />
-    <!-- <span class="icon-large">A</span> -->
-    <button
-      (click)="increaseFontSize()"
-      [disabled]="fontSize >= 180"
-      class="px-1 rounded-full hover:bg-hover-background disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
-    >
-      <span class="flex text-[1.2rem] font-bold">A</span>
-    </button>
-    <span class="percentage-label">{{ fontSize }}%</span>
-    <button class="reset-btn" (click)="resetFontSize()" title="Reset to Default">
-      <span class="reset-icon">↺</span>
-    </button>
+
+    <!-- Content -->
+    @if (isDockOpen) {
+      <div
+        class="flex items-center gap-[8px] overflow-hidden transition-all duration-300"
+        [class.w-0]="!isDockOpen"
+        [class.w-full]="isDockOpen"
+        [class.opacity-0]="!isDockOpen"
+        [class.opacity-100]="isDockOpen"
+        [class.ml-[12px]]="isDockOpen"
+      >
+        <button
+          (click)="decreaseFontSize(); keepDockOpen()"
+          [disabled]="fontSize <= 80"
+          class="p-[4px] rounded-full hover:bg-hover-background cursor-zoom-out disabled:cursor-not-allowed"
+        >
+          <span class="text-[12px] font-bold">A</span>
+        </button>
+
+        <input
+          class="flex-1 cursor-grab w-2"
+          type="range"
+          min="80"
+          max="180"
+          [value]="fontSize"
+          (input)="onSliderChange($event); keepDockOpen()"
+        />
+
+        <button
+          (click)="increaseFontSize(); keepDockOpen()"
+          [disabled]="fontSize >= 180"
+          class="p-[4px] rounded-full hover:bg-hover-background cursor-zoom-in disabled:cursor-not-allowed"
+        >
+          <span class="text-[18px] font-bold">A</span>
+        </button>
+
+        <span class="text-[14px] font-medium text-center"> {{ fontSize }}% </span>
+
+        <button
+          (click)="resetFontSize(); keepDockOpen()"
+          class="w-[36px] h-[36px] m-[6px] rounded-full hover:bg-hover-background reset-btn"
+        >
+          <span class="reset-icon">↺</span>
+        </button>
+      </div>
+    }
   </div>
 </div>
-
 <app-status-modal #modal />
