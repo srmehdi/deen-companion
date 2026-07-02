@@ -61,12 +61,12 @@ p:not(.line-clamp-4) {
 
 .fam-dock {
   position: fixed;
-  bottom: 4rem;
+  bottom: 64px;
   right: 46px;
   z-index: 1000;
   /* background: rgba(255, 255, 255, 0.7); */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 
   padding: 6px 12px;
   border-radius: 50px;
@@ -102,7 +102,7 @@ p:not(.line-clamp-4) {
   }
 
   .percentage-label {
-    font-size: 0.85rem;
+    font-size: 14px;
     /* color: #3f51b5; */
     color: var(--color-sacred-gold);
     font-weight: 700;
@@ -144,7 +144,7 @@ p:not(.line-clamp-4) {
   /* margin-left: 4px; */
 
   .reset-icon {
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: bold;
     line-height: 1;
   }

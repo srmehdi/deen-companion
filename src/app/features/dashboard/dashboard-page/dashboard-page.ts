@@ -396,4 +396,39 @@ export class DashboardPage {
     }).format(new Date(res.timestamp));
     this.currentTimeAtSelectedCity.set(time);
   }
+
+  isDockOpen = false;
+
+  private collapseTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  toggleDock() {
+    this.isDockOpen = !this.isDockOpen;
+
+    if (this.isDockOpen) {
+      this.startCollapseTimer();
+    } else {
+      this.clearCollapseTimer();
+    }
+  }
+
+  private startCollapseTimer() {
+    this.clearCollapseTimer();
+
+    this.collapseTimeout = setTimeout(() => {
+      this.isDockOpen = false;
+    }, 4000);
+  }
+
+  private clearCollapseTimer() {
+    if (this.collapseTimeout) {
+      clearTimeout(this.collapseTimeout);
+      this.collapseTimeout = null;
+    }
+  }
+
+  keepDockOpen() {
+    if (this.isDockOpen) {
+      this.startCollapseTimer();
+    }
+  }
 }
