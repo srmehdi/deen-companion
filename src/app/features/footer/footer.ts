@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { ApiService } from '../../core/services/api-service/api-service';
+import { Activity } from '../../core/services/activity/activity';
 
 @Component({
   selector: 'app-footer',
@@ -9,11 +10,17 @@ import { ApiService } from '../../core/services/api-service/api-service';
   styleUrl: './footer.css',
 })
 export class Footer {
-  constructor(private http: ApiService) {
-    this.getActivityStats();
+  activityStats: any;
+  constructor(
+    private http: ApiService,
+    private activity: Activity,
+  ) {
+    this.activityStats = this.activity.activityStats;
+    this.activity.startTracking();
+    // this.getActivityStats();
   }
 
-  activityStats: any = signal(null);
+  // activityStats: any = signal(null);
   getActivityStats() {
     this.http.getActivityStats().subscribe({
       next: (resp) => {

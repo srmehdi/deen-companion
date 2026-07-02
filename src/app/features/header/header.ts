@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, signal } from '@angular/core';
 import { ThemeService } from '../../core/services/theme-service/theme-service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })

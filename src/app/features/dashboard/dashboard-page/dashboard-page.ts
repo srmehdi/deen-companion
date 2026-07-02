@@ -15,16 +15,7 @@ import { Footer } from '../../footer/footer';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [
-    PremiumCard,
-    CommonModule,
-    OverflowCheck,
-    StatusModal,
-    FormsModule,
-    Header,
-    RouterOutlet,
-    Footer,
-  ],
+  imports: [PremiumCard, CommonModule, OverflowCheck, StatusModal, FormsModule],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
@@ -77,7 +68,7 @@ export class DashboardPage {
       this.fontSize = parseInt(saved, 10);
       this.applyFontSize(+this.fontSize);
     }
-    this.activity.startTracking();
+    // this.activity.startTracking();
     this.searchSubject
       .pipe(
         debounceTime(100),
@@ -333,7 +324,9 @@ export class DashboardPage {
       },
       (error) => {
         console.log('Error detecting location', error);
-        alert('Unable to retrieve your location. Please search manually.');
+        alert(
+          'Unable to retrieve your location. Please enable it in your browser/phone settings or search manually. We need your location to show the prayer times.',
+        );
       },
       { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
     );

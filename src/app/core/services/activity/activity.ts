@@ -1,5 +1,6 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, signal } from '@angular/core';
 import { ApiService } from '../api-service/api-service';
+import { of, Subject, takeUntil, concatMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class Activity implements OnDestroy {
@@ -50,16 +51,46 @@ export class Activity implements OnDestroy {
     }
   }
 
+  // private sendPing(visitorId: string) {
+  //   const payload = { visitorId: visitorId };
+  //   this.api.sendPing(payload).subscribe({
+  //     next: (resp) => {
+  //       // console.log('sendPing resp', resp);
+  //     },
+  //     error: (err) => {
+  //       console.log('sendPing error', err);
+  //     },
+  //   });
+  // }
+
+  activityStats: any = signal(null);
   private sendPing(visitorId: string) {
+    const $destroyed: Subject<void> = new Subject();
     const payload = { visitorId: visitorId };
-    this.api.sendPing(payload).subscribe({
-      next: (resp) => {
-        // console.log('sendPing resp', resp);
-      },
-      error: (err) => {
-        console.log('sendPing error', err);
-      },
-    });
+    this.api
+      .sendPing(payload)
+      .pipe(
+        takeUntil($destroyed),
+        concatMap((pingResp) => {
+          if (pingResp) {
+            return this.api.getActivityStats();
+          } else {
+            return of(null);
+          }
+        }),
+      )
+      .subscribe({
+        next: (activityStatsResp) => {
+          this.activityStats.set(activityStatsResp);
+        },
+        error: (err) => {
+          console.log('getActivityStats error', err);
+        },
+        complete: () => {
+          $destroyed.next();
+          $destroyed.complete();
+        },
+      });
   }
   private handleVisibilityChange() {
     document.addEventListener('visibilitychange', () => {

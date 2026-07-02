@@ -1,0 +1,358 @@
+{
+  "success": true,
+  "service": "quran-words-surah",
+  "data": {
+    "surah": 1,
+    "total_verses": 7,
+    "verses": [
+      {
+        "surah": 1,
+        "ayah": 1,
+        "verse_key": "1:1",
+        "word_count": 4,
+        "audioUrl": "https://everyayah.com/data/Alafasy_128kbps/001001.mp3",
+        "words": [
+          {
+            "position": 1,
+            "arabic": "بِسْمِ",
+            "transliteration": {
+              "text": "bis'mi",
+              "language_name": "english"
+            },
+            "translation": "In (the) name",
+            "type": "word"
+          },
+          {
+            "position": 2,
+            "arabic": "ٱللَّهِ",
+            "transliteration": {
+              "text": "l-lahi",
+              "language_name": "english"
+            },
+            "translation": "(of) Allah",
+            "type": "word"
+          },
+          {
+            "position": 3,
+            "arabic": "ٱلرَّحْمَـٰنِ",
+            "transliteration": {
+              "text": "l-raḥmāni",
+              "language_name": "english"
+            },
+            "translation": "the Most Gracious",
+            "type": "word"
+          },
+          {
+            "position": 4,
+            "arabic": "ٱلرَّحِيمِ",
+            "transliteration": {
+              "text": "l-raḥīmi",
+              "language_name": "english"
+            },
+            "translation": "the Most Merciful",
+            "type": "word"
+          }
+        ]
+      },
+      {
+        "surah": 1,
+        "ayah": 2,
+        "verse_key": "1:2",
+        "word_count": 4,
+        "words": [
+          {
+            "position": 1,
+            "arabic": "ٱلْحَمْدُ",
+            "transliteration": {
+              "text": "al-ḥamdu",
+              "language_name": "english"
+            },
+            "translation": "All praises and thanks",
+            "type": "word"
+          },
+          {
+            "position": 2,
+            "arabic": "لِلَّهِ",
+            "transliteration": {
+              "text": "lillahi",
+              "language_name": "english"
+            },
+            "translation": "(be) to Allah",
+            "type": "word"
+          },
+          {
+            "position": 3,
+            "arabic": "رَبِّ",
+            "transliteration": {
+              "text": "rabbi",
+              "language_name": "english"
+            },
+            "translation": "the Lord",
+            "type": "word"
+          },
+          {
+            "position": 4,
+            "arabic": "ٱلْعَـٰلَمِينَ",
+            "transliteration": {
+              "text": "l-ʿālamīna",
+              "language_name": "english"
+            },
+            "translation": "of the universe",
+            "type": "word"
+          }
+        ]
+      },
+      {
+        "surah": 1,
+        "ayah": 3,
+        "verse_key": "1:3",
+        "word_count": 2,
+        "words": [
+          {
+            "position": 1,
+            "arabic": "ٱلرَّحْمَـٰنِ",
+            "transliteration": {
+              "text": "al-raḥmāni",
+              "language_name": "english"
+            },
+            "translation": "The Most Gracious",
+            "type": "word"
+          },
+          {
+            "position": 2,
+            "arabic": "ٱلرَّحِيمِ",
+            "transliteration": {
+              "text": "l-raḥīmi",
+              "language_name": "english"
+            },
+            "translation": "the Most Merciful",
+            "type": "word"
+          }
+        ]
+      },
+      {
+        "surah": 1,
+        "ayah": 4,
+        "verse_key": "1:4",
+        "word_count": 3,
+        "words": [
+          {
+            "position": 1,
+            "arabic": "مَـٰلِكِ",
+            "transliteration": {
+              "text": "māliki",
+              "language_name": "english"
+            },
+            "translation": "(The) Master",
+            "type": "word"
+          },
+          {
+            "position": 2,
+            "arabic": "يَوْمِ",
+            "transliteration": {
+              "text": "yawmi",
+              "language_name": "english"
+            },
+            "translation": "(of the) Day",
+            "type": "word"
+          },
+          {
+            "position": 3,
+            "arabic": "ٱلدِّينِ",
+            "transliteration": {
+              "text": "l-dīni",
+              "language_name": "english"
+            },
+            "translation": "(of the) Judgment",
+            "type": "word"
+          }
+        ]
+      },
+      {
+        "surah": 1,
+        "ayah": 5,
+        "verse_key": "1:5",
+        "word_count": 4,
+        "words": [
+          {
+            "position": 1,
+            "arabic": "إِيَّاكَ",
+            "transliteration": {
+              "text": "iyyāka",
+              "language_name": "english"
+            },
+            "translation": "You Alone",
+            "type": "word"
+          },
+          {
+            "position": 2,
+            "arabic": "نَعْبُدُ",
+            "transliteration": {
+              "text": "naʿbudu",
+              "language_name": "english"
+            },
+            "translation": "we worship",
+            "type": "word"
+          },
+          {
+            "position": 3,
+            "arabic": "وَإِيَّاكَ",
+            "transliteration": {
+              "text": "wa-iyyāka",
+              "language_name": "english"
+            },
+            "translation": "and You Alone",
+            "type": "word"
+          },
+          {
+            "position": 4,
+            "arabic": "نَسْتَعِينُ",
+            "transliteration": {
+              "text": "nastaʿīnu",
+              "language_name": "english"
+            },
+            "translation": "we ask for help",
+            "type": "word"
+          }
+        ]
+      },
+      {
+        "surah": 1,
+        "ayah": 6,
+        "verse_key": "1:6",
+        "word_count": 3,
+        "words": [
+          {
+            "position": 1,
+            "arabic": "ٱهْدِنَا",
+            "transliteration": {
+              "text": "ih'dinā",
+              "language_name": "english"
+            },
+            "translation": "Guide us",
+            "type": "word"
+          },
+          {
+            "position": 2,
+            "arabic": "ٱلصِّرَٰطَ",
+            "transliteration": {
+              "text": "l-ṣirāṭa",
+              "language_name": "english"
+            },
+            "translation": "(to) the path",
+            "type": "word"
+          },
+          {
+            "position": 3,
+            "arabic": "ٱلْمُسْتَقِيمَ",
+            "transliteration": {
+              "text": "l-mus'taqīma",
+              "language_name": "english"
+            },
+            "translation": "the straight",
+            "type": "word"
+          }
+        ]
+      },
+      {
+        "surah": 1,
+        "ayah": 7,
+        "verse_key": "1:7",
+        "word_count": 9,
+        "words": [
+          {
+            "position": 1,
+            "arabic": "صِرَٰطَ",
+            "transliteration": {
+              "text": "ṣirāṭa",
+              "language_name": "english"
+            },
+            "translation": "(The) path",
+            "type": "word"
+          },
+          {
+            "position": 2,
+            "arabic": "ٱلَّذِينَ",
+            "transliteration": {
+              "text": "alladhīna",
+              "language_name": "english"
+            },
+            "translation": "(of) those",
+            "type": "word"
+          },
+          {
+            "position": 3,
+            "arabic": "أَنْعَمْتَ",
+            "transliteration": {
+              "text": "anʿamta",
+              "language_name": "english"
+            },
+            "translation": "You have bestowed (Your) Favors",
+            "type": "word"
+          },
+          {
+            "position": 4,
+            "arabic": "عَلَيْهِمْ",
+            "transliteration": {
+              "text": "ʿalayhim",
+              "language_name": "english"
+            },
+            "translation": "on them",
+            "type": "word"
+          },
+          {
+            "position": 5,
+            "arabic": "غَيْرِ",
+            "transliteration": {
+              "text": "ghayri",
+              "language_name": "english"
+            },
+            "translation": "not (of)",
+            "type": "word"
+          },
+          {
+            "position": 6,
+            "arabic": "ٱلْمَغْضُوبِ",
+            "transliteration": {
+              "text": "l-maghḍūbi",
+              "language_name": "english"
+            },
+            "translation": "those who earned (Your) wrath",
+            "type": "word"
+          },
+          {
+            "position": 7,
+            "arabic": "عَلَيْهِمْ",
+            "transliteration": {
+              "text": "ʿalayhim",
+              "language_name": "english"
+            },
+            "translation": "on themselves",
+            "type": "word"
+          },
+          {
+            "position": 8,
+            "arabic": "وَلَا",
+            "transliteration": {
+              "text": "walā",
+              "language_name": "english"
+            },
+            "translation": "and not",
+            "type": "word"
+          },
+          {
+            "position": 9,
+            "arabic": "ٱلضَّآلِّينَ",
+            "transliteration": {
+              "text": "l-ḍālīna",
+              "language_name": "english"
+            },
+            "translation": "(of) those who go astray",
+            "type": "word"
+          }
+        ]
+      }
+    ]
+  },
+  "timestamp": "2026-05-16T09:58:15.498Z"
+}
