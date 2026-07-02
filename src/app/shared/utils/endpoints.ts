@@ -7,4 +7,6 @@ export const Endpoints = {
   NOMINATIM_SEARCH: 'https://nominatim.openstreetmap.org/search',
   HEART_BEAT: '/api/heart-beat',
   ACTIVITY_STATS: '/api/activity-stats',
+  SURAHS_METADATA: '/api/quran/surahs',
+  SURAH_BY_NUMBER: '/api/quran/surah/',
 };

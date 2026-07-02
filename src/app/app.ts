@@ -8,7 +8,7 @@ import { Activity } from './core/services/activity/activity';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Header, PremiumCard, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

@@ -6,4 +6,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/dashboard/dashboard-page/dashboard-page').then((m) => m.DashboardPage),
   },
+  {
+    path: 'quran',
+    loadComponent: () => import('./features/quran/quran').then((m) => m.Quran),
+  },
+  {
+    path: 'dua',
+    loadComponent: () => import('./features/dua/dua').then((m) => m.Dua),
+  },
 ];

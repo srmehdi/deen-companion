@@ -68,4 +68,26 @@ export class ApiService {
   getActivityStats() {
     return this.http.get<any>(Endpoints.ACTIVITY_STATS);
   }
+  getListOfSurahs<T>() {
+    return this.http.get<T>(this.ummahBase + Endpoints.SURAHS_METADATA);
+  }
+  getSurahByNumber<T>(surahNo: number) {
+    return this.http.get<T>(
+      this.ummahBase +
+        Endpoints.SURAH_BY_NUMBER +
+        surahNo +
+        `?translation=sahih_international&reciter=1`,
+    );
+  }
+  getSurahWordByWord<T>(surahNo: number) {
+    // return this.http
+    //   .get<T>(
+    //     this.ummahBase +
+    //       Endpoints.SURAH_BY_NUMBER +
+    //       surahNo +
+    //       `?translation=sahih_international&reciter=1`,
+    //   )
+    //   .pipe(catchError(() => throwError(() => 'API error')));
+    return this.http.get<T>('./assets/jsons/surah_word_by_word.json');
+  }
 }

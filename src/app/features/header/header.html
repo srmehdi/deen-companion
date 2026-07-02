@@ -2,16 +2,27 @@
   class="sticky top-0 z-50 backdrop-blur-md py-2.5 shadow-lg dark:shadow-xl border-b bg-cream-bg/80 border-sacred-gold/80 dark:bg-slate-950/80 dark:border-white/15"
 >
   <div class="px-4 max-w-6xl mx-auto flex justify-between items-center">
-    <span
+    <a
+      href="#"
       class="text-xl font-bold tracking-tighter text-divine-emerald dark:text-sacred-gold uppercase"
-      >Deen Companion</span
+      >Deen Companion</a
     >
 
     <div
       class="max-md:hidden flex items-center gap-6 text-sm font-medium uppercase tracking-widest text-slate-500 dark:text-slate-400"
     >
-      <!-- <a href="#" class="hover:text-sacred-gold transition-colors">Hadees</a>
-        <a href="#" class="hover:text-sacred-gold transition-colors">Dua</a> -->
+      <a
+        routerLink="/quran"
+        routerLinkActive="bg-beige/80 text-chestnut"
+        class="hover:text-sacred-gold transition-colors"
+        >Quran</a
+      >
+      <a
+        routerLink="/dua"
+        routerLinkActive="bg-beige/80 text-chestnut"
+        class="hover:text-sacred-gold transition-colors"
+        >Dua</a
+      >
 
       <div class="grid grid-cols-2 border border-slate-400 dark:border-white/20 rounded-full p-1.5">
         <button
