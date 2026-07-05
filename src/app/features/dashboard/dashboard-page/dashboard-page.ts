@@ -9,9 +9,6 @@ import { ThemeService } from '../../../core/services/theme-service/theme-service
 import { StatusModal } from '../../../shared/modals/status-modal/status-modal';
 import { FormsModule } from '@angular/forms';
 import { Activity } from '../../../core/services/activity/activity';
-import { Header } from '../../header/header';
-import { RouterOutlet } from '@angular/router';
-import { Footer } from '../../footer/footer';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -52,23 +49,9 @@ export class DashboardPage {
     }, 60000);
   }
 
-  fontSize: number = 100;
+  fontSize = signal<number>(100);
   currentTime = signal(new Date());
   ngOnInit() {
-    // setInterval(() => {
-    //   this.currentTime.set(new Date());
-    // }, 1000);
-    // setInterval(() => {
-    //   if (this.prayer_times_data()) {
-    //     this.getPrayerTimes(0);
-    //   }
-    // }, 60000);
-    const saved = localStorage.getItem('user-font-size');
-    if (saved) {
-      this.fontSize = parseInt(saved, 10);
-      this.applyFontSize(+this.fontSize);
-    }
-    // this.activity.startTracking();
     this.searchSubject
       .pipe(
         debounceTime(100),
@@ -100,29 +83,11 @@ export class DashboardPage {
     PrayerTimeLoading === 1
       ? this.isPrayerTimeLoading.set(true)
       : this.isPrayerTimeLoading.set(false);
-    // this.modal.showLoading();
-    // const $destroyed: Subject<void> = new Subject();
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         localStorage.setItem('user-lat', pos.coords.latitude.toString());
         localStorage.setItem('user-lng', pos.coords.longitude.toString());
         this.prayerTimesApiCall(pos.coords.latitude, pos.coords.longitude);
-        // this.api.getPrayerTimes<any>(pos.coords.latitude, pos.coords.longitude).subscribe({
-        //   next: (res) => {
-        //     this.isPrayerTimeLoading.set(false);
-        //     this.prayer_times_data.set(res.data);
-        //     this.theme.applyPrayerTheme(res);
-        //     // this.modal.close();
-        //   },
-        //   error: (err) => {
-        //     console.log(err);
-        //     this.modal.showError({ message: 'Something went wrong.' });
-        //   },
-        //   complete: () => {
-        //     $destroyed.next();
-        //     $destroyed.complete();
-        //   },
-        // });
       },
       (error) => {
         if (localStorage.getItem('user-lat') && localStorage.getItem('user-lng')) {
@@ -338,12 +303,8 @@ export class DashboardPage {
       next: (res) => {
         this.isPrayerTimeLoading.set(false);
         this.prayer_times_data.set(res.data);
-        // const time =
-        //   new Date(res.timestamp).getUTCHours() + ':' + new Date(res.timestamp).getUTCMinutes();
-        // this.currentTimeAtSelectedCity.set(time);
         this.getCurrentTimeAtSelectedCity(res);
         this.theme.applyPrayerTheme(res);
-        // this.modal.close();
       },
       error: (err) => {
         console.log(err);
@@ -360,32 +321,6 @@ export class DashboardPage {
     this.results = [];
   }
 
-  onSliderChange(event: any) {
-    this.fontSize = event.target.value;
-    this.applyFontSize(+this.fontSize);
-  }
-
-  private applyFontSize(value: number) {
-    document.documentElement.style.setProperty('--base-font-size', `${value}%`);
-    localStorage.setItem('user-font-size', value.toString());
-  }
-  resetFontSize() {
-    this.fontSize = 100;
-    this.applyFontSize(+this.fontSize);
-  }
-  increaseFontSize() {
-    if (+this.fontSize < 180) {
-      this.fontSize = Math.min(+this.fontSize + 10, 180);
-      this.applyFontSize(+this.fontSize);
-    }
-  }
-
-  decreaseFontSize() {
-    if (+this.fontSize > 80) {
-      this.fontSize = Math.max(+this.fontSize - 10, 80);
-      this.applyFontSize(+this.fontSize);
-    }
-  }
   getCurrentTimeAtSelectedCity(res: any) {
     const time = new Intl.DateTimeFormat('en-US', {
       timeZone: res.data.timezone,
@@ -397,38 +332,7 @@ export class DashboardPage {
     this.currentTimeAtSelectedCity.set(time);
   }
 
-  isDockOpen = false;
-
-  private collapseTimeout: ReturnType<typeof setTimeout> | null = null;
-
-  toggleDock() {
-    this.isDockOpen = !this.isDockOpen;
-
-    if (this.isDockOpen) {
-      this.startCollapseTimer();
-    } else {
-      this.clearCollapseTimer();
-    }
-  }
-
-  private startCollapseTimer() {
-    this.clearCollapseTimer();
-
-    this.collapseTimeout = setTimeout(() => {
-      this.isDockOpen = false;
-    }, 4000);
-  }
-
-  private clearCollapseTimer() {
-    if (this.collapseTimeout) {
-      clearTimeout(this.collapseTimeout);
-      this.collapseTimeout = null;
-    }
-  }
-
-  keepDockOpen() {
-    if (this.isDockOpen) {
-      this.startCollapseTimer();
-    }
+  ngOnDestroy() {
+    this.audioService.stopAudio();
   }
 }

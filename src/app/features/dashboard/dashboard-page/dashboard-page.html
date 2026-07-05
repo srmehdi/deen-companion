@@ -178,7 +178,7 @@
           class="flex justify-between items-center px-4 py-1.5 rounded-xl md:flex-col md:justify-center md:p-2.5"
           [ngClass]="{
             'bg-accent text-black font-bold shadow-lg': p.key === currentPrayer(),
-            'bg-cream-highlight dark:bg-gray-800 text-gray-900 dark:text-gray-100':
+            'bg-cream-highlight dark:bg-premium-emerald border border-gold-tint/20 text-gray-900 dark:text-gray-100':
               p.key !== currentPrayer(),
           }"
         >
@@ -554,7 +554,7 @@
 </div>
 @if (isCardClicked()) {
   <footer
-    class="p-0 left-0 right-0 w-full fixed bottom-0 z-50 backdrop-blur-md py-2.5 border-t bg-sand-mist/80 border-sacred-gold/80 dark:bg-slate-950/80 dark:border-white/15 overflow-x-auto"
+    class="p-0 left-0 right-0 w-full fixed bottom-0 z-50 backdrop-blur-md py-2.5 border-t bg-sand-mist/80 border-sacred-gold/80 dark:bg-bg-green/80 dark:border-gold-tint/40 overflow-x-auto"
   >
     <div class="max-w-5xl mx-auto">
       <div class="text-xs mx-4">
@@ -659,68 +659,4 @@
   </footer>
 }
 
-<div
-  class="fixed bottom-[24px] left-1/2 -translate-x-1/2 z-50 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 shadow-xl overflow-hidden transition-all duration-300"
-  [class.w-[60px]]="!isDockOpen"
-  [class.w-[340px]]="isDockOpen"
->
-  <div class="flex items-center justify-center h-[56px]">
-    <!-- Toggle -->
-    <button
-      (click)="toggleDock()"
-      class="p-[6px] rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition cursor-pointer"
-      [class.w-full]="!isDockOpen"
-      [class.h-full]="!isDockOpen"
-      [class.m-[6px]]="isDockOpen"
-    >
-      Aa
-    </button>
-
-    <!-- Content -->
-    @if (isDockOpen) {
-      <div
-        class="flex items-center gap-[8px] overflow-hidden transition-all duration-300"
-        [class.w-0]="!isDockOpen"
-        [class.w-full]="isDockOpen"
-        [class.opacity-0]="!isDockOpen"
-        [class.opacity-100]="isDockOpen"
-        [class.ml-[12px]]="isDockOpen"
-      >
-        <button
-          (click)="decreaseFontSize(); keepDockOpen()"
-          [disabled]="fontSize <= 80"
-          class="p-[4px] rounded-full hover:bg-hover-background cursor-zoom-out disabled:cursor-not-allowed"
-        >
-          <span class="text-[12px] font-bold">A</span>
-        </button>
-
-        <input
-          class="flex-1 cursor-grab w-2"
-          type="range"
-          min="80"
-          max="180"
-          [value]="fontSize"
-          (input)="onSliderChange($event); keepDockOpen()"
-        />
-
-        <button
-          (click)="increaseFontSize(); keepDockOpen()"
-          [disabled]="fontSize >= 180"
-          class="p-[4px] rounded-full hover:bg-hover-background cursor-zoom-in disabled:cursor-not-allowed"
-        >
-          <span class="text-[18px] font-bold">A</span>
-        </button>
-
-        <span class="text-[14px] font-medium text-center"> {{ fontSize }}% </span>
-
-        <button
-          (click)="resetFontSize(); keepDockOpen()"
-          class="w-[36px] h-[36px] m-[6px] rounded-full hover:bg-hover-background reset-btn"
-        >
-          <span class="reset-icon">↺</span>
-        </button>
-      </div>
-    }
-  </div>
-</div>
 <app-status-modal #modal />

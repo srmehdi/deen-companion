@@ -38,6 +38,18 @@
   --color-cream-darkest: #3a2e1a;
   --color-cream-surface: #faf5ea;
   --color-cream-border: #e0d4ba;
+  --color-bg-green: #18221f;
+  --linear-gradient-gold-metallic: linear-gradient(
+    135deg,
+    #bf953f 0%,
+    #fcf6ba 25%,
+    #b38728 50%,
+    #fbf5b7 75%,
+    #aa771c 100%
+  );
+  --color-premium-emerald: #0b251e;
+  --color-dark-surface: #121816;
+  --color-gold-tint: #dfb76c;
 }
 
 @variant dark (&:where(.dark, .dark *));

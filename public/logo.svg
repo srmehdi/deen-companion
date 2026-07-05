@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" width="43" height="43">
+  <defs>
+    <!-- Replicating your bg-gradient-to-br direction -->
+    <linearGradient id="divineSacredGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b251e" />
+      <stop offset="100%" stop-color="#b38728" />
+    </linearGradient>
+  </defs>
+
+  <!-- Replicating your rounded-[16px] layout -->
+  <rect width="43" height="43" rx="16" fill="url(#divineSacredGradient)" />
+
+  <!-- Perfectly centered white crescent text glyph element -->
+  <text 
+    x="50%" 
+    y="53%" 
+    font-size="24" 
+    font-family="sans-serif"
+    fill="#ffffff" z
+    text-anchor="middle" 
+    dominant-baseline="middle"
+  >☪</text>
+</svg>

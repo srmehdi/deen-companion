@@ -1,0 +1,73 @@
+<div
+  class="fixed bottom-[32px] md:right-8 flex items-center z-[9999] font-sans max-sm:w-full max-sm:justify-center"
+>
+  <!-- Expanded Option Drawer Controls Deck -->
+  <div
+    class="bg-[#18221f] border border-[#dfb76c]/20 rounded-full px-[4px] sm:px-[16px] py-[8px] flex items-center gap-[2px] sm:gap-[8px] mr-[4px] sm:mr-[12px] shadow-2xl transition-all duration-300 ease-out -order-1"
+    [class.opacity-100]="isOpen()"
+    [class.translate-x-0]="isOpen()"
+    [class.pointer-events-auto]="isOpen()"
+    [class.opacity-0]="!isOpen()"
+    [class.translate-x-5]="!isOpen()"
+    [class.pointer-events-none]="!isOpen()"
+  >
+    <button
+      (click)="decreaseFontSize(); keepDockOpen()"
+      [disabled]="fontSize() <= 80"
+      class="w-[30px] h-[30px] leading-none rounded-full hover:bg-hover-background cursor-zoom-out disabled:cursor-not-allowed text-gray-100"
+    >
+      <span class="text-[12px] font-bold">A</span>
+    </button>
+
+    <input
+      class="flex-1 cursor-grab"
+      type="range"
+      min="80"
+      max="180"
+      [value]="fontSize()"
+      (input)="onSliderChange($event); keepDockOpen()"
+    />
+
+    <button
+      (click)="increaseFontSize(); keepDockOpen()"
+      [disabled]="fontSize() >= 180"
+      class="w-[30px] h-[30px] leading-none rounded-full hover:bg-hover-background cursor-zoom-in disabled:cursor-not-allowed text-gray-100"
+    >
+      <span class="text-[18px] font-bold">A</span>
+    </button>
+
+    <span class="text-[14px] text-gray-400 font-medium text-center"> {{ fontSize() }}% </span>
+
+    <button
+      (click)="resetFontSize(); keepDockOpen()"
+      class="w-[30px] h-[30px] rounded-full hover:bg-hover-background reset-btn cursor-pointer disabled:cursor-not-allowed"
+      [disabled]="fontSize() == 100"
+    >
+      <span class="reset-icon">↺</span>
+    </button>
+  </div>
+
+  <!-- Primary Trigger Action FAB Button -->
+  <button
+    class="relative bg-gradient-to-br from-[#bf953f] via-[#fcf6ba] to-[#aa771c] text-[#0b251e] w-[50px] h-[50px] rounded-full flex flex-col items-center justify-center cursor-pointer shadow-[0_4px_20px_rgba(191,149,63,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 ease-out group border border-[#fcf6ba]/40"
+    (click)="togglePanel()"
+    title="Accessibility Text Zoom Settings"
+  >
+    <!-- Ambient Pulse Glow Ring (Visible when drawer is not open) -->
+    <span
+      class="absolute inset-0 rounded-full bg-[#dfb76c] opacity-0 animate-ping transition-opacity duration-700 pointer-events-none"
+      [class.opacity-25]="!isOpen()"
+    ></span>
+
+    <!-- Text Glyphs -->
+    <span
+      class="font-serif text-lg font-black tracking-tighter leading-none relative z-10 drop-shadow-sm"
+      >Aa</span
+    >
+    <span
+      class="text-[9px] text-[#0b251e] font-extrabold tracking-tight text-center font-mono opacity-90 leading-none mt-0.5 relative z-10"
+    >
+      {{ fontSize() }}%
+    </span>
+  </button>
+</div>

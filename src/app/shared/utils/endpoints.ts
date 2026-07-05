@@ -9,4 +9,9 @@ export const Endpoints = {
   ACTIVITY_STATS: '/api/activity-stats',
   SURAHS_METADATA: '/api/quran/surahs',
   SURAH_BY_NUMBER: '/api/quran/surah/',
+  quran: {
+    surahList: 'https://api.alquran.cloud/v1/surah',
+    surahDetail: (number: number) =>
+      `https://api.alquran.cloud/v1/surah/${number}/editions/quran-uthmani,en.sahih,en.transliteration,ar.alafasy`,
+  },
 };
