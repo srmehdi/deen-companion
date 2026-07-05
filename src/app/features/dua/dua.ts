@@ -21,6 +21,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 // import { DropdownModule } from 'primeng/dropdown';
 import { TooltipModule } from 'primeng/tooltip';
 import { MessageModule } from 'primeng/message';
+import { PremiumCard } from '../../shared/components/premium-card/premium-card';
 
 @Component({
   selector: 'app-dua',
@@ -47,6 +48,7 @@ import { MessageModule } from 'primeng/message';
     // DropdownModule,
     TooltipModule,
     MessageModule,
+    PremiumCard,
   ],
   providers: [MessageService],
   templateUrl: './dua.html',

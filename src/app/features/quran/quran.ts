@@ -6,228 +6,140 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AudioService } from '../../core/services/audio-service/audio-service';
 
-export interface QuranWord {
-  position: number;
-  arabic: string;
-  transliteration: {
-    text: string;
-    language_name: string;
-  };
-  translation: string;
-  type: string;
-  startTime?: number;
-  endTime?: number;
-}
-
-export interface QuranVerse {
-  surah: number;
-  ayah: number;
-  verse_key: string;
-  word_count: number;
-  words: QuranWord[];
-  audioUrl?: string;
-}
-
-export interface SurahWordsResponse {
-  success: boolean;
-  service: string;
-  data: {
-    surah: number;
-    total_verses: number;
-    verses: QuranVerse[];
-  };
-  timestamp: string;
-}
-
-// Minimal listing interface for the initial grid list view
-export interface SurahListItem {
-  id: number;
-  name: string;
-  englishName: string;
-  versesCount: number;
-}
-export interface AyahAudioMapping {
-  verse_key: string;
-  ayah: number;
-  audio_url: string;
-}
 @Component({
   selector: 'app-quran',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, StatusModal],
   templateUrl: './quran.html',
   styleUrl: './quran.css',
 })
 export class Quran {
   @ViewChild('modal') modal!: StatusModal;
-  surahList: SurahListItem[] = [];
-  filteredSurahList: SurahListItem[] = [];
-  searchQuery: string = '';
-  loadingList: boolean = true;
 
-  selectedSurah: SurahListItem | null = null;
-  verses: any;
-  loadingDetails: boolean = false;
-  activeVerseKey = signal<string | null>(null);
-  activeWordPosition = signal<number | null>(null);
-  private timeUpdateListener!: () => void;
   constructor(
     private api: ApiService,
     public audioService: AudioService,
-  ) {}
-  ngOnInit(): void {
-    // this.api.getSurahList().subscribe({
-    //   next: (data) => {
-    //     this.surahList = data;
-    //     this.filteredSurahList = data;
-    //     this.loadingList = false;
-    //   },
-    //   error: () => {
-    //     this.loadingList = false;
-    //   }
-    // });
-    this.selectSurah({ id: 1 });
-    // this.loadSurahData();
-    this.setupAudioSync();
-  }
-  loadSurahData(): void {
-    // 💡 Mocking enriched data injection combining your Word-By-Word text payload
-    // with the segment tracking points matching verse audio file durations:
-    this.verses = [
-      {
-        surah: 1,
-        ayah: 1,
-        verse_key: '1:1',
-        word_count: 4,
-        audioUrl: 'https://everyayah.com/data/Alafasy_128kbps/001001.mp3',
-        words: [
-          {
-            position: 1,
-            arabic: 'بِسْمِ',
-            transliteration: { text: "bis'mi", language_name: 'english' },
-            translation: 'In (the) name',
-            type: 'word',
-            startTime: 0.0,
-            endTime: 1.2,
-          },
-          {
-            position: 2,
-            arabic: 'ٱللَّهِ',
-            transliteration: { text: 'l-lahi', language_name: 'english' },
-            translation: '(of) Allah',
-            type: 'word',
-            startTime: 1.2,
-            endTime: 2.5,
-          },
-          {
-            position: 3,
-            arabic: 'ٱلرَّحْمَـٰنِ',
-            transliteration: { text: 'l-raḥmāni', language_name: 'english' },
-            translation: 'the Most Gracious',
-            type: 'word',
-            startTime: 2.5,
-            endTime: 4.1,
-          },
-          {
-            position: 4,
-            arabic: 'ٱلرَّحِيمِ',
-            transliteration: { text: 'l-raḥīmi', language_name: 'english' },
-            translation: 'the Most Merciful',
-            type: 'word',
-            startTime: 4.1,
-            endTime: 6.0,
-          },
-        ],
-      },
-    ];
-  }
-
-  setupAudioSync(): void {
-    // Reference the underlying Audio element from your custom AudioService
-    const nativeAudio = this.audioService.audio;
-
-    this.timeUpdateListener = () => {
-      const currentTime = nativeAudio.currentTime;
-      this.highlightWordAtTime(currentTime);
+  ) {
+    this.audioService.audio.onended = () => {
+      this.isCardClicked.set(false);
+      this.audioService.isPlaying.set(false);
     };
-
-    nativeAudio.addEventListener('timeupdate', this.timeUpdateListener);
-
-    // Reset markers when the track completes playback cycles safely
-    nativeAudio.addEventListener('ended', () => this.clearHighlights());
   }
+  surahs = signal<any[]>([]);
+  selectedSurah = signal<any>(null);
+  currentPlayingAyah = signal<any | null>(null);
+  isAudioPlaying = signal<boolean>(false);
+  private audioPlayer = new Audio();
 
-  playVerseAudio(verse: QuranVerse): void {
-    if (!verse.audioUrl) return;
-
-    // Direct interface hook into your toggle engine
-    this.activeVerseKey.set(verse.verse_key);
-    this.audioService.toggleAudio(verse.audioUrl);
+  ngOnInit(): void {
+    // this.loadSurahList();
   }
-
-  highlightWordAtTime(seconds: number): void {
-    const currentKey = this.activeVerseKey();
-    if (!currentKey) return;
-
-    const activeVerse = this.verses.find((v: any) => v.verse_key === currentKey);
-    if (!activeVerse) return;
-
-    // Scan words array for active match matching audio timestamp intervals
-    const matchingWord = activeVerse.words.find(
-      (word: any) =>
-        word.startTime !== undefined &&
-        word.endTime !== undefined &&
-        seconds >= word.startTime &&
-        seconds <= word.endTime,
-    );
-
-    if (matchingWord) {
-      this.activeWordPosition.set(matchingWord.position);
-    } else {
-      this.activeWordPosition.set(null);
-    }
+  ngAfterViewInit() {
+    this.loadSurahList();
   }
-
-  clearHighlights(): void {
-    this.activeVerseKey.set(null);
-    this.activeWordPosition.set(null);
-  }
-
-  ngOnDestroy(): void {
-    // Prevent memory leaks by cleaning up core audio event listeners
-    this.audioService.audio.removeEventListener('timeupdate', this.timeUpdateListener);
-  }
-  filterSurahs(): void {
-    const query = this.searchQuery.toLowerCase().trim();
-    if (!query) {
-      this.filteredSurahList = this.surahList;
-      return;
-    }
-
-    this.filteredSurahList = this.surahList.filter(
-      (s) => s.englishName.toLowerCase().includes(query) || s.id.toString() === query,
-    );
-  }
-
-  selectSurah(surah: any): void {
-    // this.selectedSurah = surah;
-    this.loadingDetails = true;
-    this.verses = [];
-
-    this.api.getSurahWordByWord(surah.id).subscribe({
-      next: (versesData: any) => {
-        this.verses = versesData?.data?.verses;
-        console.log('this.verses', this.verses);
-
-        this.loadingDetails = false;
+  loadSurahList() {
+    this.modal.showLoading();
+    const $destroyed: Subject<void> = new Subject();
+    this.api.getSurahList().subscribe({
+      next: (data) => {
+        // Mutate via the signal setter API
+        this.surahs.set(data);
+        this.modal.close();
       },
-      error: () => {
-        this.loadingDetails = false;
+      error: (err) => console.error('Failed to grab index mapping', err),
+      complete: () => {
+        $destroyed.next();
+        $destroyed.complete();
       },
+    });
+    this.audioPlayer.onended = () => {
+      this.playNextAyah();
+    };
+  }
+  loadSurah(number: number): void {
+    this.modal.showLoading();
+    this.stopAudio();
+    const $destroyed: Subject<void> = new Subject();
+    this.api.getSurahDetails(number).subscribe({
+      next: (surahData) => {
+        this.selectedSurah.set(surahData);
+        this.modal.close();
+      },
+      error: (err) => console.error('Failed loading individual script metadata', err),
     });
   }
 
-  closeDetails(): void {
-    this.selectedSurah = null;
-    this.verses = [];
+  toggleAyahAudio(ayah: any): void {
+    if (this.currentPlayingAyah()?.numberInSurah === ayah.numberInSurah && this.isAudioPlaying()) {
+      this.pauseAudio();
+    } else {
+      this.playAudio(ayah);
+    }
+  }
+
+  playAudio(ayah: any): void {
+    if (this.currentPlayingAyah()?.numberInSurah === ayah.numberInSurah) {
+      this.audioPlayer.play();
+    } else {
+      this.audioPlayer.src = ayah.audio;
+      this.currentPlayingAyah.set(ayah);
+      this.audioPlayer.load();
+      this.audioPlayer.play();
+    }
+    this.isAudioPlaying.set(true);
+  }
+
+  pauseAudio(): void {
+    this.audioPlayer.pause();
+    this.isAudioPlaying.set(false);
+  }
+
+  stopAudio(): void {
+    this.audioPlayer.pause();
+    this.currentPlayingAyah.set(null);
+    this.isAudioPlaying.set(false);
+  }
+
+  playNextAyah(): void {
+    const current = this.currentPlayingAyah()?.numberInSurah;
+    const surah = this.selectedSurah();
+    if (current !== null && surah) {
+      const nextIndex = current; // numberInSurah is 1-indexed, meaning index is equal to current value
+      if (nextIndex < surah.ayahs.length) {
+        this.playAudio(surah.ayahs[nextIndex]);
+      } else {
+        this.stopAudio(); // Surah completed!
+      }
+    }
+  }
+
+  closeReader(): void {
+    this.stopAudio();
+    this.isCardClicked.set(false);
+    this.selectedSurah.set(null);
+  }
+
+  ngOnDestroy(): void {
+    this.closeReader();
+  }
+  isCardClicked = signal(false);
+
+  volume = signal<number>(0.7);
+  private previousVolume = 0.7;
+  setVolume(value: number) {
+    this.volume.set(value);
+    this.audioPlayer.volume = value;
+  }
+  toggleMute() {
+    if (this.volume() > 0) {
+      this.previousVolume = this.volume();
+      this.setVolume(0);
+    } else {
+      const restoreValue = this.previousVolume > 0 ? this.previousVolume : 0.7;
+      this.setVolume(restoreValue);
+    }
+  }
+  updateVolume(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.setVolume(parseFloat(input.value));
   }
 }

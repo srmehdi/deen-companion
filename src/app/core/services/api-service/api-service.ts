@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { catchError, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Endpoints } from '../../../shared/utils/endpoints';
 
 @Injectable({ providedIn: 'root' })
@@ -89,5 +89,31 @@ export class ApiService {
     //   )
     //   .pipe(catchError(() => throwError(() => 'API error')));
     return this.http.get<T>('./assets/jsons/surah_word_by_word.json');
+  }
+  getSurahList(): Observable<any[]> {
+    return this.http.get<any>(Endpoints.quran.surahList).pipe(map((response) => response.data));
+  }
+
+  getSurahDetails(number: number): Observable<any> {
+    return this.http.get<any>(Endpoints.quran.surahDetail(number)).pipe(
+      map((response) => {
+        const arabicAyahs = response.data[0].ayahs;
+        const englishAyahs = response.data[1].ayahs;
+        const translitAyahs = response.data[2].ayahs;
+        const audioAyahs = response.data[3].ayahs;
+
+        return {
+          info: response.data[0],
+          ayahs: arabicAyahs.map((ayah: any, index: number) => ({
+            numberInSurah: ayah.numberInSurah,
+            text: ayah.text,
+            translation: englishAyahs[index].text,
+            transliteration: translitAyahs[index].text,
+            audio: audioAyahs[index].audio,
+          })),
+          audio: response.data[3],
+        };
+      }),
+    );
   }
 }

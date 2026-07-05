@@ -1,0 +1,31 @@
+.reset-btn {
+  background: none;
+  border: none;
+  /* color: #3f51b5; */
+  color: var(--color-sacred-gold);
+  /* cursor: pointer; */
+  /* padding: 5px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+  /* margin-left: 4px; */
+
+  .reset-icon {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  &:hover:not(:disabled) {
+    background: rgba(63, 81, 181, 0.1);
+    transform: rotate(-30deg);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.9) rotate(-90deg);
+  }
+}

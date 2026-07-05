@@ -30,7 +30,10 @@ export class AudioService {
 
     if ('vibrate' in navigator) navigator.vibrate(10);
   }
-
+  stopAudio(): void {
+    this.audio.pause();
+    this.isPlaying.set(false);
+  }
   setVolume(value: number) {
     this.volume.set(value);
     this.audio.volume = value;
