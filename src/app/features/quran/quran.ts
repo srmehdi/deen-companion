@@ -1,14 +1,16 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { ApiService } from '../../core/services/api-service/api-service';
 import { StatusModal } from '../../shared/modals/status-modal/status-modal';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AudioService } from '../../core/services/audio-service/audio-service';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-quran',
-  imports: [CommonModule, FormsModule, StatusModal],
+  imports: [CommonModule, FormsModule, StatusModal, ConfirmDialogModule],
   templateUrl: './quran.html',
   styleUrl: './quran.css',
 })
@@ -63,6 +65,7 @@ export class Quran {
       next: (surahData) => {
         this.selectedSurah.set(surahData);
         this.modal.close();
+        this.confirmAudioRecitation();
       },
       error: (err) => console.error('Failed loading individual script metadata', err),
     });
@@ -141,5 +144,22 @@ export class Quran {
   updateVolume(event: Event) {
     const input = event.target as HTMLInputElement;
     this.setVolume(parseFloat(input.value));
+  }
+  confirmationService = inject(ConfirmationService);
+  confirmAudioRecitation() {
+    this.confirmationService.confirm({
+      key: 'quranAudioPrompt',
+      message: `Would you like to turn on the audio recitation for Surah <strong>${this.selectedSurah().info.englishName}</strong>?`,
+      header: 'Audio Recitation',
+      icon: 'pi pi-headphones text-[#18181B]! dark:text-[#FFFFFF]!',
+      // rejectLabel: 'Read Only',
+      // acceptLabel: 'Listen & Read',
+      accept: () => {
+        // User clicked Accept: Load details and auto-play
+        this.toggleAyahAudio(this.selectedSurah().ayahs[0]);
+        this.isCardClicked.set(true);
+      },
+      reject: () => {},
+    });
   }
 }

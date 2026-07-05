@@ -6,6 +6,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth-interceptor/auth-interceptor';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { ConfirmationService } from 'primeng/api';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -16,5 +17,6 @@ export const appConfig: ApplicationConfig = {
         preset: Aura,
       },
     }),
+    ConfirmationService,
   ],
 };

@@ -1,7 +1,7 @@
-<div class="container mx-auto max-w-6xl font-sans transition-all duration-300 mb-4">
+<div class="container mx-auto max-w-6xl font-sans transition-all duration-300 mb-[16px]">
   <!-- Premium Hero Banner -->
   <div
-    class="relative overflow-hidden rounded-xl md:rounded-2xl mb-4 p-4 md:p-6 bg-gradient-to-br from-divine-emerald to-[#0b251e] dark:from-[#071914] dark:to-[#020706] border border-sacred-gold/20 shadow-xl max-w-full"
+    class="relative overflow-hidden rounded-xl md:rounded-2xl mb-[16px] p-[16px] md:p-[24px] bg-gradient-to-br from-divine-emerald to-[#0b251e] dark:from-[#071914] dark:to-[#020706] border border-sacred-gold/20 shadow-xl max-w-full"
   >
     <div
       class="absolute right-10 text-sacred-gold/5 text-8xl font-serif select-none pointer-events-none"
@@ -27,7 +27,7 @@
   <!-- Surah Directory Grid View -->
   @if (!selectedSurah()) {
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 animate-fade-in max-w-full"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] md:gap-[16px] animate-fade-in max-w-full"
     >
       @for (surah of surahs(); track surah.number) {
         <div
@@ -67,7 +67,7 @@
   <!-- Immersive Reader Panel Layout -->
   @if (selectedSurah()) {
     <div
-      class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-3 md:p-6 shadow-2xl animate-fade-in origin-top-right max-w-full overflow-hidden"
+      class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[12px] md:p-[24px] shadow-2xl animate-fade-in origin-top-right max-w-full overflow-hidden"
     >
       <!-- Top Reader Header Navigation -->
       <div
@@ -75,7 +75,7 @@
       >
         <button
           (click)="closeReader()"
-          class="flex items-center gap-1.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold px-3 py-1.5 rounded-full text-[0.625rem] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
+          class="flex items-center max-sm:self-stretch gap-1.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold px-3 py-1.5 rounded-full text-[0.625rem] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -93,19 +93,19 @@
           </svg>
           <span>Back</span>
         </button>
-        <div class="sm:text-center min-w-0">
+        <div class="sm:text-center min-w-0 max-sm:self-center">
           <h2 class="text-xl font-black text-gray-800 dark:text-gray-100 truncate">
             {{ selectedSurah().info.englishName }}
           </h2>
           <p
-            class="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide truncate"
+            class="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide truncate max-sm:text-center"
           >
             {{ selectedSurah().info.englishNameTranslation }} •
             {{ selectedSurah().info.revelationType }}
           </p>
         </div>
         <span
-          class="font-serif text-lg md:text-xl font-bold text-divine-emerald dark:text-sacred-gold bg-divine-emerald/5 dark:bg-sacred-gold/5 border border-divine-emerald/10 dark:border-sacred-gold/20 px-3 py-1 rounded-lg whitespace-nowrap"
+          class="max-sm:self-center font-serif text-lg md:text-xl font-bold text-divine-emerald dark:text-sacred-gold bg-divine-emerald/5 dark:bg-sacred-gold/5 border border-divine-emerald/10 dark:border-sacred-gold/20 px-3 py-1 rounded-lg whitespace-nowrap"
         >
           {{ selectedSurah().info.name }}
         </span>
@@ -208,7 +208,7 @@
   >
     <div class="max-w-5xl mx-auto">
       <div class="text-[12px] mx-[16px]">
-        <div class="flex items-center justify-between pr-[8px]">
+        <div class="flex items-center justify-between">
           <div class="flex items-center justify-center">
             <div class="flex items-center justify-center">
               <button
@@ -302,3 +302,8 @@
   </footer>
 }
 <app-status-modal #modal />
+
+<p-confirmdialog
+  key="quranAudioPrompt"
+  styleClass="  max-md:m-4 bg-white! dark:bg-bg-green/95! text-[#18181B]! dark:text-[#FFFFFF]! border border-gray-200! dark:border-gold-tint/20! rounded-xl! shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-md overflow-hidden"
+/>
