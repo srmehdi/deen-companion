@@ -1,5 +1,5 @@
-<div class="grid md:grid-cols-3 md:gap-4">
-  <app-premium-card class="mb-4">
+<div class="grid md:grid-cols-3 md:gap-[16px]">
+  <app-premium-card class="mb-[16px]">
     <div class="fitems-center mb-1 pb-4 border-b border-gray-700">
       <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Today's Time & Date</h1>
       <div class="flex items-center gap-1.5">
@@ -43,7 +43,7 @@
       <span>*</span><strong>Note:</strong> {{ todayHijriDate()?.islamic_info.note }}
     </div>
   </app-premium-card>
-  <app-premium-card class="md:col-span-2 mb-4">
+  <app-premium-card class="md:col-span-2 mb-[16px]">
     <div class="relative w-full max-w-sm mx-auto mb-2">
       <div class="flex items-center gap-2">
         <div
@@ -198,8 +198,8 @@
   </app-premium-card>
 </div>
 
-<div class="grid md:grid-cols-3 md:gap-4">
-  <div class="mb-4">
+<div class="grid md:grid-cols-3 md:gap-[16px]">
+  <div class="mb-[16px]">
     <app-premium-card class="">
       <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
         <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Verse of the Day</h1>
@@ -385,7 +385,7 @@
       </div>
     </app-premium-card>
   </div>
-  <div class="mb-4">
+  <div class="mb-[16px]">
     <app-premium-card class="">
       <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
         <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Hadith of the Day</h1>
@@ -457,7 +457,7 @@
     </app-premium-card>
   </div>
 
-  <div class="mb-4">
+  <div class="mb-[16px]">
     <app-premium-card class="">
       <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
         <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Dua of the Day</h1>
@@ -554,18 +554,18 @@
 </div>
 @if (isCardClicked()) {
   <footer
-    class="p-0 left-0 right-0 w-full fixed bottom-0 z-50 backdrop-blur-md py-2.5 border-t bg-sand-mist/80 border-sacred-gold/80 dark:bg-bg-green/80 dark:border-gold-tint/40 overflow-x-auto"
+    class="p-0 left-0 right-0 w-full fixed bottom-0 z-50 backdrop-blur-md py-[10px] border-t bg-sand-mist/80 border-sacred-gold/80 dark:bg-bg-green/80 dark:border-gold-tint/40 overflow-x-auto"
   >
     <div class="max-w-5xl mx-auto">
-      <div class="text-xs mx-4">
-        <div class="flex items-center justify-between pr-2">
+      <div class="text-[12px] mx-[16px]">
+        <div class="flex items-center justify-between">
           <div class="flex items-center justify-center">
             <div class="flex items-center justify-center">
               <button
                 (click)="
                   audioService.toggleAudio(audioService.currentUrl()!); isCardClicked.set(true)
                 "
-                class="cursor-pointer group relative w-7 h-7 rounded-full bg-slate-900/80 backdrop-blur-md border border-sacred-gold/30 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl"
+                class="cursor-pointer group relative w-[28px] h-[28px] rounded-full bg-slate-900/80 backdrop-blur-md border border-sacred-gold/30 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl"
               >
                 @if (audioService.isPlaying()) {
                   <div
@@ -573,14 +573,14 @@
                   ></div>
                 }
 
-                <span class="text-xs transition-transform group-hover:rotate-12">
+                <span class="text-[12px] transition-transform group-hover:rotate-12">
                   {{ audioService.isPlaying() ? '⏸️' : '▶️' }}
                 </span>
               </button>
             </div>
-            <div class="pl-4 flex flex-col justify-center max-lg:whitespace-nowrap">
+            <div class="pl-[16px] flex flex-col justify-center max-lg:whitespace-nowrap">
               <div
-                class="flex items-center text-[0.5rem] text-sacred-gold uppercase tracking-[0.2em] font-bold animate-pulse"
+                class="flex items-center text-[8px] text-sacred-gold uppercase tracking-[0.2em] font-bold animate-pulse"
               >
                 @if (audioService.isPlaying()) {
                   Now Reciting...
@@ -588,7 +588,7 @@
                   Paused.
                 }
               </div>
-              <div class="text-xs md:text-sm">
+              <div class="text-[12px] md:text-[14px]">
                 @if (audioService.currentUrl() === verseOfTheDay()?.audio[0].surah_audio) {
                   <span class=""
                     >Surah {{ verseOfTheDay()?.surah.name_english }} | Surah No.
@@ -606,7 +606,7 @@
           </div>
           <div class="md:flex items-center justify-center">
             <div
-              class="pl-4 h-9 flex items-end justify-center gap-1 overflow-hidden pointer-events-none opacity-90 dark:opacity-45"
+              class="pl-[16px] h-[36px] flex items-end justify-center gap-[4px] overflow-hidden pointer-events-none opacity-90 dark:opacity-45"
             >
               @if (audioService.isPlaying()) {
                 @for (
@@ -614,7 +614,7 @@
                   track $index
                 ) {
                   <div
-                    class="w-0.5 bg-sacred-gold rounded-t-full animate-visualizer"
+                    class="w-[2px] bg-sacred-gold rounded-t-full animate-visualizer"
                     [style.animation-delay]="$index * 0.1 + 's'"
                     [style.height]="12 + bar * 3 + '%'"
                   ></div>
@@ -622,10 +622,10 @@
               }
             </div>
 
-            <div class="pl-4 flex items-center gap-1 group/volume relative">
+            <div class="pl-[16px] flex items-center gap-[4px] group/volume relative">
               <button
                 (click)="audioService.toggleMute()"
-                class="text-slate-500 hover:text-sacred-gold transition-colors p-1 rounded-md hover:bg-slate-800/50 cursor-pointer"
+                class="text-slate-500 hover:text-sacred-gold transition-colors p-[4px] rounded-md hover:bg-slate-800/50 cursor-pointer"
                 title="Toggle Mute"
               >
                 @if (audioService.volume() === 0) {
@@ -645,10 +645,10 @@
                 [value]="audioService.volume()"
                 (input)="updateVolume($event)"
                 [class.opacity-30]="audioService.volume() === 0"
-                class="w-20 h-2 bg-slate-700 rounded-lg cursor-pointer accent-sacred-gold transition-all group-hover/volume:w-28"
+                class="w-[80px] h-[8px] bg-slate-700 rounded-lg cursor-pointer accent-sacred-gold transition-all group-hover/volume:w-[112px]"
               />
 
-              <span class="text-[0.625rem] text-slate-500 font-mono w-6">
+              <span class="text-[10px] text-slate-500 font-mono w-[24px]">
                 {{ (audioService.volume() * 100).toFixed(0) }}%
               </span>
             </div>

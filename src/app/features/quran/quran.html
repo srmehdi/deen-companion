@@ -1,7 +1,7 @@
-<div class="container mx-auto max-w-6xl font-sans transition-all duration-300 mb-4">
+<div class="container mx-auto max-w-6xl font-sans transition-all duration-300 mb-[16px]">
   <!-- Premium Hero Banner -->
   <div
-    class="relative overflow-hidden rounded-xl md:rounded-2xl mb-4 p-4 md:p-6 bg-gradient-to-br from-divine-emerald to-[#0b251e] dark:from-[#071914] dark:to-[#020706] border border-sacred-gold/20 shadow-xl max-w-full"
+    class="relative overflow-hidden rounded-xl md:rounded-2xl mb-[16px] p-[16px] md:p-[24px] bg-gradient-to-br from-divine-emerald to-[#0b251e] dark:from-[#071914] dark:to-[#020706] border border-sacred-gold/20 shadow-xl max-w-full"
   >
     <div
       class="absolute right-10 text-sacred-gold/5 text-8xl font-serif select-none pointer-events-none"
@@ -27,7 +27,7 @@
   <!-- Surah Directory Grid View -->
   @if (!selectedSurah()) {
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 animate-fade-in max-w-full"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] md:gap-[16px] animate-fade-in max-w-full"
     >
       @for (surah of surahs(); track surah.number) {
         <div
@@ -67,7 +67,7 @@
   <!-- Immersive Reader Panel Layout -->
   @if (selectedSurah()) {
     <div
-      class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-3 md:p-6 shadow-2xl animate-fade-in origin-top-right max-w-full overflow-hidden"
+      class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[12px] md:p-[24px] shadow-2xl animate-fade-in origin-top-right max-w-full overflow-hidden"
     >
       <!-- Top Reader Header Navigation -->
       <div
@@ -208,7 +208,7 @@
   >
     <div class="max-w-5xl mx-auto">
       <div class="text-[12px] mx-[16px]">
-        <div class="flex items-center justify-between pr-[8px]">
+        <div class="flex items-center justify-between">
           <div class="flex items-center justify-center">
             <div class="flex items-center justify-center">
               <button
