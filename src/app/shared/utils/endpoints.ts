@@ -3,6 +3,7 @@ export const Endpoints = {
   TODAY_HIJRI_DATE: '/api/today-hijri',
   HADEES_OF_THE_DAY: '/api/hadith/random',
   DUA_OF_THE_DAY: '/api/duas/random',
+  ALL_DUAS: '/api/duas',
   VERSE_OF_THE_DAY: '/api/quran/random',
   NOMINATIM_SEARCH: 'https://nominatim.openstreetmap.org/search',
   HEART_BEAT: '/api/heart-beat',
@@ -14,4 +15,6 @@ export const Endpoints = {
     surahDetail: (number: number) =>
       `https://api.alquran.cloud/v1/surah/${number}/editions/quran-uthmani,en.sahih,en.transliteration,ar.alafasy`,
   },
+  SAVE_DUA_BOOKMARK_IDS: '/api/save-dua-bookmark-ids',
+  GET_DUA_BOOKMARK_IDS: '/api/get-dua-bookmark-ids',
 };

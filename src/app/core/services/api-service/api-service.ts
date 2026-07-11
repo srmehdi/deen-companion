@@ -46,6 +46,12 @@ export class ApiService {
       .pipe(catchError(() => throwError(() => 'API error')));
     // return this.http.get<T>('./assets/jsons/dua_of_the_day.json');
   }
+  getAllDuas<T>() {
+    return this.http
+      .get<T>(this.ummahBase + Endpoints.ALL_DUAS)
+      .pipe(catchError(() => throwError(() => 'API error')));
+    // return this.http.get<T>('./assets/jsons/dua_of_the_day.json');
+  }
   getVerseOfTheDay<T>() {
     return this.http
       .get<T>(this.ummahBase + Endpoints.VERSE_OF_THE_DAY)
@@ -115,5 +121,11 @@ export class ApiService {
         };
       }),
     );
+  }
+  saveDuaBookmarkIds(payload: any) {
+    return this.http.post<any>(Endpoints.SAVE_DUA_BOOKMARK_IDS, payload);
+  }
+  getDuaBookmarkIds(payload: any) {
+    return this.http.post<any>(Endpoints.GET_DUA_BOOKMARK_IDS, payload);
   }
 }

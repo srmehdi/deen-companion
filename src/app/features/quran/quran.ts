@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { ApiService } from '../../core/services/api-service/api-service';
 import { StatusModal } from '../../shared/modals/status-modal/status-modal';
 import { Subject } from 'rxjs';
@@ -162,4 +162,21 @@ export class Quran {
       reject: () => {},
     });
   }
+  searchQuery = signal<string>('');
+  clearSearch() {
+    this.searchQuery.set('');
+  }
+  filteredSurahs = computed(() => {
+    const query = this.searchQuery().toLowerCase().trim();
+
+    return this.surahs().filter((surah) => {
+      const matchesQuery =
+        !query ||
+        surah.number.toString().includes(query) ||
+        surah.englishName.toLowerCase().includes(query) ||
+        surah.englishNameTranslation.toLowerCase().includes(query);
+
+      return matchesQuery;
+    });
+  });
 }

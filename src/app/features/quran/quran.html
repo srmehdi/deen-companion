@@ -27,41 +27,73 @@
   <!-- Surah Directory Grid View -->
   @if (!selectedSurah()) {
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] md:gap-[16px] animate-fade-in max-w-full"
+      class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 dark:border-white/5 pb-3 mb-[16px] gap-3 max-w-full"
     >
-      @for (surah of surahs(); track surah.number) {
-        <div
-          (click)="loadSurah(surah.number)"
-          class="group bg-white dark:bg-[#121816]/60 border border-gray-200 dark:border-sacred-gold/15 rounded-xl p-3 flex justify-between items-center cursor-pointer shadow-sm hover:shadow-md hover:border-sacred-gold transform hover:-translate-y-0.5 transition-all duration-200 min-w-0"
-        >
-          <div class="flex items-center gap-3 min-w-0">
-            <div
-              class="w-9 h-9 flex-shrink-0 bg-divine-emerald/5 dark:bg-sacred-gold/5 text-divine-emerald dark:text-sacred-gold border border-divine-emerald/10 dark:border-sacred-gold/20 flex items-center justify-center rounded-lg font-bold font-mono text-sm"
-            >
-              {{ surah.number }}
-            </div>
-            <div class="min-w-0 truncate">
-              <h3 class="font-bold text-gray-800 dark:text-gray-200 text-xs md:text-sm truncate">
-                {{ surah.englishName }}
-              </h3>
-              <p class="text-[10px] text-gray-500 dark:text-gray-400 font-medium truncate">
-                {{ surah.englishNameTranslation }}
-              </p>
-            </div>
-          </div>
-          <div class="text-right flex flex-col items-end gap-0.5 flex-shrink-0 ml-2">
-            <span
-              class="font-serif text-sm md:text-base font-bold text-divine-emerald dark:text-sacred-gold tracking-tight"
-              >{{ surah.name }}</span
-            >
-            <span
-              class="text-[9px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
-              >{{ surah.numberOfAyahs }} Verses</span
-            >
-          </div>
-        </div>
-      }
+      <div
+        class="w-full sm:max-w-xs max-sm:self-stretch flex-1 flex items-center px-3 py-2 transition-all duration-300 border shadow-sm rounded-lg bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border-white/40 dark:border-slate-700/50 focus-within:ring-2 focus-within:ring-indigo-500/50"
+      >
+        <i class="pi pi-search text-gray-400 text-xs"></i>
+        <input
+          type="text"
+          class="w-full ml-2 bg-transparent border-none outline-none text-[0.8rem] text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
+          [value]="searchQuery()"
+          (input)="searchQuery.set($any($event.target).value)"
+          placeholder="Search surahs..."
+        />
+        @if (searchQuery().length > 0) {
+          <i class="pi pi-times text-gray-400 text-xs! cursor-pointer" (click)="clearSearch()"></i>
+        }
+      </div>
     </div>
+    @if (filteredSurahs().length > 0) {
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] md:gap-[16px] animate-fade-in max-w-full"
+      >
+        @for (surah of filteredSurahs(); track surah.number) {
+          <div
+            (click)="loadSurah(surah.number)"
+            class="group bg-white dark:bg-[#121816]/60 border border-gray-200 dark:border-sacred-gold/15 rounded-xl p-3 flex justify-between items-center cursor-pointer shadow-sm hover:shadow-md hover:border-sacred-gold transform hover:-translate-y-0.5 transition-all duration-200 min-w-0"
+          >
+            <div class="flex items-center gap-3 min-w-0">
+              <div
+                class="w-9 h-9 flex-shrink-0 bg-divine-emerald/5 dark:bg-sacred-gold/5 text-divine-emerald dark:text-sacred-gold border border-divine-emerald/10 dark:border-sacred-gold/20 flex items-center justify-center rounded-lg font-bold font-mono text-sm"
+              >
+                {{ surah.number }}
+              </div>
+              <div class="min-w-0 truncate">
+                <h3 class="font-bold text-gray-800 dark:text-gray-200 text-xs md:text-sm truncate">
+                  {{ surah.englishName }}
+                </h3>
+                <p class="text-[10px] text-gray-500 dark:text-gray-400 font-medium truncate">
+                  {{ surah.englishNameTranslation }}
+                </p>
+              </div>
+            </div>
+            <div class="text-right flex flex-col items-end gap-0.5 flex-shrink-0 ml-2">
+              <span
+                class="font-serif text-sm md:text-base font-bold text-divine-emerald dark:text-sacred-gold tracking-tight"
+                >{{ surah.name }}</span
+              >
+              <span
+                class="text-[9px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
+                >{{ surah.numberOfAyahs }} Verses</span
+              >
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div
+        class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[12px] md:p-[24px] shadow-2xl animate-fade-in max-w-full overflow-hidden"
+      >
+        <div class="text-center py-12 bg-gray-50/50 dark:bg-white/[0.02] rounded-xl my-4">
+          <i class="pi pi-info-circle text-gray-400 dark:text-[#dfb76c] text-2xl mb-2"></i>
+          <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 font-medium">
+            No Chapter index matched your search criteria context parameters.
+          </p>
+        </div>
+      </div>
+    }
   }
 
   <!-- Immersive Reader Panel Layout -->
@@ -93,7 +125,7 @@
           </svg>
           <span>Back</span>
         </button>
-        <div class="sm:text-center min-w-0 max-sm:self-center">
+        <div class="sm:text-center min-w-0 max-sm:self-center md:ml-18">
           <h2 class="text-xl font-black text-gray-800 dark:text-gray-100 truncate">
             {{ selectedSurah().info.englishName }}
           </h2>
@@ -114,7 +146,7 @@
       <div class="flex flex-col divide-y divide-gray-100 dark:divide-white/5 max-w-full">
         @if (selectedSurah().info.number !== 1 && selectedSurah().info.number !== 9) {
           <div
-            class="text-center font-serif text-xl md:text-2xl text-gray-800 dark:text-sacred-gold py-4 md:py-6 break-words px-2"
+            class="text-center font-serif text-xl md:ml-11 md:text-2xl text-gray-800 dark:text-sacred-gold py-4 md:py-6 break-words px-2"
           >
             بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
           </div>
@@ -168,7 +200,7 @@
             <div class="flex-grow flex flex-col gap-2 w-full min-w-0">
               <!-- Arabic Text Stream Panel -->
               <p
-                class="font-serif text-lg md:text-2xl text-gray-900 dark:text-white text-right leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
+                class="font-serif text-lg md:text-2xl text-gray-900 dark:text-white text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
               >
                 <!-- {{
                   selectedSurah().info.number !== 1 && ayah.numberInSurah === 1
@@ -184,14 +216,14 @@
 
               <!-- Right-Aligned English Transliteration (Phonetic Guide) -->
               <p
-                class="text-xs md:text-sm text-sacred-gold/90 italic tracking-wide break-words w-full text-right mt-1 font-medium"
+                class="text-xs md:text-sm text-sacred-gold/90 italic tracking-wide break-words w-full text-center mt-1 font-medium"
               >
                 {{ ayah.transliteration }}
               </p>
 
               <!-- Right-Aligned English Translation Block -->
               <p
-                class="text-xs md:text-sm text-gray-600 dark:text-gray-400 font-normal leading-relaxed break-words w-full text-right mt-0.5"
+                class="text-xs md:text-sm text-gray-600 dark:text-gray-400 font-normal leading-relaxed break-words w-full text-center mt-0.5"
               >
                 {{ ayah.translation }}
               </p>
