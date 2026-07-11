@@ -47,30 +47,38 @@
     <div class="relative w-full max-w-sm mx-auto mb-2">
       <div class="flex items-center gap-2">
         <div
-          class="flex-1 flex items-center px-2 py-2 transition-all duration-300 border shadow-sm rounded-xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border-white/40 dark:border-slate-700/50 focus-within:ring-2 focus-within:ring-indigo-500/50"
+          class="flex-1 flex items-center px-3 py-2 transition-all duration-300 border shadow-sm rounded-lg bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border-white/40 dark:border-slate-700/50 focus-within:ring-2 focus-within:ring-indigo-500/50"
         >
-          <span class="text-slate-400">🔍</span>
+          <!-- <span class="text-slate-400">🔍</span> -->
+          <i class="pi pi-search text-gray-400 text-xs"></i>
           <input
             type="text"
             placeholder="Search city..."
-            class="w-full ml-1 bg-transparent border-none outline-none text-[0.8rem] text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
+            class="w-full ml-2 bg-transparent border-none outline-none text-[0.8rem] text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
             (input)="onSearch($event)"
             [(ngModel)]="searchQuery"
           />
-          <button
+          @if (searchQuery.length > 0) {
+            <i
+              class="pi pi-times text-gray-400 text-xs! cursor-pointer"
+              (click)="clearSearch()"
+            ></i>
+          }
+          <!-- <button
             *ngIf="searchQuery.length > 0"
             (click)="clearSearch()"
             class="px-1 rounded-full cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
           >
             <span class="text-xs font-bold leading-none">✕</span>
-          </button>
+          </button> -->
         </div>
         <button
           (click)="detectLocation()"
-          class="flex items-center justify-center p-2 transition-all bg-indigo-600 rounded-xl hover:bg-indigo-700 active:scale-95 shadow-md shadow-indigo-200 dark:shadow-none group"
+          class="flex items-center justify-center p-2.5 transition-all bg-indigo-600 rounded-lg hover:bg-indigo-700 active:scale-95 shadow-md shadow-indigo-200 dark:shadow-none group"
           title="Use Current Location"
         >
-          <span class="text-white group-hover:animate-pulse">📍</span>
+          <!-- <span class="text-white group-hover:animate-pulse">📍</span> -->
+          <i class="pi pi-map-marker text-white text-xs group-hover:animate-pulse"></i>
         </button>
       </div>
       <ul

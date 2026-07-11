@@ -13,19 +13,20 @@
     background 0.2s ease,
     transform 0.2s ease;
   /* margin-left: 4px; */
+  transform: rotate(-60deg);
 
   .reset-icon {
-    font-size: 18px;
+    font-size: 30px;
     font-weight: bold;
     line-height: 1;
   }
 
   &:hover:not(:disabled) {
     background: rgba(63, 81, 181, 0.1);
-    transform: rotate(-30deg);
+    transform: rotate(-90deg);
   }
 
   &:active:not(:disabled) {
-    transform: scale(0.9) rotate(-90deg);
+    transform: scale(0.9) rotate(-120deg);
   }
 }
