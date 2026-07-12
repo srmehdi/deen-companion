@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { AudioPlayerService } from '../audio-player-service/audio-player-service';
 
 @Injectable({ providedIn: 'root' })
 export class AudioService {
@@ -12,7 +13,9 @@ export class AudioService {
     this.audio.onended = () => this.isPlaying.set(false);
   }
 
+  public globalAudio = inject(AudioPlayerService);
   toggleAudio(url: string) {
+    this.globalAudio.pauseAudio();
     if (this.currentUrl() === url) {
       if (this.isPlaying()) {
         this.audio.pause();

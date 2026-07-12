@@ -4,23 +4,37 @@
     class="relative overflow-hidden rounded-xl md:rounded-2xl mb-[16px] p-[16px] md:p-[24px] bg-gradient-to-br from-divine-emerald to-[#0b251e] dark:from-[#071914] dark:to-[#020706] border border-sacred-gold/20 shadow-xl max-w-full"
   >
     <div
-      class="absolute right-10 text-sacred-gold/5 text-8xl font-serif select-none pointer-events-none"
+      class="absolute left-0 right-0 text-center text-sacred-gold/5 text-8xl font-serif select-none pointer-events-none"
     >
       القرآن
     </div>
-    <div class="relative z-10 flex flex-col items-start gap-1">
-      <span
-        class="text-[9px] md:text-xs font-bold tracking-widest text-sacred-gold uppercase bg-sacred-gold/10 px-2 py-0.5 rounded-full border border-sacred-gold/20"
-        >✨ Al-Quran Al-Kareem</span
-      >
-      <h1
-        class="text-xl md:text-3xl font-extrabold text-white dark:text-gray-100 font-serif tracking-tight"
-      >
-        The Noble Quran
-      </h1>
-      <p class="text-[11px] md:text-sm text-gray-300 dark:text-gray-400 max-w-md">
-        Read, study, and contemplate the divine revelations
-      </p>
+    <div
+      class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 w-full"
+    >
+      <div class="flex flex-col items-start gap-1">
+        <span
+          class="text-[9px] md:text-xs font-bold tracking-widest text-sacred-gold uppercase bg-sacred-gold/10 px-2 py-0.5 rounded-full border border-sacred-gold/20"
+          >✨ Al-Quran Al-Kareem</span
+        >
+        <h1
+          class="text-xl md:text-3xl font-extrabold text-white dark:text-gray-100 font-serif tracking-tight"
+        >
+          The Noble Quran
+        </h1>
+        <p class="text-[11px] md:text-sm text-gray-300 dark:text-gray-400 max-w-md">
+          Read, study, and contemplate the divine revelations
+        </p>
+      </div>
+
+      @if (currentBookmark(); as bookmark) {
+        <button
+          (click)="resumeJourney()"
+          class="max-sm:self-center flex items-center gap-1.5 font-serif text-xs font-bold px-3 py-2 rounded-lg bg-sacred-gold/10 border border-sacred-gold/30 hover:bg-sacred-gold/20 text-sacred-gold transition-all duration-200 shadow-sm cursor-pointer whitespace-nowrap"
+        >
+          <i class="pi pi-bookmark-fill text-xs!"></i>
+          <span>Resume: Surah {{ bookmark.surahName }} (Ayah {{ bookmark.ayahNumber }})</span>
+        </button>
+      }
     </div>
   </div>
 
@@ -154,50 +168,104 @@
 
         <!-- Verse Blocks Loop -->
         @for (ayah of selectedSurah().ayahs; track ayah.numberInSurah) {
+          <!-- Inside the @for (ayah of selectedSurah().ayahs) loop -->
           <div
+            [id]="'ayah-row-' + ayah.numberInSurah"
             class="flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
-            [class.bg-sacred-gold/5]="currentPlayingAyah()?.numberInSurah === ayah.numberInSurah"
-            [class.border-l-2]="currentPlayingAyah()?.numberInSurah === ayah.numberInSurah"
-            [class.border-[#dfb76c]]="currentPlayingAyah()?.numberInSurah === ayah.numberInSurah"
+            [class.bg-sacred-gold/5]="
+              (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
+                selectedSurah().info.number &&
+              (globalAudio.currentPlayingAyah()?.numberInSurah || currentBookmark()?.ayahNumber) ===
+                ayah.numberInSurah
+            "
+            [class.border-l-2]="
+              (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
+                selectedSurah().info.number &&
+              (globalAudio.currentPlayingAyah()?.numberInSurah || currentBookmark()?.ayahNumber) ===
+                ayah.numberInSurah
+            "
+            [class.border-[#dfb76c]]="
+              (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
+                selectedSurah().info.number &&
+              (globalAudio.currentPlayingAyah()?.numberInSurah || currentBookmark()?.ayahNumber) ===
+                ayah.numberInSurah
+            "
           >
-            <!-- Controls Pillar Panel (Left-Aligned in desktop layouts) -->
             <div
               class="flex flex-row md:flex-col items-center justify-between md:justify-start gap-2 md:gap-3 flex-shrink-0 bg-gray-50/50 dark:bg-white/[0.02] md:bg-transparent dark:md:bg-transparent p-2 md:p-0 rounded-lg"
             >
-              <!-- Ayah Index Badge -->
               <div
                 class="w-7 h-7 md:w-8 md:h-8 bg-white dark:bg-[#18221f] border border-gray-200 dark:border-sacred-gold/30 text-gray-600 dark:text-sacred-gold rounded-full flex items-center justify-center text-xs font-bold font-mono shadow-inner"
               >
                 {{ ayah.numberInSurah }}
               </div>
 
-              <!-- Floating Audio Control Button Wrap -->
-              <button
-                (click)="toggleAyahAudio(ayah); isCardClicked.set(true)"
-                class="relative w-7 h-7 md:w-8 md:h-8 rounded-full bg-divine-emerald/10 dark:bg-sacred-gold/10 text-divine-emerald dark:text-sacred-gold flex items-center justify-center hover:bg-divine-emerald hover:text-white dark:hover:bg-sacred-gold dark:hover:text-black transition-all duration-200 cursor-pointer shadow-sm group overflow-visible"
-              >
-                <!-- Ambient Pulse Glow Ring Layer (Triggers only when current ayah is actively playing) -->
-                @if (
-                  currentPlayingAyah()?.numberInSurah === ayah.numberInSurah && isAudioPlaying()
-                ) {
-                  <span
-                    class="absolute inset-0 rounded-full bg-divine-emerald/30 dark:bg-sacred-gold/30 animate-ping pointer-events-none"
-                  ></span>
-                }
+              <div class="flex flex-row md:flex-col gap-2">
+                <!-- Media Streaming Playback Action Trigger -->
+                <button
+                  (click)="toggleAyahAudio(ayah)"
+                  class="relative w-7 h-7 md:w-8 md:h-8 rounded-full bg-divine-emerald/10 dark:bg-sacred-gold/10 text-divine-emerald dark:text-sacred-gold flex items-center justify-center hover:bg-divine-emerald hover:text-white dark:hover:bg-sacred-gold dark:hover:text-black transition-all duration-200 cursor-pointer shadow-sm group overflow-visible"
+                >
+                  @if (
+                    globalAudio.playingSurahInfo()?.surahNumber === selectedSurah().info.number &&
+                    globalAudio.currentPlayingAyah()?.numberInSurah === ayah.numberInSurah &&
+                    globalAudio.isAudioPlaying()
+                  ) {
+                    <span
+                      class="absolute inset-0 rounded-full bg-divine-emerald/30 dark:bg-sacred-gold/30 animate-ping pointer-events-none"
+                    ></span>
+                  }
+                  <span class="material-icons text-sm md:text-base relative z-10">
+                    {{
+                      globalAudio.playingSurahInfo()?.surahNumber === selectedSurah().info.number &&
+                      globalAudio.currentPlayingAyah()?.numberInSurah === ayah.numberInSurah &&
+                      globalAudio.isAudioPlaying()
+                        ? '⏸️'
+                        : '▶️'
+                    }}
+                  </span>
+                </button>
 
-                <!-- Play/Pause Icon Text Glyphs -->
-                <span class="material-icons text-sm md:text-base relative z-10">
-                  {{
-                    currentPlayingAyah()?.numberInSurah === ayah.numberInSurah && isAudioPlaying()
-                      ? '⏸️'
-                      : '▶️'
-                  }}
-                </span>
-              </button>
+                <!-- Journey Bookmark Tracking Action Trigger -->
+                <button
+                  (click)="bookmarkAyah(ayah)"
+                  class="relative w-7 h-7 md:w-8 md:h-8 rounded-full bg-divine-emerald/10 dark:bg-sacred-gold/10 text-divine-emerald dark:text-sacred-gold flex items-center justify-center hover:bg-divine-emerald hover:text-white dark:hover:bg-sacred-gold dark:hover:text-black transition-all duration-200 cursor-pointer shadow-sm border-transparent!"
+                  [title]="'Mark Ayah ' + ayah.numberInSurah + ' as Last Read'"
+                  [class.bg-sacred-gold!]="
+                    currentBookmark()?.surahNumber === selectedSurah().info.number &&
+                    currentBookmark()?.ayahNumber === ayah.numberInSurah
+                  "
+                  [class.text-black!]="
+                    currentBookmark()?.surahNumber === selectedSurah().info.number &&
+                    currentBookmark()?.ayahNumber === ayah.numberInSurah
+                  "
+                >
+                  <i
+                    class="pi text-xs! z-10"
+                    [class.pi-bookmark-fill]="
+                      currentBookmark()?.surahNumber === selectedSurah().info.number &&
+                      currentBookmark()?.ayahNumber === ayah.numberInSurah
+                    "
+                    [class.pi-bookmark]="
+                      !(
+                        currentBookmark()?.surahNumber === selectedSurah().info.number &&
+                        currentBookmark()?.ayahNumber === ayah.numberInSurah
+                      )
+                    "
+                  ></i>
+                </button>
+              </div>
             </div>
 
             <!-- Main Scripture Content Panel -->
             <div class="flex-grow flex flex-col gap-2 w-full min-w-0">
+              <div class="text-left w-full">
+                <span
+                  class="text-[12px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
+                >
+                  Surah {{ selectedSurah().info.englishName }} • Ayah {{ ayah.numberInSurah }}
+                </span>
+              </div>
               <!-- Arabic Text Stream Panel -->
               <p
                 class="font-serif text-lg md:text-2xl text-gray-900 dark:text-white text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
@@ -234,105 +302,7 @@
     </div>
   }
 </div>
-@if (isCardClicked()) {
-  <footer
-    class="p-0 left-0 right-0 w-full fixed bottom-0 z-50 backdrop-blur-md py-[10px] border-t bg-sand-mist/80 border-sacred-gold/80 dark:bg-bg-green/80 dark:border-gold-tint/40 overflow-x-auto"
-  >
-    <div class="max-w-5xl mx-auto">
-      <div class="text-[12px] mx-[16px]">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center justify-center">
-            <div class="flex items-center justify-center">
-              <button
-                (click)="toggleAyahAudio(currentPlayingAyah()!); isCardClicked.set(true)"
-                class="cursor-pointer group relative w-[28px] h-[28px] rounded-full bg-slate-900/80 backdrop-blur-md border border-sacred-gold/30 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl"
-              >
-                @if (isAudioPlaying()) {
-                  <div
-                    class="absolute inset-0 rounded-full bg-sacred-gold/70 dark:bg-sacred-gold/20 animate-ping"
-                  ></div>
-                }
-
-                <span class="text-[12px] transition-transform group-hover:rotate-12">
-                  {{ isAudioPlaying() ? '⏸️' : '▶️' }}
-                </span>
-              </button>
-            </div>
-            <div class="pl-[16px] flex flex-col justify-center max-lg:whitespace-nowrap">
-              <div
-                class="flex items-center text-[8px] text-sacred-gold uppercase tracking-[0.2em] font-bold animate-pulse"
-              >
-                @if (isAudioPlaying()) {
-                  Now Reciting...
-                } @else {
-                  Paused.
-                }
-              </div>
-              <div class="text-[12px] md:text-[14px]">
-                <span class=""
-                  >Surah {{ selectedSurah().info.englishName }} | Ayah No.
-                  {{ currentPlayingAyah()?.numberInSurah }}
-                </span>
-                <span class="max-md:block"
-                  >(By {{ selectedSurah().audio.edition.englishName }})
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="md:flex items-center justify-center">
-            <div
-              class="pl-[16px] h-[36px] flex items-end justify-center gap-[4px] overflow-hidden pointer-events-none opacity-90 dark:opacity-45"
-            >
-              @if (isAudioPlaying()) {
-                @for (
-                  bar of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-                  track $index
-                ) {
-                  <div
-                    class="w-[2px] bg-sacred-gold rounded-t-full animate-visualizer"
-                    [style.animation-delay]="$index * 0.1 + 's'"
-                    [style.height]="12 + bar * 3 + '%'"
-                  ></div>
-                }
-              }
-            </div>
-
-            <div class="pl-[16px] flex items-center gap-[4px] group/volume relative">
-              <button
-                (click)="toggleMute()"
-                class="text-slate-500 hover:text-sacred-gold transition-colors p-[4px] rounded-md hover:bg-slate-800/50 cursor-pointer"
-                title="Toggle Mute"
-              >
-                @if (volume() === 0) {
-                  🔇
-                } @else if (volume() < 0.5) {
-                  🔉
-                } @else {
-                  🔊
-                }
-              </button>
-
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                [value]="volume()"
-                (input)="updateVolume($event)"
-                [class.opacity-30]="volume() === 0"
-                class="w-[80px] h-[8px] bg-slate-700 rounded-lg cursor-pointer accent-sacred-gold transition-all group-hover/volume:w-[112px]"
-              />
-
-              <span class="text-[10px] text-slate-500 font-mono w-[24px]">
-                {{ (volume() * 100).toFixed(0) }}%
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-}
+<p-toast position="bottom-left" class="left-0! mx-[16px]! w-auto! z-[10000]!"></p-toast>
 <app-status-modal #modal />
 
 <p-confirmdialog
