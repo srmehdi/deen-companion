@@ -97,6 +97,9 @@
     transform: scale(0.9) rotate(-90deg);
   }
 }
+::ng-deep .p-scrolltop-sticky.p-button {
+  position: fixed !important;
+}
 
 @media (max-width: 768px) {
   .fam-dock {

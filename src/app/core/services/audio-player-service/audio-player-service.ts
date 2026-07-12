@@ -1,0 +1,97 @@
+import { Injectable, signal, computed } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AudioPlayerService {
+  private audioPlayer = new Audio();
+
+  // Global Signals for any component to read
+  currentPlayingAyah = signal<any | null>(null);
+  playingSurahInfo = signal<any>(null);
+  isAudioPlaying = signal<boolean>(false);
+  isCardClicked = signal<boolean>(false);
+  volume = signal<number>(0.7);
+  private previousVolume = 0.7;
+
+  private playingSurahAyahs: any[] = [];
+
+  constructor() {
+    this.audioPlayer.volume = this.volume();
+    this.audioPlayer.onended = () => {
+      this.playNextAyah();
+    };
+  }
+
+  playAudio(ayah: any, surahData?: any): void {
+    if (!ayah) return;
+
+    if (surahData) {
+      this.playingSurahAyahs = surahData.ayahs || [];
+      this.playingSurahInfo.set({
+        surahNumber: surahData.info.number,
+        englishName: surahData.info.englishName,
+        audioEditionName: surahData.audio?.edition?.englishName || 'Reciter',
+      });
+    }
+
+    if (this.currentPlayingAyah()?.numberInSurah === ayah.numberInSurah && this.audioPlayer.src) {
+      this.audioPlayer.play().catch((err) => console.error(err));
+    } else {
+      this.audioPlayer.src = ayah.audio;
+      this.currentPlayingAyah.set(ayah);
+      this.audioPlayer.load();
+      this.audioPlayer.play().catch((err) => console.error(err));
+    }
+
+    this.isAudioPlaying.set(true);
+    this.isCardClicked.set(true);
+  }
+
+  pauseAudio(): void {
+    this.audioPlayer.pause();
+    this.isAudioPlaying.set(false);
+  }
+
+  toggleAyahAudio(ayah: any, surahData?: any): void {
+    if (this.currentPlayingAyah()?.numberInSurah === ayah.numberInSurah && this.isAudioPlaying()) {
+      this.pauseAudio();
+    } else {
+      this.playAudio(ayah, surahData);
+    }
+  }
+
+  stopAudio(): void {
+    this.audioPlayer.pause();
+    this.audioPlayer.src = '';
+    this.playingSurahAyahs = [];
+    this.currentPlayingAyah.set(null);
+    this.isAudioPlaying.set(false);
+    this.isCardClicked.set(false);
+  }
+
+  private playNextAyah(): void {
+    const current = this.currentPlayingAyah()?.numberInSurah;
+    if (current !== null && current !== undefined && this.playingSurahAyahs.length > 0) {
+      if (current < this.playingSurahAyahs.length) {
+        this.playAudio(this.playingSurahAyahs[current]); // array index matches next track
+      } else {
+        this.stopAudio();
+      }
+    }
+  }
+
+  setVolume(value: number) {
+    this.volume.set(value);
+    this.audioPlayer.volume = value;
+  }
+
+  toggleMute() {
+    if (this.volume() > 0) {
+      this.previousVolume = this.volume();
+      this.setVolume(0);
+    } else {
+      this.setVolume(this.previousVolume > 0 ? this.previousVolume : 0.7);
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, computed, DOCUMENT, Inject, signal, ViewChild } from '@angular/core';
+import { Component, computed, DOCUMENT, inject, Inject, signal, ViewChild } from '@angular/core';
 import { PremiumCard } from '../../../shared/components/premium-card/premium-card';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../core/services/api-service/api-service';
@@ -9,10 +9,20 @@ import { ThemeService } from '../../../core/services/theme-service/theme-service
 import { StatusModal } from '../../../shared/modals/status-modal/status-modal';
 import { FormsModule } from '@angular/forms';
 import { Activity } from '../../../core/services/activity/activity';
+import { ConfirmationService } from 'primeng/api';
+import { AudioPlayerService } from '../../../core/services/audio-player-service/audio-player-service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [PremiumCard, CommonModule, OverflowCheck, StatusModal, FormsModule],
+  imports: [
+    PremiumCard,
+    CommonModule,
+    OverflowCheck,
+    StatusModal,
+    FormsModule,
+    ConfirmDialogModule,
+  ],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
@@ -31,24 +41,26 @@ export class DashboardPage {
       this.audioService.isPlaying.set(false);
     };
 
-    setInterval(() => {
-      this.currentTime.set(new Date());
-    }, 1000);
-    setInterval(() => {
-      if (this.prayer_times_data()) {
-        if (localStorage.getItem('user-lat') && localStorage.getItem('user-lng')) {
-          this.prayerTimesApiCall(
-            parseFloat(localStorage.getItem('user-lat')!),
-            parseFloat(localStorage.getItem('user-lng')!),
-          );
-        } else {
-          this.getPrayerTimes(0);
-        }
-        // this.getPrayerTimes(0);
-      }
-    }, 60000);
+    // setInterval(() => {
+    //   this.currentTime.set(new Date());
+    // }, 1000);
+    // setInterval(() => {
+    //   if (this.prayer_times_data()) {
+    //     if (localStorage.getItem('user-lat') && localStorage.getItem('user-lng')) {
+    //       this.prayerTimesApiCall(
+    //         parseFloat(localStorage.getItem('user-lat')!),
+    //         parseFloat(localStorage.getItem('user-lng')!),
+    //       );
+    //     } else {
+    //       this.getPrayerTimes(0);
+    //     }
+    //     // this.getPrayerTimes(0);
+    //   }
+    // }, 60000);
   }
 
+  private timeIntervalId?: any;
+  private apiIntervalId?: any;
   fontSize = signal<number>(100);
   currentTime = signal(new Date());
   ngOnInit() {
@@ -59,6 +71,20 @@ export class DashboardPage {
         switchMap((query) => (query.length > 2 ? this.api.searchCity(query) : [])),
       )
       .subscribe((data) => (this.results = data));
+
+    this.timeIntervalId = setInterval(() => {
+      this.currentTime.set(new Date());
+    }, 1000);
+
+    // Optimized API polling: Only runs if data exists, avoiding geolocation methods entirely
+    this.apiIntervalId = setInterval(() => {
+      const lat = localStorage.getItem('user-lat');
+      const lng = localStorage.getItem('user-lng');
+
+      if (this.prayer_times_data() && lat && lng) {
+        this.prayerTimesApiCall(parseFloat(lat), parseFloat(lng));
+      }
+    }, 60000);
   }
   ngAfterViewInit() {
     this.getPrayerTimes(1);
@@ -332,7 +358,33 @@ export class DashboardPage {
     this.currentTimeAtSelectedCity.set(time);
   }
 
+  globalAudio = inject(AudioPlayerService);
+  private confirmationService = inject(ConfirmationService);
+  confirmAudioPlayerClose() {
+    this.confirmationService.confirm({
+      key: 'closeAudioPromptDashboard',
+      message: `Are you sure you want to close the audio player?`,
+      header: 'Close Audio Player',
+      icon: 'pi pi-headphones text-[#18181B]! dark:text-[#FFFFFF]!',
+
+      // Applied ! (important) to override PrimeNG's structural and skin properties
+      rejectButtonStyleClass:
+        'px-4! py-2! bg-transparent! border! border-gray-300! dark:border-white/10! hover:bg-gray-100! dark:hover:bg-white/5! text-gray-700! dark:text-gray-300! rounded-lg! text-xs! font-semibold! font-sans! mr-2! transition-all! duration-200! cursor-pointer!',
+
+      acceptButtonStyleClass:
+        'px-4! py-2! bg-red-700! hover:bg-red-800! text-white! border-none! rounded-lg! text-xs! font-semibold! font-sans! transition-all! duration-200! cursor-pointer! shadow-sm!',
+
+      accept: () => {
+        this.audioService.stopAudio();
+        this.audioService.currentUrl.set('');
+        this.isCardClicked.set(false);
+      },
+      reject: () => {},
+    });
+  }
   ngOnDestroy() {
     this.audioService.stopAudio();
+    if (this.timeIntervalId) clearInterval(this.timeIntervalId);
+    if (this.apiIntervalId) clearInterval(this.apiIntervalId);
   }
 }

@@ -9,6 +9,14 @@
         <app-footer></app-footer>
       </app-premium-card>
     </div>
+    <p-scrolltop
+      styleClass="!bottom-[110px] !right-6"
+      target="parent"
+      [threshold]="200"
+      icon="pi pi-arrow-up"
+      [buttonProps]="{ severity: 'contrast', raised: true, rounded: true }"
+    ></p-scrolltop>
   </main>
   <app-accessibility-control></app-accessibility-control>
+  <app-audio-player></app-audio-player>
 </div>
