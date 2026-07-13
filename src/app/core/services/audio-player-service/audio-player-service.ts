@@ -1,4 +1,5 @@
 import { Injectable, signal, computed } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -70,16 +71,33 @@ export class AudioPlayerService {
     this.isCardClicked.set(false);
   }
 
+  public playNextSurah$ = new Subject<number>();
   private playNextAyah(): void {
     const current = this.currentPlayingAyah()?.numberInSurah;
     if (current !== null && current !== undefined && this.playingSurahAyahs.length > 0) {
       if (current < this.playingSurahAyahs.length) {
         this.playAudio(this.playingSurahAyahs[current]); // array index matches next track
       } else {
-        this.stopAudio();
+        // We reached the end of the current Surah ayahs array
+        const currentSurahNumber = this.playingSurahInfo()?.surahNumber;
+        if (currentSurahNumber && currentSurahNumber < 114) {
+          this.playNextSurah$.next(currentSurahNumber + 1);
+        } else {
+          this.stopAudio();
+        }
       }
     }
   }
+  // private playNextAyah(): void {
+  //   const current = this.currentPlayingAyah()?.numberInSurah;
+  //   if (current !== null && current !== undefined && this.playingSurahAyahs.length > 0) {
+  //     if (current < this.playingSurahAyahs.length) {
+  //       this.playAudio(this.playingSurahAyahs[current]); // array index matches next track
+  //     } else {
+  //       this.stopAudio();
+  //     }
+  //   }
+  // }
 
   setVolume(value: number) {
     this.volume.set(value);

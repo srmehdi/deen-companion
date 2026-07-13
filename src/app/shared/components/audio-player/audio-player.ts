@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AudioPlayerService } from '../../../core/services/audio-player-service/audio-player-service';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-audio-player',
@@ -13,7 +14,26 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 })
 export class AudioPlayer {
   public globalAudio = inject(AudioPlayerService);
+  private router = inject(Router);
 
+  navigateToCurrentAudio(): void {
+    const playingSurah = this.globalAudio.playingSurahInfo();
+    const activeAyah = this.globalAudio.currentPlayingAyah();
+
+    if (!playingSurah || !activeAyah) return;
+
+    // Direct user to the Quran workspace context view layout route
+    this.router.navigate(['/quran']).then(() => {
+      // Dispatch custom window targeting dispatch hook to perform element scrolling adjustments
+      const scrollEvent = new CustomEvent('jumpToActiveAyah', {
+        detail: {
+          surahNumber: playingSurah.surahNumber,
+          ayahNumber: activeAyah.numberInSurah,
+        },
+      });
+      window.dispatchEvent(scrollEvent);
+    });
+  }
   updateVolume(event: Event) {
     const input = event.target as HTMLInputElement;
     this.globalAudio.setVolume(parseFloat(input.value));

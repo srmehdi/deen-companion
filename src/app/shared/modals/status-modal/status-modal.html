@@ -12,7 +12,7 @@
       ></div>
 
       <div class="mb-4 sm:mb-8 flex justify-center h-16 sm:h-20 items-center">
-        @if (state() === 'loading') {
+        @if (state() === 'loading' || state() === 'initializing') {
           <svg class="w-16 h-16 sm:w-20 sm:h-20 animate-star-breathe" viewBox="0 0 100 100">
             <defs>
               <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -39,7 +39,7 @@
               <path d="M5 13l4 4L19 7" />
             </svg>
           </div>
-        } @else {
+        } @else if (state() === 'error') {
           <div
             class="w-16 h-16 rounded-full bg-red-500/10 dark:bg-red-500/20 border border-red-500/50 flex items-center justify-center"
           >
@@ -60,7 +60,7 @@
         class="mb-2 text-sm sm:text-xl font-bold tracking-[0.2em] uppercase text-gray-900 dark:text-white wrap-break-word"
       >
         {{
-          state() === 'loading'
+          state() === 'loading' || state() === 'initializing'
             ? 'Bismillah'
             : state() === 'success'
               ? 'Alhamdulillah'
@@ -77,7 +77,7 @@
       @if (state() === 'error' || state() === 'success') {
         <div class="mt-2 sm:mt-10 flex justify-center">
           <button
-            class="w-40 py-3 rounded-md shadow-sm transition-all duration-300 cursor-pointer text-[0.65rem] tracking-[0.25em] font-black uppercase /* Light Mode Colors */ bg-gray-900 text-white border border-gray-800 hover:bg-gray-700 /* Dark Mode Colors */ dark:bg-white/5 dark:text-white dark:border-white/20 dark:hover:bg-accent/20 dark:hover:border-accent/40 dark:hover:text-white"
+            class="w-40 py-3 rounded-md shadow-sm transition-all duration-300 cursor-pointer text-[0.65rem] tracking-[0.25em] font-black uppercase bg-gray-900 text-white border border-gray-800 hover:bg-gray-700 dark:bg-white/5 dark:text-white dark:border-white/20 dark:hover:bg-accent/20 dark:hover:border-accent/40 dark:hover:text-white"
             (click)="close()"
           >
             Continue

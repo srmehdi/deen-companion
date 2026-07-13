@@ -1,4 +1,13 @@
-import { Component, computed, inject, signal, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  signal,
+  ViewChild,
+  AfterViewInit,
+  effect,
+  HostListener,
+} from '@angular/core';
 import { ApiService } from '../../core/services/api-service/api-service';
 import { StatusModal } from '../../shared/modals/status-modal/status-modal';
 import { CommonModule } from '@angular/common';
@@ -8,27 +17,67 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Bookmark } from '../../shared/utils/interface';
 import { ToastModule } from 'primeng/toast';
+import { StatusModalService } from '../../core/services/status-modal-service/status-modal-service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-quran',
-  imports: [CommonModule, FormsModule, StatusModal, ConfirmDialogModule, ToastModule],
+  imports: [CommonModule, FormsModule, ConfirmDialogModule, ToastModule],
   templateUrl: './quran.html',
   styleUrl: './quran.css',
 })
 export class Quran implements AfterViewInit {
-  @ViewChild('modal') modal!: StatusModal;
-
+  private modal = inject(StatusModalService);
   // Inject the global player service
   public globalAudio = inject(AudioPlayerService);
   private api = inject(ApiService);
   private confirmationService = inject(ConfirmationService);
+  // Track subscription to prevent memory leaks
+  private audioSubscription!: Subscription;
 
   surahs = signal<any[]>([]);
   selectedSurah = signal<any>(null);
   searchQuery = signal<string>('');
+  constructor() {
+    // Reactive effect that auto-scrolls to the active ayah row whenever it changes
+    effect(() => {
+      const activeAyah = this.globalAudio.currentPlayingAyah();
+      const currentSurah = this.selectedSurah();
+
+      // Ensure we only scroll if the active Ayah belongs to the currently displayed Surah
+      if (
+        activeAyah &&
+        currentSurah &&
+        this.globalAudio.playingSurahInfo()?.surahNumber === currentSurah.info.number
+      ) {
+        this.scrollToAyah(activeAyah.numberInSurah);
+      }
+    });
+  }
 
   ngAfterViewInit() {
     this.loadSurahList();
+    // Listen to next Surah actions triggered by the background audio service
+    this.audioSubscription = this.globalAudio.playNextSurah$.subscribe((nextSurahNumber) => {
+      this.loadSurahAndAutoPlay(nextSurahNumber);
+    });
+  }
+  // A variant helper to fetch the next Surah and immediately begin the first track
+  loadSurahAndAutoPlay(number: number): void {
+    this.modal.showLoading();
+    this.api.getSurahDetails(number).subscribe({
+      next: (surahData) => {
+        this.selectedSurah.set(surahData);
+        this.modal.close();
+
+        // Directly trigger the first Ayah audio stream rather than displaying the prompt modal
+        if (surahData.ayahs && surahData.ayahs.length > 0) {
+          this.scrollToAyah(1);
+          this.globalAudio.playAudio(surahData.ayahs[0], surahData);
+        }
+      },
+      error: (err) => console.error('Failed loading auto-advanced script', err),
+    });
   }
   loadSurahList() {
     this.modal.showLoading();
@@ -49,20 +98,51 @@ export class Quran implements AfterViewInit {
         if (targetAyahNumber) {
           this.scrollToAyah(targetAyahNumber);
         } else {
-          this.confirmAudioRecitation();
+          const activeAyah = this.globalAudio.currentPlayingAyah();
+          const currentSurah = this.selectedSurah();
+          if (
+            activeAyah &&
+            currentSurah &&
+            this.globalAudio.playingSurahInfo()?.surahNumber === currentSurah.info.number
+          ) {
+            this.scrollToAyah(activeAyah.numberInSurah);
+          } else {
+            this.confirmAudioRecitation();
+          }
+          // this.confirmAudioRecitation();
         }
       },
       error: (err) => console.error('Failed loading individual script metadata', err),
     });
   }
 
+  @HostListener('window:jumpToActiveAyah', ['$event'])
+  onJumpToActiveAyahRequested(event: any) {
+    const { surahNumber, ayahNumber } = event.detail;
+    const currentSurah = this.selectedSurah();
+
+    if (!currentSurah || currentSurah.info.number !== surahNumber) {
+      this.modal.showLoading();
+      this.api.getSurahDetails(surahNumber).subscribe({
+        next: (surahData) => {
+          this.selectedSurah.set(surahData);
+          this.modal.close();
+          // Force scroll target calculation update context smoothly
+          this.scrollToAyah(ayahNumber);
+        },
+        error: (err) => this.modal.close(),
+      });
+    } else {
+      this.scrollToAyah(ayahNumber);
+    }
+  }
   scrollToAyah(ayahNumber: number): void {
     setTimeout(() => {
       const element = document.getElementById(`ayah-row-${ayahNumber}`);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-    }, 250);
+    }, 100);
   }
 
   bookmarkAyah(ayah: any): void {

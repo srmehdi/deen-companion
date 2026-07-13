@@ -10,7 +10,7 @@
       </app-premium-card>
     </div>
     <p-scrolltop
-      styleClass="!bottom-[110px] !right-6"
+      styleClass="max-sm:!bottom-[90px] max-sm:!right-0 max-sm:!left-0 max-sm:!m-auto !bottom-[110px] !right-8"
       target="parent"
       [threshold]="200"
       icon="pi pi-arrow-up"
@@ -20,3 +20,8 @@
   <app-accessibility-control></app-accessibility-control>
   <app-audio-player></app-audio-player>
 </div>
+<app-status-modal
+  [state]="modalService.state()"
+  [message]="modalService.message()"
+  (onClose)="modalService.close()"
+/>

@@ -8,6 +8,7 @@ import { ApiService } from '../../core/services/api-service/api-service';
 import { forkJoin, Subject } from 'rxjs';
 import { StatusModal } from '../../shared/modals/status-modal/status-modal';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { StatusModalService } from '../../core/services/status-modal-service/status-modal-service';
 
 interface DuaItem {
   id: number;
@@ -22,12 +23,12 @@ interface DuaItem {
 @Component({
   selector: 'app-dua',
   standalone: true,
-  imports: [CommonModule, FormsModule, ToastModule, StatusModal, ConfirmDialogModule],
+  imports: [CommonModule, FormsModule, ToastModule, ConfirmDialogModule],
   templateUrl: './dua.html',
   styleUrl: './dua.css',
 })
 export class Dua {
-  @ViewChild('modal') modal!: StatusModal;
+  private modal = inject(StatusModalService);
   // State-tracking reactive signals
   searchQuery = signal<string>('');
   selectedCategory = signal<string>('All');
