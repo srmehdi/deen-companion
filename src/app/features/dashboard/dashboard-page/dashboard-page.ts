@@ -9,9 +9,11 @@ import { ThemeService } from '../../../core/services/theme-service/theme-service
 import { StatusModal } from '../../../shared/modals/status-modal/status-modal';
 import { FormsModule } from '@angular/forms';
 import { Activity } from '../../../core/services/activity/activity';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AudioPlayerService } from '../../../core/services/audio-player-service/audio-player-service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { StatusModalService } from '../../../core/services/status-modal-service/status-modal-service';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -19,15 +21,15 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     PremiumCard,
     CommonModule,
     OverflowCheck,
-    StatusModal,
     FormsModule,
     ConfirmDialogModule,
+    ToastModule,
   ],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
 export class DashboardPage {
-  @ViewChild('modal') modal!: StatusModal;
+  private modal = inject(StatusModalService);
   isCardClicked = signal(false);
   constructor(
     private api: ApiService,
@@ -64,6 +66,9 @@ export class DashboardPage {
   fontSize = signal<number>(100);
   currentTime = signal(new Date());
   ngOnInit() {
+    if (this.modal.state() !== 'initializing') {
+      this.modal.showLoading('Syncing dashboard components...');
+    }
     this.searchSubject
       .pipe(
         debounceTime(100),
@@ -123,7 +128,13 @@ export class DashboardPage {
           );
         } else {
           console.log('Error detecting location', error);
-          alert('Unable to retrieve your location. Please search manually.');
+          // alert('Unable to retrieve your location. Please search manually.');
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Location Access Needed',
+            detail: 'Please enable location services or search manually for accurate prayer times.',
+            life: 10000,
+          });
         }
       },
     );
@@ -295,6 +306,7 @@ export class DashboardPage {
 
     this.prayerTimesApiCall(lat, lng);
   }
+  private messageService = inject(MessageService);
   detectLocation() {
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser');
@@ -315,9 +327,15 @@ export class DashboardPage {
       },
       (error) => {
         console.log('Error detecting location', error);
-        alert(
-          'Unable to retrieve your location. Please enable it in your browser/phone settings or search manually. We need your location to show the prayer times.',
-        );
+        // alert(
+        //   'Unable to retrieve your location. Please enable it in your browser/phone settings or search manually. We need your location to show the prayer times.',
+        // );
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Location Access Needed',
+          detail: 'Please enable location services or search manually for accurate prayer times.',
+          life: 10000,
+        });
       },
       { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
     );
