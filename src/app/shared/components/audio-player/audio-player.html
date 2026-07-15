@@ -50,14 +50,14 @@
               <button
                 (click)="navigateToCurrentAudio()"
                 title="Click to jump straight to this verse in the Quran text view"
-                class="sm:pl-[16px] flex flex-col justify-center max-lg:whitespace-nowrap cursor-pointer hover:bg-sacred-gold/10 dark:hover:bg-gold-tint/10 sm:px-2 sm:py-[4px] rounded-lg transition-all text-left outline-none group/meta"
+                class="sm:pl-[16px] flex flex-col justify-center max-lg:whitespace-nowrap cursor-pointer bg-sacred-gold/10 hover:bg-sacred-gold/40 bg-gold-tint/10 dark:hover:bg-gold-tint/20 py-[4px] px-[6px] sm:px-2 sm:py-[4px] rounded-md transition-all text-left outline-none group/meta"
               >
                 <div
                   class="flex items-center text-[8px] text-sacred-gold dark:text-gold-tint uppercase tracking-[0.2em] font-bold animate-pulse group-hover/meta:underline"
                 >
                   {{ globalAudio.isAudioPlaying() ? 'Now Reciting...' : 'Paused.' }} 🎯
                 </div>
-                <div class="text-[12px] md:text-[14px] text-slate-800 dark:text-slate-200">
+                <div class="text-[11px] md:text-[14px] text-slate-800 dark:text-slate-200">
                   <span>
                     {{ globalAudio.playingSurahInfo()?.surahNumber }}. Surah
                     {{ globalAudio.playingSurahInfo()?.englishName }} | Ayah No.
@@ -73,7 +73,7 @@
 
           <div class="md:flex items-center justify-center">
             <div
-              class="pl-[10px] sm:pl-[16px] h-[36px] flex items-end justify-center gap-[4px] overflow-hidden pointer-events-none opacity-90 dark:opacity-45"
+              class="pl-0 sm:pl-[16px] h-[36px] flex items-end justify-center gap-[3.5px] sm:gap-[4px] overflow-hidden pointer-events-none opacity-90 dark:opacity-45"
             >
               @if (globalAudio.isAudioPlaying()) {
                 @for (
@@ -89,10 +89,12 @@
               }
             </div>
 
-            <div class="pl-[10px] sm:pl-[16px] flex items-center gap-[4px] group/volume relative">
+            <div
+              class="pl-0 sm:pl-[16px] flex items-center gap-[2px] sm:gap-[4px] group/volume relative"
+            >
               <button
                 (click)="globalAudio.toggleMute()"
-                class="text-slate-500 hover:text-sacred-gold transition-colors p-[4px] rounded-md hover:bg-slate-800/50 cursor-pointer"
+                class="text-slate-500 hover:text-sacred-gold transition-colors p-[2px] sm:p-[4px] rounded-md hover:bg-slate-800/50 cursor-pointer"
                 title="Toggle Mute"
               >
                 @if (globalAudio.volume() === 0) {

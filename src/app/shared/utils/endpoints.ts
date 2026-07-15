@@ -17,4 +17,7 @@ export const Endpoints = {
   },
   SAVE_DUA_BOOKMARK_IDS: '/api/save-dua-bookmark-ids',
   GET_DUA_BOOKMARK_IDS: '/api/get-dua-bookmark-ids',
+  HADITHS_COLLECTIONS: '/api/hadith/collections',
+  HADITHS_BY_COLLECTION: '/api/hadith/',
+  HADITHS_SEARCH: '/api/hadith/search',
 };

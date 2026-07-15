@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Endpoints } from '../../../shared/utils/endpoints';
@@ -127,5 +127,28 @@ export class ApiService {
   }
   getDuaBookmarkIds(payload: any) {
     return this.http.post<any>(Endpoints.GET_DUA_BOOKMARK_IDS, payload);
+  }
+  getHadithCollections<T>() {
+    return this.http
+      .get<T>(this.ummahBase + Endpoints.HADITHS_COLLECTIONS)
+      .pipe(catchError(() => throwError(() => 'API error')));
+  }
+  getHadithsByCollection<T>(collectionKey: string, page: number = 1, limit: number = 5) {
+    const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
+
+    return this.http
+      .get<T>(this.ummahBase + Endpoints.HADITHS_BY_COLLECTION + collectionKey, { params })
+      .pipe(catchError(() => throwError(() => 'API error')));
+  }
+  searchHadiths<T>(query: string, limit: number = 100) {
+    const params = new HttpParams().set('q', query).set('limit', limit.toString());
+    return this.http
+      .get<T>(this.ummahBase + Endpoints.HADITHS_SEARCH, { params })
+      .pipe(catchError(() => throwError(() => 'API search error')));
+  }
+  getHadithByNumber<T>(collectionKey: string, hadithNumber: string | number) {
+    return this.http.get<T>(
+      this.ummahBase + Endpoints.HADITHS_BY_COLLECTION + `${collectionKey}/${hadithNumber}`,
+    );
   }
 }
