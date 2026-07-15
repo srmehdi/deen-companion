@@ -1,4 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, effect } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -17,13 +17,32 @@ export class AudioPlayerService {
 
   private playingSurahAyahs: any[] = [];
 
+  lastPlayedAudio = signal<any>(this.loadAudioProgressFromStorage());
   constructor() {
     this.audioPlayer.volume = this.volume();
     this.audioPlayer.onended = () => {
       this.playNextAyah();
     };
-  }
+    effect(() => {
+      const activeAyah = this.currentPlayingAyah();
+      const currentSurahInfo = this.playingSurahInfo(); // Ensure your service exposes this or structural equal metadata
 
+      if (activeAyah && currentSurahInfo) {
+        const audioProgress = {
+          surahNumber: currentSurahInfo.surahNumber,
+          surahName: currentSurahInfo.englishName || currentSurahInfo.surahName, // Cross-check mapping properties
+          ayahNumber: activeAyah.numberInSurah,
+        };
+
+        localStorage.setItem('quran_audio_progress', JSON.stringify(audioProgress));
+        this.lastPlayedAudio.set(audioProgress);
+      }
+    });
+  }
+  private loadAudioProgressFromStorage() {
+    const saved = localStorage.getItem('quran_audio_progress');
+    return saved ? JSON.parse(saved) : null;
+  }
   playAudio(ayah: any, surahData?: any): void {
     if (!ayah) return;
 

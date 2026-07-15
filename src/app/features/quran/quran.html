@@ -25,16 +25,40 @@
           Read, study, and contemplate the divine revelations
         </p>
       </div>
-
-      @if (currentBookmark(); as bookmark) {
-        <button
-          (click)="resumeJourney()"
-          class="max-sm:self-center flex items-center gap-1.5 font-serif text-xs font-bold px-3 py-2 rounded-lg bg-sacred-gold/10 border border-sacred-gold/30 hover:bg-sacred-gold/20 text-sacred-gold transition-all duration-200 shadow-sm cursor-pointer whitespace-nowrap"
-        >
-          <i class="pi pi-bookmark-fill text-xs!"></i>
-          <span>Resume: Surah {{ bookmark.surahName }} (Ayah {{ bookmark.ayahNumber }})</span>
-        </button>
-      }
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 max-sm:w-full">
+        @if (currentBookmark(); as bookmark) {
+          <button
+            (click)="resumeJourney()"
+            class="flex items-start gap-2 font-serif text-xs font-bold px-2 sm:px-3 py-2 rounded-lg bg-sacred-gold/10 border border-sacred-gold/30 hover:bg-sacred-gold/20 text-sacred-gold transition-all duration-200 shadow-sm cursor-pointer min-w-0"
+          >
+            <i class="pi pi-bookmark-fill text-xs! mt-0.5"></i>
+            <div class="flex flex-col items-start text-left min-w-0">
+              <span class="break-words">Last Marked: Surah {{ bookmark.surahName }}</span>
+              <span
+                class="block text-[10px] opacity-90 mt-0.5 font-sans tracking-wide whitespace-nowrap max-sm:whitespace-normal"
+              >
+                (Surah {{ bookmark.surahNumber }} • Ayah {{ bookmark.ayahNumber }})
+              </span>
+            </div>
+          </button>
+        }
+        @if (globalAudio.lastPlayedAudio(); as audioSession) {
+          <button
+            (click)="resumeAudioJourney()"
+            class="flex items-start gap-2 font-serif text-xs font-bold px-2 sm:px-3 py-2 rounded-lg bg-divine-emerald/20 border border-divine-emerald/40 hover:bg-divine-emerald/30 text-white transition-all duration-200 shadow-sm cursor-pointer min-w-0"
+          >
+            <i class="pi pi-headphones text-xs! mt-0.5 text-sacred-gold"></i>
+            <div class="flex flex-col items-start text-left min-w-0">
+              <span class="break-words">Resume Audio: {{ audioSession.surahName }}</span>
+              <span
+                class="block text-[10px] opacity-90 mt-0.5 font-sans tracking-wide whitespace-nowrap max-sm:whitespace-normal"
+              >
+                (Surah {{ audioSession.surahNumber }} • Ayah {{ audioSession.ayahNumber }})
+              </span>
+            </div>
+          </button>
+        }
+      </div>
     </div>
   </div>
 
@@ -263,7 +287,8 @@
                 <span
                   class="text-[12px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
                 >
-                  Surah {{ selectedSurah().info.englishName }} • Ayah {{ ayah.numberInSurah }}
+                  Surah {{ selectedSurah().info.englishName }} • Surah
+                  {{ selectedSurah().info.number }} • Ayah {{ ayah.numberInSurah }}
                 </span>
               </div>
               <!-- Arabic Text Stream Panel -->
