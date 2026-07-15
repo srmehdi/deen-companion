@@ -180,7 +180,7 @@ export class Quran implements AfterViewInit {
     setTimeout(() => {
       const element = document.getElementById(`ayah-row-${ayahNumber}`);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 100);
   }

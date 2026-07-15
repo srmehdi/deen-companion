@@ -166,9 +166,11 @@ export class Dua {
       const matchesCat = onlySaved || cat === 'All' || dua.category === cat;
       const matchesQuery =
         !query ||
-        dua.title.toLowerCase().includes(query) ||
-        dua.translation.toLowerCase().includes(query) ||
-        dua.transliteration.toLowerCase().includes(query);
+        query.length < 3 ||
+        (query.length >= 3 &&
+          (dua.title.toLowerCase().includes(query) ||
+            dua.translation.toLowerCase().includes(query) ||
+            dua.transliteration.toLowerCase().includes(query)));
 
       return matchesSaved && matchesCat && matchesQuery;
     });
@@ -274,7 +276,20 @@ export class Dua {
       this.currentPage.set(page);
       // Premium smooth behavior scroll repositioning matching reader transitions
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      this.scrollToActivePageButton();
     }
+  }
+  scrollToActivePageButton(): void {
+    setTimeout(() => {
+      const activeBtn = document.querySelector('.page-btn-active');
+      if (activeBtn) {
+        activeBtn.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center',
+        });
+      }
+    }, 150);
   }
   clearSearch() {
     this.searchQuery.set('');

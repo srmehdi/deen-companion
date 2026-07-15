@@ -161,7 +161,7 @@
               d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
             />
           </svg>
-          <span>Back</span>
+          <span>Back to Surahs</span>
         </button>
         <div class="sm:text-center min-w-0 max-sm:self-center md:ml-18">
           <h2 class="text-xl font-black text-gray-800 dark:text-gray-100 truncate">
@@ -195,7 +195,7 @@
           <!-- Inside the @for (ayah of selectedSurah().ayahs) loop -->
           <div
             [id]="'ayah-row-' + ayah.numberInSurah"
-            class="flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
+            class="scroll-mt-25 flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
             [class.bg-sacred-gold/5]="
               (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
                 selectedSurah().info.number &&

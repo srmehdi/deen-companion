@@ -229,7 +229,8 @@
             @for (pageIdx of [].constructor(totalPages()); track $index) {
               <button
                 (click)="changePage($index + 1)"
-                class="w-7 h-7 rounded-lg text-xs font-bold font-mono border transition-all duration-200 cursor-pointer flex-shrink-0"
+                class="page-btn w-7 h-7 rounded-lg text-xs font-bold font-mono border transition-all duration-200 cursor-pointer flex-shrink-0"
+                [class.page-btn-active]="currentPage() === $index + 1"
                 [class.bg-divine-emerald]="currentPage() === $index + 1"
                 [class.text-white]="currentPage() === $index + 1"
                 [class.border-divine-emerald]="currentPage() === $index + 1"
@@ -239,7 +240,6 @@
                 [class.dark:text-gray-400]="currentPage() !== $index + 1"
                 [class.border-gray-200]="currentPage() !== $index + 1"
                 [class.dark:border-white/10]="currentPage() !== $index + 1"
-                [class.hover:border-sacred-gold]="currentPage() !== $index + 1"
               >
                 {{ $index + 1 }}
               </button>

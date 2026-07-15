@@ -94,3 +94,9 @@ body {
   animation: shimmer 2s infinite linear;
   border-radius: 0.5rem;
 } */
+.p-dialog-title {
+  font-size: 20px !important;
+}
+.p-confirmdialog-message {
+  font-size: 16px !important;
+}
