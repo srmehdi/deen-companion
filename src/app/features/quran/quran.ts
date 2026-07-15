@@ -38,6 +38,8 @@ export class Quran implements AfterViewInit {
   surahs = signal<any[]>([]);
   selectedSurah = signal<any>(null);
   searchQuery = signal<string>('');
+  private isUserInteracting = false;
+  private interactionTimeout: any;
   constructor() {
     // Reactive effect that auto-scrolls to the active ayah row whenever it changes
     effect(() => {
@@ -46,6 +48,7 @@ export class Quran implements AfterViewInit {
 
       // Ensure we only scroll if the active Ayah belongs to the currently displayed Surah
       if (
+        !this.isUserInteracting &&
         activeAyah &&
         currentSurah &&
         this.globalAudio.playingSurahInfo()?.surahNumber === currentSurah.info.number
@@ -54,7 +57,37 @@ export class Quran implements AfterViewInit {
       }
     });
   }
+  @HostListener('window:wheel')
+  @HostListener('window:touchmove')
+  @HostListener('window:scroll')
+  onUserInteraction() {
+    this.isUserInteracting = true;
 
+    if (this.interactionTimeout) {
+      clearTimeout(this.interactionTimeout);
+    }
+
+    this.interactionTimeout = setTimeout(() => {
+      this.isUserInteracting = false;
+    }, 5000);
+  }
+  resumeAudioJourney(): void {
+    const progress = this.globalAudio.lastPlayedAudio();
+    if (progress) {
+      this.loadSurah(progress.surahNumber, progress.ayahNumber);
+      setTimeout(() => {
+        const targetSurah = this.selectedSurah();
+        if (targetSurah && targetSurah.ayahs) {
+          const targetAyah = targetSurah.ayahs.find(
+            (a: any) => a.numberInSurah === progress.ayahNumber,
+          );
+          if (targetAyah && !this.globalAudio.isAudioPlaying()) {
+            this.globalAudio.playAudio(targetAyah, targetSurah);
+          }
+        }
+      }, 800);
+    }
+  }
   ngAfterViewInit() {
     this.loadSurahList();
     // Listen to next Surah actions triggered by the background audio service
@@ -89,14 +122,21 @@ export class Quran implements AfterViewInit {
       error: (err) => console.error('Failed to grab index mapping', err),
     });
   }
-  loadSurah(number: number, targetAyahNumber?: number): void {
+  loadSurah(number: number, targetAyahNumber?: number, isManualBookmarkJump = false): void {
     this.modal.showLoading();
     this.api.getSurahDetails(number).subscribe({
       next: (surahData) => {
         this.selectedSurah.set(surahData);
         this.modal.close();
         if (targetAyahNumber) {
-          this.scrollToAyah(targetAyahNumber);
+          if (isManualBookmarkJump) {
+            this.isUserInteracting = true;
+            this.scrollToAyah(targetAyahNumber);
+            setTimeout(() => (this.isUserInteracting = false), 1500);
+          } else {
+            this.scrollToAyah(targetAyahNumber);
+          }
+          // this.scrollToAyah(targetAyahNumber);
         } else {
           const activeAyah = this.globalAudio.currentPlayingAyah();
           const currentSurah = this.selectedSurah();
@@ -155,7 +195,7 @@ export class Quran implements AfterViewInit {
   resumeJourney(): void {
     const activeBookmark = this.currentBookmark();
     if (activeBookmark) {
-      this.loadSurah(activeBookmark.surahNumber, activeBookmark.ayahNumber);
+      this.loadSurah(activeBookmark.surahNumber, activeBookmark.ayahNumber, true);
     }
   }
 
