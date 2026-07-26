@@ -61,12 +61,14 @@
 }
 
 html {
-  @apply bg-slate-50 text-slate-900;
+  @apply bg-gray-50! text-slate-900!;
+  /* @apply bg-slate-50 text-slate-900; */
   font-size: var(--base-font-size) !important;
 }
 
 html.dark {
-  @apply bg-slate-950 text-slate-100;
+  @apply bg-[#070d0b]! text-gray-100!;
+  /* @apply bg-slate-950 text-slate-100; */
 }
 
 body {

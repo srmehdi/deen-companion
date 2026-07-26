@@ -70,11 +70,22 @@ export class MediaComponent implements OnInit {
     this.fetchData();
   }
 
+  // playVideoByIndex(index: number): void {
+  //   const list = this.filteredVideos();
+  //   if (index >= 0 && index < list.length) {
+  //     this.activeVideoIndex.set(index);
+  //     this.activeEmbedUrl.set(getYoutubeEmbedUrl(list[index].url));
+  //   }
+  // }
+
   playVideoByIndex(index: number): void {
     const list = this.filteredVideos();
     if (index >= 0 && index < list.length) {
       this.activeVideoIndex.set(index);
-      this.activeEmbedUrl.set(getYoutubeEmbedUrl(list[index].url));
+
+      // Pass current URL, full active list, and index
+      const embedUrl = getYoutubeEmbedUrl(list[index].url, list, index);
+      this.activeEmbedUrl.set(embedUrl);
     }
   }
 
