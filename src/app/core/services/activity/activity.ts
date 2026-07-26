@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy, signal } from '@angular/core';
 import { ApiService } from '../api-service/api-service';
 import { of, Subject, takeUntil, concatMap } from 'rxjs';
+import { getDeviceDetails } from '../../../shared/utils/helpers';
 
 @Injectable({ providedIn: 'root' })
 export class Activity implements OnDestroy {
@@ -64,14 +65,25 @@ export class Activity implements OnDestroy {
   // }
 
   activityStats: any = signal(null);
+  pingResponse: any = signal(null);
   private sendPing(visitorId: string) {
     const $destroyed: Subject<void> = new Subject();
-    const payload = { visitorId: visitorId };
+    // const payload = { visitorId: visitorId };
+    const deviceInfo = getDeviceDetails();
+    const payload = {
+      visitorId: visitorId,
+      device: deviceInfo.device,
+      userAgent: deviceInfo.userAgent,
+      screenResolution: `${window.screen.width}x${window.screen.height}`,
+      language: navigator.language,
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    };
     this.api
       .sendPing(payload)
       .pipe(
         takeUntil($destroyed),
         concatMap((pingResp) => {
+          this.pingResponse.set(pingResp);
           if (pingResp) {
             return this.api.getActivityStats();
           } else {
@@ -121,7 +133,13 @@ export class Activity implements OnDestroy {
       return crypto.randomUUID();
     }
   }
+  // ngOnDestroy() {
+  //   clearInterval(this.pingIntervalId);
+  // }
   ngOnDestroy() {
-    clearInterval(this.pingIntervalId);
+    this.stopPing();
+    if (this.inactivityTimeoutId) {
+      clearTimeout(this.inactivityTimeoutId);
+    }
   }
 }

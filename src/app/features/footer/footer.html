@@ -1,29 +1,30 @@
-<!-- <footer class="text-center sm:flex sm:justify-between">
-  <div class="sm:mr-4">
-    <p class="text-sm m-0">© 2026 Deen Companion.</p>
-  </div>
-  <div class="">
-    <p class="text-sm m-0">
-      Contact Me:
-      <span class="underline text-xs"
-        ><a href="mailto:srmthisside@gmail.com">srmthisside@gmail.com</a></span
-      >
-    </p>
-  </div>
-</footer> -->
-
-<!-- <footer
-  class="mt-8 border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm px-6 py-8"
-> -->
-<footer class="backdrop-blur-sm p-4">
+<!-- <footer class="backdrop-blur-sm p-4">
   <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-    <div class="flex items-center gap-4 order-1 md:order-1">
+    <div class="flex items-center gap-2 order-1 md:order-1">
       <div class="flex flex-col">
         <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold"
           >Total Visits</span
         >
         <span class="text-sm text-center font-semibold text-slate-700 dark:text-slate-300">{{
           activityStats()?.totalUsers?.[0]?.count || 0
+        }}</span>
+      </div>
+      <div class="h-8 w-[1px] bg-gray-700"></div>
+      <div class="flex flex-col">
+        <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold"
+          >Unique Visitors</span
+        >
+        <span class="text-sm text-center font-semibold text-slate-700 dark:text-slate-300">{{
+          activityStats()?.totalUniqueUsers?.[0]?.count || 0
+        }}</span>
+      </div>
+      <div class="h-8 w-[1px] bg-gray-700"></div>
+      <div class="flex flex-col">
+        <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold"
+          >Your Visits</span
+        >
+        <span class="text-sm text-center font-semibold text-slate-700 dark:text-slate-300">{{
+          pingResponse()?.visitCount || 0
         }}</span>
       </div>
       <div class="h-8 w-[1px] bg-gray-700"></div>
@@ -67,6 +68,115 @@
         class="cursor-pointer text-sm text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors underline decoration-slate-300 dark:decoration-slate-700 underline-offset-4"
       >
         srmthisside@gmail.com
+      </a>
+    </div>
+  </div>
+</footer> -->
+
+<footer class="relative backdrop-blur-md px-[16px] transition-colors duration-300">
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <!-- Stat Badges Bar (Strict 2x2 Grid for All Screen Sizes) -->
+    <div class="order-1 grid grid-cols-2 gap-1 w-full md:w-auto">
+      <!-- Total Visits Badge -->
+      <div
+        class="flex flex-col items-center justify-center bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200/50 dark:border-slate-800/50 rounded-xl px-4 py-2 shadow-sm min-w-[110px]"
+      >
+        <span
+          class="text-[9px] leading-tight uppercase tracking-wider text-slate-400 font-bold text-center"
+        >
+          Total Visits
+        </span>
+        <span class="text-xs font-semibold text-slate-800 dark:text-slate-200 font-mono mt-0.5">
+          {{ activityStats()?.totalUsers?.[0]?.count || 0 }}
+        </span>
+      </div>
+
+      <!-- Unique Visitors Badge -->
+      <div
+        class="flex flex-col items-center justify-center bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200/50 dark:border-slate-800/50 rounded-xl px-4 py-2 shadow-sm min-w-[110px]"
+      >
+        <span
+          class="text-[9px] leading-tight uppercase tracking-wider text-slate-400 font-bold text-center"
+        >
+          Unique Visitors
+        </span>
+        <span class="text-xs font-semibold text-slate-800 dark:text-slate-200 font-mono mt-0.5">
+          {{ activityStats()?.totalUniqueUsers?.[0]?.count || 0 }}
+        </span>
+      </div>
+
+      <!-- Personal Visits Badge -->
+      <div
+        class="flex flex-col items-center justify-center bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2 shadow-sm min-w-[110px]"
+      >
+        <span
+          class="text-[9px] leading-tight uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold text-center"
+        >
+          Your Visits
+        </span>
+        <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-300 font-mono mt-0.5">
+          {{ pingResponse()?.visitCount || 0 }}
+        </span>
+      </div>
+
+      <!-- Live Active Indicator Badge -->
+      <div
+        class="flex flex-col items-center justify-center bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2 shadow-sm min-w-[110px]"
+      >
+        <div class="flex items-center gap-1">
+          <span class="relative flex h-1.5 w-1.5">
+            <span
+              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sacred-gold opacity-75"
+            ></span>
+            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-sacred-gold"></span>
+          </span>
+          <span
+            class="text-[9px] leading-tight uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold text-center"
+          >
+            Active Now
+          </span>
+        </div>
+        <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-300 font-mono mt-0.5">
+          {{ activityStats()?.activeUsers?.[0]?.count || 0 }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Center Branding & Copyright -->
+    <div class="order-3 md:order-2 text-center">
+      <div class="flex flex-col items-center gap-1">
+        <p class="text-[12px] text-slate-600 dark:text-slate-400 font-medium">
+          © 2026
+          <span
+            class="font-semibold text-slate-900 dark:text-slate-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+          >
+            Deen Companion
+          </span>
+        </p>
+        <p class="text-[11px] text-slate-400 dark:text-slate-500">
+          Developed by
+          <span
+            class="font-semibold text-emerald-600 dark:text-emerald-400 cursor-pointer"
+            title="srmthisside@gmail.com"
+          >
+            SRM
+          </span>
+          for <span class="font-semibold text-slate-700 dark:text-slate-300">UMMAH</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Contact Button -->
+    <div class="order-2 md:order-3 flex flex-col items-center md:items-end">
+      <p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">
+        Get in Touch
+      </p>
+      <a
+        href="mailto:srmthisside@gmail.com"
+        class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 bg-slate-100 dark:bg-slate-900 hover:bg-slate-200/80 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800 px-3 py-1.5 rounded-lg transition-all duration-200 shadow-sm"
+      >
+        <span>✉️</span>
+        <span>srmthisside@gmail.com</span>
       </a>
     </div>
   </div>

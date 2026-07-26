@@ -18,4 +18,8 @@ export const routes: Routes = [
     path: 'dua',
     loadComponent: () => import('./features/dua/dua').then((m) => m.Dua),
   },
+  {
+    path: 'islamic-videos',
+    loadComponent: () => import('./features/media/media').then((m) => m.MediaComponent),
+  },
 ];

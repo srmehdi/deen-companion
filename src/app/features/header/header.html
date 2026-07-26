@@ -1,5 +1,5 @@
 <nav
-  class="sticky top-0 z-50 border-b border-white/20 dark:border-white/10 bg-white/70 dark:bg-bg-green backdrop-blur-2xl shadow-[0_8px_40px_rgba(15,23,42,0.08)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.35)]"
+  class="fixed left-0 right-0 top-0 z-50 border-b border-white/20 dark:border-white/10 bg-white/70 dark:bg-bg-green backdrop-blur-2xl shadow-[0_8px_40px_rgba(15,23,42,0.08)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.35)]"
 >
   <div
     class="relative max-w-6xl mx-auto h-[72px] px-[16px] md:px-[24px] flex items-center justify-between"
@@ -24,26 +24,26 @@
     </a>
 
     <!-- Desktop Navigation -->
-    <div class="hidden lg:flex items-center gap-2">
+    <div class="hidden lg:flex items-center gap-[8px]">
       <a
         routerLink="/"
         [routerLinkActiveOptions]="{ exact: true }"
         routerLinkActive="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 shadow-sm"
-        class="px-[16px] py-[8px] leading-normal rounded-full text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-white/10 transition-all duration-300 hover:-translate-y-0.5"
+        class="px-[16px] py-[8px] leading-normal rounded-full text-[14px] font-medium text-slate-600 dark:text-slate-300 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-white/10 transition-all duration-300 hover:-translate-y-0.5"
       >
         Home
       </a>
       <a
         routerLink="/quran"
         routerLinkActive="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 shadow-sm"
-        class="px-[16px] py-[8px] leading-normal rounded-full text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-white/10 transition-all duration-300 hover:-translate-y-0.5"
+        class="px-[16px] py-[8px] leading-normal rounded-full text-[14px] font-medium text-slate-600 dark:text-slate-300 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-white/10 transition-all duration-300 hover:-translate-y-0.5"
       >
         Quran
       </a>
       <a
         routerLink="/hadees"
         routerLinkActive="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 shadow-sm"
-        class="px-[16px] py-[8px] leading-normal rounded-full text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-white/10 transition-all duration-300 hover:-translate-y-0.5"
+        class="px-[16px] py-[8px] leading-normal rounded-full text-[14px] font-medium text-slate-600 dark:text-slate-300 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-white/10 transition-all duration-300 hover:-translate-y-0.5"
       >
         Hadees
       </a>
@@ -51,14 +51,21 @@
       <a
         routerLink="/dua"
         routerLinkActive="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 shadow-sm"
-        class="px-[16px] py-[8px] leading-normal rounded-full text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-white/10 transition-all duration-300 hover:-translate-y-0.5"
+        class="px-[16px] py-[8px] leading-normal rounded-full text-[14px] font-medium text-slate-600 dark:text-slate-300 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-white/10 transition-all duration-300 hover:-translate-y-0.5"
       >
         Dua
+      </a>
+      <a
+        routerLink="/islamic-videos"
+        routerLinkActive="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 shadow-sm"
+        class="px-[16px] py-[8px] leading-normal rounded-full text-[14px] font-medium text-slate-600 dark:text-slate-300 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-white/10 transition-all duration-300 hover:-translate-y-0.5"
+      >
+        Videos
       </a>
 
       <!-- Theme Switch -->
       <div
-        class="ml-3 flex items-center gap-2 rounded-full border border-white/30 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-xl px-[12px] py-[8px] shadow-sm"
+        class="ml-[12px] flex items-center gap-[8px] rounded-full border border-white/30 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-xl px-[12px] py-[8px] shadow-sm"
       >
         <span class="text-[16px]">☀️</span>
 
@@ -73,10 +80,10 @@
 
         <span class="text-[16px]">🌙</span>
 
-        <div class="w-px h-5 bg-slate-300 dark:bg-white/10"></div>
+        <div class="w-px h-[20px] bg-slate-300 dark:bg-white/10"></div>
 
         <label
-          class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 cursor-pointer"
+          class="flex items-center gap-[8px] text-[12px] text-slate-500 dark:text-slate-400 cursor-pointer"
         >
           <input
             type="checkbox"
@@ -115,7 +122,7 @@
 
   <!-- Mobile Menu -->
   <div
-    class="lg:hidden absolute right-[16px] top-full w-[280px] rounded-2xl border border-white/20 dark:border-white/10 bg-white/90 dark:bg-bg-green/95 backdrop-blur-2xl shadow-2xl transition-all duration-300"
+    class="lg:hidden absolute right-[12px] top-full w-[280px] rounded-[12px] border border-white/20 dark:border-white/10 bg-white/90 dark:bg-bg-green/95 backdrop-blur-2xl shadow-2xl transition-all duration-300"
     [ngClass]="
       isToggle() ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3 pointer-events-none'
     "
@@ -126,7 +133,7 @@
         [routerLinkActiveOptions]="{ exact: true }"
         routerLinkActive="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 shadow-sm"
         (click)="toggleMenu()"
-        class="block rounded-xl px-[16px] py-[12px] hover:bg-amber-50 dark:hover:bg-white/5 transition"
+        class="block rounded-xl px-[16px] py-[12px] text-[14px] hover:bg-amber-50 dark:hover:bg-white/5 transition"
       >
         Home
       </a>
@@ -134,7 +141,7 @@
         routerLink="/quran"
         routerLinkActive="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 shadow-sm"
         (click)="toggleMenu()"
-        class="block rounded-xl px-[16px] py-[12px] hover:bg-amber-50 dark:hover:bg-white/5 transition"
+        class="block rounded-xl px-[16px] py-[12px] text-[14px] hover:bg-amber-50 dark:hover:bg-white/5 transition"
       >
         Quran
       </a>
@@ -142,7 +149,7 @@
         routerLink="/hadees"
         routerLinkActive="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 shadow-sm"
         (click)="toggleMenu()"
-        class="block rounded-xl px-[16px] py-[12px] hover:bg-amber-50 dark:hover:bg-white/5 transition"
+        class="block rounded-xl px-[16px] py-[12px] text-[14px] hover:bg-amber-50 dark:hover:bg-white/5 transition"
       >
         Hadees
       </a>
@@ -151,15 +158,25 @@
         routerLink="/dua"
         routerLinkActive="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 shadow-sm"
         (click)="toggleMenu()"
-        class="block rounded-xl px-[16px] py-[12px] hover:bg-amber-50 dark:hover:bg-white/5 transition"
+        class="block rounded-xl px-[16px] py-[12px] text-[14px] hover:bg-amber-50 dark:hover:bg-white/5 transition"
       >
         Dua
+      </a>
+      <a
+        routerLink="/islamic-videos"
+        routerLinkActive="bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 shadow-sm"
+        (click)="toggleMenu()"
+        class="block rounded-xl px-[16px] py-[12px] text-[14px] hover:bg-amber-50 dark:hover:bg-white/5 transition"
+      >
+        Videos
       </a>
 
       <div class="border-t border-slate-200 dark:border-white/10 my-3"></div>
 
-      <div class="flex items-center justify-between rounded-xl bg-slate-50 dark:bg-white/5 p-3">
-        <span class="text-sm font-medium">Theme</span>
+      <div
+        class="flex items-center justify-between rounded-xl bg-slate-50 dark:bg-white/5 p-[12px]"
+      >
+        <span class="text-[14px] font-medium">Theme</span>
 
         <button
           (click)="theme.toggleManual()"
@@ -172,9 +189,9 @@
       </div>
 
       <label
-        class="mt-3 flex items-center justify-between rounded-xl bg-slate-50 dark:bg-white/5 p-3 cursor-pointer"
+        class="mt-[12px] flex items-center justify-between rounded-xl bg-slate-50 dark:bg-white/5 p-[12px] cursor-pointer"
       >
-        <span class="text-sm">Automatic Theme</span>
+        <span class="text-[14px]">Automatic Theme</span>
 
         <input
           type="checkbox"

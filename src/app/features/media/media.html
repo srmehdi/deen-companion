@@ -1,0 +1,197 @@
+<div class="yt-container">
+  <!-- Header Filter Pills Bar -->
+  <header class="yt-header max-sm:gap-[4px]!">
+    <div class="type-pills max-sm:gap-[2px]!">
+      <button
+        class="yt-pill"
+        [class.active]="selectedType() === 'short'"
+        (click)="selectType('short')"
+      >
+        <span>⚡</span> Shorts
+      </button>
+      <button
+        class="yt-pill"
+        [class.active]="selectedType() === 'video'"
+        (click)="selectType('video')"
+      >
+        <span>🎬</span> <span>Videos</span>
+      </button>
+    </div>
+
+    <div class="divider bg-slate-950! dark:bg-[#e5e7eb]!"></div>
+
+    <div class="category-pills max-sm:gap-[2px]!">
+      @for (cat of categories; track cat) {
+        <button
+          class="yt-pill"
+          [class.active]="selectedCategory() === cat"
+          (click)="selectCategory(cat)"
+        >
+          {{ cat | titlecase }}
+        </button>
+      }
+    </div>
+  </header>
+
+  <!-- Skeleton Shimmer Loader -->
+  @if (loading()) {
+    <div class="yt-grid max-sm:gap-[8px]!" [class.shorts-grid]="selectedType() === 'short'">
+      @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track i) {
+        <div class="skeleton-card">
+          <div class="skeleton-thumb"></div>
+          <div class="skeleton-meta">
+            <div class="skeleton-avatar"></div>
+            <div class="skeleton-lines">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line short"></div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <!-- Main Media Content Grid -->
+    <main class="yt-grid max-sm:gap-[8px]!" [class.shorts-grid]="selectedType() === 'short'">
+      @for (item of filteredVideos(); track item.id; let idx = $index) {
+        <div class="yt-card" (click)="playVideoByIndex(idx)">
+          <div class="thumbnail-container">
+            <img
+              [src]="getThumbnailUrl(item.url)"
+              [alt]="item.title"
+              (error)="onThumbnailError($event)"
+              loading="lazy"
+            />
+            <div class="play-overlay">
+              <span class="play-icon">▶</span>
+            </div>
+            @if (selectedType() === 'short') {
+              <span class="type-badge">SHORT</span>
+            }
+          </div>
+
+          <div class="card-details">
+            <!-- <div class="channel-avatar">🕌</div> -->
+            <div class="card-meta">
+              <h3 class="video-title">{{ item.title }}</h3>
+              <p class="channel-name">{{ item.category | titlecase }}</p>
+              <!-- <p class="channel-name">Deen Companion • {{ item.category | titlecase }}</p> -->
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="no-results-card text-[16px]!">
+          <div class="no-results-icon">🔍</div>
+          <h3 class="no-results-title">
+            No {{ selectedType() === 'short' ? 'Shorts' : 'Videos' }} Found
+          </h3>
+          <p class="no-results-text">
+            There are no media items available under the
+            <span class="highlight-category">"{{ selectedCategory() | titlecase }}"</span> category.
+          </p>
+          <button class="reset-filter-btn" (click)="selectCategory('all')">Clear Filters</button>
+        </div>
+      }
+    </main>
+  }
+
+  <!-- Viewport Safety YouTube Modal Player with Non-Overlapping Controls -->
+  @if (activeEmbedUrl(); as embedUrl) {
+    <div class="yt-modal-backdrop">
+      <!-- Fixed Viewport Close Button -->
+      <button class="close-btn" (click)="closePlayer()" aria-label="Close">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="22"
+          viewBox="0 0 24 24"
+          width="22"
+          fill="currentColor"
+        >
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+          />
+        </svg>
+      </button>
+
+      <div class="yt-modal-container">
+        <!-- Desktop Previous Video Button -->
+        @if (activeVideoIndex()! > 0) {
+          <button
+            class="nav-btn prev-btn desktop-only"
+            (click)="playPrevious()"
+            aria-label="Previous Video"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              fill="currentColor"
+            >
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+          </button>
+        }
+
+        <!-- Video Iframe Wrapper -->
+        <div class="iframe-wrapper" [class.short-aspect]="selectedType() === 'short'">
+          <iframe
+            [src]="embedUrl | safeUrl"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              fullscreen;
+            "
+            allowfullscreen="true"
+            webkitallowfullscreen="true"
+            mozallowfullscreen="true"
+          >
+          </iframe>
+        </div>
+
+        <!-- Desktop Next Video Button -->
+        @if (activeVideoIndex()! < filteredVideos().length - 1) {
+          <button
+            class="nav-btn next-btn desktop-only"
+            (click)="playNext()"
+            aria-label="Next Video"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              fill="currentColor"
+            >
+              <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+            </svg>
+          </button>
+        }
+
+        <!-- Mobile Floating Nav Controls Bar -->
+        <div class="mobile-nav-bar mobile-only">
+          <button
+            class="nav-btn-mobile"
+            [disabled]="activeVideoIndex() === 0"
+            (click)="playPrevious()"
+            aria-label="Previous Video"
+          >
+            ◀ Previous
+          </button>
+          <button
+            class="nav-btn-mobile"
+            [disabled]="activeVideoIndex() === filteredVideos().length - 1"
+            (click)="playNext()"
+            aria-label="Next Video"
+          >
+            Next ▶
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
