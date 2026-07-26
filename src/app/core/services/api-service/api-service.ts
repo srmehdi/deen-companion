@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Endpoints } from '../../../shared/utils/endpoints';
+import { VideoItem } from '../../../shared/utils/interface';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -150,5 +151,8 @@ export class ApiService {
     return this.http.get<T>(
       this.ummahBase + Endpoints.HADITHS_BY_COLLECTION + `${collectionKey}/${hadithNumber}`,
     );
+  }
+  getVideos(payload: { type: string }) {
+    return this.http.post<any>(Endpoints.GET_VIDEOS, payload);
   }
 }

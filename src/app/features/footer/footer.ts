@@ -11,11 +11,13 @@ import { Activity } from '../../core/services/activity/activity';
 })
 export class Footer {
   activityStats: any;
+  pingResponse: any;
   constructor(
     private http: ApiService,
     private activity: Activity,
   ) {
     this.activityStats = this.activity.activityStats;
+    this.pingResponse = this.activity.pingResponse;
     this.activity.startTracking();
     // this.getActivityStats();
   }

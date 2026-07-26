@@ -10,6 +10,10 @@ export const handler: Handler = async () => {
   `);
 
     const totalResult = await query(`
+      SELECT COALESCE(SUM(visit_count), 0) AS count
+      FROM visitors
+    `);
+    const totalUniqueResult = await query(`
     SELECT COUNT(*) AS count
     FROM visitors
   `);
@@ -19,6 +23,7 @@ export const handler: Handler = async () => {
       body: JSON.stringify({
         activeUsers: activeResult.rows,
         totalUsers: totalResult.rows,
+        totalUniqueUsers: totalUniqueResult.rows,
       }),
     };
   } catch (err) {
