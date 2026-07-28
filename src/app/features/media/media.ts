@@ -5,6 +5,7 @@ import { getYoutubeEmbedUrl } from '../../shared/utils/helpers';
 import { VideoItem } from '../../shared/utils/interface';
 import { StatusModalService } from '../../core/services/status-modal-service/status-modal-service';
 import { ApiService } from '../../core/services/api-service/api-service';
+import { AudioPlayerService } from '../../core/services/audio-player-service/audio-player-service';
 
 @Component({
   selector: 'app-media',
@@ -77,8 +78,11 @@ export class MediaComponent implements OnInit {
   //     this.activeEmbedUrl.set(getYoutubeEmbedUrl(list[index].url));
   //   }
   // }
-
+  globalAudio = inject(AudioPlayerService);
   playVideoByIndex(index: number): void {
+    if (this.globalAudio.isAudioPlaying()) {
+      this.globalAudio.pauseAudio();
+    }
     const list = this.filteredVideos();
     if (index >= 0 && index < list.length) {
       this.activeVideoIndex.set(index);
