@@ -13,7 +13,7 @@ export const Endpoints = {
   quran: {
     surahList: 'https://api.alquran.cloud/v1/surah',
     surahDetail: (number: number) =>
-      `https://api.alquran.cloud/v1/surah/${number}/editions/quran-uthmani,en.sahih,en.transliteration,ar.alafasy`,
+      `https://api.alquran.cloud/v1/surah/${number}/editions/quran-uthmani,en.sahih,en.transliteration,ar.alafasy,ur.jalandhry,hi.hindi`,
   },
   SAVE_DUA_BOOKMARK_IDS: '/api/save-dua-bookmark-ids',
   GET_DUA_BOOKMARK_IDS: '/api/get-dua-bookmark-ids',
