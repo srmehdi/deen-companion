@@ -146,12 +146,12 @@
     >
       <!-- FIXED SIZED STICKY TOP BAR -->
       <div
-        class="sticky top-0 z-30 backdrop-blur-md h-[46px] px-[12px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm transition-all duration-200 flex items-center justify-between gap-[8px] max-w-full overflow-hidden"
+        class="sticky top-0 z-30 backdrop-blur-md h-[46px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm transition-all duration-200 flex items-center justify-between gap-[8px] max-w-full overflow-hidden"
       >
         <!-- Fixed Sized Back Button -->
         <button
           (click)="closeReader()"
-          class="flex-shrink-0 flex items-center gap-[6px] h-[30px] px-[12px] bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold rounded-full text-[10px] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
+          class="flex-shrink-0 flex items-center gap-[6px] h-[30px] px-[12px] bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold rounded-full text-[11px] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -173,7 +173,7 @@
         <!-- Fixed Sized Language Switcher with Static Absolute Text Label -->
         <div class="flex-shrink-0 flex flex-col items-end justify-center h-[38px] gap-[4px]">
           <span
-            class="text-[6px] font-bold tracking-wider text-gray-500 dark:text-gray-400 uppercase leading-none select-none"
+            class="text-[8px] font-bold tracking-wider text-gray-500 dark:text-gray-400 uppercase leading-none select-none"
           >
             Translation Language
           </span>
@@ -182,7 +182,7 @@
           >
             <button
               (click)="setLanguage('ur')"
-              class="h-[22px] px-[8px] rounded-[4px] text-[11px] font-bold font-urdu leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
+              class="h-[22px] px-[8px] rounded-[4px] text-[12px] font-bold font-urdu leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
               [class.bg-divine-emerald]="selectedLanguage() === 'ur'"
               [class.text-white]="selectedLanguage() === 'ur'"
               [class.dark:bg-sacred-gold]="selectedLanguage() === 'ur'"
@@ -194,7 +194,7 @@
             </button>
             <button
               (click)="setLanguage('hi')"
-              class="h-[22px] px-[8px] rounded-[4px] text-[10px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
+              class="h-[22px] px-[8px] rounded-[4px] text-[12px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
               [class.bg-divine-emerald]="selectedLanguage() === 'hi'"
               [class.text-white]="selectedLanguage() === 'hi'"
               [class.dark:bg-sacred-gold]="selectedLanguage() === 'hi'"
@@ -206,7 +206,7 @@
             </button>
             <button
               (click)="setLanguage('en')"
-              class="h-[22px] px-[8px] rounded-[4px] text-[10px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
+              class="h-[22px] px-[8px] rounded-[4px] text-[12px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
               [class.bg-divine-emerald]="selectedLanguage() === 'en'"
               [class.text-white]="selectedLanguage() === 'en'"
               [class.dark:bg-sacred-gold]="selectedLanguage() === 'en'"
@@ -256,7 +256,7 @@
         @for (ayah of selectedSurah().ayahs; track ayah.numberInSurah) {
           <div
             [id]="'ayah-row-' + ayah.numberInSurah"
-            class="scroll-mt-[120px] flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
+            class="scroll-mt-[124px] flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
             [class.bg-sacred-gold/5]="
               (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
                 selectedSurah().info.number &&

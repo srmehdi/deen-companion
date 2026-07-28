@@ -148,12 +148,12 @@
     >
       <!-- FIXED SIZED STICKY TOP BAR: Back / Clear Search Button ONLY -->
       <div
-        class="sticky top-0 z-30 backdrop-blur-md h-[46px] px-[12px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm transition-all duration-200 flex items-center justify-between gap-[8px] max-w-full overflow-hidden"
+        class="sticky top-0 z-30 backdrop-blur-md h-[46px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm transition-all duration-200 flex items-center justify-between gap-[8px] max-w-full overflow-hidden"
       >
         <!-- Fixed Sized Back Button -->
         <button
           (click)="closeReader()"
-          class="flex-shrink-0 flex items-center gap-[6px] h-[30px] px-[12px] bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold rounded-full text-[10px] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
+          class="flex-shrink-0 flex items-center gap-[6px] h-[30px] px-[12px] bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold rounded-full text-[11px] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -176,7 +176,7 @@
 
         <!-- Compact Context Indicator -->
         <span
-          class="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider truncate"
+          class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider truncate"
         >
           {{ isSearchingGlobally() ? 'Global Search Results' : current.info.name }}
         </span>
@@ -215,7 +215,7 @@
         @for (hadith of displayedHadiths(); track hadith.id) {
           <div
             [id]="'hadith-row-' + hadith.id"
-            class="scroll-mt-25 flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
+            class="scroll-mt-[124px] flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
             [class.bg-sacred-gold/5]="
               !isSearchingGlobally() &&
               currentBookmark()?.collectionKey === selectedCollection().info.key &&
