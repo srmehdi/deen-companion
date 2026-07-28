@@ -108,6 +108,8 @@ export class ApiService {
         const englishAyahs = response.data[1].ayahs;
         const translitAyahs = response.data[2].ayahs;
         const audioAyahs = response.data[3].ayahs;
+        const urduAyahs = response.data[4].ayahs;
+        const hindiAyahs = response.data[5].ayahs;
 
         return {
           info: response.data[0],
@@ -115,6 +117,8 @@ export class ApiService {
             numberInSurah: ayah.numberInSurah,
             text: ayah.text,
             translation: englishAyahs[index].text,
+            translationUr: urduAyahs[index].text,
+            translationHi: hindiAyahs[index].text,
             transliteration: translitAyahs[index].text,
             audio: audioAyahs[index].audio,
           })),
