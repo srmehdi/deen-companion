@@ -110,6 +110,7 @@ export class ApiService {
         const audioAyahs = response.data[3].ayahs;
         const urduAyahs = response.data[4].ayahs;
         const hindiAyahs = response.data[5].ayahs;
+        const audioUrduAyahs = response.data[6].ayahs;
 
         return {
           info: response.data[0],
@@ -121,6 +122,7 @@ export class ApiService {
             translationHi: hindiAyahs[index].text,
             transliteration: translitAyahs[index].text,
             audio: audioAyahs[index].audio,
+            audioUrdu: audioUrduAyahs[index].audio,
           })),
           audio: response.data[3],
         };

@@ -10,7 +10,7 @@
       >
         <i class="pi pi-times text-white text-[12px]! group-hover:animate-pulse"></i>
       </button>
-      <div class="text-[12px] mx-[16px]">
+      <div class="text-[12px] mx-[10px]">
         <div class="flex items-center justify-between">
           <div class="flex items-center justify-center">
             <div class="flex items-center justify-center">
@@ -64,7 +64,11 @@
                     {{ globalAudio.currentPlayingAyah()?.numberInSurah }}
                   </span>
                   <span class="max-md:block text-slate-500 dark:text-slate-400 text-[11px] md:ml-1">
-                    (By {{ globalAudio.playingSurahInfo()?.audioEditionName }})
+                    (By {{ globalAudio.playingSurahInfo()?.audioEditionName }}
+                    @if (globalAudio.playUrduAudio()) {
+                      + Shamshad Ali Khan
+                    }
+                    )
                   </span>
                 </div>
               </button>
@@ -117,7 +121,7 @@
                 class="w-[80px] h-[8px] bg-slate-700 rounded-lg cursor-pointer accent-sacred-gold transition-all group-hover/volume:w-[112px]"
               />
 
-              <span class="text-[10px] text-slate-500 font-mono w-[24px]">
+              <span class="text-[10px] text-slate-500 font-mono w-[16px]">
                 {{ (globalAudio.volume() * 100).toFixed(0) }}%
               </span>
             </div>
