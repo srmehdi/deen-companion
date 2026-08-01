@@ -1,10 +1,12 @@
-import { Injectable, signal, computed, effect } from '@angular/core';
+import { Injectable, signal, computed, effect, inject } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ApiService } from '../api-service/api-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AudioPlayerService {
+  private api = inject(ApiService);
   private audioPlayer = new Audio();
 
   // Global Signals for any component to read
@@ -16,21 +18,45 @@ export class AudioPlayerService {
   private previousVolume = 0.7;
 
   private playingSurahAyahs: any[] = [];
-
+  playUrduAudio = signal<boolean>(this.loadUrduAudioSetting());
+  private isPlayingUrduTrack = false;
   lastPlayedAudio = signal<any>(this.loadAudioProgressFromStorage());
+
+  public playNextSurah$ = new Subject<number>();
+
   constructor() {
     this.audioPlayer.volume = this.volume();
+
+    // Event Listeners to synchronize browser audio state with Angular signals
+    this.audioPlayer.onplay = () => this.isAudioPlaying.set(true);
+    this.audioPlayer.onpause = () => this.isAudioPlaying.set(false);
+
+    // Handle sequential track playback
     this.audioPlayer.onended = () => {
-      this.playNextAyah();
+      const activeAyah = this.currentPlayingAyah();
+
+      // If Arabic just finished and Urdu audio is available & enabled, play Urdu next
+      if (!this.isPlayingUrduTrack && this.playUrduAudio() && activeAyah?.audioUrdu) {
+        this.isPlayingUrduTrack = true;
+        this.audioPlayer.src = activeAyah.audioUrdu;
+        this.audioPlayer.load();
+        this.audioPlayer.play().catch((err) => console.error('Urdu playback error:', err));
+      } else {
+        // Otherwise, move to the next Ayah in the Surah
+        this.isPlayingUrduTrack = false;
+        this.playNextAyah();
+      }
     };
+
+    // Save playback progress in local storage automatically
     effect(() => {
       const activeAyah = this.currentPlayingAyah();
-      const currentSurahInfo = this.playingSurahInfo(); // Ensure your service exposes this or structural equal metadata
+      const currentSurahInfo = this.playingSurahInfo();
 
       if (activeAyah && currentSurahInfo) {
         const audioProgress = {
           surahNumber: currentSurahInfo.surahNumber,
-          surahName: currentSurahInfo.englishName || currentSurahInfo.surahName, // Cross-check mapping properties
+          surahName: currentSurahInfo.englishName || currentSurahInfo.surahName,
           ayahNumber: activeAyah.numberInSurah,
         };
 
@@ -39,10 +65,12 @@ export class AudioPlayerService {
       }
     });
   }
-  private loadAudioProgressFromStorage() {
+
+  private loadAudioProgressFromStorage(): any {
     const saved = localStorage.getItem('quran_audio_progress');
     return saved ? JSON.parse(saved) : null;
   }
+
   playAudio(ayah: any, surahData?: any): void {
     if (!ayah) return;
 
@@ -56,16 +84,21 @@ export class AudioPlayerService {
     }
 
     if (this.currentPlayingAyah()?.numberInSurah === ayah.numberInSurah && this.audioPlayer.src) {
-      this.audioPlayer.play().catch((err) => console.error(err));
+      this.audioPlayer.play().catch((err) => console.error('Audio play error:', err));
     } else {
+      this.isPlayingUrduTrack = false;
       this.audioPlayer.src = ayah.audio;
       this.currentPlayingAyah.set(ayah);
       this.audioPlayer.load();
-      this.audioPlayer.play().catch((err) => console.error(err));
+      this.audioPlayer.play().catch((err) => console.error('Audio load/play error:', err));
     }
 
     this.isAudioPlaying.set(true);
     this.isCardClicked.set(true);
+  }
+
+  toggleUrduRecitation(enabled: boolean): void {
+    this.playUrduAudio.set(enabled);
   }
 
   pauseAudio(): void {
@@ -90,45 +123,74 @@ export class AudioPlayerService {
     this.isCardClicked.set(false);
   }
 
-  public playNextSurah$ = new Subject<number>();
   private playNextAyah(): void {
     const current = this.currentPlayingAyah()?.numberInSurah;
+
     if (current !== null && current !== undefined && this.playingSurahAyahs.length > 0) {
       if (current < this.playingSurahAyahs.length) {
-        this.playAudio(this.playingSurahAyahs[current]); // array index matches next track
+        this.playAudio(this.playingSurahAyahs[current]); // Next track index matches current numberInSurah
       } else {
-        // We reached the end of the current Surah ayahs array
+        // End of the current Surah reached -> Auto-fetch and play next Surah globally
         const currentSurahNumber = this.playingSurahInfo()?.surahNumber;
         if (currentSurahNumber && currentSurahNumber < 114) {
-          this.playNextSurah$.next(currentSurahNumber + 1);
+          const nextSurahNumber = currentSurahNumber + 1;
+          this.loadAndPlayNextSurahGlobally(nextSurahNumber);
         } else {
           this.stopAudio();
         }
       }
     }
   }
-  // private playNextAyah(): void {
-  //   const current = this.currentPlayingAyah()?.numberInSurah;
-  //   if (current !== null && current !== undefined && this.playingSurahAyahs.length > 0) {
-  //     if (current < this.playingSurahAyahs.length) {
-  //       this.playAudio(this.playingSurahAyahs[current]); // array index matches next track
-  //     } else {
-  //       this.stopAudio();
-  //     }
-  //   }
-  // }
 
-  setVolume(value: number) {
+  private loadAndPlayNextSurahGlobally(nextSurahNumber: number): void {
+    this.api.getSurahDetails(nextSurahNumber).subscribe({
+      next: (surahData) => {
+        if (surahData && surahData.ayahs && surahData.ayahs.length > 0) {
+          // Continuous playback start
+          this.playAudio(surahData.ayahs[0], surahData);
+
+          // Emit event for UI components to sync their local state if currently mounted
+          this.playNextSurah$.next(nextSurahNumber);
+        } else {
+          this.stopAudio();
+        }
+      },
+      error: (err) => {
+        console.error('Failed to load next Surah globally:', err);
+        this.stopAudio();
+      },
+    });
+  }
+
+  setVolume(value: number): void {
     this.volume.set(value);
     this.audioPlayer.volume = value;
   }
 
-  toggleMute() {
+  toggleMute(): void {
     if (this.volume() > 0) {
       this.previousVolume = this.volume();
       this.setVolume(0);
     } else {
       this.setVolume(this.previousVolume > 0 ? this.previousVolume : 0.7);
     }
+  }
+
+  replayCurrentAyah(): void {
+    const activeAyah = this.currentPlayingAyah();
+    if (!activeAyah) return;
+
+    this.isPlayingUrduTrack = false;
+    this.audioPlayer.pause();
+    this.audioPlayer.src = activeAyah.audio;
+    this.audioPlayer.currentTime = 0;
+    this.audioPlayer.load();
+    this.audioPlayer.play().catch((err) => console.error('Replay error:', err));
+    this.isAudioPlaying.set(true);
+  }
+
+  private loadUrduAudioSetting(): boolean {
+    const saved = localStorage.getItem('quran_play_urdu_audio');
+    return saved !== null ? JSON.parse(saved) : false;
   }
 }

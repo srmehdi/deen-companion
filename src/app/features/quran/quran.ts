@@ -21,6 +21,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
 import { Bookmark } from '../../shared/utils/interface';
+import { UserInteractionService } from '../../core/services/user-interaction-service/user-interaction.service';
 
 @Component({
   selector: 'app-quran',
@@ -37,7 +38,8 @@ export class Quran implements AfterViewInit, OnDestroy {
   private messageService = inject(MessageService);
 
   private audioSubscription!: Subscription;
-  private interactionTimeout: ReturnType<typeof setTimeout> | null = null;
+  // private interactionTimeout: ReturnType<typeof setTimeout> | null = null;
+  public userInteraction = inject(UserInteractionService);
 
   surahs = signal<any[]>([]);
   selectedSurah = signal<any>(null);
@@ -46,31 +48,61 @@ export class Quran implements AfterViewInit, OnDestroy {
   /// Update language signal type to support 'en' | 'ur' | 'hi'
   selectedLanguage = signal<'en' | 'ur' | 'hi'>(this.loadLanguage());
 
-  private isUserInteracting = false;
+  // private isUserInteracting = false;
 
   currentBookmark = signal<Bookmark | null>(this.loadBookmark());
 
   constructor() {
-    // Auto-scrolls to the active ayah row when playing
     effect(() => {
       const activeAyah = this.globalAudio.currentPlayingAyah();
       const currentSurah = this.selectedSurah();
 
       if (
-        !this.isUserInteracting &&
         activeAyah &&
         currentSurah &&
         this.globalAudio.playingSurahInfo()?.surahNumber === currentSurah.info.number
       ) {
-        this.scrollToAyah(activeAyah.numberInSurah);
+        // Ensure the page containing the active ayah is visible
+        // this.setPageForAyah(activeAyah.numberInSurah);
+
+        const targetAyahNumber = activeAyah.numberInSurah;
+        const targetPage = Math.ceil(targetAyahNumber / this.ayahPageSize());
+        // if (this.currentAyahPage() !== targetPage) {
+        // this.currentAyahPage.set(targetPage);
+        // }
+        if (!this.userInteraction.isInteracting()) {
+          this.currentAyahPage.set(targetPage);
+          this.scrollToAyah(activeAyah.numberInSurah);
+        }
       }
     });
   }
-
   ngAfterViewInit(): void {
     this.loadSurahList();
+
     this.audioSubscription = this.globalAudio.playNextSurah$.subscribe((nextSurahNumber) => {
-      this.loadSurahAndAutoPlay(nextSurahNumber);
+      // Sync the UI view with the newly active Surah playing in the background
+      const currentPlayingSurahInfo = this.globalAudio.playingSurahInfo();
+
+      if (currentPlayingSurahInfo?.surahNumber === nextSurahNumber) {
+        // Load details for view synchronization without triggering re-play
+        this.loadSurahForViewOnly(nextSurahNumber);
+      }
+    });
+  }
+  private loadSurahForViewOnly(surahNumber: number): void {
+    this.api.getSurahDetails(surahNumber).subscribe({
+      next: (surahData) => {
+        // this.selectedSurah.set(surahData);
+        if (!this.userInteraction.isInteracting()) {
+          this.selectedSurah.set(surahData);
+          this.currentAyahPage.set(1);
+          this.scrollToAyah(1);
+        }
+      },
+      error: (err) => {
+        console.error('Failed updating view state for next Surah:', err);
+      },
     });
   }
 
@@ -78,24 +110,9 @@ export class Quran implements AfterViewInit, OnDestroy {
     if (this.audioSubscription) {
       this.audioSubscription.unsubscribe();
     }
-    if (this.interactionTimeout) {
-      clearTimeout(this.interactionTimeout);
-    }
-  }
-
-  @HostListener('window:wheel')
-  @HostListener('window:touchmove')
-  @HostListener('window:scroll')
-  onUserInteraction(): void {
-    this.isUserInteracting = true;
-
-    if (this.interactionTimeout) {
-      clearTimeout(this.interactionTimeout);
-    }
-
-    this.interactionTimeout = setTimeout(() => {
-      this.isUserInteracting = false;
-    }, 5000);
+    // if (this.interactionTimeout) {
+    //   clearTimeout(this.interactionTimeout);
+    // }
   }
 
   setLanguage(lang: 'en' | 'ur' | 'hi'): void {
@@ -128,10 +145,11 @@ export class Quran implements AfterViewInit, OnDestroy {
         this.modal.close();
 
         if (targetAyahNumber) {
+          this.setPageForAyah(targetAyahNumber);
           if (isManualBookmarkJump) {
-            this.isUserInteracting = true;
+            this.userInteraction.isInteracting.set(true);
             this.scrollToAyah(targetAyahNumber);
-            setTimeout(() => (this.isUserInteracting = false), 1500);
+            // setTimeout(() => this.userInteraction.isInteracting.set(false), 1500);
           } else {
             this.scrollToAyah(targetAyahNumber);
           }
@@ -143,8 +161,10 @@ export class Quran implements AfterViewInit, OnDestroy {
             currentSurah &&
             this.globalAudio.playingSurahInfo()?.surahNumber === currentSurah.info.number
           ) {
+            this.setPageForAyah(activeAyah.numberInSurah);
             this.scrollToAyah(activeAyah.numberInSurah);
           } else {
+            this.currentAyahPage.set(1);
             this.confirmAudioRecitation();
           }
         }
@@ -155,21 +175,22 @@ export class Quran implements AfterViewInit, OnDestroy {
       },
     });
   }
-
   loadSurahAndAutoPlay(number: number): void {
     this.modal.showLoading();
     this.api.getSurahDetails(number).subscribe({
       next: (surahData) => {
         this.selectedSurah.set(surahData);
+        this.currentAyahPage.set(1);
         this.modal.close();
 
         if (surahData.ayahs && surahData.ayahs.length > 0) {
           this.scrollToAyah(1);
+          // Pass complete surahData object to initialize global sequence
           this.globalAudio.playAudio(surahData.ayahs[0], surahData);
         }
       },
       error: (err) => {
-        console.error('Failed loading auto-advanced script', err);
+        console.error('Failed loading auto-advanced script:', err);
         this.modal.close();
       },
     });
@@ -185,20 +206,28 @@ export class Quran implements AfterViewInit, OnDestroy {
       this.api.getSurahDetails(surahNumber).subscribe({
         next: (surahData) => {
           this.selectedSurah.set(surahData);
+          this.setPageForAyah(ayahNumber);
           this.modal.close();
           this.scrollToAyah(ayahNumber);
         },
         error: () => this.modal.close(),
       });
     } else {
+      this.setPageForAyah(ayahNumber);
       this.scrollToAyah(ayahNumber);
     }
+  }
+
+  closeReader(): void {
+    this.selectedSurah.set(null);
+    this.currentAyahPage.set(1);
   }
 
   scrollToAyah(ayahNumber: number): void {
     setTimeout(() => {
       const element = document.getElementById(`ayah-row-${ayahNumber}`);
       if (element) {
+        this.scrollToActiveAyahPageButton();
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 100);
@@ -264,19 +293,15 @@ export class Quran implements AfterViewInit, OnDestroy {
 
   private loadBookmark(): Bookmark | null {
     const saved = localStorage.getItem('quran_bookmark');
-    return saved ? JSON.parse(saved) : { surahNumber: 1, surahName: 'Al-Faatiha', ayahNumber: 1 };
+    return saved ? JSON.parse(saved) : null;
   }
 
   toggleAyahAudio(ayah: any): void {
     this.globalAudio.toggleAyahAudio(ayah, this.selectedSurah());
   }
-
-  closeReader(): void {
-    this.selectedSurah.set(null);
-  }
-
   clearSearch(): void {
     this.searchQuery.set('');
+    this.currentPage.set(1);
   }
 
   confirmAudioRecitation(): void {
@@ -314,5 +339,142 @@ export class Quran implements AfterViewInit, OnDestroy {
       /^(بِسْمِ\s*ٱللَّهِ\s*ٱلرَّحْمَٰنِ\s*ٱلرَّحِيمِ|بِسْمِ\s*اللَّهِ\s*الرَّحْمَٰنِ\s*الرَّحِيمِ)\s*/,
       '',
     );
+  }
+  confirmUrduRecitation(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    const isEnabling = checkbox.checked;
+
+    // Temporarily revert the checkbox visual state until the user confirms
+    checkbox.checked = !isEnabling;
+
+    const header = isEnabling ? 'Enable Urdu Recitation' : 'Disable Urdu Recitation';
+
+    const message = isEnabling
+      ? `The Urdu recitation will play after the Arabic recitation for each Ayah.<br> Are you sure you want to proceed?`
+      : `Urdu recitation will be turned off. Only Arabic recitation will play.<br> Are you sure you want to proceed?`;
+
+    this.confirmationService.confirm({
+      key: 'quranAudioPrompt',
+      header: header,
+      message: message,
+      icon: 'pi pi-volume-up text-[#18181B]! dark:text-[#FFFFFF]!',
+      rejectButtonStyleClass:
+        'px-4! py-2! bg-transparent! border! border-gray-300! dark:border-white/10! hover:bg-gray-100! dark:hover:bg-white/5! text-gray-700! dark:text-gray-300! rounded-lg! text-xs! font-semibold! font-sans! mr-2! transition-all! duration-200! cursor-pointer!',
+      acceptButtonStyleClass:
+        'px-4! py-2! border-none! rounded-lg! text-xs! font-semibold! font-sans! transition-all! duration-200! cursor-pointer! shadow-sm!',
+      accept: () => {
+        // Set the intended state on accept
+        checkbox.checked = isEnabling;
+        this.globalAudio.playUrduAudio.set(isEnabling);
+        localStorage.setItem(
+          'quran_play_urdu_audio',
+          JSON.stringify(this.globalAudio.playUrduAudio()),
+        );
+        if (this.globalAudio.currentPlayingAyah()) {
+          this.globalAudio.replayCurrentAyah();
+        }
+        // else if (this.selectedSurah()?.ayahs?.length > 0) {
+        //   this.globalAudio.playAudio(this.selectedSurah().ayahs[0], this.selectedSurah());
+        // }
+      },
+      reject: () => {
+        // Revert back to the original state on reject
+        checkbox.checked = !isEnabling;
+      },
+    });
+  }
+
+  // Add Math reference for template usage
+  protected readonly Math = Math;
+
+  // Pagination state signals
+  currentPage = signal<number>(1);
+  pageSize = signal<number>(9);
+
+  // Sliced Surah list for active page boundary
+  paginatedSurahs = computed(() => {
+    const startIndex = (this.currentPage() - 1) * this.pageSize();
+    const endIndex = startIndex + this.pageSize();
+    return this.filteredSurahs().slice(startIndex, endIndex);
+  });
+
+  // Calculate total dynamic page count
+  totalPages = computed(() => {
+    const pages = Math.ceil(this.filteredSurahs().length / this.pageSize());
+    return pages > 0 ? pages : 1;
+  });
+
+  // Navigation trigger
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage.set(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      this.scrollToActivePageButton();
+    }
+  }
+
+  scrollToActivePageButton(): void {
+    setTimeout(() => {
+      const activeBtn = document.querySelector('.page-btn-active');
+      if (activeBtn) {
+        activeBtn.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center',
+        });
+      }
+    }, 150);
+  }
+  // Ayah Pagination State Signals
+  currentAyahPage = signal<number>(1);
+  ayahPageSize = signal<number>(10);
+
+  // Dynamic slice for current Surah ayahs
+  paginatedAyahs = computed(() => {
+    const surah = this.selectedSurah();
+    if (!surah || !surah.ayahs) return [];
+    const startIndex = (this.currentAyahPage() - 1) * this.ayahPageSize();
+    const endIndex = startIndex + this.ayahPageSize();
+    return surah.ayahs.slice(startIndex, endIndex);
+  });
+
+  // Calculate total Ayah pages
+  totalAyahPages = computed(() => {
+    const surah = this.selectedSurah();
+    if (!surah || !surah.ayahs) return 1;
+    const pages = Math.ceil(surah.ayahs.length / this.ayahPageSize());
+    return pages > 0 ? pages : 1;
+  });
+
+  // Navigate Ayah pages manually
+  changeAyahPage(page: number): void {
+    if (page >= 1 && page <= this.totalAyahPages()) {
+      this.currentAyahPage.set(page);
+      this.userInteraction.isInteracting.set(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      this.scrollToActiveAyahPageButton();
+      // setTimeout(() => {
+      //   this.userInteraction.isInteracting.set(false);
+      // }, 1500);
+    }
+  }
+
+  scrollToActiveAyahPageButton(): void {
+    // setTimeout(() => {
+    const activeBtn = document.querySelector('.ayah-page-btn-active');
+    if (activeBtn) {
+      activeBtn.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      });
+    }
+    // }, 150);
+  }
+
+  // Helper to resolve & switch to the page containing a given Ayah number
+  private setPageForAyah(ayahNumber: number): void {
+    const targetPage = Math.ceil(ayahNumber / this.ayahPageSize());
+    this.currentAyahPage.set(targetPage);
   }
 }

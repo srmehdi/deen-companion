@@ -42,6 +42,22 @@
               </span>
             </div>
           </button>
+        } @else {
+          <!-- Fallback when no bookmark is saved -->
+          <button
+            (click)="loadCollectionDetails('bukhari', 1, 1)"
+            class="flex items-start gap-2 font-serif text-xs font-bold px-2 sm:px-3 py-2 rounded-lg bg-sacred-gold/10 border border-sacred-gold/30 hover:bg-sacred-gold/20 text-sacred-gold transition-all duration-200 shadow-sm cursor-pointer min-w-0"
+          >
+            <i class="pi pi-book text-xs! mt-0.5"></i>
+            <div class="flex flex-col items-start text-left min-w-0">
+              <span class="break-words">Start Reading</span>
+              <span
+                class="block text-[10px] opacity-90 mt-0.5 font-sans tracking-wide whitespace-nowrap max-sm:whitespace-normal"
+              >
+                (Begin with Sahih al-Bukhari #1)
+              </span>
+            </div>
+          </button>
         }
       </div>
     </div>
@@ -148,7 +164,7 @@
     >
       <!-- FIXED SIZED STICKY TOP BAR: Back / Clear Search Button ONLY -->
       <div
-        class="sticky top-0 z-30 backdrop-blur-md h-[46px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm transition-all duration-200 flex items-center justify-between gap-[8px] max-w-full overflow-hidden"
+        class="sticky top-0 z-30 backdrop-blur-md min-h-[46px] py-[2px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm transition-all duration-200 flex items-center justify-between gap-[8px] max-w-full overflow-visible bg-white/80 dark:bg-[#121816]/90"
       >
         <!-- Fixed Sized Back Button -->
         <button
