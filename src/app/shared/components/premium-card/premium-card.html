@@ -1,5 +1,9 @@
 <div
-  class="p-4 rounded-md transition-all bg-cream-bg shadow border border-cream-border dark:bg-bg-green dark:border-gold-tint/20 h-full"
+  class="relative overflow-hidden h-full p-4 rounded-md transition-all duration-300 bg-cream-bg dark:bg-bg-green backdrop-blur-md border border-gray-200/80 dark:border-amber-500/20 shadow-xl shadow-slate-900/5 dark:shadow-emerald-950/20 hover:border-amber-500/30 dark:hover:border-amber-500/40"
 >
+  <div
+    class="pointer-events-none absolute -top-12 -right-12 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl"
+  ></div>
+
   <ng-content />
 </div>

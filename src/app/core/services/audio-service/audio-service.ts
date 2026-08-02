@@ -6,8 +6,8 @@ export class AudioService {
   audio = new Audio();
   isPlaying = signal(false);
   currentUrl = signal<string | null>(null);
-  volume = signal<number>(0.7);
-  private previousVolume = 0.7;
+  volume = signal<number>(0.8);
+  private previousVolume = 0.8;
   constructor() {
     this.audio.volume = this.volume();
     this.audio.onended = () => this.isPlaying.set(false);

@@ -64,11 +64,19 @@ html {
   @apply bg-gray-50! text-slate-900!;
   /* @apply bg-slate-50 text-slate-900; */
   font-size: var(--base-font-size) !important;
+
+  .p-toast-detail {
+    color: #18181b !important;
+  }
 }
 
 html.dark {
   @apply bg-[#070d0b]! text-gray-100!;
   /* @apply bg-slate-950 text-slate-100; */
+
+  .p-toast-detail {
+    color: #ffffff !important;
+  }
 }
 
 body {
