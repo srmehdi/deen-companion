@@ -1,325 +1,378 @@
 <div class="grid md:grid-cols-3 md:gap-[16px]">
+  <!-- Date & Time Card -->
   <app-premium-card class="mb-[12px] sm:mb-[16px]">
-    <div class="fitems-center mb-1 pb-4 border-b border-gray-700">
-      <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Today's Time & Date</h1>
-      <div class="flex items-center gap-1.5">
+    <div
+      class="flex items-center justify-between pb-3.5 mb-3 border-b border-gray-400 dark:border-amber-500/15"
+    >
+      <h1
+        class="text-xs font-bold uppercase tracking-[0.15em] text-amber-700 dark:text-amber-400/90"
+      >
+        Today's Time & Date
+      </h1>
+      <div
+        class="flex items-center gap-2 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20"
+      >
         <span class="relative flex h-2 w-2">
           <span
-            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sacred-gold opacity-75"
+            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"
           ></span>
-          <span class="relative inline-flex rounded-full h-2 w-2 bg-sacred-gold"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
         </span>
-        <span class="text-[0.6rem] tracking-widest text-gray-400">Live</span>
+        <span
+          class="text-[0.64rem] font-semibold tracking-widest uppercase text-amber-600 dark:text-amber-300"
+          >Live</span
+        >
       </div>
     </div>
+
     <div class="text-center">
-      <div class="mb-1 pb-2 border-b border-gray-700">
-        <div class="text-4xl font-light tracking-tight">
-          <span class="ml-3">{{ currentTime() | date: 'HH:mm' }}</span
-          ><span class="text-sm ml-1 text-gray-400">{{ currentTime() | date: 'ss' }}</span>
+      <div class="pb-3 mb-2 border-b border-gray-400 dark:border-amber-500/15">
+        <div
+          class="text-4xl md:text-4xl font-extralight tracking-tight text-gray-900 dark:text-gray-100 font-mono"
+        >
+          <span>{{ currentTime() | date: 'HH:mm' }}</span>
+          <span class="text-base font-normal ml-1 text-amber-600 dark:text-amber-400/80">{{
+            currentTime() | date: 'ss'
+          }}</span>
         </div>
-        <div class="text-[0.5rem] uppercase tracking-[0.2em] text-sacred-gold/80 font-medium">
+        <div
+          class="mt-1 text-[0.6rem] uppercase tracking-[0.25em] text-amber-600/80 dark:text-amber-400/70 font-semibold"
+        >
           Standard Time
         </div>
       </div>
-      <div class="text-4xl font-extrabold text-sacred-gold">
+
+      <div
+        class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 my-1"
+      >
         {{ todayHijriDate()?.hijri.day }}
       </div>
-      <div class="text-xs text-uw-text2 mb-2 mt-1">
+
+      <div class="text-sm font-medium text-gray-700 dark:text-gray-200 mt-1">
         {{ todayHijriDate()?.hijri.month_name }} {{ todayHijriDate()?.hijri.year }}
         {{ todayHijriDate()?.hijri.era }}
       </div>
-      <div class="font-arabic text-uw-text3">
+
+      <div class="font-arabic text-lg text-amber-700 dark:text-amber-300/90 my-1">
         {{ todayHijriDate()?.hijri.month_name_arabic }} {{ todayHijriDate()?.hijri.year }}
       </div>
-      <div class="">({{ todayHijriDate()?.hijri.date | date: 'dd-MM-yyyy' }})</div>
-      <div class="border-t border-gray-700 text-uw-text2 mt-2 pb-1">
+
+      <div class="text-xs text-gray-500 dark:text-gray-400 font-mono">
+        ({{ todayHijriDate()?.hijri.date | date: 'dd-MM-yyyy' }})
+      </div>
+
+      <div
+        class="border-t border-gray-400 dark:border-amber-500/15 text-xs text-gray-600 dark:text-gray-300 mt-3 pt-2.5 font-medium"
+      >
         {{ todayHijriDate()?.gregorian.formatted }}
       </div>
     </div>
-    <div class="border-t border-gray-700"></div>
 
-    <div class="pt-2 font-extralight text-[0.6rem] tracking-[0.06em] opacity-60">
-      <span>*</span><strong>Note:</strong> {{ todayHijriDate()?.islamic_info.note }}
-    </div>
+    @if (todayHijriDate()?.islamic_info?.note) {
+      <div
+        class="mt-2.5 pt-3 border-t border-gray-400 dark:border-amber-500/15 font-light text-[0.64rem] tracking-wide text-gray-500 dark:text-gray-400/80"
+      >
+        <span class="text-amber-500 font-bold">*</span><strong>Note:</strong>
+        {{ todayHijriDate()?.islamic_info.note }}
+      </div>
+    }
   </app-premium-card>
+
+  <!-- Prayer Times Card -->
   <app-premium-card class="md:col-span-2 mb-[12px] sm:mb-[16px]">
-    <div class="relative w-full max-w-sm mx-auto mb-2">
-      <div class="flex items-center gap-1 sm:gap-2">
+    <!-- Search Bar Section -->
+    <div class="relative w-full max-w-sm mx-auto mb-5">
+      <div class="flex items-center gap-2">
         <div
-          class="flex-1 flex items-center px-3 py-2 transition-all duration-300 border shadow-sm rounded-lg bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border-white/40 dark:border-slate-700/50 focus-within:ring-2 focus-within:ring-indigo-500/50"
+          class="flex-1 flex items-center px-3 py-2 transition-all duration-300 border rounded-lg bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border-gray-400 dark:border-amber-500/20 focus-within:border-amber-500/60 focus-within:ring-2 focus-within:ring-amber-500/20 shadow-sm"
         >
-          <!-- <span class="text-slate-400">🔍</span> -->
-          <i class="pi pi-search text-gray-400 text-xs"></i>
+          <i class="pi pi-search text-amber-600/70 dark:text-amber-400/70 text-xs"></i>
           <input
             type="text"
             placeholder="Search city..."
-            class="w-full ml-2 bg-transparent border-none outline-none text-[0.8rem] text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
+            class="w-full ml-2.5 bg-transparent border-none outline-none text-[0.8rem] text-gray-800 dark:text-gray-100 placeholder:text-gray-400"
             (input)="onSearch($event)"
             [(ngModel)]="searchQuery"
           />
           @if (searchQuery.length > 0) {
             <i
-              class="pi pi-times text-gray-400 text-xs! cursor-pointer"
+              class="pi pi-times text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xs cursor-pointer transition-colors"
               (click)="clearSearch()"
             ></i>
           }
-          <!-- <button
-            *ngIf="searchQuery.length > 0"
-            (click)="clearSearch()"
-            class="px-1 rounded-full cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
-          >
-            <span class="text-xs font-bold leading-none">✕</span>
-          </button> -->
         </div>
         <button
           (click)="detectLocation()"
-          class="flex items-center justify-center p-2.5 transition-all bg-indigo-600 rounded-lg hover:bg-indigo-700 active:scale-95 shadow-md shadow-indigo-200 dark:shadow-none group cursor-pointer"
+          class="flex items-center justify-center p-2.5 transition-all duration-200 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white rounded-lg active:scale-95 shadow-md shadow-amber-500/20 cursor-pointer group"
           title="Use Current Location"
         >
-          <!-- <span class="text-white group-hover:animate-pulse">📍</span> -->
-          <i class="pi pi-map-marker text-white text-xs group-hover:animate-pulse"></i>
+          <i class="pi pi-map-marker text-xs group-hover:scale-110 transition-transform"></i>
         </button>
       </div>
+
+      <!-- Search Results Dropdown -->
       <ul
         *ngIf="results.length > 0 && searchQuery.length > 0"
-        class="absolute w-full mt-2 overflow-hidden border shadow-2xl rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-white/20 dark:border-slate-800/50 z-[2000]"
+        class="absolute w-full mt-2 overflow-hidden border shadow-2xl rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-amber-500/20 z-[2000] max-h-60 overflow-y-auto"
       >
         <li
           *ngFor="let city of results"
           (click)="selectCity(city)"
-          class="px-5 py-3 cursor-pointer hover:bg-indigo-500/10 text-[0.8rem] text-slate-800 dark:text-slate-100 border-b border-slate-100 dark:border-slate-800 last:border-none"
+          class="px-4 py-3 cursor-pointer hover:bg-amber-500/10 text-xs text-gray-800 dark:text-gray-100 border-b border-gray-100 dark:border-slate-800/80 last:border-none transition-colors flex items-center justify-between"
         >
-          {{ city.display_name }}
+          <span>{{ city.display_name }}</span>
+          <i class="pi pi-chevron-right text-[10px] text-gray-400"></i>
         </li>
       </ul>
     </div>
+
+    <!-- Loading Skeleton -->
     @if (isPrayerTimeLoading()) {
-      <!-- <app-premium-card class="md:col-span-2 mb-4"> -->
-      <!-- <div class="mb-4 pb-4 border-b border-gray-700">
-        <div
-          class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-4 w-32 mb-3"
-        ></div>
-        <div
-          class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-32"
-        ></div>
-      </div> -->
-      <div class="items-center mb-4 pb-4 border-b border-gray-700">
-        <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Prayer Times</h1>
-        <div
-          class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-32"
-        ></div>
+      <div
+        class="flex sm:items-center items-start flex-col max-sm:gap-1 sm:flex-row sm:justify-between pb-3 mb-4 border-b border-gray-400 dark:border-amber-500/15"
+      >
+        <h1
+          class="text-xs font-bold uppercase tracking-[0.15em] text-amber-700 dark:text-amber-400/90 mb-1"
+        >
+          Prayer Times
+        </h1>
+        <div class="animate-pulse bg-gray-200 dark:bg-slate-800/80 h-3 w-48 rounded-md"></div>
       </div>
 
-      <div class="md:columns-2">
-        <div class="mb-4 md:border-r border-gray-700">
-          <div
-            class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-20 mb-2"
-          ></div>
-          <div
-            class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-6 w-32"
-          ></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div
+          class="p-3 rounded-xl bg-gray-100/50 dark:bg-slate-800/30 border border-gray-400/50 dark:border-slate-800"
+        >
+          <div class="animate-pulse bg-gray-200 dark:bg-slate-800 h-3 w-20 rounded mb-2"></div>
+          <div class="animate-pulse bg-gray-200 dark:bg-slate-800 h-6 w-32 rounded"></div>
         </div>
-        <div class="mb-4">
-          <div
-            class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-20 mb-2"
-          ></div>
-          <div
-            class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-6 w-32"
-          ></div>
+        <div
+          class="p-3 rounded-xl bg-gray-100/50 dark:bg-slate-800/30 border border-gray-400/50 dark:border-slate-800"
+        >
+          <div class="animate-pulse bg-gray-200 dark:bg-slate-800 h-3 w-20 rounded mb-2"></div>
+          <div class="animate-pulse bg-gray-200 dark:bg-slate-800 h-6 w-32 rounded"></div>
         </div>
       </div>
-
-      <div class="border-t border-gray-700 mb-4"></div>
 
       <div
-        class="flex flex-col gap-2 md:grid lg:grid-cols-5 md:grid-cols-3 md:gap-3 border-b border-gray-700 pb-4"
+        class="grid grid-cols-1 md:grid-cols-5 gap-2.5 pb-4 border-b border-gray-400 dark:border-amber-500/15"
       >
         @for (item of [1, 2, 3, 4, 5]; track $index) {
-          <div
-            class="shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-4 md:h-16 rounded-xl"
-          ></div>
+          <div class="animate-pulse bg-gray-200 dark:bg-slate-800/80 h-11 md:h-18 rounded-xl"></div>
         }
       </div>
-      <div
-        class="mt-4 shimmer-block dark:bg-linear-to-r! from-[#1f2937]! via-[#374151] to-[#1f2937] h-3 w-full"
-      ></div>
-      <!-- </app-premium-card> -->
     } @else {
-      <!-- <app-premium-card class="md:col-span-2 mb-4"> -->
-      <div class="items-center mb-4 pb-4 border-b border-gray-700">
-        <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Prayer Times</h1>
-        <div class="text-[0.6rem] text-gray-400">
-          <span class="">{{ prayer_times_data()?.date | date: 'fullDate' }} | </span>
-          <span class="">{{ currentTimeAtSelectedCity() ?? 'N/A' }} | </span>
-          <span class=""> {{ prayer_times_data()?.timezone }}</span>
+      <!-- Main Content -->
+      <div
+        class="flex sm:items-center items-start flex-col max-sm:gap-1 sm:flex-row sm:justify-between pb-3 mb-4 border-b border-gray-400 dark:border-amber-500/15"
+      >
+        <h1
+          class="text-xs font-bold uppercase tracking-[0.15em] text-amber-700 dark:text-amber-400/90"
+        >
+          Prayer Times
+        </h1>
+        <div class="text-[0.65rem] text-gray-500 dark:text-gray-400 font-medium tracking-wide">
+          <span>{{ prayer_times_data()?.date | date: 'fullDate' }}</span>
+          <span class="mx-1.5 opacity-50">•</span>
+          <span>{{ currentTimeAtSelectedCity() ?? 'N/A' }}</span>
+          <span class="mx-1.5 opacity-50">•</span>
+          <span class="text-amber-600 dark:text-amber-400">{{
+            prayer_times_data()?.timezone
+          }}</span>
         </div>
       </div>
-      <div class="md:columns-2">
-        <div class="mb-4 md:border-r border-gray-700">
-          <p class="text-xs text-gray-400">Current Prayer</p>
-          <h2 class="text-lg font-bold text-accent">
-            {{ prayer_times_data()?.islamic_info.prayer_names[currentPrayer()] ?? 'N/A' }}
+
+      <!-- Current vs Next Prayer Highlights -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 backdrop-blur-sm">
+          <p
+            class="text-[0.65rem] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400"
+          >
+            Current Prayer
+          </p>
+          <h2 class="text-xl font-extrabold text-amber-800 dark:text-amber-300 mt-0.5">
+            {{ prayer_times_data()?.islamic_info?.prayer_names?.[currentPrayer()] ?? 'N/A' }}
           </h2>
         </div>
-        <div class="mb-4">
-          <p class="text-xs text-gray-400">Next Prayer</p>
-          @if (prayer_times_data()?.islamic_info.prayer_names[nextPrayer()]) {
-            <h2 class="text-lg">
-              {{ prayer_times_data()?.islamic_info.prayer_names[nextPrayer()] ?? 'N/A' }} in
-              {{ prayer_times_data()?.current_status.minutes_until_next ?? 'N/A' }} minute(s)
+        <div
+          class="p-3.5 rounded-xl bg-gray-100/70 dark:bg-slate-900/40 border border-gray-400 dark:border-slate-800"
+        >
+          <p
+            class="text-[0.65rem] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400"
+          >
+            Next Prayer
+          </p>
+          @if (prayer_times_data()?.islamic_info?.prayer_names?.[nextPrayer()]) {
+            <h2 class="text-base font-bold text-gray-800 dark:text-gray-200 mt-0.5">
+              {{ prayer_times_data()?.islamic_info?.prayer_names?.[nextPrayer()] }}
+              <span class="text-xs font-normal text-amber-600 dark:text-amber-400 ml-1">
+                in {{ prayer_times_data()?.current_status?.minutes_until_next ?? 'N/A' }} min
+              </span>
             </h2>
           } @else {
-            <h2 class="text-lg">
-              {{ 'N/A' }}
-            </h2>
+            <h2 class="text-base font-bold text-gray-400 mt-0.5">N/A</h2>
           }
         </div>
       </div>
-      <div class="border-t border-gray-700 mb-4"></div>
 
+      <!-- Prayer List Grid -->
       <div
-        class="flex flex-col gap-2 md:grid lg:grid-cols-5 md:grid-cols-3 md:gap-3 border-b border-gray-700 pb-4"
+        class="grid grid-cols-1 md:grid-cols-5 gap-2.5 pb-4 border-b border-gray-400 dark:border-amber-500/15"
       >
         <div
           *ngFor="let p of prayers"
-          class="flex justify-between items-center px-4 py-1.5 rounded-xl md:flex-col md:justify-center md:p-2.5"
+          class="flex md:flex-col justify-between md:justify-center items-center p-3 rounded-xl transition-all duration-300"
           [ngClass]="{
             'bg-accent text-black font-bold shadow-lg': p.key === currentPrayer(),
-            'bg-cream-highlight dark:bg-premium-emerald border border-gold-tint/20 text-gray-900 dark:text-gray-100':
+            'bg-white/60 dark:bg-premium-emerald border border-gold-tint/20 text-gray-800 dark:text-gray-200 hover:border-amber-500/40':
               p.key !== currentPrayer(),
           }"
         >
-          <p class="text-sm font-medium uppercase tracking-wider dark:opacity-80 md:mb-0.5">
+          <p class="text-[0.7rem] font-bold uppercase tracking-wider opacity-80 md:mb-1">
             {{ p.name }}
           </p>
-          <p class="text-sm tracking-wider dark:opacity-80 md:text-lg font-bold">
-            {{ prayer_times_data()?.prayer_times[p.key] }}
+          <p class="text-sm md:text-base font-extrabold tracking-tight font-mono">
+            {{ prayer_times_data()?.prayer_times?.[p.key] }}
           </p>
         </div>
       </div>
-      <div class="pt-4 font-extralight text-[0.6rem] tracking-[0.08em] opacity-60">
-        <span>*</span><strong>Note:</strong> {{ prayer_times_data()?.islamic_info.note }}
-      </div>
-      <!-- </app-premium-card> -->
+
+      @if (prayer_times_data()?.islamic_info?.note) {
+        <div
+          class="pt-3 font-light text-[0.65rem] tracking-wide text-gray-500 dark:text-gray-400/80"
+        >
+          <span class="text-amber-500 font-bold">*</span><strong>Note:</strong>
+          {{ prayer_times_data()?.islamic_info?.note }}
+        </div>
+      }
     }
   </app-premium-card>
 </div>
 
 <div class="grid md:grid-cols-3 md:gap-[16px]">
   <div class="mb-[12px] sm:mb-[16px]">
-    <app-premium-card class="">
-      <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
-        <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Verse of the Day</h1>
-        <div>
-          <span class="text-xs text-gray-400"
-            >{{ verseOfTheDay()?.surah.name_english }} ({{
-              verseOfTheDay()?.surah.name_translation
-            }})
-          </span>
-        </div>
+    <app-premium-card>
+      <div
+        class="flex items-start flex-col gap-1 pb-3 mb-4 border-b border-gray-400 dark:border-amber-500/15"
+      >
+        <h1
+          class="text-xs font-bold uppercase tracking-[0.15em] text-amber-700 dark:text-amber-400/90"
+        >
+          Verse of the Day
+        </h1>
+        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+          Surah {{ verseOfTheDay()?.surah?.name_english }} ({{
+            verseOfTheDay()?.surah?.name_translation
+          }})
+        </span>
       </div>
+
       <div class="text-center">
+        <!-- Arabic Verse -->
         <div
           appOverflowCheck
-          (hasOverflow)="handleOverflow(verseOfTheDay()?.surah.number + 1, $event)"
-          [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah.number + 1)"
-          [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah.number + 1)"
-          class="font-arabic text-[1.1rem] leading-[1.9] text-justify antialiased mb-4 text-center!"
+          (hasOverflow)="handleOverflow(verseOfTheDay()?.surah?.number + 1, $event)"
+          [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah?.number + 1)"
+          [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah?.number + 1)"
+          class="font-arabic text-[1.1rem] leading-[2.2] text-center antialiased mb-4 text-amber-900 dark:text-amber-100"
           dir="rtl"
         >
-          {{ verseOfTheDay()?.verse.arabic }}
+          {{ verseOfTheDay()?.verse?.arabic }}
         </div>
+
         @if (
-          needsReadMore().has(verseOfTheDay()?.surah.number + 1) ||
-          isExpanded(verseOfTheDay()?.surah.number + 1)
+          needsReadMore().has(verseOfTheDay()?.surah?.number + 1) ||
+          isExpanded(verseOfTheDay()?.surah?.number + 1)
         ) {
           <button
-            (click)="toggleExpand(verseOfTheDay()?.surah.number + 1)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+            (click)="toggleExpand(verseOfTheDay()?.surah?.number + 1)"
+            class="mx-auto mb-4 text-[0.65rem] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest hover:text-amber-500 transition-colors flex items-center gap-1 cursor-pointer"
           >
-            {{ isExpanded(verseOfTheDay()?.surah.number + 1) ? 'Show Less' : 'Read Full Verse' }}
+            {{ isExpanded(verseOfTheDay()?.surah?.number + 1) ? 'Show Less' : 'Read Full Verse' }}
             <span
-              [class.rotate-180]="isExpanded(verseOfTheDay()?.surah.number + 1)"
+              [class.rotate-180]="isExpanded(verseOfTheDay()?.surah?.number + 1)"
               class="transition-transform duration-300"
+              >▼</span
             >
-              ▼
-            </span>
           </button>
         }
+
+        <!-- Transliteration -->
         <div
           appOverflowCheck
-          (hasOverflow)="handleOverflow(verseOfTheDay()?.surah.number + 2, $event)"
-          [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah.number + 2)"
-          [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah.number + 2)"
-          class="italic text-xs text-uw-text2 text-justify antialiased mb-4 text-center!"
+          (hasOverflow)="handleOverflow(verseOfTheDay()?.surah?.number + 2, $event)"
+          [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah?.number + 2)"
+          [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah?.number + 2)"
+          class="italic text-xs text-gray-600 dark:text-gray-300 antialiased mb-4 leading-relaxed"
         >
-          {{ verseOfTheDay()?.verse.transliteration }}
+          {{ verseOfTheDay()?.verse?.transliteration }}
         </div>
+
         @if (
-          needsReadMore().has(verseOfTheDay()?.surah.number + 2) ||
-          isExpanded(verseOfTheDay()?.surah.number + 2)
+          needsReadMore().has(verseOfTheDay()?.surah?.number + 2) ||
+          isExpanded(verseOfTheDay()?.surah?.number + 2)
         ) {
           <button
-            (click)="toggleExpand(verseOfTheDay()?.surah.number + 2)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+            (click)="toggleExpand(verseOfTheDay()?.surah?.number + 2)"
+            class="mx-auto mb-4 text-[0.65rem] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest hover:text-amber-500 transition-colors flex items-center gap-1 cursor-pointer"
           >
             {{
-              isExpanded(verseOfTheDay()?.surah.number + 2)
+              isExpanded(verseOfTheDay()?.surah?.number + 2)
                 ? 'Show Less'
                 : 'Read Full Transliteration'
             }}
             <span
-              [class.rotate-180]="isExpanded(verseOfTheDay()?.surah.number + 2)"
+              [class.rotate-180]="isExpanded(verseOfTheDay()?.surah?.number + 2)"
               class="transition-transform duration-300"
+              >▼</span
             >
-              ▼
-            </span>
           </button>
         }
+
+        <!-- Translation -->
         <div
           appOverflowCheck
-          (hasOverflow)="handleOverflow(verseOfTheDay()?.surah.number + 3, $event)"
-          [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah.number + 3)"
-          [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah.number + 3)"
-          class="text-xs text-justify antialiased mb-4 text-center!"
+          (hasOverflow)="handleOverflow(verseOfTheDay()?.surah?.number + 3, $event)"
+          [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah?.number + 3)"
+          [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah?.number + 3)"
+          class="text-xs text-gray-800 dark:text-gray-200 antialiased mb-4 leading-relaxed"
         >
-          {{ verseOfTheDay()?.verse.translations.sahih_international }}
+          {{ verseOfTheDay()?.verse?.translations?.sahih_international }}
         </div>
+
         @if (
-          needsReadMore().has(verseOfTheDay()?.surah.number + 3) ||
-          isExpanded(verseOfTheDay()?.surah.number + 3)
+          needsReadMore().has(verseOfTheDay()?.surah?.number + 3) ||
+          isExpanded(verseOfTheDay()?.surah?.number + 3)
         ) {
           <button
-            (click)="toggleExpand(verseOfTheDay()?.surah.number + 3)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+            (click)="toggleExpand(verseOfTheDay()?.surah?.number + 3)"
+            class="mx-auto mb-4 text-[0.65rem] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest hover:text-amber-500 transition-colors flex items-center gap-1 cursor-pointer"
           >
             {{
-              isExpanded(verseOfTheDay()?.surah.number + 3) ? 'Show Less' : 'Read Full Translation'
+              isExpanded(verseOfTheDay()?.surah?.number + 3) ? 'Show Less' : 'Read Full Translation'
             }}
             <span
-              [class.rotate-180]="isExpanded(verseOfTheDay()?.surah.number + 3)"
+              [class.rotate-180]="isExpanded(verseOfTheDay()?.surah?.number + 3)"
               class="transition-transform duration-300"
+              >▼</span
             >
-              ▼
-            </span>
           </button>
         }
       </div>
-      <div class="border-t border-gray-700 mb-4"></div>
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div class="space-y-1 text-xs">
-          <div class="flex gap-1 md:gap-2">
-            <span class="text-slate-500 font-bold uppercase">Reference</span>
-            <span class="text-emerald-500"
-              >: Surah {{ verseOfTheDay()?.surah.name_english }}
-              {{ verseOfTheDay()?.verse.verse_key }}</span
-            >
-          </div>
-        </div>
+
+      <div
+        class="border-t border-gray-400 dark:border-amber-500/15 my-3 pt-3 flex items-center justify-between text-xs"
+      >
+        <span class="text-gray-400 font-bold uppercase tracking-wider">Reference</span>
+        <span class="text-amber-600 dark:text-amber-400 font-semibold">
+          Surah {{ verseOfTheDay()?.surah?.name_english }} {{ verseOfTheDay()?.verse?.verse_key }}
+        </span>
       </div>
-      <div class="border-t border-gray-700 my-4"></div>
-      <div class="text-xs columns-2 divide-x divide-gray-700">
+
+      <!-- Audio Controls Bar -->
+      <div
+        class="text-xs columns-2 divide-x divide-gray-400 dark:divide-amber-500/15 pt-3 border-t border-gray-400 dark:border-amber-500/15"
+      >
         <div class="flex justify-between pr-2">
           <div class="flex items-center justify-center">
             Listen to Surah {{ verseOfTheDay()?.surah.number }}
@@ -393,169 +446,188 @@
       </div>
     </app-premium-card>
   </div>
+
+  <!-- Hadith of the Day Card -->
   <div class="mb-[12px] sm:mb-[16px]">
-    <app-premium-card class="">
-      <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
-        <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Hadith of the Day</h1>
+    <app-premium-card>
+      <div
+        class="flex items-start flex-col gap-1 pb-3 mb-4 border-b border-gray-400 dark:border-amber-500/15"
+      >
+        <h1
+          class="text-xs font-bold uppercase tracking-[0.15em] text-amber-700 dark:text-amber-400/90"
+        >
+          Hadith of the Day
+        </h1>
       </div>
+
       <div class="text-center">
         <div
           appOverflowCheck
           (hasOverflow)="handleOverflow(hadithOfTheDay()?.id + 1, $event)"
           [class.line-clamp-4]="!isExpanded(hadithOfTheDay()?.id + 1)"
           [class.no-mask-image]="!needsReadMore().has(hadithOfTheDay()?.id + 1)"
-          class="mb-2 font-arabic text-[1.1rem] leading-[1.9] text-justify antialiased text-center!"
+          class="font-arabic text-[1.1rem] leading-[2.2] text-center antialiased mb-4 text-amber-900 dark:text-amber-100"
           dir="rtl"
         >
           {{ hadithOfTheDay()?.arabic }}
         </div>
+
         @if (
           needsReadMore().has(hadithOfTheDay()?.id + 1) || isExpanded(hadithOfTheDay()?.id + 1)
         ) {
           <button
             (click)="toggleExpand(hadithOfTheDay()?.id + 1)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+            class="mx-auto mb-4 text-[0.65rem] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest hover:text-amber-500 transition-colors flex items-center gap-1 cursor-pointer"
           >
-            {{ isExpanded(hadithOfTheDay()?.id + 1) ? 'Show Less' : 'Read Full Hadees' }}
+            {{ isExpanded(hadithOfTheDay()?.id + 1) ? 'Show Less' : 'Read Full Hadith' }}
             <span
               [class.rotate-180]="isExpanded(hadithOfTheDay()?.id + 1)"
               class="transition-transform duration-300"
+              >▼</span
             >
-              ▼
-            </span>
           </button>
         }
+
         <div
           appOverflowCheck
           (hasOverflow)="handleOverflow(hadithOfTheDay()?.id + 2, $event)"
           [class.line-clamp-4]="!isExpanded(hadithOfTheDay()?.id + 2)"
           [class.no-mask-image]="!needsReadMore().has(hadithOfTheDay()?.id + 2)"
-          class="mb-2 text-xs text-justify antialiased text-center!"
+          class="text-xs text-gray-800 dark:text-gray-200 antialiased mb-4 leading-relaxed"
         >
           {{ hadithOfTheDay()?.english }}
         </div>
+
         @if (
           needsReadMore().has(hadithOfTheDay()?.id + 2) || isExpanded(hadithOfTheDay()?.id + 2)
         ) {
           <button
             (click)="toggleExpand(hadithOfTheDay()?.id + 2)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+            class="mx-auto mb-4 text-[0.65rem] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest hover:text-amber-500 transition-colors flex items-center gap-1 cursor-pointer"
           >
             {{ isExpanded(hadithOfTheDay()?.id + 2) ? 'Show Less' : 'Read Full Translation' }}
             <span
               [class.rotate-180]="isExpanded(hadithOfTheDay()?.id + 2)"
               class="transition-transform duration-300"
+              >▼</span
             >
-              ▼
-            </span>
           </button>
         }
       </div>
-      <div class="border-t border-gray-700 mb-4"></div>
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div class="space-y-1 text-xs">
-          <div class="flex gap-1 md:gap-2">
-            <span class="text-slate-500 font-bold uppercase">Reference</span>
-            <span class="text-emerald-500"
-              >: {{ hadithOfTheDay()?.collection_name }} {{ hadithOfTheDay()?.hadithnumber }}</span
-            >
-          </div>
-        </div>
+
+      <div
+        class="border-t border-gray-400 dark:border-amber-500/15 my-3 pt-3 flex items-center justify-between text-xs"
+      >
+        <span class="text-gray-400 font-bold uppercase tracking-wider">Reference</span>
+        <span class="text-amber-600 dark:text-amber-400 font-semibold">
+          {{ hadithOfTheDay()?.collection_name }} {{ hadithOfTheDay()?.hadithnumber }}
+        </span>
       </div>
     </app-premium-card>
   </div>
 
+  <!-- Dua of the Day Card -->
   <div class="mb-[12px] sm:mb-[16px]">
-    <app-premium-card class="">
-      <div class="fitems-center mb-4 pb-4 border-b border-gray-700">
-        <h1 class="text-[0.8rem] font-bold uppercase tracking-[0.08em]">Dua of the Day</h1>
-        <div>
-          <span class="text-xs text-gray-400">{{ duaOfTheDay()?.category_info.name }} </span>
-        </div>
+    <app-premium-card>
+      <div
+        class="flex items-start flex-col gap-1 pb-3 mb-4 border-b border-gray-400 dark:border-amber-500/15"
+      >
+        <h1
+          class="text-xs font-bold uppercase tracking-[0.15em] text-amber-700 dark:text-amber-400/90"
+        >
+          Dua of the Day
+        </h1>
+        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{{
+          duaOfTheDay()?.category_info?.name
+        }}</span>
       </div>
+
       <div class="text-center">
-        <div class="text-[0.92rem] font-bold text-justify antialiased mb-4">
+        <div class="[0.92rem] font-bold text-amber-700 dark:text-amber-300 mb-3 px-2">
           {{ duaOfTheDay()?.title }}
         </div>
+
         <div
           appOverflowCheck
           (hasOverflow)="handleOverflow(duaOfTheDay()?.id + 1, $event)"
           [class.line-clamp-4]="!isExpanded(duaOfTheDay()?.id + 1)"
           [class.no-mask-image]="!needsReadMore().has(duaOfTheDay()?.id + 1)"
-          class="font-arabic text-[1.1rem] leading-[1.9] text-justify antialiased mb-4 text-center!"
+          class="font-arabic text-[1.1rem] leading-[2.2] text-center antialiased mb-4 text-amber-900 dark:text-amber-100"
           dir="rtl"
         >
           {{ duaOfTheDay()?.arabic }}
         </div>
+
         @if (needsReadMore().has(duaOfTheDay()?.id + 1) || isExpanded(duaOfTheDay()?.id + 1)) {
           <button
             (click)="toggleExpand(duaOfTheDay()?.id + 1)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+            class="mx-auto mb-4 text-[0.65rem] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest hover:text-amber-500 transition-colors flex items-center gap-1 cursor-pointer"
           >
             {{ isExpanded(duaOfTheDay()?.id + 1) ? 'Show Less' : 'Read Full Dua' }}
             <span
               [class.rotate-180]="isExpanded(duaOfTheDay()?.id + 1)"
               class="transition-transform duration-300"
+              >▼</span
             >
-              ▼
-            </span>
           </button>
         }
+
         <div
           appOverflowCheck
           (hasOverflow)="handleOverflow(duaOfTheDay()?.id + 2, $event)"
           [class.line-clamp-4]="!isExpanded(duaOfTheDay()?.id + 2)"
           [class.no-mask-image]="!needsReadMore().has(duaOfTheDay()?.id + 2)"
-          class="italic text-xs text-uw-text2 text-justify antialiased mb-4 text-center!"
+          class="italic text-xs text-gray-600 dark:text-gray-300 antialiased mb-4 leading-relaxed"
         >
           {{ duaOfTheDay()?.transliteration }}
         </div>
+
         @if (needsReadMore().has(duaOfTheDay()?.id + 2) || isExpanded(duaOfTheDay()?.id + 2)) {
           <button
             (click)="toggleExpand(duaOfTheDay()?.id + 2)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+            class="mx-auto mb-4 text-[0.65rem] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest hover:text-amber-500 transition-colors flex items-center gap-1 cursor-pointer"
           >
             {{ isExpanded(duaOfTheDay()?.id + 2) ? 'Show Less' : 'Read Full Transliteration' }}
             <span
               [class.rotate-180]="isExpanded(duaOfTheDay()?.id + 2)"
               class="transition-transform duration-300"
+              >▼</span
             >
-              ▼
-            </span>
           </button>
         }
+
         <div
           appOverflowCheck
           (hasOverflow)="handleOverflow(duaOfTheDay()?.id + 3, $event)"
           [class.line-clamp-4]="!isExpanded(duaOfTheDay()?.id + 3)"
           [class.no-mask-image]="!needsReadMore().has(duaOfTheDay()?.id + 3)"
-          class="text-xs text-justify antialiased mb-4 text-center!"
+          class="text-xs text-gray-800 dark:text-gray-200 antialiased mb-4 leading-relaxed"
         >
           {{ duaOfTheDay()?.translation }}
         </div>
+
         @if (needsReadMore().has(duaOfTheDay()?.id + 3) || isExpanded(duaOfTheDay()?.id + 3)) {
           <button
             (click)="toggleExpand(duaOfTheDay()?.id + 3)"
-            class="cursor-pointer mb-4 text-[0.6rem] font-bold text-sacred-gold uppercase tracking-wider hover:text-cream-darker transition-colors flex items-center gap-1"
+            class="mx-auto mb-4 text-[0.65rem] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest hover:text-amber-500 transition-colors flex items-center gap-1 cursor-pointer"
           >
             {{ isExpanded(duaOfTheDay()?.id + 3) ? 'Show Less' : 'Read Full Translation' }}
             <span
               [class.rotate-180]="isExpanded(duaOfTheDay()?.id + 3)"
               class="transition-transform duration-300"
+              >▼</span
             >
-              ▼
-            </span>
           </button>
         }
       </div>
-      <div class="border-t border-gray-700 mb-4"></div>
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div class="space-y-1 text-xs">
-          <div class="flex gap-1 md:gap-2">
-            <span class="text-slate-500 font-bold uppercase">Reference</span>
-            <span class="text-emerald-500">: {{ duaOfTheDay()?.source }}</span>
-          </div>
-        </div>
+
+      <div
+        class="border-t border-gray-400 dark:border-amber-500/15 my-3 pt-3 flex items-center justify-between text-xs"
+      >
+        <span class="text-gray-400 font-bold uppercase tracking-wider">Reference</span>
+        <span class="text-amber-600 dark:text-amber-400 font-semibold">{{
+          duaOfTheDay()?.source
+        }}</span>
       </div>
     </app-premium-card>
   </div>
@@ -615,7 +687,6 @@
                     {{ verseOfTheDay()?.verse.ayah }}
                   </span>
                 }
-                <!-- <span class="max-md:block">(By {{ verseOfTheDay()?.audio[0].reciter }}) </span> -->
                 <span class="max-md:block text-slate-500 dark:text-slate-400 text-[11px] md:ml-1">
                   (By {{ verseOfTheDay()?.audio[0].reciter }})
                 </span>
@@ -679,7 +750,7 @@
 
 <p-confirmdialog
   key="closeAudioPromptDashboard"
-  styleClass="  max-md:m-4 bg-white! dark:bg-bg-green/95! text-[#18181B]! dark:text-[#FFFFFF]! border border-gray-200! dark:border-gold-tint/20! rounded-xl! shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-md overflow-hidden"
+  styleClass="  max-md:m-4 bg-white! dark:bg-bg-green/95! text-[#18181B]! dark:text-[#FFFFFF]! border border-gray-400! dark:border-gold-tint/20! rounded-xl! shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-md overflow-hidden"
 />
 <p-toast
   position="bottom-left"

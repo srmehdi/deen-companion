@@ -14,8 +14,8 @@ export class AudioPlayerService {
   playingSurahInfo = signal<any>(null);
   isAudioPlaying = signal<boolean>(false);
   isCardClicked = signal<boolean>(false);
-  volume = signal<number>(0.7);
-  private previousVolume = 0.7;
+  volume = signal<number>(0.8);
+  private previousVolume = 0.8;
 
   private playingSurahAyahs: any[] = [];
   playUrduAudio = signal<boolean>(this.loadUrduAudioSetting());
@@ -172,7 +172,7 @@ export class AudioPlayerService {
       this.previousVolume = this.volume();
       this.setVolume(0);
     } else {
-      this.setVolume(this.previousVolume > 0 ? this.previousVolume : 0.7);
+      this.setVolume(this.previousVolume > 0 ? this.previousVolume : 0.8);
     }
   }
 
