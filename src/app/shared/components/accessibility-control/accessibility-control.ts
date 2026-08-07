@@ -9,7 +9,7 @@ import { Component, signal, effect } from '@angular/core';
 })
 export class AccessibilityControlComponent {
   isOpen = signal(false);
-  fontSize = signal<number>(100);
+  fontSize = signal<number>(110);
 
   togglePanel(): void {
     this.isOpen.update((v) => !v);
@@ -36,7 +36,7 @@ export class AccessibilityControlComponent {
     localStorage.setItem('user-font-size', value.toString());
   }
   resetFontSize() {
-    this.fontSize.set(100);
+    this.fontSize.set(110);
     this.applyFontSize(+this.fontSize());
   }
   increaseFontSize() {

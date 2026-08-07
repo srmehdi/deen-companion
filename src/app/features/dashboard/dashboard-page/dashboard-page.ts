@@ -1,4 +1,15 @@
-import { Component, computed, DOCUMENT, inject, Inject, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  DOCUMENT,
+  inject,
+  Inject,
+  signal,
+  ViewChild,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { PremiumCard } from '../../../shared/components/premium-card/premium-card';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../core/services/api-service/api-service';
@@ -15,6 +26,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { StatusModalService } from '../../../core/services/status-modal-service/status-modal-service';
 
+// Default Location: New Delhi, India
+const DEFAULT_INDIA_LAT = 28.6139;
+const DEFAULT_INDIA_LNG = 77.209;
+const DEFAULT_INDIA_CITY = 'New Delhi, India';
+
 @Component({
   selector: 'app-dashboard-page',
   imports: [
@@ -28,9 +44,46 @@ import { StatusModalService } from '../../../core/services/status-modal-service/
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
-export class DashboardPage {
+export class DashboardPage implements OnInit, AfterViewInit, OnDestroy {
   private modal = inject(StatusModalService);
+  private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+  globalAudio = inject(AudioPlayerService);
+
   isCardClicked = signal(false);
+  private timeIntervalId?: any;
+  private apiIntervalId?: any;
+
+  fontSize = signal<number>(100);
+  currentTime = signal(new Date());
+  darkMode = signal(true);
+
+  prayers: any = [
+    { key: 'fajr', name: 'Fajr' },
+    { key: 'dhuhr', name: 'Dhuhr' },
+    { key: 'asr', name: 'Asr' },
+    { key: 'maghrib', name: 'Maghrib' },
+    { key: 'isha', name: 'Isha' },
+  ];
+
+  isPrayerTimeLoading = signal(false);
+  prayer_times_data = signal<any>(null);
+  todayHijriDate = signal<any>(null);
+  hadithOfTheDay = signal<any>(null);
+  duaOfTheDay = signal<any>(null);
+  verseOfTheDay = signal<any>(null);
+  currentTimeAtSelectedCity = signal<string | null>(null);
+
+  results: any[] = [];
+  searchQuery: string = '';
+  private searchSubject = new Subject<string>();
+
+  expandedItems = signal<Set<number>>(new Set());
+  needsReadMore = signal<Set<number>>(new Set());
+
+  currentPrayer = computed(() => this.prayer_times_data()?.current_status.current_prayer);
+  nextPrayer = computed(() => this.prayer_times_data()?.current_status.next_prayer);
+
   constructor(
     private api: ApiService,
     public audioService: AudioService,
@@ -42,33 +95,13 @@ export class DashboardPage {
       this.isCardClicked.set(false);
       this.audioService.isPlaying.set(false);
     };
-
-    // setInterval(() => {
-    //   this.currentTime.set(new Date());
-    // }, 1000);
-    // setInterval(() => {
-    //   if (this.prayer_times_data()) {
-    //     if (localStorage.getItem('user-lat') && localStorage.getItem('user-lng')) {
-    //       this.prayerTimesApiCall(
-    //         parseFloat(localStorage.getItem('user-lat')!),
-    //         parseFloat(localStorage.getItem('user-lng')!),
-    //       );
-    //     } else {
-    //       this.getPrayerTimes(0);
-    //     }
-    //     // this.getPrayerTimes(0);
-    //   }
-    // }, 60000);
   }
 
-  private timeIntervalId?: any;
-  private apiIntervalId?: any;
-  fontSize = signal<number>(100);
-  currentTime = signal(new Date());
   ngOnInit() {
     if (this.modal.state() !== 'initializing') {
       this.modal.showLoading('Syncing dashboard components...');
     }
+
     this.searchSubject
       .pipe(
         debounceTime(100),
@@ -81,147 +114,171 @@ export class DashboardPage {
       this.currentTime.set(new Date());
     }, 1000);
 
-    // Optimized API polling: Only runs if data exists, avoiding geolocation methods entirely
+    // Polling interval using stored or default coordinates
     this.apiIntervalId = setInterval(() => {
-      const lat = localStorage.getItem('user-lat');
-      const lng = localStorage.getItem('user-lng');
-
-      if (this.prayer_times_data() && lat && lng) {
-        this.prayerTimesApiCall(parseFloat(lat), parseFloat(lng));
+      const { lat, lng } = this.getStoredOrDefaultCoordinates();
+      if (this.prayer_times_data()) {
+        this.prayerTimesApiCall(lat, lng);
       }
     }, 60000);
   }
+
   ngAfterViewInit() {
-    this.getPrayerTimes(1);
+    this.initDefaultPrayerTimes();
     this.apiCalls();
   }
-  darkMode = signal(true);
 
-  prayers: any = [
-    { key: 'fajr', name: 'Fajr' },
-    { key: 'dhuhr', name: 'Dhuhr' },
-    { key: 'asr', name: 'Asr' },
-    { key: 'maghrib', name: 'Maghrib' },
-    { key: 'isha', name: 'Isha' },
-  ];
+  /**
+   * Helper to fetch active coordinates from LocalStorage or Fallback India Defaults
+   */
+  private getStoredOrDefaultCoordinates(): { lat: number; lng: number } {
+    const lat = localStorage.getItem('user-lat');
+    const lng = localStorage.getItem('user-lng');
 
-  currentPrayer = computed(() => this.prayer_times_data()?.current_status.current_prayer);
-  nextPrayer = computed(() => this.prayer_times_data()?.current_status.next_prayer);
+    if (lat && lng) {
+      return { lat: parseFloat(lat), lng: parseFloat(lng) };
+    }
 
-  isPrayerTimeLoading = signal(false);
-  prayer_times_data = signal<any>(null);
-  getPrayerTimes(PrayerTimeLoading: number) {
-    PrayerTimeLoading === 1
-      ? this.isPrayerTimeLoading.set(true)
-      : this.isPrayerTimeLoading.set(false);
+    return { lat: DEFAULT_INDIA_LAT, lng: DEFAULT_INDIA_LNG };
+  }
+
+  /**
+   * Initial load handler: Renders default/cached prayer times instantly
+   * and requests browser geolocation silently without blocking or warning toasts.
+   */
+  private initDefaultPrayerTimes() {
+    const { lat, lng } = this.getStoredOrDefaultCoordinates();
+
+    // Set search box placeholder/label if present
+    const storedCity = localStorage.getItem('user-city-name');
+    this.searchQuery =
+      storedCity || (localStorage.getItem('user-lat') ? 'Current Location' : DEFAULT_INDIA_CITY);
+
+    // Fetch instantly with current or default India location
+    this.isPrayerTimeLoading.set(true);
+    this.prayerTimesApiCall(lat, lng);
+
+    // Non-intrusive background location sync
+    if (navigator.geolocation && !localStorage.getItem('user-lat')) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const userLat = pos.coords.latitude;
+          const userLng = pos.coords.longitude;
+
+          localStorage.setItem('user-lat', userLat.toString());
+          localStorage.setItem('user-lng', userLng.toString());
+          this.searchQuery = 'Current Location';
+
+          // Silently update to accurate user prayer times
+          this.prayerTimesApiCall(userLat, userLng);
+        },
+        () => {
+          // Silently ignore permissions denial on first load
+        },
+        { timeout: 8000, maximumAge: 60000 },
+      );
+    }
+  }
+
+  /**
+   * Explicit user action to request geolocation via the Map Marker button
+   */
+  detectLocation() {
+    if (!navigator.geolocation) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Not Supported',
+        detail: 'Geolocation is not supported by your browser.',
+        life: 5000,
+      });
+      return;
+    }
+
+    this.isPrayerTimeLoading.set(true);
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        localStorage.setItem('user-lat', pos.coords.latitude.toString());
-        localStorage.setItem('user-lng', pos.coords.longitude.toString());
-        this.prayerTimesApiCall(pos.coords.latitude, pos.coords.longitude);
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        localStorage.setItem('user-lat', lat.toString());
+        localStorage.setItem('user-lng', lng.toString());
+        localStorage.setItem('user-city-name', 'Current Location');
+
+        this.searchQuery = 'Current Location';
+        this.prayerTimesApiCall(lat, lng);
       },
       (error) => {
-        if (localStorage.getItem('user-lat') && localStorage.getItem('user-lng')) {
-          this.prayerTimesApiCall(
-            parseFloat(localStorage.getItem('user-lat')!),
-            parseFloat(localStorage.getItem('user-lng')!),
-          );
-        } else {
-          console.log('Error detecting location', error);
-          // alert('Unable to retrieve your location. Please search manually.');
-          this.messageService.add({
-            severity: 'warn',
-            summary: 'Location Access Needed',
-            detail: 'Please enable location services or search manually for accurate prayer times.',
-            life: 10000,
-          });
-        }
+        console.log('Error detecting location', error);
+        this.isPrayerTimeLoading.set(false);
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Location Access Needed',
+          detail: 'Please enable location permissions or search manually for your city.',
+          life: 8000,
+        });
       },
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
     );
   }
-  todayHijriDate = signal<any>(null);
-  getTodayHijriDate() {
-    this.modal.showLoading();
-    const $destroyed: Subject<void> = new Subject();
-    this.api.getTodayHijriDate<any>().subscribe({
+
+  prayerTimesApiCall(lat: number, lng: number) {
+    this.api.getPrayerTimes<any>(lat, lng).subscribe({
       next: (res) => {
-        this.todayHijriDate.set(res.data);
-        this.modal.close();
+        this.isPrayerTimeLoading.set(false);
+        this.prayer_times_data.set(res.data);
+        this.getCurrentTimeAtSelectedCity(res);
+        this.theme.applyPrayerTheme(res);
       },
       error: (err) => {
         console.log(err);
-        this.modal.showError({ message: 'Something went wrong.' });
-      },
-      complete: () => {
-        $destroyed.next();
-        $destroyed.complete();
+        this.isPrayerTimeLoading.set(false);
+        this.modal.showError({ message: 'Unable to fetch prayer times.' });
       },
     });
   }
-  hadithOfTheDay = signal<any>(null);
-  getHadithOfTheDay() {
-    this.modal.showLoading();
-    const $destroyed: Subject<void> = new Subject();
-    this.api.getHadithOfTheDay<any>('bukhari').subscribe({
-      next: (res) => {
-        this.hadithOfTheDay.set(res.data);
-        this.modal.close();
-      },
-      error: (err) => {
-        console.log(err);
-        this.modal.showError({ message: 'Something went wrong.' });
-      },
-      complete: () => {
-        $destroyed.next();
-        $destroyed.complete();
-      },
-    });
+
+  selectCity(city: any) {
+    this.isPrayerTimeLoading.set(true);
+    const lat = city.lat;
+    const lng = city.lon;
+    const cityName = city.display_name.split(',')[0];
+
+    localStorage.setItem('user-lat', lat);
+    localStorage.setItem('user-lng', lng);
+    localStorage.setItem('user-city-name', cityName);
+
+    this.results = [];
+    this.searchQuery = city.display_name;
+
+    this.prayerTimesApiCall(lat, lng);
   }
-  duaOfTheDay = signal<any>(null);
-  getDuaOfTheDay() {
-    this.modal.showLoading();
-    const $destroyed: Subject<void> = new Subject();
-    this.api.getDuaOfTheDay<any>().subscribe({
-      next: (res) => {
-        this.duaOfTheDay.set(res.data);
-        this.modal.close();
-      },
-      error: (err) => {
-        console.log(err);
-        this.modal.showError({ message: 'Something went wrong.' });
-      },
-      complete: () => {
-        $destroyed.next();
-        $destroyed.complete();
-      },
-    });
+
+  onSearch(event: any) {
+    this.searchSubject.next(event.target.value);
   }
-  verseOfTheDay = signal<any>(null);
-  getVerseOfTheDay() {
-    this.modal.showLoading();
-    const $destroyed: Subject<void> = new Subject();
-    this.api.getVerseOfTheDay<any>().subscribe({
-      next: (res) => {
-        this.verseOfTheDay.set(res.data);
-        this.modal.close();
-      },
-      error: (err) => {
-        console.log(err);
-        this.modal.showError({ message: 'Something went wrong.' });
-      },
-      complete: () => {
-        $destroyed.next();
-        $destroyed.complete();
-      },
-    });
+
+  clearSearch() {
+    this.searchQuery = '';
+    this.results = [];
   }
+
+  getCurrentTimeAtSelectedCity(res: any) {
+    const time = new Intl.DateTimeFormat('en-US', {
+      timeZone: res.data.timezone,
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).format(new Date(res.timestamp));
+    this.currentTimeAtSelectedCity.set(time);
+  }
+
   apiCalls() {
     this.modal.showLoading();
     const getTodayHijriDate = this.api.getTodayHijriDate<any>();
     const getHadithOfTheDay = this.api.getHadithOfTheDay<any>('bukhari');
     const getDuaOfTheDay = this.api.getDuaOfTheDay<any>();
     const getVerseOfTheDay = this.api.getVerseOfTheDay<any>();
-    const $destroyed: Subject<void> = new Subject();
+
     forkJoin([getTodayHijriDate, getHadithOfTheDay, getDuaOfTheDay, getVerseOfTheDay]).subscribe({
       next: (res) => {
         if (res[0].success && res[1].success && res[2].success && res[3].success) {
@@ -230,34 +287,22 @@ export class DashboardPage {
           this.duaOfTheDay.set(res[2].data);
           this.verseOfTheDay.set(res[3].data);
           this.modal.close();
-          // this.getPrayerTimes(1);
-        } else if (!res[0].success) {
-          this.modal.showError({ message: 'Error in todayHijriDate api' });
-        } else if (!res[1].success) {
-          this.modal.showError({ message: 'Error in hadithOfTheDay api' });
-        } else if (!res[2].success) {
-          this.modal.showError({ message: 'Error in duaOfTheDay api' });
-        } else if (!res[3].success) {
-          this.modal.showError({ message: 'Error in verseOfTheDay api' });
+        } else {
+          this.modal.showError({ message: 'Error loading dashboard components.' });
         }
       },
       error: (err) => {
         console.log(err);
         this.modal.showError({ message: 'Something went wrong.' });
       },
-      complete: () => {
-        $destroyed.next();
-        $destroyed.complete();
-      },
     });
   }
+
   updateVolume(event: Event) {
     const input = event.target as HTMLInputElement;
     this.audioService.setVolume(parseFloat(input.value));
   }
 
-  expandedItems = signal<Set<number>>(new Set());
-  needsReadMore = signal<Set<number>>(new Set());
   handleOverflow(id: number, isOverflowing: boolean) {
     this.needsReadMore.update((prev) => {
       const next = new Set(prev);
@@ -266,6 +311,7 @@ export class DashboardPage {
       return next;
     });
   }
+
   toggleExpand(id: number) {
     this.expandedItems.update((prev) => {
       const next = new Set(prev);
@@ -284,114 +330,16 @@ export class DashboardPage {
     return this.expandedItems().has(id);
   }
 
-  results: any[] = [];
-  searchQuery: string = '';
-  private searchSubject = new Subject<string>();
-
-  onSearch(event: any) {
-    this.searchSubject.next(event.target.value);
-  }
-
-  selectCity(city: any) {
-    this.isPrayerTimeLoading.set(true);
-    const lat = city.lat;
-    const lng = city.lon;
-
-    localStorage.setItem('user-lat', lat);
-    localStorage.setItem('user-lng', lng);
-    localStorage.setItem('user-city-name', city.display_name.split(',')[0]);
-
-    this.results = [];
-    this.searchQuery = city.display_name;
-
-    this.prayerTimesApiCall(lat, lng);
-  }
-  private messageService = inject(MessageService);
-  detectLocation() {
-    if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser');
-      return;
-    }
-    this.isPrayerTimeLoading.set(true);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-
-        localStorage.setItem('user-lat', lat.toString());
-        localStorage.setItem('user-lng', lng.toString());
-
-        this.prayerTimesApiCall(lat, lng);
-
-        this.searchQuery = 'Current Location';
-      },
-      (error) => {
-        console.log('Error detecting location', error);
-        // alert(
-        //   'Unable to retrieve your location. Please enable it in your browser/phone settings or search manually. We need your location to show the prayer times.',
-        // );
-        this.messageService.add({
-          severity: 'warn',
-          summary: 'Location Access Needed',
-          detail: 'Please enable location services or search manually for accurate prayer times.',
-          life: 10000,
-        });
-      },
-      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
-    );
-  }
-  currentTimeAtSelectedCity = signal<string | null>(null);
-  prayerTimesApiCall(lat: number, lng: number) {
-    const $destroyed: Subject<void> = new Subject();
-    this.api.getPrayerTimes<any>(lat, lng).subscribe({
-      next: (res) => {
-        this.isPrayerTimeLoading.set(false);
-        this.prayer_times_data.set(res.data);
-        this.getCurrentTimeAtSelectedCity(res);
-        this.theme.applyPrayerTheme(res);
-      },
-      error: (err) => {
-        console.log(err);
-        this.modal.showError({ message: 'Something went wrong.' });
-      },
-      complete: () => {
-        $destroyed.next();
-        $destroyed.complete();
-      },
-    });
-  }
-  clearSearch() {
-    this.searchQuery = '';
-    this.results = [];
-  }
-
-  getCurrentTimeAtSelectedCity(res: any) {
-    const time = new Intl.DateTimeFormat('en-US', {
-      timeZone: res.data.timezone,
-      hour: '2-digit',
-      minute: '2-digit',
-      // second: '2-digit',
-      hour12: false,
-    }).format(new Date(res.timestamp));
-    this.currentTimeAtSelectedCity.set(time);
-  }
-
-  globalAudio = inject(AudioPlayerService);
-  private confirmationService = inject(ConfirmationService);
   confirmAudioPlayerClose() {
     this.confirmationService.confirm({
       key: 'closeAudioPromptDashboard',
       message: `Are you sure you want to close the audio player?`,
       header: 'Close Audio Player',
       icon: 'pi pi-headphones text-[#18181B]! dark:text-[#FFFFFF]!',
-
-      // Applied ! (important) to override PrimeNG's structural and skin properties
       rejectButtonStyleClass:
         'px-4! py-2! bg-transparent! border! border-gray-300! dark:border-white/10! hover:bg-gray-100! dark:hover:bg-white/5! text-gray-700! dark:text-gray-300! rounded-lg! text-xs! font-semibold! font-sans! mr-2! transition-all! duration-200! cursor-pointer!',
-
       acceptButtonStyleClass:
         'px-4! py-2! bg-red-700! hover:bg-red-800! text-white! border-none! rounded-lg! text-xs! font-semibold! font-sans! transition-all! duration-200! cursor-pointer! shadow-sm!',
-
       accept: () => {
         this.audioService.stopAudio();
         this.audioService.currentUrl.set('');
@@ -400,6 +348,7 @@ export class DashboardPage {
       reject: () => {},
     });
   }
+
   ngOnDestroy() {
     this.audioService.stopAudio();
     if (this.timeIntervalId) clearInterval(this.timeIntervalId);
