@@ -25,8 +25,9 @@ import { AudioPlayerService } from '../../../core/services/audio-player-service/
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { StatusModalService } from '../../../core/services/status-modal-service/status-modal-service';
+import { HttpClient } from '@angular/common/http';
 
-// Default Location: New Delhi, India
+// Ultimate Fallback Location: New Delhi, India
 const DEFAULT_INDIA_LAT = 28.6139;
 const DEFAULT_INDIA_LNG = 77.209;
 const DEFAULT_INDIA_CITY = 'New Delhi, India';
@@ -48,6 +49,7 @@ export class DashboardPage implements OnInit, AfterViewInit, OnDestroy {
   private modal = inject(StatusModalService);
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
+  private http = inject(HttpClient);
   globalAudio = inject(AudioPlayerService);
 
   isCardClicked = signal(false);
@@ -114,10 +116,10 @@ export class DashboardPage implements OnInit, AfterViewInit, OnDestroy {
       this.currentTime.set(new Date());
     }, 1000);
 
-    // Polling interval using stored or default coordinates
+    // Refresh prayer times every minute
     this.apiIntervalId = setInterval(() => {
-      const { lat, lng } = this.getStoredOrDefaultCoordinates();
-      if (this.prayer_times_data()) {
+      const { lat, lng } = this.getStoredCoordinates();
+      if (this.prayer_times_data() && lat !== null && lng !== null) {
         this.prayerTimesApiCall(lat, lng);
       }
     }, 60000);
@@ -129,68 +131,98 @@ export class DashboardPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Helper to fetch active coordinates from LocalStorage or Fallback India Defaults
+   * Helper to fetch active coordinates from LocalStorage
    */
-  private getStoredOrDefaultCoordinates(): { lat: number; lng: number } {
+  private getStoredCoordinates(): { lat: number | null; lng: number | null } {
     const lat = localStorage.getItem('user-lat');
     const lng = localStorage.getItem('user-lng');
 
-    if (lat && lng) {
-      return { lat: parseFloat(lat), lng: parseFloat(lng) };
-    }
-
-    return { lat: DEFAULT_INDIA_LAT, lng: DEFAULT_INDIA_LNG };
+    return {
+      lat: lat ? parseFloat(lat) : null,
+      lng: lng ? parseFloat(lng) : null,
+    };
   }
 
   /**
-   * Initial load handler: Renders default/cached prayer times instantly
-   * and requests browser geolocation silently without blocking or warning toasts.
+   * Initial load handler:
+   * 1. Uses cached location if present.
+   * 2. Resolves IP-based location automatically via HTTPS (ipwho.is) if no cached data.
+   * 3. Falls back to default India location if IP lookup fails.
    */
   private initDefaultPrayerTimes() {
-    const { lat, lng } = this.getStoredOrDefaultCoordinates();
-
-    // Set search box placeholder/label if present
+    const { lat, lng } = this.getStoredCoordinates();
     const storedCity = localStorage.getItem('user-city-name');
-    this.searchQuery =
-      storedCity || (localStorage.getItem('user-lat') ? 'Current Location' : DEFAULT_INDIA_CITY);
 
-    // Fetch instantly with current or default India location
-    this.isPrayerTimeLoading.set(true);
-    this.prayerTimesApiCall(lat, lng);
-
-    // Non-intrusive background location sync
-    if (navigator.geolocation && !localStorage.getItem('user-lat')) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const userLat = pos.coords.latitude;
-          const userLng = pos.coords.longitude;
-
-          localStorage.setItem('user-lat', userLat.toString());
-          localStorage.setItem('user-lng', userLng.toString());
-          this.searchQuery = 'Current Location';
-
-          // Silently update to accurate user prayer times
-          this.prayerTimesApiCall(userLat, userLng);
-        },
-        () => {
-          // Silently ignore permissions denial on first load
-        },
-        { timeout: 8000, maximumAge: 60000 },
-      );
+    // Scenario A: Cached location exists
+    if (lat !== null && lng !== null) {
+      this.searchQuery = storedCity || 'Saved Location';
+      this.isPrayerTimeLoading.set(true);
+      this.prayerTimesApiCall(lat, lng);
+      return;
     }
+
+    // Scenario B: Fetch location via IP Geolocation
+    this.fetchIpLocation();
   }
 
   /**
-   * Explicit user action to request geolocation via the Map Marker button
+   * Resolves location via IP Geolocation (ipwho.is)
+   */
+  private fetchIpLocation() {
+    this.isPrayerTimeLoading.set(true);
+    this.api.getIpLocation().subscribe({
+      next: (res) => {
+        if (res && res.success && res.latitude && res.longitude) {
+          const ipLat = res.latitude;
+          const ipLng = res.longitude;
+          const ipCity = res.city
+            ? `${res.city}, ${res.country}`
+            : res.country || 'Detected Location';
+
+          // Cache resolved location
+          localStorage.setItem('user-lat', ipLat.toString());
+          localStorage.setItem('user-lng', ipLng.toString());
+          localStorage.setItem('user-city-name', ipCity);
+
+          this.searchQuery = ipCity;
+          this.prayerTimesApiCall(ipLat, ipLng);
+        } else {
+          this.fallbackToDefaultLocation();
+        }
+      },
+      error: (err) => {
+        console.warn('IP location retrieval failed, falling back to default:', err);
+        this.fallbackToDefaultLocation();
+      },
+    });
+  }
+
+  private fallbackToDefaultLocation() {
+    this.searchQuery = DEFAULT_INDIA_CITY;
+    this.prayerTimesApiCall(DEFAULT_INDIA_LAT, DEFAULT_INDIA_LNG);
+  }
+
+  /**
+   * Reverse geocodes coordinates to a human-readable city/location name using OpenStreetMap Nominatim.
+   */
+  private reverseGeocode(lat: number, lng: number) {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+    return this.http.get<any>(url);
+  }
+
+  /**
+   * Explicit user action to request high-accuracy GPS geolocation via Map Marker button.
+   * Reverse-geocodes actual city name to store in LocalStorage instead of generic text.
    */
   detectLocation() {
     if (!navigator.geolocation) {
       this.messageService.add({
         severity: 'warn',
-        summary: 'Not Supported',
-        detail: 'Geolocation is not supported by your browser.',
-        life: 5000,
+        summary: 'GPS Not Supported',
+        detail: 'Geolocation is not supported by your browser. Falling back to network location.',
+        life: 7000,
       });
+      this.fetchIpLocation();
       return;
     }
 
@@ -200,22 +232,54 @@ export class DashboardPage implements OnInit, AfterViewInit, OnDestroy {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
 
-        localStorage.setItem('user-lat', lat.toString());
-        localStorage.setItem('user-lng', lng.toString());
-        localStorage.setItem('user-city-name', 'Current Location');
+        // Perform reverse geocoding to retrieve actual city name from GPS coordinates
+        this.reverseGeocode(lat, lng).subscribe({
+          next: (geoRes) => {
+            const address = geoRes?.address;
+            const cityName =
+              address?.city ||
+              address?.town ||
+              address?.village ||
+              address?.suburb ||
+              address?.county ||
+              'Current Location';
+            const stateOrCountry = address?.state || address?.country || '';
+            const fullLocationName = stateOrCountry ? `${cityName}, ${stateOrCountry}` : cityName;
 
-        this.searchQuery = 'Current Location';
-        this.prayerTimesApiCall(lat, lng);
+            localStorage.setItem('user-lat', lat.toString());
+            localStorage.setItem('user-lng', lng.toString());
+            localStorage.setItem('user-city-name', fullLocationName);
+
+            this.searchQuery = fullLocationName;
+            this.prayerTimesApiCall(lat, lng);
+          },
+          error: (err) => {
+            console.warn('Reverse geocoding failed, storing fallback location string:', err);
+            const fallbackName = 'Current Location';
+
+            localStorage.setItem('user-lat', lat.toString());
+            localStorage.setItem('user-lng', lng.toString());
+            localStorage.setItem('user-city-name', fallbackName);
+
+            this.searchQuery = fallbackName;
+            this.prayerTimesApiCall(lat, lng);
+          },
+        });
       },
       (error) => {
-        console.log('Error detecting location', error);
-        this.isPrayerTimeLoading.set(false);
+        console.warn(
+          'Error/permission denied for GPS location. Falling back to IP location:',
+          error,
+        );
         this.messageService.add({
-          severity: 'warn',
-          summary: 'Location Access Needed',
-          detail: 'Please enable location permissions or search manually for your city.',
-          life: 8000,
+          severity: 'info',
+          summary: 'Device Location Disabled',
+          detail: 'Could not access device GPS. Using network IP location instead.',
+          life: 7000,
         });
+
+        // Fallback to IP-based location on error or permission rejection
+        this.fetchIpLocation();
       },
       { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
     );

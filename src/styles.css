@@ -110,3 +110,6 @@ body {
 .p-confirmdialog-message {
   font-size: 16px !important;
 }
+p-scrolltop p-button {
+  z-index: 9999 !important;
+}
