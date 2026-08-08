@@ -19,4 +19,5 @@ export interface VideoItem {
   url: string;
   category: string;
   type: 'video' | 'short';
+  duration?: string;
 }

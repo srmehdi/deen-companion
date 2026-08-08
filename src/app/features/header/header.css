@@ -1,7 +1,7 @@
 .burger {
-  background: none;
+  /* background: none; */
   border: 1px solid var(--color-gold-tint);
-  padding: 7px 7px;
+  padding: 6.7px 7px;
   border-radius: 8px;
   cursor: pointer;
   color: #555550;

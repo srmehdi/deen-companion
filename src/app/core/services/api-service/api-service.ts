@@ -161,4 +161,7 @@ export class ApiService {
   getVideos(payload: { type: string }) {
     return this.http.post<any>(Endpoints.GET_VIDEOS, payload);
   }
+  getIpLocation(): Observable<any> {
+    return this.http.get('https://ipwho.is/');
+  }
 }
