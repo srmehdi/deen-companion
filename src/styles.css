@@ -113,3 +113,6 @@ body {
 p-scrolltop p-button {
   z-index: 9999 !important;
 }
+input[type='range']::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}

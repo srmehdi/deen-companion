@@ -45,7 +45,7 @@
         } @else {
           <!-- Fallback when no bookmark is saved -->
           <button
-            (click)="loadCollectionDetails('bukhari', 1, 1)"
+            (click)="navigateToCollection('bukhari')"
             class="flex items-start gap-2 font-serif text-xs font-bold px-2 sm:px-3 py-2 rounded-lg bg-sacred-gold/10 border border-sacred-gold/30 hover:bg-sacred-gold/20 text-sacred-gold transition-all duration-200 shadow-sm cursor-pointer min-w-0"
           >
             <i class="pi pi-book text-xs! mt-0.5"></i>
@@ -125,7 +125,7 @@
       >
         @for (item of collections(); track item.key) {
           <div
-            (click)="loadCollectionDetails(item.key)"
+            (click)="navigateToCollection(item.key)"
             class="group bg-white dark:bg-[#121816]/60 border border-gray-200 dark:border-sacred-gold/15 rounded-xl p-4 flex justify-between items-center cursor-pointer shadow-sm hover:shadow-md hover:border-sacred-gold transform hover:-translate-y-0.5 transition-all duration-200 min-w-0"
           >
             <div class="flex items-center gap-3 min-w-0">
@@ -198,7 +198,7 @@
         </span>
       </div>
 
-      <!-- NON-STICKY SECTION: Collection Header Details (Will scroll naturally with page) -->
+      <!-- NON-STICKY SECTION: Collection Header Details -->
       <div
         class="flex flex-col sm:flex-row justify-between sm:justify-center items-center border-b border-gray-100 dark:border-white/5 py-2 sm:py-4 gap-3 max-w-full"
       >
@@ -231,7 +231,7 @@
         @for (hadith of displayedHadiths(); track hadith.id) {
           <div
             [id]="'hadith-row-' + hadith.id"
-            class="scroll-mt-[124px] flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
+            class="scroll-mt-[140px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
             [class.bg-sacred-gold/5]="
               !isSearchingGlobally() &&
               currentBookmark()?.collectionKey === selectedCollection().info.key &&
@@ -357,7 +357,6 @@
             <div
               class="flex items-center gap-1 overflow-x-auto no-scrollbar max-w-[200px] sm:max-w-[400px] lg:max-w-[600px] py-0.5"
             >
-              <!-- Locate this loop inside your HTML template -->
               @for (pageIdx of [].constructor(totalPages()); track $index) {
                 <button
                   (click)="changePage($index + 1)"
