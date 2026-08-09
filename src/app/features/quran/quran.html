@@ -67,7 +67,10 @@
           >
             <i class="pi pi-headphones text-xs! mt-0.5 text-sacred-gold"></i>
             <div class="flex flex-col items-start text-left min-w-0">
-              <span class="break-words">Resume Audio: {{ audioSession.surahName }}</span>
+              <span class="break-words"
+                >{{ globalAudio.isAudioPlaying() ? 'Playing Audio' : 'Resume Audio' }}:
+                {{ audioSession.surahName }}</span
+              >
               <span
                 class="block text-[10px] opacity-90 mt-0.5 font-sans tracking-wide whitespace-nowrap max-sm:whitespace-normal"
               >
@@ -122,6 +125,7 @@
       >
         @for (surah of paginatedSurahs(); track surah.number) {
           <div
+            [routerLink]="['/quran', surah.number]"
             (click)="loadSurah(surah.number)"
             class="group bg-white dark:bg-[#121816]/60 border border-gray-200 dark:border-sacred-gold/15 rounded-xl p-3 flex justify-between items-center cursor-pointer shadow-sm hover:shadow-md hover:border-sacred-gold transform hover:-translate-y-0.5 transition-all duration-200 min-w-0"
           >
@@ -358,7 +362,7 @@
         @for (ayah of paginatedAyahs(); track ayah.numberInSurah) {
           <div
             [id]="'ayah-row-' + ayah.numberInSurah"
-            class="scroll-mt-[140px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
+            class="scroll-mt-[140px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch! md:items-start! rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
             [class.bg-sacred-gold/5]="
               (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
                 selectedSurah().info.number &&

@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { ApiService } from '../../core/services/api-service/api-service';
@@ -26,7 +27,7 @@ import { UserInteractionService } from '../../core/services/user-interaction-ser
 @Component({
   selector: 'app-quran',
   standalone: true,
-  imports: [CommonModule, FormsModule, ConfirmDialogModule, ToastModule],
+  imports: [CommonModule, FormsModule, ConfirmDialogModule, ToastModule, RouterLink],
   templateUrl: './quran.html',
   styleUrl: './quran.css',
 })
@@ -36,20 +37,18 @@ export class Quran implements AfterViewInit, OnDestroy {
   private api = inject(ApiService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   private audioSubscription!: Subscription;
-  // private interactionTimeout: ReturnType<typeof setTimeout> | null = null;
+  private routeSubscription!: Subscription;
   public userInteraction = inject(UserInteractionService);
 
   surahs = signal<any[]>([]);
   selectedSurah = signal<any>(null);
   searchQuery = signal<string>('');
 
-  /// Update language signal type to support 'en' | 'ur' | 'hi'
   selectedLanguage = signal<'en' | 'ur' | 'hi'>(this.loadLanguage());
-
-  // private isUserInteracting = false;
-
   currentBookmark = signal<Bookmark | null>(this.loadBookmark());
 
   constructor() {
@@ -62,14 +61,8 @@ export class Quran implements AfterViewInit, OnDestroy {
         currentSurah &&
         this.globalAudio.playingSurahInfo()?.surahNumber === currentSurah.info.number
       ) {
-        // Ensure the page containing the active ayah is visible
-        // this.setPageForAyah(activeAyah.numberInSurah);
-
         const targetAyahNumber = activeAyah.numberInSurah;
         const targetPage = Math.ceil(targetAyahNumber / this.ayahPageSize());
-        // if (this.currentAyahPage() !== targetPage) {
-        // this.currentAyahPage.set(targetPage);
-        // }
         if (!this.userInteraction.isInteracting()) {
           this.currentAyahPage.set(targetPage);
           this.scrollToAyah(activeAyah.numberInSurah);
@@ -77,67 +70,36 @@ export class Quran implements AfterViewInit, OnDestroy {
       }
     });
   }
+
   ngAfterViewInit(): void {
     this.loadSurahList();
 
-    this.audioSubscription = this.globalAudio.playNextSurah$.subscribe((nextSurahNumber) => {
-      // Sync the UI view with the newly active Surah playing in the background
-      const currentPlayingSurahInfo = this.globalAudio.playingSurahInfo();
+    // Listen to route parameter changes to load the corresponding Surah
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id) {
+        const surahNumber = Number(id);
+        if (!isNaN(surahNumber)) {
+          this.fetchAndSetSurah(surahNumber);
+        }
+      } else {
+        this.selectedSurah.set(null);
+      }
+    });
 
+    this.audioSubscription = this.globalAudio.playNextSurah$.subscribe((nextSurahNumber) => {
+      const currentPlayingSurahInfo = this.globalAudio.playingSurahInfo();
       if (currentPlayingSurahInfo?.surahNumber === nextSurahNumber) {
-        // Load details for view synchronization without triggering re-play
         this.loadSurahForViewOnly(nextSurahNumber);
       }
     });
   }
-  private loadSurahForViewOnly(surahNumber: number): void {
-    this.api.getSurahDetails(surahNumber).subscribe({
-      next: (surahData) => {
-        // this.selectedSurah.set(surahData);
-        if (!this.userInteraction.isInteracting()) {
-          this.selectedSurah.set(surahData);
-          this.currentAyahPage.set(1);
-          this.scrollToAyah(1);
-        }
-      },
-      error: (err) => {
-        console.error('Failed updating view state for next Surah:', err);
-      },
-    });
-  }
 
-  ngOnDestroy(): void {
-    if (this.audioSubscription) {
-      this.audioSubscription.unsubscribe();
-    }
-    // if (this.interactionTimeout) {
-    //   clearTimeout(this.interactionTimeout);
-    // }
-  }
-
-  setLanguage(lang: 'en' | 'ur' | 'hi'): void {
-    this.selectedLanguage.set(lang);
-    localStorage.setItem('translation_language', JSON.stringify(lang));
-  }
-  private loadLanguage(): 'en' | 'ur' | 'hi' {
-    const saved = localStorage.getItem('translation_language');
-    return saved ? JSON.parse(saved) : 'en';
-  }
-  loadSurahList(): void {
-    this.modal.showLoading();
-    this.api.getSurahList().subscribe({
-      next: (data) => {
-        this.surahs.set(data);
-        this.modal.close();
-      },
-      error: (err) => {
-        console.error('Failed to grab index mapping', err);
-        this.modal.close();
-      },
-    });
-  }
-
-  loadSurah(number: number, targetAyahNumber?: number, isManualBookmarkJump = false): void {
+  private fetchAndSetSurah(
+    number: number,
+    targetAyahNumber?: number,
+    isManualBookmarkJump = false,
+  ): void {
     this.modal.showLoading();
     this.api.getSurahDetails(number).subscribe({
       next: (surahData) => {
@@ -149,7 +111,6 @@ export class Quran implements AfterViewInit, OnDestroy {
           if (isManualBookmarkJump) {
             this.userInteraction.isInteracting.set(true);
             this.scrollToAyah(targetAyahNumber);
-            // setTimeout(() => this.userInteraction.isInteracting.set(false), 1500);
           } else {
             this.scrollToAyah(targetAyahNumber);
           }
@@ -165,7 +126,9 @@ export class Quran implements AfterViewInit, OnDestroy {
             this.scrollToAyah(activeAyah.numberInSurah);
           } else {
             this.currentAyahPage.set(1);
-            this.confirmAudioRecitation();
+            if (!this.globalAudio.isAudioPlaying()) {
+              this.confirmAudioRecitation();
+            }
           }
         }
       },
@@ -175,7 +138,70 @@ export class Quran implements AfterViewInit, OnDestroy {
       },
     });
   }
+
+  // Trigger routing navigation instead of manual state management
+  loadSurah(number: number, targetAyahNumber?: number, isManualBookmarkJump = false): void {
+    this.router.navigate(['/quran', number]);
+    if (targetAyahNumber) {
+      this.fetchAndSetSurah(number, targetAyahNumber, isManualBookmarkJump);
+    }
+  }
+
+  closeReader(): void {
+    this.router.navigate(['/quran']);
+  }
+
+  private loadSurahForViewOnly(surahNumber: number): void {
+    this.api.getSurahDetails(surahNumber).subscribe({
+      next: (surahData) => {
+        if (!this.userInteraction.isInteracting()) {
+          this.selectedSurah.set(surahData);
+          this.currentAyahPage.set(1);
+          this.scrollToAyah(1);
+          this.router.navigate(['/quran', surahNumber], { skipLocationChange: false });
+        }
+      },
+      error: (err) => {
+        console.error('Failed updating view state for next Surah:', err);
+      },
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.audioSubscription) {
+      this.audioSubscription.unsubscribe();
+    }
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
+  }
+
+  setLanguage(lang: 'en' | 'ur' | 'hi'): void {
+    this.selectedLanguage.set(lang);
+    localStorage.setItem('translation_language', JSON.stringify(lang));
+  }
+
+  private loadLanguage(): 'en' | 'ur' | 'hi' {
+    const saved = localStorage.getItem('translation_language');
+    return saved ? JSON.parse(saved) : 'en';
+  }
+
+  loadSurahList(): void {
+    this.modal.showLoading();
+    this.api.getSurahList().subscribe({
+      next: (data) => {
+        this.surahs.set(data);
+        this.modal.close();
+      },
+      error: (err) => {
+        console.error('Failed to grab index mapping', err);
+        this.modal.close();
+      },
+    });
+  }
+
   loadSurahAndAutoPlay(number: number): void {
+    this.router.navigate(['/quran', number]);
     this.modal.showLoading();
     this.api.getSurahDetails(number).subscribe({
       next: (surahData) => {
@@ -185,7 +211,6 @@ export class Quran implements AfterViewInit, OnDestroy {
 
         if (surahData.ayahs && surahData.ayahs.length > 0) {
           this.scrollToAyah(1);
-          // Pass complete surahData object to initialize global sequence
           this.globalAudio.playAudio(surahData.ayahs[0], surahData);
         }
       },
@@ -199,28 +224,8 @@ export class Quran implements AfterViewInit, OnDestroy {
   @HostListener('window:jumpToActiveAyah', ['$event'])
   onJumpToActiveAyahRequested(event: any): void {
     const { surahNumber, ayahNumber } = event.detail;
-    const currentSurah = this.selectedSurah();
-
-    if (!currentSurah || currentSurah.info.number !== surahNumber) {
-      this.modal.showLoading();
-      this.api.getSurahDetails(surahNumber).subscribe({
-        next: (surahData) => {
-          this.selectedSurah.set(surahData);
-          this.setPageForAyah(ayahNumber);
-          this.modal.close();
-          this.scrollToAyah(ayahNumber);
-        },
-        error: () => this.modal.close(),
-      });
-    } else {
-      this.setPageForAyah(ayahNumber);
-      this.scrollToAyah(ayahNumber);
-    }
-  }
-
-  closeReader(): void {
-    this.selectedSurah.set(null);
-    this.currentAyahPage.set(1);
+    this.router.navigate(['/quran', surahNumber]);
+    this.fetchAndSetSurah(surahNumber, ayahNumber);
   }
 
   scrollToAyah(ayahNumber: number): void {
@@ -299,6 +304,7 @@ export class Quran implements AfterViewInit, OnDestroy {
   toggleAyahAudio(ayah: any): void {
     this.globalAudio.toggleAyahAudio(ayah, this.selectedSurah());
   }
+
   clearSearch(): void {
     this.searchQuery.set('');
     this.currentPage.set(1);
@@ -333,22 +339,20 @@ export class Quran implements AfterViewInit, OnDestroy {
     });
   });
 
-  // Clean Bismillah prefix safely across varying Unicode encodings
   cleanBismillah(text: string): string {
     return text.replace(
       /^(بِسْمِ\s*ٱللَّهِ\s*ٱلرَّحْمَٰنِ\s*ٱلرَّحِيمِ|بِسْمِ\s*اللَّهِ\s*الرَّحْمَٰنِ\s*الرَّحِيمِ)\s*/,
       '',
     );
   }
+
   confirmUrduRecitation(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     const isEnabling = checkbox.checked;
 
-    // Temporarily revert the checkbox visual state until the user confirms
     checkbox.checked = !isEnabling;
 
     const header = isEnabling ? 'Enable Urdu Recitation' : 'Disable Urdu Recitation';
-
     const message = isEnabling
       ? `The Urdu recitation will play after the Arabic recitation for each Ayah.<br> Are you sure you want to proceed?`
       : `Urdu recitation will be turned off. Only Arabic recitation will play.<br> Are you sure you want to proceed?`;
@@ -363,7 +367,6 @@ export class Quran implements AfterViewInit, OnDestroy {
       acceptButtonStyleClass:
         'px-4! py-2! border-none! rounded-lg! text-xs! font-semibold! font-sans! transition-all! duration-200! cursor-pointer! shadow-sm!',
       accept: () => {
-        // Set the intended state on accept
         checkbox.checked = isEnabling;
         this.globalAudio.playUrduAudio.set(isEnabling);
         localStorage.setItem(
@@ -373,38 +376,29 @@ export class Quran implements AfterViewInit, OnDestroy {
         if (this.globalAudio.currentPlayingAyah()) {
           this.globalAudio.replayCurrentAyah();
         }
-        // else if (this.selectedSurah()?.ayahs?.length > 0) {
-        //   this.globalAudio.playAudio(this.selectedSurah().ayahs[0], this.selectedSurah());
-        // }
       },
       reject: () => {
-        // Revert back to the original state on reject
         checkbox.checked = !isEnabling;
       },
     });
   }
 
-  // Add Math reference for template usage
   protected readonly Math = Math;
 
-  // Pagination state signals
   currentPage = signal<number>(1);
   pageSize = signal<number>(9);
 
-  // Sliced Surah list for active page boundary
   paginatedSurahs = computed(() => {
     const startIndex = (this.currentPage() - 1) * this.pageSize();
     const endIndex = startIndex + this.pageSize();
     return this.filteredSurahs().slice(startIndex, endIndex);
   });
 
-  // Calculate total dynamic page count
   totalPages = computed(() => {
     const pages = Math.ceil(this.filteredSurahs().length / this.pageSize());
     return pages > 0 ? pages : 1;
   });
 
-  // Navigation trigger
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages()) {
       this.currentPage.set(page);
@@ -425,11 +419,10 @@ export class Quran implements AfterViewInit, OnDestroy {
       }
     }, 150);
   }
-  // Ayah Pagination State Signals
+
   currentAyahPage = signal<number>(1);
   ayahPageSize = signal<number>(10);
 
-  // Dynamic slice for current Surah ayahs
   paginatedAyahs = computed(() => {
     const surah = this.selectedSurah();
     if (!surah || !surah.ayahs) return [];
@@ -438,7 +431,6 @@ export class Quran implements AfterViewInit, OnDestroy {
     return surah.ayahs.slice(startIndex, endIndex);
   });
 
-  // Calculate total Ayah pages
   totalAyahPages = computed(() => {
     const surah = this.selectedSurah();
     if (!surah || !surah.ayahs) return 1;
@@ -446,21 +438,16 @@ export class Quran implements AfterViewInit, OnDestroy {
     return pages > 0 ? pages : 1;
   });
 
-  // Navigate Ayah pages manually
   changeAyahPage(page: number): void {
     if (page >= 1 && page <= this.totalAyahPages()) {
       this.currentAyahPage.set(page);
       this.userInteraction.isInteracting.set(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       this.scrollToActiveAyahPageButton();
-      // setTimeout(() => {
-      //   this.userInteraction.isInteracting.set(false);
-      // }, 1500);
     }
   }
 
   scrollToActiveAyahPageButton(): void {
-    // setTimeout(() => {
     const activeBtn = document.querySelector('.ayah-page-btn-active');
     if (activeBtn) {
       activeBtn.scrollIntoView({
@@ -469,10 +456,8 @@ export class Quran implements AfterViewInit, OnDestroy {
         inline: 'center',
       });
     }
-    // }, 150);
   }
 
-  // Helper to resolve & switch to the page containing a given Ayah number
   private setPageForAyah(ayahNumber: number): void {
     const targetPage = Math.ceil(ayahNumber / this.ayahPageSize());
     this.currentAyahPage.set(targetPage);

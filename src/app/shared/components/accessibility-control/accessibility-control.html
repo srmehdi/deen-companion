@@ -1,5 +1,5 @@
 <div
-  class="fixed bottom-[100px] sm:right-8 flex items-center z-[9999] font-sans max-sm:w-full max-sm:justify-center transition-all duration-300"
+  class="fixed bottom-[100px] lg:bottom-[14px] right-[12px] sm:right-4 flex items-center z-[9999] font-sans max-sm:w-full max-sm:justify-end transition-all duration-300"
   [class.pointer-events-none]="!isOpen()"
   [class.pointer-events-auto]="isOpen()"
 >
@@ -41,7 +41,7 @@
     <button
       (click)="resetFontSize(); keepDockOpen()"
       class="w-[28px] h-[28px] rounded-full hover:bg-hover-background reset-btn cursor-pointer disabled:cursor-not-allowed"
-      [disabled]="fontSize() == 100"
+      [disabled]="fontSize() == 110"
     >
       <span class="reset-icon">↺</span>
     </button>

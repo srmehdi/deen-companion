@@ -11,7 +11,15 @@ export const routes: Routes = [
     loadComponent: () => import('./features/quran/quran').then((m) => m.Quran),
   },
   {
+    path: 'quran/:id',
+    loadComponent: () => import('./features/quran/quran').then((m) => m.Quran),
+  },
+  {
     path: 'hadees',
+    loadComponent: () => import('./features/hadees/hadees').then((m) => m.Hadees),
+  },
+  {
+    path: 'hadees/:collectionKey',
     loadComponent: () => import('./features/hadees/hadees').then((m) => m.Hadees),
   },
   {

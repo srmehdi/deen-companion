@@ -1,6 +1,10 @@
-import { Component, computed, inject, signal, AfterViewInit, effect } from '@angular/core';
+import { Component, computed, inject, signal, effect, DestroyRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { combineLatest, asapScheduler } from 'rxjs';
+import { auditTime, map } from 'rxjs/operators';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -32,9 +36,12 @@ interface HadithItem {
   templateUrl: './hadees.html',
   styleUrl: './hadees.css',
 })
-export class Hadees implements AfterViewInit {
+export class Hadees implements OnInit {
   private modal = inject(StatusModalService);
   private messageService = inject(MessageService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
   apiService = inject(ApiService);
 
   collections = signal<HadithCollection[]>([]);
@@ -56,7 +63,36 @@ export class Hadees implements AfterViewInit {
 
   protected readonly Math = Math;
   currentBookmark = signal<any | null>(this.loadBookmark());
+
+  private lastFetchKey = '';
+
   constructor() {
+    // auditTime(0, asapScheduler) collapse split micro-tick emissions from paramMap & queryParamMap during route transitions
+    combineLatest([this.route.paramMap, this.route.queryParamMap])
+      .pipe(
+        auditTime(0, asapScheduler),
+        map(([params, queryParams]) => {
+          const collectionKey = params.get('collectionKey');
+          const targetPage = Number(queryParams.get('page')) || 1;
+          const targetHadithId = queryParams.get('hadithId') || undefined;
+          return { collectionKey, targetPage, targetHadithId };
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(({ collectionKey, targetPage, targetHadithId }) => {
+        if (collectionKey) {
+          const fetchKey = `${collectionKey}_${targetPage}_${targetHadithId || ''}`;
+          if (this.lastFetchKey !== fetchKey) {
+            this.loadCollectionDetails(collectionKey, targetPage, targetHadithId);
+          }
+        } else if (!this.isSearchingGlobally()) {
+          this.lastFetchKey = '';
+          this.selectedCollection.set(null);
+          this.hadiths.set([]);
+        }
+      });
+
+    // Global text search effect
     effect(() => {
       const query = this.searchQuery().trim();
 
@@ -70,6 +106,7 @@ export class Hadees implements AfterViewInit {
       }
     });
 
+    // Precise number search effect
     effect(() => {
       const hadithNum = this.numberSearchQuery().trim();
       const activeCollection = this.selectedCollection();
@@ -120,28 +157,26 @@ export class Hadees implements AfterViewInit {
             });
           },
         });
-      } else {
-        if (this.totalItems() === 0 || this.totalItems() === 1) {
-          const activeCollectionKey = activeCollection.info.key;
-          setTimeout(() => {
-            if (this.selectedCollection() && this.numberSearchQuery().trim().length === 0) {
-              this.loadCollectionDetails(activeCollectionKey, 1);
-            }
-          }, 0);
-        }
       }
     });
   }
 
-  ngAfterViewInit() {
-    this.loadHadithCollections();
+  ngOnInit() {
+    const cachedCollections = localStorage.getItem('collections');
+    if (!cachedCollections || cachedCollections.length === 0) {
+      this.loadHadithCollections();
+    } else {
+      this.collections.set(JSON.parse(cachedCollections));
+    }
   }
 
   loadHadithCollections() {
     this.modal.showLoading();
     this.apiService.getHadithCollections<any>().subscribe({
       next: (response) => {
-        this.collections.set(response?.data?.collections || []);
+        const collectionsList = response?.data?.collections || [];
+        this.collections.set(collectionsList);
+        localStorage.setItem('collections', JSON.stringify(collectionsList));
         this.modal.close();
       },
       error: (err) => {
@@ -151,11 +186,23 @@ export class Hadees implements AfterViewInit {
     });
   }
 
+  navigateToCollection(collectionKey: string, page: number = 1, hadithId?: string | number) {
+    const queryParams: Record<string, any> = {};
+    if (page > 1) queryParams['page'] = page;
+    if (hadithId) queryParams['hadithId'] = hadithId;
+
+    // this.router.navigate(['/hadees', collectionKey], { queryParams });
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/hadees', collectionKey], { queryParams });
+    });
+  }
+
   loadCollectionDetails(
     collectionKey: string,
     targetPage: number = 1,
     targetHadithId?: string | number,
   ) {
+    this.lastFetchKey = `${collectionKey}_${targetPage}_${targetHadithId || ''}`;
     this.searchQuery.set('');
     this.numberSearchQuery.set('');
     this.isSearchingGlobally.set(false);
@@ -198,6 +245,8 @@ export class Hadees implements AfterViewInit {
 
           if (targetHadithId) {
             this.scrollToHadith(targetHadithId);
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }
         },
         error: (err) => {
@@ -257,10 +306,9 @@ export class Hadees implements AfterViewInit {
     this.allSearchHadiths.set([]);
     const fallback = this.previousCollectionBeforeSearch();
     if (fallback && fallback.info && fallback.info.key !== 'search-results') {
-      this.loadCollectionDetails(fallback.info.key, 1);
+      this.navigateToCollection(fallback.info.key);
     } else {
-      this.selectedCollection.set(null);
-      this.hadiths.set([]);
+      this.closeReader();
     }
     this.previousCollectionBeforeSearch.set(null);
   }
@@ -269,16 +317,17 @@ export class Hadees implements AfterViewInit {
     if (page >= 1 && page <= this.totalPages()) {
       if (this.isSearchingGlobally()) {
         this.currentPage.set(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         const activeCollection = this.selectedCollection();
         if (activeCollection) {
-          this.loadCollectionDetails(activeCollection.info.key, page);
+          this.navigateToCollection(activeCollection.info.key, page);
         }
       }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       this.scrollToActivePageButton();
     }
   }
+
   scrollToActivePageButton(): void {
     setTimeout(() => {
       const activeBtn = document.querySelector('.page-btn-active');
@@ -291,6 +340,7 @@ export class Hadees implements AfterViewInit {
       }
     }, 150);
   }
+
   bookmarkHadith(hadith: HadithItem): void {
     if (this.isSearchingGlobally()) return;
     const current = this.selectedCollection();
@@ -318,7 +368,7 @@ export class Hadees implements AfterViewInit {
   resumeJourney(): void {
     const bookmark = this.currentBookmark();
     if (bookmark) {
-      this.loadCollectionDetails(bookmark.collectionKey, bookmark.page || 1, bookmark.hadithId);
+      this.navigateToCollection(bookmark.collectionKey, bookmark.page || 1, bookmark.hadithId);
     }
   }
 
@@ -331,11 +381,22 @@ export class Hadees implements AfterViewInit {
     setTimeout(() => {
       const element = document.getElementById(`hadith-row-${hadithId}`);
       if (element) {
+        this.scrollToActiveHadithPageButton();
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    }, 300);
+    }, 100);
   }
 
+  scrollToActiveHadithPageButton(): void {
+    const activeBtn = document.querySelector('.page-btn-active');
+    if (activeBtn) {
+      activeBtn.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      });
+    }
+  }
   copyToClipboard(hadith: HadithItem, event: MouseEvent): void {
     const current = this.selectedCollection();
     const titleText = hadith.collectionName || (current ? current.info.name : 'Hadith');
@@ -362,6 +423,7 @@ export class Hadees implements AfterViewInit {
   }
 
   closeReader(): void {
+    this.lastFetchKey = '';
     this.searchQuery.set('');
     this.numberSearchQuery.set('');
     this.selectedCollection.set(null);
@@ -370,6 +432,8 @@ export class Hadees implements AfterViewInit {
     this.isSearchingGlobally.set(false);
     this.isSearching.set(false);
     this.previousCollectionBeforeSearch.set(null);
+
+    this.router.navigate(['/hadees']);
   }
 
   clearSearch() {
@@ -377,6 +441,10 @@ export class Hadees implements AfterViewInit {
   }
 
   clearNumberSearch() {
+    const activeCollection = this.selectedCollection();
     this.numberSearchQuery.set('');
+    if (activeCollection) {
+      this.loadCollectionDetails(activeCollection.info.key, this.currentPage());
+    }
   }
 }
