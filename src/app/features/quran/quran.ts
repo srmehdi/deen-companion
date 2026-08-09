@@ -3,7 +3,7 @@ import {
   computed,
   inject,
   signal,
-  AfterViewInit,
+  OnInit,
   OnDestroy,
   effect,
   HostListener,
@@ -31,7 +31,7 @@ import { UserInteractionService } from '../../core/services/user-interaction-ser
   templateUrl: './quran.html',
   styleUrl: './quran.css',
 })
-export class Quran implements AfterViewInit, OnDestroy {
+export class Quran implements OnInit, OnDestroy {
   private modal = inject(StatusModalService);
   public globalAudio = inject(AudioPlayerService);
   private api = inject(ApiService);
@@ -71,16 +71,29 @@ export class Quran implements AfterViewInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.loadSurahList();
 
-    // Listen to route parameter changes to load the corresponding Surah
+    // Route subscription acts as single source of truth for fetching surah data
     this.routeSubscription = this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
         const surahNumber = Number(id);
         if (!isNaN(surahNumber)) {
-          this.fetchAndSetSurah(surahNumber);
+          // Check if navigation passed state (for ayah jumps, auto-play, or audio resume)
+          const navigationState = history.state;
+          const targetAyahNumber = navigationState?.targetAyahNumber;
+          const isManualBookmarkJump = navigationState?.isManualBookmarkJump ?? false;
+          const autoPlay = navigationState?.autoPlay ?? false;
+          const autoPlayAyahNumber = navigationState?.autoPlayAyahNumber;
+
+          this.fetchAndSetSurah(
+            surahNumber,
+            targetAyahNumber,
+            isManualBookmarkJump,
+            autoPlay,
+            autoPlayAyahNumber,
+          );
         }
       } else {
         this.selectedSurah.set(null);
@@ -99,21 +112,54 @@ export class Quran implements AfterViewInit, OnDestroy {
     number: number,
     targetAyahNumber?: number,
     isManualBookmarkJump = false,
+    autoPlay = false,
+    autoPlayAyahNumber?: number,
   ): void {
+    // Avoid re-fetching if we already have this surah loaded and no special action is required
+    if (
+      this.selectedSurah()?.info?.number === number &&
+      !targetAyahNumber &&
+      !autoPlay &&
+      !autoPlayAyahNumber
+    ) {
+      return;
+    }
+
     this.modal.showLoading();
     this.api.getSurahDetails(number).subscribe({
       next: (surahData) => {
         this.selectedSurah.set(surahData);
         this.modal.close();
 
+        // Priority 1: Resume specific Ayah audio playback (e.g., from resumeAudioJourney)
+        if (autoPlayAyahNumber && surahData.ayahs) {
+          const targetAyah = surahData.ayahs.find(
+            (a: any) => a.numberInSurah === autoPlayAyahNumber,
+          );
+          this.setPageForAyah(autoPlayAyahNumber);
+          this.scrollToAyah(autoPlayAyahNumber);
+
+          if (targetAyah && !this.globalAudio.isAudioPlaying()) {
+            this.globalAudio.playAudio(targetAyah, surahData);
+          }
+          return;
+        }
+
+        // Priority 2: Auto-play from start of Surah
+        if (autoPlay && surahData.ayahs && surahData.ayahs.length > 0) {
+          this.currentAyahPage.set(1);
+          this.scrollToAyah(1);
+          this.globalAudio.playAudio(surahData.ayahs[0], surahData);
+          return;
+        }
+
+        // Priority 3: Target Ayah navigation without immediate auto-play
         if (targetAyahNumber) {
           this.setPageForAyah(targetAyahNumber);
           if (isManualBookmarkJump) {
             this.userInteraction.isInteracting.set(true);
-            this.scrollToAyah(targetAyahNumber);
-          } else {
-            this.scrollToAyah(targetAyahNumber);
           }
+          this.scrollToAyah(targetAyahNumber);
         } else {
           const activeAyah = this.globalAudio.currentPlayingAyah();
           const currentSurah = this.selectedSurah();
@@ -133,18 +179,27 @@ export class Quran implements AfterViewInit, OnDestroy {
         }
       },
       error: (err) => {
-        console.error('Failed loading individual script metadata', err);
+        console.error('Failed loading surah details:', err);
         this.modal.close();
       },
     });
   }
 
-  // Trigger routing navigation instead of manual state management
-  loadSurah(number: number, targetAyahNumber?: number, isManualBookmarkJump = false): void {
-    this.router.navigate(['/quran', number]);
-    if (targetAyahNumber) {
-      this.fetchAndSetSurah(number, targetAyahNumber, isManualBookmarkJump);
-    }
+  loadSurah(
+    number: number,
+    targetAyahNumber?: number,
+    isManualBookmarkJump = false,
+    autoPlayAyahNumber?: number,
+  ): void {
+    // Navigate and pass state parameters; paramMap subscription handles execution
+    // this.router.navigate(['/quran', number], {
+    //   state: { targetAyahNumber, isManualBookmarkJump, autoPlayAyahNumber },
+    // });
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/quran', number], {
+        state: { targetAyahNumber, isManualBookmarkJump, autoPlayAyahNumber },
+      });
+    });
   }
 
   closeReader(): void {
@@ -201,31 +256,17 @@ export class Quran implements AfterViewInit, OnDestroy {
   }
 
   loadSurahAndAutoPlay(number: number): void {
-    this.router.navigate(['/quran', number]);
-    this.modal.showLoading();
-    this.api.getSurahDetails(number).subscribe({
-      next: (surahData) => {
-        this.selectedSurah.set(surahData);
-        this.currentAyahPage.set(1);
-        this.modal.close();
-
-        if (surahData.ayahs && surahData.ayahs.length > 0) {
-          this.scrollToAyah(1);
-          this.globalAudio.playAudio(surahData.ayahs[0], surahData);
-        }
-      },
-      error: (err) => {
-        console.error('Failed loading auto-advanced script:', err);
-        this.modal.close();
-      },
+    this.router.navigate(['/quran', number], {
+      state: { autoPlay: true },
     });
   }
 
   @HostListener('window:jumpToActiveAyah', ['$event'])
   onJumpToActiveAyahRequested(event: any): void {
     const { surahNumber, ayahNumber } = event.detail;
-    this.router.navigate(['/quran', surahNumber]);
-    this.fetchAndSetSurah(surahNumber, ayahNumber);
+    this.router.navigate(['/quran', surahNumber], {
+      state: { targetAyahNumber: ayahNumber },
+    });
   }
 
   scrollToAyah(ayahNumber: number): void {
@@ -248,18 +289,7 @@ export class Quran implements AfterViewInit, OnDestroy {
   resumeAudioJourney(): void {
     const progress = this.globalAudio.lastPlayedAudio();
     if (progress) {
-      this.loadSurah(progress.surahNumber, progress.ayahNumber);
-      setTimeout(() => {
-        const targetSurah = this.selectedSurah();
-        if (targetSurah && targetSurah.ayahs) {
-          const targetAyah = targetSurah.ayahs.find(
-            (a: any) => a.numberInSurah === progress.ayahNumber,
-          );
-          if (targetAyah && !this.globalAudio.isAudioPlaying()) {
-            this.globalAudio.playAudio(targetAyah, targetSurah);
-          }
-        }
-      }, 800);
+      this.loadSurah(progress.surahNumber, progress.ayahNumber, false, progress.ayahNumber);
     }
   }
 
@@ -283,15 +313,15 @@ export class Quran implements AfterViewInit, OnDestroy {
       this.messageService.add({
         severity: 'success',
         summary: 'Bookmarked',
-        detail: 'Ayah saved to your bookmark.',
-        life: 3000,
+        detail: `Ayah saved as 'Last Marked'`,
+        life: 5000,
       });
     } else {
       this.messageService.add({
         severity: 'info',
         summary: 'Already Bookmarked',
-        detail: 'This Ayah is already in your bookmark.',
-        life: 3000,
+        detail: `This Ayah has been already saved as 'Last Marked'`,
+        life: 5000,
       });
     }
   }

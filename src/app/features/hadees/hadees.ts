@@ -353,16 +353,29 @@ export class Hadees implements OnInit {
       hadithNumber: hadith.hadithNumber,
       page: this.currentPage(),
     };
+    if (
+      !(
+        this.currentBookmark()?.collectionKey === current.info.key &&
+        this.currentBookmark()?.hadithId === hadith.id
+      )
+    ) {
+      localStorage.setItem('hadith_bookmark', JSON.stringify(bookmark));
+      this.currentBookmark.set(bookmark);
 
-    localStorage.setItem('hadith_bookmark', JSON.stringify(bookmark));
-    this.currentBookmark.set(bookmark);
-
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Bookmarked',
-      detail: 'Hadith saved as last read.',
-      life: 3000,
-    });
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Bookmarked',
+        detail: `${current.info.name} (Hadith No.${hadith.hadithNumber}) saved as 'Last Marked'`,
+        life: 5000,
+      });
+    } else {
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Already Bookmarked',
+        detail: `This Hadith has been already saved as 'Last Marked'`,
+        life: 5000,
+      });
+    }
   }
 
   resumeJourney(): void {

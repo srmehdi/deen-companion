@@ -26,6 +26,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { StatusModalService } from '../../../core/services/status-modal-service/status-modal-service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 // Ultimate Fallback Location: New Delhi, India
 const DEFAULT_INDIA_LAT = 28.6139;
@@ -411,6 +412,36 @@ export class DashboardPage implements OnInit, AfterViewInit, OnDestroy {
       },
       reject: () => {},
     });
+  }
+  private router = inject(Router);
+  navigateToVerse(): void {
+    const verse = this.verseOfTheDay();
+    if (!verse) {
+      this.router.navigate(['/quran']);
+      return;
+    }
+
+    this.router.navigate(['/quran', verse.surah.number]);
+  }
+
+  navigateToHadith(): void {
+    const hadith = this.hadithOfTheDay();
+    if (!hadith) {
+      this.router.navigate(['/hadees']);
+      return;
+    }
+
+    this.router.navigate(['/hadees']);
+  }
+
+  navigateToDua(): void {
+    const dua = this.duaOfTheDay();
+    if (!dua) {
+      this.router.navigate(['/dua']);
+      return;
+    }
+
+    this.router.navigate(['/dua']);
   }
 
   ngOnDestroy() {
