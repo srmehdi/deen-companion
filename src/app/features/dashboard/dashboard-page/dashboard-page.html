@@ -84,7 +84,7 @@
     <div class="relative w-full max-w-sm mx-auto mb-5">
       <div class="flex items-center gap-2">
         <div
-          class="flex-1 flex items-center px-3 py-2.5 transition-all duration-300 border rounded-lg bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border-gray-400 dark:border-amber-500/20 focus-within:border-amber-500/60 focus-within:ring-2 focus-within:ring-amber-500/20 shadow-sm"
+          class="flex-1 flex items-center px-[12px] py-[10px] transition-all duration-300 border rounded-lg bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border-gray-400 dark:border-amber-500/20 focus-within:border-amber-500/60 focus-within:ring-2 focus-within:ring-amber-500/20 shadow-sm"
         >
           <i class="pi pi-search text-amber-600/70 dark:text-amber-400/70 text-xs!"></i>
           <input
@@ -103,7 +103,7 @@
         </div>
         <button
           (click)="detectLocation()"
-          class="flex items-center justify-center py-2.5 px-3 transition-all duration-200 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white rounded-lg active:scale-95 shadow-md shadow-amber-500/20 cursor-pointer group"
+          class="flex items-center justify-center px-[12px] py-[10px] transition-all duration-200 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white rounded-lg active:scale-95 shadow-md shadow-amber-500/20 cursor-pointer group shrink-0"
           title="Use Current Location"
         >
           <i class="pi pi-map-marker text-xs! group-hover:scale-110 transition-transform"></i>
@@ -120,8 +120,8 @@
           (click)="selectCity(city)"
           class="px-4 py-3 cursor-pointer hover:bg-amber-500/10 text-xs text-gray-800 dark:text-gray-100 border-b border-gray-100 dark:border-slate-800/80 last:border-none transition-colors flex items-center justify-between"
         >
-          <span>{{ city.display_name }}</span>
-          <i class="pi pi-chevron-right text-[10px] text-gray-400"></i>
+          <span class="break-words pr-2">{{ city.display_name }}</span>
+          <i class="pi pi-chevron-right text-[10px] text-gray-400 shrink-0"></i>
         </li>
       </ul>
     </div>
@@ -162,20 +162,22 @@
         }
       </div>
     } @else {
-      <!-- Main Content -->
+      <!-- Main Content Header -->
       <div
-        class="flex sm:items-center items-start flex-col max-sm:gap-1 sm:flex-row sm:justify-between pb-3 mb-4 border-b border-gray-400 dark:border-amber-500/15"
+        class="flex sm:items-center items-start flex-col max-sm:gap-1 sm:flex-row sm:justify-between pb-3 mb-4 border-b border-gray-400 dark:border-amber-500/15 gap-2"
       >
         <h1
-          class="text-xs font-bold uppercase tracking-[0.15em] text-amber-700 dark:text-amber-400/90"
+          class="text-xs font-bold uppercase tracking-[0.15em] text-amber-700 dark:text-amber-400/90 shrink-0"
         >
           Prayer Times
         </h1>
-        <div class="text-[0.65rem] text-gray-500 dark:text-gray-400 font-medium tracking-wide">
+        <div
+          class="text-[0.65rem] text-gray-500 dark:text-gray-400 font-medium tracking-wide flex flex-wrap items-center gap-1.5"
+        >
           <span>{{ prayer_times_data()?.date | date: 'fullDate' }}</span>
-          <span class="mx-1.5 opacity-50">•</span>
+          <span class="opacity-50">•</span>
           <span>{{ currentTimeAtSelectedCity() ?? 'N/A' }}</span>
-          <span class="mx-1.5 opacity-50">•</span>
+          <span class="opacity-50">•</span>
           <span class="text-amber-600 dark:text-amber-400">{{
             prayer_times_data()?.timezone
           }}</span>
@@ -184,18 +186,35 @@
 
       <!-- Current vs Next Prayer Highlights -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-        <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 backdrop-blur-sm">
-          <p
-            class="text-[0.65rem] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400"
-          >
-            Current Prayer
-          </p>
-          <h2 class="text-xl font-extrabold text-amber-800 dark:text-amber-300 mt-0.5">
-            {{ prayer_times_data()?.islamic_info?.prayer_names?.[currentPrayer()] ?? 'N/A' }}
-          </h2>
-        </div>
+        <!-- Current Prayer with Wrap-Safe View Guide Button -->
         <div
-          class="p-3.5 rounded-xl bg-gray-100/70 dark:bg-slate-900/40 border border-gray-400 dark:border-slate-900"
+          (click)="goToNamazGuide(currentPrayer())"
+          class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 hover:border-amber-500/60 backdrop-blur-sm cursor-pointer transition-all duration-200 group relative flex flex-col justify-between min-h-[5rem]"
+        >
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-1.5">
+              <p
+                class="text-[0.65rem] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400"
+              >
+                Current Prayer
+              </p>
+
+              <!-- Responsive Action Badge -->
+              <span
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-bold bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-white transition-all whitespace-nowrap shrink-0"
+              >
+                <i class="pi pi-book text-[0.6rem]!"></i>
+                <span>View Guide</span>
+              </span>
+            </div>
+            <h2 class="text-xl font-extrabold text-amber-800 dark:text-amber-300 mt-1 break-words">
+              {{ prayer_times_data()?.islamic_info?.prayer_names?.[currentPrayer()] ?? 'N/A' }}
+            </h2>
+          </div>
+        </div>
+
+        <div
+          class="p-3.5 rounded-xl bg-gray-100/70 dark:bg-slate-900/40 border border-gray-400 dark:border-slate-900 min-h-[5rem]"
         >
           <p
             class="text-[0.65rem] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400"
@@ -203,43 +222,78 @@
             Next Prayer
           </p>
           @if (prayer_times_data()?.islamic_info?.prayer_names?.[nextPrayer()]) {
-            <h2 class="text-base font-bold text-gray-800 dark:text-gray-200 mt-0.5">
-              {{ prayer_times_data()?.islamic_info?.prayer_names?.[nextPrayer()] }}
-              <span class="text-xs font-normal text-amber-600 dark:text-amber-400 ml-1">
+            <h2
+              class="text-base font-bold text-gray-800 dark:text-gray-200 mt-1 flex flex-wrap items-baseline gap-1"
+            >
+              <span class="break-words">{{
+                prayer_times_data()?.islamic_info?.prayer_names?.[nextPrayer()]
+              }}</span>
+              <span
+                class="text-xs font-normal text-amber-600 dark:text-amber-400 whitespace-nowrap"
+              >
                 in {{ prayer_times_data()?.current_status?.minutes_until_next ?? 'N/A' }} min
               </span>
             </h2>
           } @else {
-            <h2 class="text-base font-bold text-gray-400 mt-0.5">N/A</h2>
+            <h2 class="text-base font-bold text-gray-400 mt-1">N/A</h2>
           }
         </div>
       </div>
 
-      <!-- Prayer List Grid -->
+      <!-- Prayer List Grid: Fully Fluid & Wrap-Safe -->
       <div
         class="grid grid-cols-1 md:grid-cols-5 gap-2.5 pb-4 border-b border-gray-400 dark:border-amber-500/15"
       >
         <div
           *ngFor="let p of prayers"
-          class="flex md:flex-col justify-between md:justify-center items-center p-3 rounded-xl transition-all duration-300"
+          (click)="goToNamazGuide(p.key)"
+          title="Open {{ p.name }} Namaz Guide"
+          class="flex md:flex-col justify-between md:justify-center items-center gap-1 p-2 rounded-xl transition-all duration-200 cursor-pointer active:scale-95 group relative min-w-0"
           [ngClass]="{
-            'bg-accent text-black font-bold shadow-lg': p.key === currentPrayer(),
-            'bg-white/60 dark:bg-premium-emerald border border-gold-tint/20 text-gray-800 dark:text-gray-200 hover:border-amber-500/40':
+            'bg-amber-500/20 dark:bg-amber-500/20 border-2 border-amber-500 text-gray-900 dark:text-amber-200 font-bold shadow-md':
+              p.key === currentPrayer(),
+            'bg-white/60 dark:bg-premium-emerald border border-gold-tint/20 text-gray-800 dark:text-gray-200 hover:border-amber-500/60 hover:shadow-md':
               p.key !== currentPrayer(),
           }"
         >
-          <p class="text-[0.7rem] font-bold uppercase tracking-wider opacity-80 md:mb-1">
-            {{ p.name }}
-          </p>
-          <p class="text-sm md:text-base font-extrabold tracking-tight font-mono">
-            {{ prayer_times_data()?.prayer_times?.[p.key] }}
-          </p>
+          <!-- Prayer Name & Desktop Guide Badge -->
+          <div class="flex items-center md:justify-center w-full min-w-0 gap-1">
+            <p class="text-[0.75rem] font-bold uppercase tracking-wider truncate">
+              {{ p.name }}
+            </p>
+          </div>
+
+          <!-- Time Display & Mobile Guide Button -->
+          <div
+            class="flex items-center justify-end md:justify-center gap-[12px] w-auto md:w-full min-w-0"
+          >
+            <p
+              class="text-sm md:text-base font-extrabold tracking-tight font-mono whitespace-nowrap"
+            >
+              {{ prayer_times_data()?.prayer_times?.[p.key] }}
+            </p>
+
+            <!-- Mobile Guide Badge -->
+            <span
+              class="md:hidden inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 whitespace-nowrap shrink-0"
+            >
+              <span>Guide</span>
+              <i class="pi pi-arrow-right text-[9px]!"></i>
+            </span>
+          </div>
+          <!-- Desktop/Tablet Responsive Guide Badge -->
+          <span
+            class="hidden md:inline-flex items-center gap-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20 group-hover:bg-amber-500 group-hover:text-white transition-all whitespace-nowrap shrink-0"
+          >
+            <span>Guide</span>
+            <i class="pi pi-arrow-right text-[9px]!"></i>
+          </span>
         </div>
       </div>
 
       @if (prayer_times_data()?.islamic_info?.note) {
         <div
-          class="pt-3 font-light text-[0.65rem] tracking-wide text-gray-500 dark:text-gray-400/80"
+          class="pt-3 font-light text-[0.65rem] tracking-wide text-gray-500 dark:text-gray-400/80 leading-normal"
         >
           <span class="text-amber-500 font-bold">*</span><strong>Note:</strong>
           {{ prayer_times_data()?.islamic_info?.note }}
@@ -371,7 +425,7 @@
       </div>
 
       <div
-        class="border-t border-gray-400 dark:border-amber-500/15 my-3 pt-3 flex items-center justify-around! text-xs"
+        class="border-t border-gray-400 dark:border-amber-500/15 mt-3 pt-3 flex items-center justify-around! text-xs"
       >
         <button
           (click)="navigateToVerse()"
@@ -540,7 +594,7 @@
         </span>
       </div>
       <div
-        class="border-t border-gray-400 dark:border-amber-500/15 my-3 pt-3 flex items-center justify-around! text-xs"
+        class="border-t border-gray-400 dark:border-amber-500/15 mt-3 pt-3 flex items-center justify-around! text-xs"
       >
         <button
           (click)="navigateToHadith()"
@@ -660,7 +714,7 @@
         }}</span>
       </div>
       <div
-        class="border-t border-gray-400 dark:border-amber-500/15 my-3 pt-3 flex items-center justify-around! text-xs"
+        class="border-t border-gray-400 dark:border-amber-500/15 mt-3 pt-3 flex items-center justify-around! text-xs"
       >
         <button
           (click)="navigateToDua()"

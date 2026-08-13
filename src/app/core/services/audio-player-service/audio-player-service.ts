@@ -225,8 +225,6 @@ export class AudioPlayerService {
 
   private playNextAyah(): void {
     const current = this.currentPlayingAyah()?.numberInSurah;
-    console.log('current', current);
-
     if (current !== null && current !== undefined && this.playingSurahAyahs.length > 0) {
       if (current < this.playingSurahAyahs.length) {
         this.playAudio(this.playingSurahAyahs[current]);

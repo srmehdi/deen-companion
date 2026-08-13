@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, input, signal } from '@angular/core';
 import { ThemeService } from '../../core/services/theme-service/theme-service';
 import { RouterModule } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.css',
 })
 export class Header {
+  isHeaderHidden = input<boolean>(false, { alias: 'isHidden' });
   constructor(
     public theme: ThemeService,
     private eRef: ElementRef,

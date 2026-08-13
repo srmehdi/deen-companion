@@ -1,0 +1,72 @@
+.namaz-guide-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.namaz-guide-container[dir='rtl'] {
+  font-family: 'Nastaliq', 'Urdu Typesetting', sans-serif;
+  text-align: right;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.language-tabs button,
+.prayer-selector button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: #f8f9fa;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.language-tabs button.active,
+.prayer-selector button.selected {
+  background: #0d6efd;
+  color: #fff;
+  border-color: #0d6efd;
+}
+
+.prayer-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+.step-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  position: relative;
+  background: #ffffff;
+}
+
+.arabic-text {
+  font-size: 1.5rem;
+  font-family: 'Amiri', 'Traditional Arabic', serif;
+  color: #1b4332;
+  margin: 0.75rem 0;
+  direction: rtl;
+  text-align: center;
+}
+
+.paywall-overlay {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #fff8e1;
+  border-radius: 6px;
+}

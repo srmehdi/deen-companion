@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ApiService } from '../../core/services/api-service/api-service';
 import { StatusModalService } from '../../core/services/status-modal-service/status-modal-service';
+import { HeaderStateService } from '../../core/services/header-state-service/header-state-service';
 
 interface HadithCollection {
   key: string;
@@ -160,13 +161,14 @@ export class Hadees implements OnInit {
       }
     });
   }
-
+  private headerState = inject(HeaderStateService);
   ngOnInit() {
     const cachedCollections = localStorage.getItem('collections');
     if (!cachedCollections || cachedCollections.length === 0) {
       this.loadHadithCollections();
     } else {
       this.collections.set(JSON.parse(cachedCollections));
+      this.modal.close();
     }
   }
 
@@ -194,6 +196,8 @@ export class Hadees implements OnInit {
     // this.router.navigate(['/hadees', collectionKey], { queryParams });
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/hadees', collectionKey], { queryParams });
+      this.headerState.isHeaderHidden.set(false);
+      this.headerState.enableAutoHide();
     });
   }
 
@@ -459,5 +463,8 @@ export class Hadees implements OnInit {
     if (activeCollection) {
       this.loadCollectionDetails(activeCollection.info.key, this.currentPage());
     }
+  }
+  ngOnDestroy(): void {
+    this.headerState.disableAutoHide();
   }
 }

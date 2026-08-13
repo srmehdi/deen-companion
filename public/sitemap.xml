@@ -28,6 +28,11 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://deen-companion.netlify.app/namaz-guide</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
   <!-- Media Feature -->
   <url>

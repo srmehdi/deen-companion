@@ -27,6 +27,16 @@ export const routes: Routes = [
     loadComponent: () => import('./features/dua/dua').then((m) => m.Dua),
   },
   {
+    path: 'namaz-guide',
+    redirectTo: 'namaz-guide/fajr',
+    pathMatch: 'full',
+  },
+  {
+    path: 'namaz-guide/:prayerId',
+    loadComponent: () =>
+      import('./features/namaz-guide/namaz-guide').then((m) => m.NamazGuideComponent),
+  },
+  {
     path: 'islamic-videos',
     loadComponent: () => import('./features/media/media').then((m) => m.MediaComponent),
   },

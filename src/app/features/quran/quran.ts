@@ -23,6 +23,7 @@ import { ToastModule } from 'primeng/toast';
 
 import { Bookmark } from '../../shared/utils/interface';
 import { UserInteractionService } from '../../core/services/user-interaction-service/user-interaction.service';
+import { HeaderStateService } from '../../core/services/header-state-service/header-state-service';
 
 @Component({
   selector: 'app-quran',
@@ -71,6 +72,7 @@ export class Quran implements OnInit, OnDestroy {
     });
   }
 
+  private headerState = inject(HeaderStateService);
   ngOnInit(): void {
     this.loadSurahList();
 
@@ -80,6 +82,8 @@ export class Quran implements OnInit, OnDestroy {
       if (id) {
         const surahNumber = Number(id);
         if (!isNaN(surahNumber)) {
+          this.headerState.isHeaderHidden.set(false);
+          this.headerState.enableAutoHide();
           // Check if navigation passed state (for ayah jumps, auto-play, or audio resume)
           const navigationState = history.state;
           const targetAyahNumber = navigationState?.targetAyahNumber;
@@ -96,6 +100,7 @@ export class Quran implements OnInit, OnDestroy {
           );
         }
       } else {
+        this.headerState.disableAutoHide();
         this.selectedSurah.set(null);
       }
     });
@@ -223,6 +228,7 @@ export class Quran implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.headerState.disableAutoHide();
     if (this.audioSubscription) {
       this.audioSubscription.unsubscribe();
     }
@@ -256,8 +262,10 @@ export class Quran implements OnInit, OnDestroy {
   }
 
   loadSurahAndAutoPlay(number: number): void {
-    this.router.navigate(['/quran', number], {
-      state: { autoPlay: true },
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/quran', number], {
+        state: { autoPlay: true },
+      });
     });
   }
 
