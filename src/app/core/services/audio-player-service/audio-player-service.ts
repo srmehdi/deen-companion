@@ -296,6 +296,6 @@ export class AudioPlayerService {
 
   private loadUrduAudioSetting(): boolean {
     const saved = localStorage.getItem('quran_play_urdu_audio');
-    return saved !== null ? JSON.parse(saved) : false;
+    return saved !== null ? JSON.parse(saved) : true;
   }
 }

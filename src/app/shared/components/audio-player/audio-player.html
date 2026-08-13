@@ -191,12 +191,16 @@
                   'text-slate-700 dark:text-slate-300': !globalAudio.playUrduAudio(),
                 }"
               >
-                Play Urdu Audio Translation
+                {{ globalAudio.playUrduAudio() ? 'Turn Off' : 'Turn On' }} Urdu Audio Translation
               </span>
               <span
                 class="text-[9.5px] sm:text-[10.5px] text-slate-500 dark:text-slate-400 truncate"
               >
-                Urdu Audio will play right after each Arabic Ayah
+                {{
+                  globalAudio.playUrduAudio()
+                    ? 'Urdu Audio will be turned off. Only Arabic Audio will play.'
+                    : 'Urdu Audio will play right after each Arabic Ayah.'
+                }}
               </span>
             </div>
           </div>
