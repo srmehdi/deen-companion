@@ -6,6 +6,7 @@ import { VideoItem } from '../../shared/utils/interface';
 import { StatusModalService } from '../../core/services/status-modal-service/status-modal-service';
 import { ApiService } from '../../core/services/api-service/api-service';
 import { AudioPlayerService } from '../../core/services/audio-player-service/audio-player-service';
+import { HeaderStateService } from '../../core/services/header-state-service/header-state-service';
 
 @Component({
   selector: 'app-media',
@@ -52,8 +53,10 @@ export class MediaComponent implements OnInit {
   });
 
   private modal = inject(StatusModalService);
-
+  private headerState = inject(HeaderStateService);
   ngOnInit(): void {
+    this.headerState.isHeaderHidden.set(false);
+    this.headerState.enableAutoHide();
     this.fetchData();
   }
 
@@ -171,5 +174,8 @@ export class MediaComponent implements OnInit {
         this.loading.set(false);
       },
     });
+  }
+  ngOnDestroy(): void {
+    this.headerState.disableAutoHide();
   }
 }

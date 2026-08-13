@@ -9,7 +9,7 @@ export class UserInteractionService {
   // Dynamic signal tracking active interaction status
   public isInteracting = signal<boolean>(false);
   private interactionTimeout: ReturnType<typeof setTimeout> | null = null;
-  private readonly inactivityDelay = 5000;
+  private readonly inactivityDelay = 10000;
 
   constructor() {
     this.initGlobalListeners();

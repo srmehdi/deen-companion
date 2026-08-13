@@ -1,0 +1,44 @@
+{
+  "prayers": [
+    {
+      "id": "fajr",
+      "name": {
+        "en": "Fajr",
+        "ur": "فجر",
+        "hi": "फज्र"
+      }
+    },
+    {
+      "id": "dhuhr",
+      "name": {
+        "en": "Dhuhr",
+        "ur": "ظہر",
+        "hi": "ज़ुह्र"
+      }
+    },
+    {
+      "id": "asr",
+      "name": {
+        "en": "Asr",
+        "ur": "عصر",
+        "hi": "असर"
+      }
+    },
+    {
+      "id": "maghrib",
+      "name": {
+        "en": "Maghrib",
+        "ur": "مغرب",
+        "hi": "मग़रिब"
+      }
+    },
+    {
+      "id": "isha",
+      "name": {
+        "en": "Isha",
+        "ur": "عشاء",
+        "hi": "इशा"
+      }
+    }
+  ]
+}

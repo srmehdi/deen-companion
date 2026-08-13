@@ -9,6 +9,7 @@ import { forkJoin, Subject } from 'rxjs';
 import { StatusModal } from '../../shared/modals/status-modal/status-modal';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { StatusModalService } from '../../core/services/status-modal-service/status-modal-service';
+import { HeaderStateService } from '../../core/services/header-state-service/header-state-service';
 
 interface DuaItem {
   id: number;
@@ -38,7 +39,10 @@ export class Dua {
   // Curated Islamic Supplications Repository Core
   duas = signal<DuaItem[]>([]);
   protected readonly Math = Math;
+  private headerState = inject(HeaderStateService);
   ngAfterViewInit() {
+    this.headerState.isHeaderHidden.set(false);
+    this.headerState.enableAutoHide();
     // this.getDuaBookmarks();
     // this.getAllDuas();
     this.getAllDuasAndBookmarkedIds();
@@ -320,5 +324,8 @@ export class Dua {
       },
       reject: () => {},
     });
+  }
+  ngOnDestroy(): void {
+    this.headerState.disableAutoHide();
   }
 }

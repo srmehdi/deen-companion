@@ -444,6 +444,10 @@ export class DashboardPage implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['/dua']);
   }
 
+  goToNamazGuide(prayerKey: string): void {
+    if (!prayerKey) return;
+    this.router.navigate(['/namaz-guide', prayerKey.toLowerCase()]);
+  }
   ngOnDestroy() {
     this.audioService.stopAudio();
     if (this.timeIntervalId) clearInterval(this.timeIntervalId);
