@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AudioPlayerService } from '../../../core/services/audio-player-service/audio-player-service';
 import { ConfirmationService } from 'primeng/api';
@@ -95,5 +95,10 @@ export class AudioPlayer {
         // User cancelled; signals remain untouched
       },
     });
+  }
+  isAudioPlayerMinimized = signal(false);
+
+  toggleMinimize() {
+    this.isAudioPlayerMinimized.update((v) => !v);
   }
 }

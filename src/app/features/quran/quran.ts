@@ -24,11 +24,19 @@ import { ToastModule } from 'primeng/toast';
 import { Bookmark } from '../../shared/utils/interface';
 import { UserInteractionService } from '../../core/services/user-interaction-service/user-interaction.service';
 import { HeaderStateService } from '../../core/services/header-state-service/header-state-service';
+import { StickyHeaderWrapper } from '../../shared/components/sticky-header-wrapper/sticky-header-wrapper';
 
 @Component({
   selector: 'app-quran',
   standalone: true,
-  imports: [CommonModule, FormsModule, ConfirmDialogModule, ToastModule, RouterLink],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ConfirmDialogModule,
+    ToastModule,
+    RouterLink,
+    StickyHeaderWrapper,
+  ],
   templateUrl: './quran.html',
   styleUrl: './quran.css',
 })

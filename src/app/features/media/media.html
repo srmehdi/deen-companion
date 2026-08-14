@@ -1,37 +1,41 @@
 <div class="yt-container">
   <!-- Header Filter Pills Bar -->
-  <header class="yt-header max-sm:gap-[4px]!">
-    <div class="type-pills max-sm:gap-[2px]!">
-      <button
-        class="yt-pill"
-        [class.active]="selectedType() === 'short'"
-        (click)="selectType('short')"
-      >
-        <span>⚡</span> Shorts
-      </button>
-      <button
-        class="yt-pill"
-        [class.active]="selectedType() === 'video'"
-        (click)="selectType('video')"
-      >
-        <span>🎬</span> <span>Videos</span>
-      </button>
-    </div>
-
-    <div class="divider bg-slate-950! dark:bg-[#e5e7eb]!"></div>
-
-    <div class="category-pills max-sm:gap-[2px]!">
-      @for (cat of categories; track cat) {
+  <app-sticky-header-wrapper>
+    <header
+      class="yt-header max-sm:gap-[4px]! border-b border-gray-100 dark:border-white/10 shadow-sm"
+    >
+      <div class="type-pills max-sm:gap-[2px]!">
         <button
           class="yt-pill"
-          [class.active]="selectedCategory() === cat"
-          (click)="selectCategory(cat)"
+          [class.active]="selectedType() === 'short'"
+          (click)="selectType('short')"
         >
-          {{ cat | titlecase }}
+          <span>⚡</span> Shorts
         </button>
-      }
-    </div>
-  </header>
+        <button
+          class="yt-pill"
+          [class.active]="selectedType() === 'video'"
+          (click)="selectType('video')"
+        >
+          <span>🎬</span> <span>Videos</span>
+        </button>
+      </div>
+
+      <div class="divider bg-slate-950! dark:bg-[#e5e7eb]!"></div>
+
+      <div class="category-pills max-sm:gap-[2px]!">
+        @for (cat of categories; track cat) {
+          <button
+            class="yt-pill"
+            [class.active]="selectedCategory() === cat"
+            (click)="selectCategory(cat)"
+          >
+            {{ cat | titlecase }}
+          </button>
+        }
+      </div>
+    </header>
+  </app-sticky-header-wrapper>
 
   <!-- Skeleton Shimmer Loader -->
   @if (loading()) {

@@ -11,6 +11,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ApiService } from '../../core/services/api-service/api-service';
 import { StatusModalService } from '../../core/services/status-modal-service/status-modal-service';
 import { HeaderStateService } from '../../core/services/header-state-service/header-state-service';
+import { StickyHeaderWrapper } from '../../shared/components/sticky-header-wrapper/sticky-header-wrapper';
 
 interface HadithCollection {
   key: string;
@@ -33,7 +34,7 @@ interface HadithItem {
 @Component({
   selector: 'app-hadees',
   standalone: true,
-  imports: [CommonModule, FormsModule, ToastModule, ConfirmDialogModule],
+  imports: [CommonModule, FormsModule, ToastModule, ConfirmDialogModule, StickyHeaderWrapper],
   templateUrl: './hadees.html',
   styleUrl: './hadees.css',
 })

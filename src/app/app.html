@@ -1,12 +1,13 @@
-<div class="flex flex-col h-screen">
-  <!-- <app-header class="shrink-0"></app-header>
-  <main class="flex-1 overflow-y-auto pt-[72px]"> -->
-  <app-header class="shrink-0" [isHidden]="isHeaderHidden()"></app-header>
-  <main
-    (scroll)="onMainScroll($event)"
-    class="flex-1 overflow-y-auto transition-[padding] duration-300"
-    [ngClass]="isHeaderHidden() ? 'pt-0' : 'pt-[72px]'"
-  >
+<div class="relative flex flex-col h-screen overflow-hidden">
+  <!-- Fixed Header with GPU Translate Animation -->
+  <app-header
+    class="fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-out"
+    [class.-translate-y-full]="headerState.isHeaderHidden()"
+    [isHidden]="headerState.isHeaderHidden()"
+  ></app-header>
+
+  <!-- Main Scroll Container with Static Top Padding -->
+  <main (scroll)="onMainScroll($event)" class="flex-1 overflow-y-auto pt-[72px]">
     <div class="flex min-h-full flex-col">
       <div class="flex-1 px-[12px] sm:px-[16px] pt-[12px] sm:pt-[16px] max-w-6xl mx-auto w-full">
         <router-outlet />
@@ -15,6 +16,8 @@
         <app-footer></app-footer>
       </app-premium-card>
     </div>
+
+    <!-- Scroll-to-Top Button -->
     <p-scrolltop
       styleClass="!right-0 !left-0 !m-auto !bottom-[170px] md:!bottom-[160px] lg:!bottom-[120px] !h-[40px] !w-[40px]"
       target="parent"
@@ -23,9 +26,12 @@
       [buttonProps]="{ severity: 'contrast', raised: true, rounded: true }"
     ></p-scrolltop>
   </main>
+
+  <!-- Global Overlays & Modals -->
   <app-accessibility-control></app-accessibility-control>
   <app-audio-player></app-audio-player>
 </div>
+
 <app-status-modal
   [state]="modalService.state()"
   [message]="modalService.message()"
