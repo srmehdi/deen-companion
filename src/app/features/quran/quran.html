@@ -146,7 +146,7 @@
             </div>
             <div class="text-right flex flex-col items-end gap-0.5 flex-shrink-0 ml-2">
               <span
-                class="font-arabic text-sm md:text-base font-bold text-divine-emerald dark:text-sacred-gold tracking-tight"
+                class="font-arabic text-sm md:text-base font-bold arabic-text-style tracking-tight"
               >
                 {{ surah.name }}
               </span>
@@ -231,37 +231,40 @@
       class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[12px] md:p-[24px] pt-[4px]! shadow-2xl animate-fade-in origin-top-right max-w-full overflow-visible"
     >
       <!-- RESPONSIVE STICKY TOP BAR -->
-      <div
-        class="sticky top-0 z-30 backdrop-blur-md min-h-[46px] py-[2px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm transition-all duration-200 flex flex-row items-stretch items-center justify-between gap-[0px] sm:gap-[8px] max-w-full overflow-visible bg-white/80 dark:bg-[#121816]/90"
-      >
-        <div class="flex items-center justify-start w-full sm:w-auto">
-          <button
-            (click)="closeReader()"
-            class="flex-shrink-0 flex items-center gap-[6px] h-[30px] px-[12px] bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold rounded-full text-[11px] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="2.5"
-              stroke="currentColor"
-              class="w-[12px] h-[12px] flex-shrink-0"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-              />
-            </svg>
-            <span class="leading-none">Back to Surahs</span>
-          </button>
-        </div>
 
+      <app-sticky-header-wrapper>
+        <!-- Simply place your toolbar inside -->
         <div
-          class="flex items-center justify-between w-full sm:w-auto justify-end gap-[8px] sm:gap-[16px] sm:ml-auto"
+          class="backdrop-blur-md min-h-[46px] py-[2px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm flex flex-row items-center justify-between gap-[0px] sm:gap-[8px] max-w-full bg-white/95 dark:bg-[#121816]/95"
         >
-          <!-- Urdu Audio Toggle -->
-          <!-- <label
+          <div class="flex items-center justify-start w-full sm:w-auto">
+            <button
+              (click)="closeReader()"
+              class="flex-shrink-0 flex items-center gap-[6px] h-[30px] px-[12px] bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold rounded-full text-[11px] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2.5"
+                stroke="currentColor"
+                class="w-[12px] h-[12px] flex-shrink-0"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                />
+              </svg>
+              <span class="leading-none">Back to Surahs</span>
+            </button>
+          </div>
+
+          <div
+            class="flex items-center justify-between w-full sm:w-auto justify-end gap-[8px] sm:gap-[16px] sm:ml-auto"
+          >
+            <!-- Urdu Audio Toggle -->
+            <!-- <label
             class="flex self-end items-center gap-[6px] text-[10px] sm:text-[11px] font-bold text-gray-700 dark:text-sacred-gold cursor-pointer select-none bg-gray-100 dark:bg-white/5 px-[8px] py-[6px] rounded-[6px] border border-gray-200 dark:border-white/10"
           >
             <input
@@ -273,57 +276,57 @@
             <span>Urdu Recitation (اردو) 🔊</span>
           </label> -->
 
-          <!-- Language Switcher -->
-          <div class="flex flex-col items-end justify-center gap-[2px]">
-            <span
-              class="text-[7px] sm:text-[8px] font-bold tracking-wider text-gray-500 dark:text-gray-400 uppercase leading-none select-none"
-            >
-              Translation Language
-            </span>
-            <div
-              class="flex items-center h-[24px] sm:h-[26px] bg-gray-100 dark:bg-white/5 p-[2px] rounded-[6px] border border-gray-200 dark:border-white/10"
-            >
-              <button
-                (click)="setLanguage('ur')"
-                class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold font-urdu leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
-                [class.bg-divine-emerald]="selectedLanguage() === 'ur'"
-                [class.text-white]="selectedLanguage() === 'ur'"
-                [class.dark:bg-sacred-gold]="selectedLanguage() === 'ur'"
-                [class.dark:text-black]="selectedLanguage() === 'ur'"
-                [class.text-gray-600]="selectedLanguage() !== 'ur'"
-                [class.dark:text-gray-400]="selectedLanguage() !== 'ur'"
+            <!-- Language Switcher -->
+            <div class="flex flex-col items-end justify-center gap-[2px]">
+              <span
+                class="text-[7px] sm:text-[8px] font-bold tracking-wider text-gray-500 dark:text-gray-400 uppercase leading-none select-none"
               >
-                اردو
-              </button>
-              <button
-                (click)="setLanguage('hi')"
-                class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
-                [class.bg-divine-emerald]="selectedLanguage() === 'hi'"
-                [class.text-white]="selectedLanguage() === 'hi'"
-                [class.dark:bg-sacred-gold]="selectedLanguage() === 'hi'"
-                [class.dark:text-black]="selectedLanguage() === 'hi'"
-                [class.text-gray-600]="selectedLanguage() !== 'hi'"
-                [class.dark:text-gray-400]="selectedLanguage() !== 'hi'"
+                Translation Language
+              </span>
+              <div
+                class="flex items-center h-[24px] sm:h-[26px] bg-gray-100 dark:bg-white/5 p-[2px] rounded-[6px] border border-gray-200 dark:border-white/10"
               >
-                हिंदी
-              </button>
-              <button
-                (click)="setLanguage('en')"
-                class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
-                [class.bg-divine-emerald]="selectedLanguage() === 'en'"
-                [class.text-white]="selectedLanguage() === 'en'"
-                [class.dark:bg-sacred-gold]="selectedLanguage() === 'en'"
-                [class.dark:text-black]="selectedLanguage() === 'en'"
-                [class.text-gray-600]="selectedLanguage() !== 'en'"
-                [class.dark:text-gray-400]="selectedLanguage() !== 'en'"
-              >
-                English
-              </button>
+                <button
+                  (click)="setLanguage('ur')"
+                  class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold font-urdu leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
+                  [class.bg-divine-emerald]="selectedLanguage() === 'ur'"
+                  [class.text-white]="selectedLanguage() === 'ur'"
+                  [class.dark:bg-sacred-gold]="selectedLanguage() === 'ur'"
+                  [class.dark:text-black]="selectedLanguage() === 'ur'"
+                  [class.text-gray-600]="selectedLanguage() !== 'ur'"
+                  [class.dark:text-gray-400]="selectedLanguage() !== 'ur'"
+                >
+                  اردو
+                </button>
+                <button
+                  (click)="setLanguage('hi')"
+                  class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
+                  [class.bg-divine-emerald]="selectedLanguage() === 'hi'"
+                  [class.text-white]="selectedLanguage() === 'hi'"
+                  [class.dark:bg-sacred-gold]="selectedLanguage() === 'hi'"
+                  [class.dark:text-black]="selectedLanguage() === 'hi'"
+                  [class.text-gray-600]="selectedLanguage() !== 'hi'"
+                  [class.dark:text-gray-400]="selectedLanguage() !== 'hi'"
+                >
+                  हिंदी
+                </button>
+                <button
+                  (click)="setLanguage('en')"
+                  class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
+                  [class.bg-divine-emerald]="selectedLanguage() === 'en'"
+                  [class.text-white]="selectedLanguage() === 'en'"
+                  [class.dark:bg-sacred-gold]="selectedLanguage() === 'en'"
+                  [class.dark:text-black]="selectedLanguage() === 'en'"
+                  [class.text-gray-600]="selectedLanguage() !== 'en'"
+                  [class.dark:text-gray-400]="selectedLanguage() !== 'en'"
+                >
+                  English
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
+      </app-sticky-header-wrapper>
       <!-- NON-STICKY SECTION: Surah Titles (Will scroll naturally with page) -->
       <div
         class="flex flex-col sm:flex-row sm:ml-11 justify-between sm:justify-center items-center py-2 sm:py-4 border-b border-gray-100 dark:border-white/5 gap-2 max-w-full"
@@ -341,41 +344,46 @@
         </div>
 
         <span
-          class="font-serif text-base md:text-xl font-bold text-divine-emerald dark:text-sacred-gold bg-divine-emerald/5 dark:bg-sacred-gold/5 border border-divine-emerald/10 dark:border-sacred-gold/20 px-3 py-1 rounded-lg whitespace-nowrap"
+          class="font-serif! text-base md:text-xl font-bold arabic-text-style bg-divine-emerald/5 dark:bg-sacred-gold/5 border border-divine-emerald/10 dark:border-sacred-gold/20 px-3 py-1 rounded-lg whitespace-nowrap"
         >
           {{ selectedSurah().info.name }}
         </span>
       </div>
 
-      <div
+      <!-- <div
         class="flex flex-col divide-y divide-gray-100 dark:divide-white/5 max-w-full mt-2 min-h-[500px]"
-      >
-        @if (selectedSurah().info.number !== 1 && selectedSurah().info.number !== 9) {
-          <div
-            class="text-center font-arabic text-xl md:ml-11 md:text-2xl text-gray-800 dark:text-sacred-gold py-4 md:py-6 break-words px-2"
-          >
-            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-          </div>
-        }
+      > -->
+      @if (
+        selectedSurah().info.number !== 1 &&
+        selectedSurah().info.number !== 9 &&
+        currentAyahPage() === 1
+      ) {
+        <div
+          class="text-center font-arabic text-xl md:ml-11 md:text-2xl arabic-text-style py-4 md:py-6 break-words px-2"
+        >
+          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        </div>
+      }
 
+      <div class="space-y-[12px] sm:space-y-[16px] max-w-full mt-2 min-h-[500px]">
         <!-- Verse Blocks Loop -->
         @for (ayah of paginatedAyahs(); track ayah.numberInSurah) {
           <div
             [id]="'ayah-row-' + ayah.numberInSurah"
-            class="scroll-mt-[140px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch! md:items-start! rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
-            [class.bg-sacred-gold/5]="
+            class="scroll-mt-[140px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-2 md:gap-4 py-4 md:py-5 items-stretch! md:items-start! rounded-[12px] border border-slate-200/80 dark:border-sacred-gold/30 transition-all duration-300 px-2 sm:px-4 max-w-full shadow-lg overflow-hidden"
+            [class.bg-sacred-gold/6]="
               (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
                 selectedSurah().info.number &&
               (globalAudio.currentPlayingAyah()?.numberInSurah || currentBookmark()?.ayahNumber) ===
                 ayah.numberInSurah
             "
-            [class.border-l-2]="
+            [class.border-2!]="
               (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
                 selectedSurah().info.number &&
               (globalAudio.currentPlayingAyah()?.numberInSurah || currentBookmark()?.ayahNumber) ===
                 ayah.numberInSurah
             "
-            [class.border-[#dfb76c]]="
+            [class.border-[#dfb76c]!]="
               (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
                 selectedSurah().info.number &&
               (globalAudio.currentPlayingAyah()?.numberInSurah || currentBookmark()?.ayahNumber) ===
@@ -383,7 +391,7 @@
             "
           >
             <div
-              class="flex flex-row md:flex-col items-center justify-between md:justify-start gap-2 md:gap-3 flex-shrink-0 bg-gray-50/50 dark:bg-white/[0.02] md:bg-transparent dark:md:bg-transparent p-2 md:p-0 rounded-lg"
+              class="flex flex-row md:flex-col items-center justify-between md:justify-start gap-2 md:gap-3 flex-shrink-0 bg-gray-50/50 dark:bg-white/[0.02] md:bg-transparent dark:md:bg-transparent p-2 md:p-0 rounded-lg max-md:border border-slate-100 dark:border-slate-800/80"
             >
               <div
                 class="w-7 h-7 md:w-8 md:h-8 bg-white dark:bg-[#18221f] border border-gray-200 dark:border-sacred-gold/30 text-gray-600 dark:text-sacred-gold rounded-full flex items-center justify-center text-xs font-bold font-mono shadow-inner"
@@ -452,7 +460,7 @@
             <div class="flex-grow flex flex-col gap-2 w-full min-w-0">
               <div class="text-left w-full">
                 <span
-                  class="text-[12px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
+                  class="text-[12px] font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider"
                 >
                   Surah {{ selectedSurah().info.englishName }} • Surah
                   {{ selectedSurah().info.number }} • Ayah {{ ayah.numberInSurah }}
@@ -460,8 +468,8 @@
               </div>
 
               <!-- Arabic Text Stream Panel -->
-              <p
-                class="font-arabic text-lg md:text-2xl text-gray-900 dark:text-white text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
+              <!-- <p
+                class="font-arabic text-lg md:text-2xl text-emerald-900 dark:text-emerald-300 text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
                 dir="rtl"
               >
                 {{
@@ -469,12 +477,21 @@
                     ? ayah.text.replace('بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', '')
                     : ayah.text
                 }}
-              </p>
+              </p> -->
 
+              <div
+                class="arabic-text-style text-lg md:text-2xl p-[12px] sm:p-[16px] bg-gray-50/50 dark:bg-white/[0.02] rounded-lg border border-slate-100 dark:border-slate-800/80 text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
+              >
+                {{
+                  selectedSurah().info.number !== 1 && ayah.numberInSurah === 1
+                    ? ayah.text.replace('بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', '')
+                    : ayah.text
+                }}
+              </div>
               <!-- Phonetic Guide (Transliteration) -->
               @if (ayah.transliteration) {
                 <p
-                  class="text-xs md:text-sm text-sacred-gold/90 italic tracking-wide break-words w-full text-center mt-1 font-medium"
+                  class="text-xs md:text-sm text-amber-700 dark:text-sacred-gold italic tracking-wide break-words w-full text-center mt-1 font-medium"
                 >
                   {{ ayah.transliteration }}
                 </p>
@@ -483,21 +500,21 @@
               <!-- Urdu / Hindi / English Translation Render Switch -->
               @if (selectedLanguage() === 'ur') {
                 <p
-                  class="font-arabic text-lg md:text-xl text-emerald-800 dark:text-emerald-300 font-normal leading-[2.2rem] md:leading-[2.5rem] tracking-wide break-words w-full text-center mt-1"
+                  class="font-arabic text-lg md:text-xl text-gray-900 dark:text-white font-normal leading-[2.2rem] md:leading-[2.5rem] tracking-wide break-words w-full text-center mt-1"
                   dir="rtl"
                 >
                   {{ ayah.translationUr || ayah.translation }}
                 </p>
               } @else if (selectedLanguage() === 'hi') {
                 <p
-                  class="text-sm md:text-base text-emerald-800 dark:text-emerald-300 font-normal leading-relaxed tracking-wide break-words w-full text-center mt-1"
+                  class="text-sm md:text-base text-gray-900 dark:text-white font-normal leading-relaxed tracking-wide break-words w-full text-center mt-1"
                   dir="ltr"
                 >
                   {{ ayah.translationHi || ayah.translation }}
                 </p>
               } @else {
                 <p
-                  class="text-xs md:text-sm text-emerald-800 dark:text-emerald-300 font-normal leading-relaxed break-words w-full text-center mt-0.5"
+                  class="text-xs md:text-sm text-gray-900 dark:text-white font-normal leading-relaxed break-words w-full text-center mt-0.5"
                   dir="ltr"
                 >
                   {{ ayah.translationEn || ayah.translation }}
@@ -507,6 +524,9 @@
           </div>
         }
       </div>
+
+      <!-- </div> -->
+
       @if (selectedSurah().ayahs.length > ayahPageSize()) {
         <div
           class="flex flex-col md:flex-row justify-between items-center border-t border-gray-100 dark:border-white/5 pt-4 mt-4 gap-3 max-w-full"

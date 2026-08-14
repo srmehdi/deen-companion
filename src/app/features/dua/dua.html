@@ -83,28 +83,30 @@
   </div>
 
   <!-- Horizontal Multi-Category Ribbon Filter Deck -->
-  <div
-    class="flex gap-[4px] overflow-x-auto pb-3 mb-[16px] max-w-full no-scrollbar sticky top-0 z-30 backdrop-blur-md pt-[8px]"
-  >
-    @for (cat of categories(); track cat) {
-      <button
-        (click)="selectedCategory.set(cat); showOnlyBookmarks.set(false); currentPage.set(1)"
-        class="px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wider uppercase border transition-all duration-200 cursor-pointer whitespace-nowrap shadow-sm"
-        [class.bg-divine-emerald]="selectedCategory() === cat && !showOnlyBookmarks()"
-        [class.text-white]="selectedCategory() === cat && !showOnlyBookmarks()"
-        [class.border-divine-emerald]="selectedCategory() === cat && !showOnlyBookmarks()"
-        [class.bg-white]="selectedCategory() !== cat || showOnlyBookmarks()"
-        [class.dark:bg-[#121816]/60]="selectedCategory() !== cat || showOnlyBookmarks()"
-        [class.text-gray-600]="selectedCategory() !== cat || showOnlyBookmarks()"
-        [class.dark:text-gray-400]="selectedCategory() !== cat || showOnlyBookmarks()"
-        [class.border-gray-200]="selectedCategory() !== cat || showOnlyBookmarks()"
-        [class.dark:border-sacred-gold/15]="selectedCategory() !== cat || showOnlyBookmarks()"
-        [class.hover:border-sacred-gold]="selectedCategory() !== cat || showOnlyBookmarks()"
-      >
-        {{ cat }}
-      </button>
-    }
-  </div>
+  <app-sticky-header-wrapper>
+    <div
+      class="flex gap-[4px] overflow-x-auto pb-3 mb-[16px] max-w-full no-scrollbar z-30 backdrop-blur-md pt-[8px]"
+    >
+      @for (cat of categories(); track cat) {
+        <button
+          (click)="selectedCategory.set(cat); showOnlyBookmarks.set(false); currentPage.set(1)"
+          class="px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wider uppercase border transition-all duration-200 cursor-pointer whitespace-nowrap shadow-sm"
+          [class.bg-divine-emerald]="selectedCategory() === cat && !showOnlyBookmarks()"
+          [class.text-white]="selectedCategory() === cat && !showOnlyBookmarks()"
+          [class.border-divine-emerald]="selectedCategory() === cat && !showOnlyBookmarks()"
+          [class.bg-white]="selectedCategory() !== cat || showOnlyBookmarks()"
+          [class.dark:bg-[#121816]/60]="selectedCategory() !== cat || showOnlyBookmarks()"
+          [class.text-gray-600]="selectedCategory() !== cat || showOnlyBookmarks()"
+          [class.dark:text-gray-400]="selectedCategory() !== cat || showOnlyBookmarks()"
+          [class.border-gray-200]="selectedCategory() !== cat || showOnlyBookmarks()"
+          [class.dark:border-sacred-gold/15]="selectedCategory() !== cat || showOnlyBookmarks()"
+          [class.hover:border-sacred-gold]="selectedCategory() !== cat || showOnlyBookmarks()"
+        >
+          {{ cat }}
+        </button>
+      }
+    </div>
+  </app-sticky-header-wrapper>
 
   <!-- Supplications Content Stream Layout (Mirrors Surah Grid/Reader hybrid spacing metrics) -->
   <div
@@ -115,7 +117,7 @@
         <div
           class="flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
           [class.bg-sacred-gold/5]="bookmarkedIds()?.includes(dua.id)"
-          [class.border-l-2]="bookmarkedIds()?.includes(dua.id)"
+          [class.border-2]="bookmarkedIds()?.includes(dua.id)"
           [class.border-[#dfb76c]]="bookmarkedIds()?.includes(dua.id)"
         >
           <!-- Controls Pillar Panel (Left-Aligned in desktop layouts) -->
@@ -168,21 +170,21 @@
 
             <!-- Arabic Supplication Scripture Stream Panel -->
             <p
-              class="font-arabic text-lg md:text-2xl text-gray-900 dark:text-white text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
+              class="font-arabic text-lg md:text-2xl text-emerald-900 dark:text-emerald-300 text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
             >
               {{ dua.arabic }}
             </p>
 
             <!-- Right-Aligned Latin Transliteration Phonetic Guide Line -->
             <p
-              class="text-xs md:text-sm text-sacred-gold/90 italic tracking-wide break-words w-full text-center mt-1 font-medium"
+              class="text-xs md:text-sm text-amber-700 dark:text-sacred-gold italic tracking-wide break-words w-full text-center mt-1 font-medium"
             >
               {{ dua.transliteration }}
             </p>
 
             <!-- Right-Aligned English Translation Block Elements -->
             <p
-              class="text-xs md:text-sm text-emerald-800 dark:text-emerald-300 font-normal leading-relaxed break-words w-full text-center mt-0.5"
+              class="text-xs md:text-sm text-gray-900 dark:text-white font-normal leading-relaxed break-words w-full text-center mt-0.5"
             >
               {{ dua.translation }}
             </p>

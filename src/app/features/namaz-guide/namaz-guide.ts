@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PremiumCard } from '../../shared/components/premium-card/premium-card';
 import { StatusModalService } from '../../core/services/status-modal-service/status-modal-service';
 import { HeaderStateService } from '../../core/services/header-state-service/header-state-service';
+import { StickyHeaderWrapper } from '../../shared/components/sticky-header-wrapper/sticky-header-wrapper';
 
 export type SupportedLanguage = 'en' | 'ur' | 'hi';
 export type PrayerSectionType = 'sunnah' | 'fard' | 'nafl' | 'witr';
@@ -42,7 +43,7 @@ export interface Prayer {
 @Component({
   selector: 'app-namaz-guide',
   standalone: true,
-  imports: [CommonModule, PremiumCard],
+  imports: [CommonModule, PremiumCard, StickyHeaderWrapper],
   templateUrl: './namaz-guide.html',
   styleUrl: './namaz-guide.css',
 })

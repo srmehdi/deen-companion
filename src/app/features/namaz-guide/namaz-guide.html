@@ -30,118 +30,124 @@
     </header>
 
     <!-- ================= FIXED STICKY NAVIGATION BAR ================= -->
-    <div class="sticky top-0 z-30 pb-[8px] backdrop-blur-md" dir="ltr">
+    <app-sticky-header-wrapper>
       <div
-        class="p-[4px] sm:p-[10px] bg-white/90 dark:bg-slate-900/90 shadow-md shadow-slate-900/5 space-y-[4px] sm:space-y-[8px]"
+        class="z-30 pb-[4px] backdrop-blur-md border-b border-gray-100 dark:border-white/10 shadow-sm"
+        dir="ltr"
       >
-        <!-- Row 1: Prayer Navigation Tabs + Fixed Language Switcher -->
-        <div class="flex items-center justify-between gap-[8px]">
-          <!-- Main Prayer Tabs (Fixed English) -->
-          <nav
-            class="flex items-center gap-[6px] overflow-x-auto py-[4px] no-scrollbar flex-1"
-            dir="ltr"
-          >
-            @for (prayer of prayers(); track prayer.id) {
-              <button
-                class="cursor-pointer px-[8px] py-[4px] rounded-[8px] text-[12px] sm:text-[14px] font-medium whitespace-nowrap transition-all duration-200 border shrink-0"
-                [class]="
-                  selectedPrayer()?.id === prayer.id
-                    ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs'
-                    : 'bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 border-slate-200/80 dark:border-slate-700/60 hover:border-emerald-500/40'
-                "
-                (click)="onPrayerTabClick(prayer.id)"
-              >
-                {{ prayer.name['en'] }}
-              </button>
-            }
-          </nav>
-
-          <!-- Fixed Right Language Switcher -->
-          <div
-            class="flex items-center p-[2px] bg-slate-100 dark:bg-slate-800/80 rounded-[6px] border border-slate-200 dark:border-slate-700 shrink-0"
-          >
-            <button
-              class="px-[8px] sm:px-[10px] py-[4px] text-[11px] sm:text-[12px] font-bold rounded-[4px] transition-all duration-200"
-              [class]="
-                currentLang() === 'ur'
-                  ? 'bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer'
-              "
-              (click)="setLanguage('ur')"
+        <div
+          class="p-[4px] sm:p-[10px] bg-white/90 dark:bg-slate-900/90 shadow-md shadow-slate-900/5 space-y-[4px] sm:space-y-[8px]"
+        >
+          <!-- Row 1: Prayer Navigation Tabs + Fixed Language Switcher -->
+          <div class="flex items-center justify-between gap-[8px]">
+            <!-- Main Prayer Tabs (Fixed English) -->
+            <nav
+              class="flex items-center gap-[6px] overflow-x-auto py-[4px] no-scrollbar flex-1"
+              dir="ltr"
             >
-              اردو
-            </button>
-            <button
-              class="px-[8px] sm:px-[10px] py-[4px] text-[11px] sm:text-[12px] font-bold rounded-[4px] transition-all duration-200"
-              [class]="
-                currentLang() === 'hi'
-                  ? 'bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer'
-              "
-              (click)="setLanguage('hi')"
-            >
-              हिंदी
-            </button>
-            <button
-              class="px-[8px] sm:px-[10px] py-[4px] text-[11px] sm:text-[12px] font-bold rounded-[4px] transition-all duration-200"
-              [class]="
-                currentLang() === 'en'
-                  ? 'bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer'
-              "
-              (click)="setLanguage('en')"
-            >
-              English
-            </button>
-          </div>
-        </div>
-
-        <!-- Row 2: Breakdown Section Tabs (Sunnah / Fard - Fixed English) -->
-        @if (selectedPrayer(); as prayer) {
-          <div
-            class="flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 pt-[4px] sm:pt-[8px] px-[4px]"
-            dir="ltr"
-          >
-            <!-- <span class="text-[14px] font-bold text-slate-700 dark:text-slate-300">
-              {{ prayer.name['en'] }} ({{ prayer.totalRakats }} Rakat)
-            </span> -->
-            <span
-              class="inline-flex flex-wrap items-baseline gap-x-[4px] text-[14px] font-bold text-slate-700 dark:text-slate-300 leading-tight"
-            >
-              <span class="whitespace-nowrap">{{ prayer.name['en'] }}</span>
-              <span
-                class="text-[12px] font-normal text-slate-500 dark:text-slate-400 whitespace-nowrap"
-              >
-                ({{ prayer.totalRakats }} Rakat)
-              </span>
-            </span>
-
-            <div class="flex items-center gap-[6px]">
-              @for (sectionKey of availableSections(); track sectionKey) {
+              @for (prayer of prayers(); track prayer.id) {
                 <button
-                  class="px-[6px] py-[4px] rounded-[6px] text-[11px] sm:text-[12px] font-bold uppercase tracking-wider transition-all duration-200 border"
+                  class="cursor-pointer px-[8px] py-[4px] rounded-[8px] text-[12px] sm:text-[14px] font-medium whitespace-nowrap transition-all duration-200 border shrink-0"
                   [class]="
-                    selectedSectionType() === sectionKey
-                      ? 'bg-amber-500 text-white border-amber-500 shadow-xs'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-amber-500/40 cursor-pointer'
+                    selectedPrayer()?.id === prayer.id
+                      ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs'
+                      : 'bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 border-slate-200/80 dark:border-slate-700/60 hover:border-emerald-500/40'
                   "
-                  (click)="selectSection(sectionKey)"
+                  (click)="onPrayerTabClick(prayer.id)"
                 >
-                  {{ sectionKey }} ({{ prayer.sections[sectionKey]?.rakats }})
+                  {{ prayer.name['en'] }}
                 </button>
               }
+            </nav>
+
+            <!-- Fixed Right Language Switcher -->
+            <div
+              class="flex items-center p-[2px] bg-slate-100 dark:bg-slate-800/80 rounded-[6px] border border-slate-200 dark:border-slate-700 shrink-0"
+            >
+              <button
+                class="px-[8px] sm:px-[10px] py-[4px] text-[11px] sm:text-[12px] font-bold rounded-[4px] transition-all duration-200"
+                [class]="
+                  currentLang() === 'ur'
+                    ? 'bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-xs'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer'
+                "
+                (click)="setLanguage('ur')"
+              >
+                اردو
+              </button>
+              <button
+                class="px-[8px] sm:px-[10px] py-[4px] text-[11px] sm:text-[12px] font-bold rounded-[4px] transition-all duration-200"
+                [class]="
+                  currentLang() === 'hi'
+                    ? 'bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-xs'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer'
+                "
+                (click)="setLanguage('hi')"
+              >
+                हिंदी
+              </button>
+              <button
+                class="px-[8px] sm:px-[10px] py-[4px] text-[11px] sm:text-[12px] font-bold rounded-[4px] transition-all duration-200"
+                [class]="
+                  currentLang() === 'en'
+                    ? 'bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-xs'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer'
+                "
+                (click)="setLanguage('en')"
+              >
+                English
+              </button>
             </div>
           </div>
-        }
+
+          <!-- Row 2: Breakdown Section Tabs (Sunnah / Fard - Fixed English) -->
+          @if (selectedPrayer(); as prayer) {
+            <div
+              class="flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 pt-[4px] sm:pt-[8px] px-[4px]"
+              dir="ltr"
+            >
+              <!-- <span class="text-[14px] font-bold text-slate-700 dark:text-slate-300">
+              {{ prayer.name['en'] }} ({{ prayer.totalRakats }} Rakat)
+            </span> -->
+              <span
+                class="inline-flex flex-wrap items-baseline gap-x-[4px] text-[16px] font-bold text-slate-700 dark:text-slate-300 leading-tight"
+              >
+                <span class="whitespace-nowrap">{{ prayer.name['en'] }}</span>
+                <span
+                  class="text-[12px] font-normal text-slate-500 dark:text-slate-400 whitespace-nowrap"
+                >
+                  ({{ prayer.totalRakats }} Rakat)
+                </span>
+              </span>
+
+              <div class="flex items-center gap-[6px]">
+                @for (sectionKey of availableSections(); track sectionKey) {
+                  <button
+                    class="px-[6px] py-[4px] rounded-[6px] text-[11px] sm:text-[12px] font-bold uppercase tracking-wider transition-all duration-200 border"
+                    [class]="
+                      selectedSectionType() === sectionKey
+                        ? 'bg-amber-500 text-white border-amber-500 shadow-xs'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-amber-500/40 cursor-pointer'
+                    "
+                    (click)="selectSection(sectionKey)"
+                  >
+                    {{ sectionKey }} ({{ prayer.sections[sectionKey]?.rakats }})
+                  </button>
+                }
+              </div>
+            </div>
+          }
+        </div>
       </div>
-    </div>
+    </app-sticky-header-wrapper>
+
     <!-- ================= END SLIM STICKY BAR ================= -->
 
     <!-- Scrollable Steps List Section -->
     @if (selectedPrayer(); as prayer) {
       @if (activeSection(); as section) {
-        <div class="space-y-[8px] sm:space-y-[16px]">
-          <div class="px-1 flex items-center justify-between" dir="ltr">
+        <div class="space-y-[8px]">
+          <div class="px-1 pt-1 flex items-center justify-between" dir="ltr">
             <h3 class="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400">
               {{ section.title['en'] }}
             </h3>
@@ -186,7 +192,7 @@
                   class="p-[12px] sm:p-[16px] rounded-[12px] bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800/80"
                 >
                   <p
-                    class="text-lg sm:text-2xl font-arabic text-center text-emerald-700 dark:text-emerald-400 leading-loose"
+                    class="text-lg sm:text-2xl font-arabic text-center text-emerald-900 dark:text-emerald-300 leading-loose"
                     dir="rtl"
                   >
                     {{ step.arabic }}
@@ -197,7 +203,7 @@
               <!-- Transliteration -->
               @if (step.transliteration) {
                 <p
-                  class="text-xs sm:text-sm text-amber-700 dark:text-amber-400 italic tracking-wide break-words text-center"
+                  class="text-xs sm:text-sm text-amber-700 dark:text-sacred-gold italic tracking-wide break-words text-center"
                   dir="ltr"
                 >
                   <span class="font-bold not-italic">Transliteration:</span><br />
@@ -217,7 +223,7 @@
                 </p>
               } @else if (step.translation) {
                 <p
-                  class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed break-words text-center"
+                  class="text-xs sm:text-sm text-gray-900 dark:text-white leading-relaxed break-words text-center"
                 >
                   <span class="font-bold">Translation:</span><br />
                   {{ step.translation[currentLang()] }}

@@ -1,0 +1,27 @@
+@keyframes chevronWave {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(2px);
+    opacity: 1;
+  }
+}
+
+.animate-chevron-wave-1 {
+  animation: chevronWave 1.6s ease-in-out infinite;
+}
+
+.animate-chevron-wave-2 {
+  animation: chevronWave 1.6s ease-in-out infinite 0.25s; /* Staggered delay */
+}
+
+/* Pause animation on hover to allow solid click target */
+button:hover .animate-chevron-wave-1,
+button:hover .animate-chevron-wave-2 {
+  animation-play-state: paused;
+  transform: translateY(1px);
+  opacity: 1;
+}

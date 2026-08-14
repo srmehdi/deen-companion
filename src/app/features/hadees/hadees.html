@@ -141,7 +141,7 @@
             </div>
             <div class="text-right flex flex-col items-end gap-0.5 flex-shrink-0 ml-2">
               <span
-                class="font-arabic text-sm md:text-base font-bold text-divine-emerald dark:text-sacred-gold tracking-tight"
+                class="font-arabic text-sm md:text-base font-bold arabic-text-style tracking-tight"
               >
                 {{ item.arabic_name }}
               </span>
@@ -163,40 +163,42 @@
       class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[12px] md:p-[24px] pt-[4px]! shadow-2xl animate-fade-in origin-top-right max-w-full overflow-visible"
     >
       <!-- FIXED SIZED STICKY TOP BAR: Back / Clear Search Button ONLY -->
-      <div
-        class="sticky top-0 z-30 backdrop-blur-md min-h-[46px] py-[2px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm transition-all duration-200 flex items-center justify-between gap-[8px] max-w-full overflow-visible bg-white/80 dark:bg-[#121816]/90"
-      >
-        <!-- Fixed Sized Back Button -->
-        <button
-          (click)="closeReader()"
-          class="flex-shrink-0 flex items-center gap-[6px] h-[30px] px-[12px] bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold rounded-full text-[11px] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
+      <app-sticky-header-wrapper>
+        <div
+          class="z-30 backdrop-blur-md min-h-[46px] py-[2px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm transition-all duration-200 flex items-center justify-between gap-[8px] max-w-full overflow-visible bg-white/80 dark:bg-[#121816]/90"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2.5"
-            stroke="currentColor"
-            class="w-[12px] h-[12px] flex-shrink-0"
+          <!-- Fixed Sized Back Button -->
+          <button
+            (click)="closeReader()"
+            class="flex-shrink-0 flex items-center gap-[6px] h-[30px] px-[12px] bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold rounded-full text-[11px] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-            />
-          </svg>
-          <span class="leading-none">{{
-            isSearchingGlobally() ? 'Clear Search' : 'Back to Collections'
-          }}</span>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2.5"
+              stroke="currentColor"
+              class="w-[12px] h-[12px] flex-shrink-0"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+              />
+            </svg>
+            <span class="leading-none">{{
+              isSearchingGlobally() ? 'Clear Search' : 'Back to Collections'
+            }}</span>
+          </button>
 
-        <!-- Compact Context Indicator -->
-        <span
-          class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider truncate"
-        >
-          {{ isSearchingGlobally() ? 'Global Search Results' : current.info.name }}
-        </span>
-      </div>
+          <!-- Compact Context Indicator -->
+          <span
+            class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider truncate"
+          >
+            {{ isSearchingGlobally() ? 'Global Search Results' : current.info.name }}
+          </span>
+        </div>
+      </app-sticky-header-wrapper>
 
       <!-- NON-STICKY SECTION: Collection Header Details -->
       <div
@@ -237,7 +239,7 @@
               currentBookmark()?.collectionKey === selectedCollection().info.key &&
               currentBookmark()?.hadithId === hadith.id
             "
-            [class.border-l-2]="
+            [class.border-2]="
               !isSearchingGlobally() &&
               currentBookmark()?.collectionKey === selectedCollection().info.key &&
               currentBookmark()?.hadithId === hadith.id
@@ -306,12 +308,12 @@
                 </span>
               </div>
               <p
-                class="font-arabic text-lg md:text-2xl text-gray-900 dark:text-white text-center leading-[2.2rem] md:leading-[3rem] tracking-wide break-words block w-full"
+                class="font-arabic text-lg md:text-2xl text-emerald-900 dark:text-emerald-300 text-center leading-[2.2rem] md:leading-[3rem] tracking-wide break-words block w-full"
               >
                 {{ hadith.arabic }}
               </p>
               <p
-                class="text-xs md:text-sm text-emerald-800 dark:text-emerald-300 font-normal leading-relaxed break-words w-full text-center mt-2"
+                class="text-xs md:text-sm text-gray-900 dark:text-white font-normal leading-relaxed break-words w-full text-center mt-2"
               >
                 {{ hadith.translation }}
               </p>

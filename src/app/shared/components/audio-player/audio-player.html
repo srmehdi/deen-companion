@@ -1,46 +1,100 @@
 @if (globalAudio.isCardClicked()) {
   <footer class="fixed bottom-0 left-0 right-0 z-[1005] px-[12px] sm:px-[16px] pointer-events-none">
     <div
-      class="max-w-5xl mx-auto pointer-events-auto relative rounded-t-[12px] bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border border-amber-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-[12px] sm:p-[16px] text-slate-800 dark:text-white transition-all duration-300"
+      class="max-w-5xl mx-auto pointer-events-auto relative rounded-t-[12px] bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border border-amber-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-300"
+      [ngClass]="isAudioPlayerMinimized() ? 'p-[8px] sm:p-[10px]' : 'p-[12px] sm:p-[16px]'"
     >
-      <!-- Premium Close Button Badge -->
-      <button
-        (click)="confirmAudioPlayerClose()"
-        class="absolute -top-[14px] right-[8px] sm:right-[16px] bg-slate-900/90 dark:bg-slate-950/90 hover:bg-red-950/80 text-amber-400 hover:text-red-400 border border-amber-500/40 hover:border-red-500/50 backdrop-blur-md rounded-full px-[10px] py-[4px] flex items-center gap-[6px] shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer z-50 group"
-        title="Close Audio Player"
+      <!-- Top Action Badges (Minimize/Maximize & Close) -->
+      <div
+        class="absolute -top-[14px] right-[8px] sm:right-[16px] flex items-center gap-[6px] z-50"
       >
-        <i class="pi pi-times text-[11px]! transition-transform group-hover:rotate-90"></i>
-        <span class="text-[10px] font-bold tracking-wider uppercase">Close Audio Player</span>
-      </button>
+        <!-- Minimize / Maximize Button Badge -->
+        <button
+          (click)="toggleMinimize()"
+          class="bg-slate-900/90 dark:bg-slate-950/90 hover:bg-amber-950/80 text-amber-400 border border-amber-500/40 hover:border-amber-500/60 backdrop-blur-md rounded-full px-[10px] py-[4px] flex items-center gap-[5px] shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer group"
+          [title]="isAudioPlayerMinimized() ? 'Expand Audio Player' : 'Minimize Audio Player'"
+        >
+          <i
+            class="pi text-[11px]! transition-transform duration-200"
+            [ngClass]="isAudioPlayerMinimized() ? 'pi-window-maximize' : 'pi-window-minimize'"
+          ></i>
+          <span class="text-[10px] font-bold tracking-wider uppercase">
+            {{ isAudioPlayerMinimized() ? 'Expand' : 'Minimize' }}
+          </span>
+        </button>
+
+        <!-- Premium Close Button Badge -->
+        <button
+          (click)="confirmAudioPlayerClose()"
+          class="bg-slate-900/90 dark:bg-slate-950/90 hover:bg-red-950/80 text-amber-400 hover:text-red-400 border border-amber-500/40 hover:border-red-500/50 backdrop-blur-md rounded-full px-[10px] py-[4px] flex items-center gap-[6px] shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer group"
+          title="Close Audio Player"
+        >
+          <i class="pi pi-times text-[11px]! transition-transform group-hover:rotate-90"></i>
+          <span class="text-[10px] font-bold tracking-wider uppercase">Close</span>
+        </button>
+      </div>
 
       <div class="flex flex-col gap-[8px] sm:gap-[10px]">
         <!-- ROW 1: Controls, Metadata & Visualizer -->
         <div
-          class="flex flex-col lg:flex-row lg:items-center justify-between gap-[8px] sm:gap-[10px]"
+          class=""
+          [ngClass]="
+            isAudioPlayerMinimized()
+              ? 'flex flex-col md:flex-row md:items-center justify-between gap-[8px] sm:gap-[10px]'
+              : 'flex flex-col lg:flex-row lg:items-center justify-between gap-[8px] sm:gap-[10px]'
+          "
         >
           <!-- Left Controls: Play/Pause, Metadata, Visualizer -->
           <div class="flex items-center justify-between lg:justify-start shrink-0">
-            <div class="flex items-center gap-[4px] sm:gap-[10px] w-full">
-              <!-- Play / Pause Button -->
-              <button
-                (click)="globalAudio.toggleAyahAudio(globalAudio.currentPlayingAyah()!)"
-                class="cursor-pointer group relative w-[32px]! h-[32px]! sm:w-[36px]! sm:h-[36px]! rounded-full bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 flex items-center justify-center transition-all active:scale-95 shadow-md shadow-amber-500/20 shrink-0"
-                title="Play / Pause"
-              >
-                @if (globalAudio.isAudioPlaying()) {
-                  <span class="absolute inset-0 rounded-full bg-amber-400/40 animate-ping"></span>
+            <div class="flex items-center gap-[6px] sm:gap-[10px] w-full">
+              <!-- Play / Pause Button with Label Below -->
+              <div class="flex flex-col items-center justify-center shrink-0">
+                <button
+                  (click)="globalAudio.toggleAyahAudio(globalAudio.currentPlayingAyah()!)"
+                  class="cursor-pointer group relative rounded-full bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 flex items-center justify-center transition-all active:scale-95 shadow-md shadow-amber-500/20 shrink-0"
+                  [ngClass]="
+                    isAudioPlayerMinimized()
+                      ? 'w-[28px]! h-[28px]!'
+                      : 'w-[32px]! h-[32px]! sm:w-[36px]! sm:h-[36px]!'
+                  "
+                  [title]="globalAudio.isAudioPlaying() ? 'Pause Audio' : 'Play Audio'"
+                >
+                  @if (globalAudio.isAudioPlaying()) {
+                    <span class="absolute inset-0 rounded-full bg-amber-400/40 animate-ping"></span>
+                  }
+                  <i
+                    class="pi font-bold! text-slate-950 transition-transform group-hover:scale-110"
+                    [ngClass]="[
+                      globalAudio.isAudioPlaying() ? 'pi-pause' : 'pi-play',
+                      isAudioPlayerMinimized() ? 'text-[12px]!' : 'text-[14px]! sm:text-[16px]!',
+                    ]"
+                  ></i>
+                </button>
+                @if (!isAudioPlayerMinimized()) {
+                  <span
+                    class="text-[9px] sm:text-[10px] font-semibold text-slate-600 dark:text-slate-300 tracking-wide mt-[2px] leading-tight select-none"
+                  >
+                    {{ globalAudio.isAudioPlaying() ? 'Pause' : 'Play' }}
+                  </span>
+                } @else {
+                  <span
+                    class="text-[8px] sm:text-[9px] font-semibold text-slate-600 dark:text-slate-300 tracking-wide mt-[1px] leading-tight select-none"
+                  >
+                    {{ globalAudio.isAudioPlaying() ? 'Pause' : 'Play' }}
+                  </span>
                 }
-                <i
-                  class="pi text-[12px]! sm:text-[14px]! text-slate-950 transition-transform group-hover:scale-110"
-                  [ngClass]="globalAudio.isAudioPlaying() ? 'pi-pause' : 'pi-play'"
-                ></i>
-              </button>
+              </div>
 
               <!-- Verse Meta Clickable Badge -->
               <button
                 (click)="navigateToCurrentAudio()"
                 title="Click to jump straight to this verse in the Quran text view"
-                class="flex flex-col justify-center text-left cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 py-[6px] px-[12px] rounded-[12px] transition-all outline-none group/meta w-full lg:max-w-[350px] truncate"
+                class="flex flex-col justify-center text-left cursor-pointer bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 rounded-[12px] transition-all outline-none group/meta w-full truncate"
+                [ngClass]="
+                  isAudioPlayerMinimized()
+                    ? 'py-[3px] px-[8px] max-w-full'
+                    : 'py-[6px] px-[12px] lg:max-w-[350px]'
+                "
               >
                 <div
                   class="flex items-center gap-[6px] text-[9px] sm:text-[10px] text-amber-700 dark:text-amber-400 uppercase tracking-widest font-bold"
@@ -57,7 +111,12 @@
                 </div>
 
                 <div
-                  class="text-[11px] sm:text-[13px] font-semibold text-slate-800 dark:text-slate-100 truncate mt-[2px]"
+                  class="font-semibold text-slate-800 dark:text-slate-100 truncate"
+                  [ngClass]="
+                    isAudioPlayerMinimized()
+                      ? 'text-[11px] sm:text-[12px]'
+                      : 'text-[11px] sm:text-[13px] mt-[2px]'
+                  "
                 >
                   <span>
                     {{ globalAudio.playingSurahInfo()?.surahNumber }}.
@@ -77,151 +136,216 @@
             </div>
 
             <!-- Equalizer Graphic -->
-            <div
-              class="hidden sm:flex pl-0 sm:pl-[16px] h-[36px] items-end justify-center gap-[3.5px] sm:gap-[4px] overflow-hidden pointer-events-none"
-            >
-              @if (globalAudio.isAudioPlaying()) {
-                @for (
-                  bar of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-                  track $index
-                ) {
-                  <div
-                    class="w-[2px] bg-sacred-gold rounded-t-full animate-visualizer"
-                    [style.animation-delay]="$index * 0.1 + 's'"
-                    [style.height]="12 + bar * 3 + '%'"
-                  ></div>
+            @if (!isAudioPlayerMinimized()) {
+              <div
+                class="hidden sm:flex pl-0 sm:pl-[16px] h-[36px] items-end justify-center gap-[3.5px] sm:gap-[4px] overflow-hidden pointer-events-none"
+              >
+                @if (globalAudio.isAudioPlaying()) {
+                  @for (
+                    bar of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+                    track $index
+                  ) {
+                    <div
+                      class="w-[2px] bg-sacred-gold rounded-t-full animate-visualizer"
+                      [style.animation-delay]="$index * 0.1 + 's'"
+                      [style.height]="12 + bar * 3 + '%'"
+                    ></div>
+                  }
                 }
-              }
-            </div>
+              </div>
+            }
           </div>
 
           <!-- Center/Right Controls: Scrubber & Volume Dock -->
-          <div
-            class="flex items-center justify-between md:justify-end gap-[4px] sm:gap-[14px] flex-1 w-full md:w-auto"
-          >
-            <!-- Audio Timer & Scrubbing Slider -->
+          @if (!isAudioPlayerMinimized()) {
             <div
-              class="flex-1 flex items-center gap-[6px] sm:gap-[8px] bg-slate-100/80 dark:bg-slate-900/60 py-[6px] px-[12px] rounded-[12px] border border-slate-200 dark:border-slate-800/80"
+              class="flex items-center justify-between md:justify-end gap-[4px] sm:gap-[14px] flex-1 w-full md:w-auto"
             >
-              <span
-                class="text-[10.4px] font-mono text-slate-600 dark:text-slate-300 font-semibold min-w-[65px] text-center shrink-0"
+              <!-- Audio Timer & Scrubbing Slider -->
+              <div
+                class="flex-1 flex items-center gap-[6px] sm:gap-[8px] bg-slate-100/80 dark:bg-slate-900/60 py-[6px] px-[12px] rounded-[12px] border border-slate-200 dark:border-slate-800/80"
               >
-                {{ globalAudio.formattedTimeProgress() }}
-              </span>
+                <span
+                  class="text-[10.4px] font-mono text-slate-600 dark:text-slate-300 font-semibold min-w-[65px] text-center shrink-0"
+                >
+                  {{ globalAudio.formattedTimeProgress() }}
+                </span>
 
-              <input
-                type="range"
-                min="0"
-                [max]="globalAudio.duration()"
-                step="0.1"
-                [value]="globalAudio.currentTime()"
-                (input)="seekTo($event)"
-                class="w-full h-[6px] bg-slate-300 dark:bg-slate-700 rounded-[8px] cursor-grab accent-amber-500"
-              />
+                <input
+                  type="range"
+                  min="0"
+                  [max]="globalAudio.duration()"
+                  step="0.1"
+                  [value]="globalAudio.currentTime()"
+                  (input)="seekTo($event)"
+                  class="w-full h-[6px] bg-slate-300 dark:bg-slate-700 rounded-[8px] cursor-grab accent-amber-500"
+                />
+              </div>
+
+              <!-- Volume Control Dock -->
+              <div
+                class="flex items-center gap-[6px] bg-slate-100/80 dark:bg-slate-900/60 p-[6px] rounded-[12px] border border-slate-200 dark:border-slate-800/80 shrink-0 group/volume"
+              >
+                <button
+                  (click)="globalAudio.toggleMute()"
+                  class="text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors cursor-pointer flex"
+                  title="Toggle Mute"
+                >
+                  <i
+                    class="pi text-[12px]!"
+                    [ngClass]="
+                      globalAudio.volume() === 0
+                        ? 'pi-volume-off text-red-500'
+                        : globalAudio.volume() < 0.5
+                          ? 'pi-volume-down'
+                          : 'pi-volume-up'
+                    "
+                  ></i>
+                </button>
+
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  [value]="globalAudio.volume()"
+                  (input)="updateVolume($event)"
+                  class="w-[60px] sm:w-[80px] h-[6px] bg-slate-300 dark:bg-slate-700 rounded-[8px] cursor-grab accent-amber-500 transition-all group-hover/volume:w-[90px]"
+                />
+
+                <span class="text-[9.6px] font-mono text-slate-500 dark:text-slate-400 text-right">
+                  {{ (globalAudio.volume() * 100).toFixed(0) }}%
+                </span>
+              </div>
             </div>
-
-            <!-- Volume Control Dock -->
+          } @else {
             <div
-              class="flex items-center gap-[6px] bg-slate-100/80 dark:bg-slate-900/60 p-[6px] rounded-[12px] border border-slate-200 dark:border-slate-800/80 shrink-0 group/volume"
+              class="max-md:hidden flex items-center justify-between md:justify-end gap-[4px] sm:gap-[14px] flex-1 w-full md:w-auto"
             >
-              <button
-                (click)="globalAudio.toggleMute()"
-                class="text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors p-[2px] cursor-pointer flex"
-                title="Toggle Mute"
+              <!-- Audio Timer & Scrubbing Slider -->
+              <div
+                class="flex-1 flex items-center gap-[6px] sm:gap-[8px] bg-slate-100/80 dark:bg-slate-900/60 py-[6px] px-[12px] rounded-[12px] border border-slate-200 dark:border-slate-800/80"
               >
-                <i
-                  class="pi text-[12px]!"
-                  [ngClass]="
-                    globalAudio.volume() === 0
-                      ? 'pi-volume-off text-red-500'
-                      : globalAudio.volume() < 0.5
-                        ? 'pi-volume-down'
-                        : 'pi-volume-up'
-                  "
-                ></i>
-              </button>
+                <span
+                  class="text-[10.4px] font-mono text-slate-600 dark:text-slate-300 font-semibold min-w-[65px] text-center shrink-0"
+                >
+                  {{ globalAudio.formattedTimeProgress() }}
+                </span>
 
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                [value]="globalAudio.volume()"
-                (input)="updateVolume($event)"
-                class="w-[48px] sm:w-[64px] h-[6px] bg-slate-300 dark:bg-slate-700 rounded-[8px] cursor-grab accent-amber-500 transition-all group-hover/volume:w-[80px]"
-              />
+                <input
+                  type="range"
+                  min="0"
+                  [max]="globalAudio.duration()"
+                  step="0.1"
+                  [value]="globalAudio.currentTime()"
+                  (input)="seekTo($event)"
+                  class="w-full h-[6px] bg-slate-300 dark:bg-slate-700 rounded-[8px] cursor-grab accent-amber-500"
+                />
+              </div>
 
-              <span
-                class="text-[9.6px] font-mono text-slate-500 dark:text-slate-400 w-[24px] text-right"
+              <!-- Volume Control Dock -->
+              <div
+                class="flex items-center gap-[6px] bg-slate-100/80 dark:bg-slate-900/60 p-[6px] rounded-[12px] border border-slate-200 dark:border-slate-800/80 shrink-0 group/volume"
               >
-                {{ (globalAudio.volume() * 100).toFixed(0) }}%
-              </span>
+                <button
+                  (click)="globalAudio.toggleMute()"
+                  class="text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors cursor-pointer flex"
+                  title="Toggle Mute"
+                >
+                  <i
+                    class="pi text-[12px]!"
+                    [ngClass]="
+                      globalAudio.volume() === 0
+                        ? 'pi-volume-off text-red-500'
+                        : globalAudio.volume() < 0.5
+                          ? 'pi-volume-down'
+                          : 'pi-volume-up'
+                    "
+                  ></i>
+                </button>
+
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  [value]="globalAudio.volume()"
+                  (input)="updateVolume($event)"
+                  class="w-[60px] sm:w-[80px] h-[6px] bg-slate-300 dark:bg-slate-700 rounded-[8px] cursor-grab accent-amber-500 transition-all group-hover/volume:w-[90px]"
+                />
+
+                <span class="text-[9.6px] font-mono text-slate-500 dark:text-slate-400 text-right">
+                  {{ (globalAudio.volume() * 100).toFixed(0) }}%
+                </span>
+              </div>
             </div>
-          </div>
+          }
         </div>
 
         <!-- ROW 2: Dedicated Full-Width Urdu Translation Banner & Toggle -->
-        <div
-          (click)="confirmUrduRecitation($event)"
-          class="flex items-center justify-between px-[12px] py-[6px] rounded-[12px] border transition-all duration-300 cursor-pointer select-none"
-          [ngClass]="{
-            'bg-amber-500/10 dark:bg-amber-500/15 hover:bg-amber-500/20 border-amber-500/40 shadow-sm shadow-amber-500/5':
-              globalAudio.playUrduAudio(),
-            'bg-slate-100/60 dark:bg-slate-900/40 border-slate-200/80 dark:border-slate-800/80 hover:border-amber-500/30':
-              !globalAudio.playUrduAudio(),
-          }"
-          title="Toggle Urdu Audio Translation"
-        >
-          <div class="flex items-center gap-[8px] min-w-0">
-            <span
-              class="flex items-center justify-center w-[20px] h-[20px] rounded-[8px] text-[11px] font-bold transition-colors shrink-0"
-              [ngClass]="{
-                'bg-amber-500 text-slate-950': globalAudio.playUrduAudio(),
-                'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400':
-                  !globalAudio.playUrduAudio(),
-              }"
-            >
-              📖
-            </span>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:gap-[8px] truncate">
+        @if (!isAudioPlayerMinimized()) {
+          <div
+            (click)="confirmUrduRecitation($event)"
+            class="flex items-center justify-between px-[12px] py-[6px] rounded-[12px] border transition-all duration-300 cursor-pointer select-none"
+            [ngClass]="{
+              'bg-amber-500/10 dark:bg-amber-500/15 hover:bg-amber-500/20 border-amber-500/40 shadow-sm shadow-amber-500/5':
+                globalAudio.playUrduAudio(),
+              'bg-slate-100/60 dark:bg-slate-900/40 border-slate-200/80 dark:border-slate-800/80 hover:border-amber-500/30':
+                !globalAudio.playUrduAudio(),
+            }"
+            title="Toggle Urdu Audio Translation"
+          >
+            <div class="flex items-center gap-[8px] min-w-0">
               <span
-                class="text-[14px] font-bold tracking-wide transition-colors truncate"
+                class="flex items-center justify-center w-[20px] h-[20px] rounded-[8px] text-[11px] font-bold transition-colors shrink-0"
                 [ngClass]="{
-                  'text-amber-800 dark:text-amber-300': globalAudio.playUrduAudio(),
-                  'text-slate-700 dark:text-slate-300': !globalAudio.playUrduAudio(),
+                  'bg-amber-500 text-slate-950': globalAudio.playUrduAudio(),
+                  'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400':
+                    !globalAudio.playUrduAudio(),
                 }"
               >
-                {{ globalAudio.playUrduAudio() ? 'Turn Off' : 'Turn On' }} Urdu Audio Translation
+                📖
               </span>
-              <span
-                class="text-[9.5px] sm:text-[10.5px] text-slate-500 dark:text-slate-400 truncate"
-              >
-                {{
+              <div class="flex flex-col sm:flex-row sm:items-center sm:gap-[8px] truncate">
+                <span
+                  class="text-[14px] font-bold tracking-wide transition-colors truncate"
+                  [ngClass]="{
+                    'text-amber-800 dark:text-amber-300': globalAudio.playUrduAudio(),
+                    'text-slate-700 dark:text-slate-300': !globalAudio.playUrduAudio(),
+                  }"
+                >
+                  {{ globalAudio.playUrduAudio() ? 'Turn Off' : 'Turn On' }} Urdu Audio Translation
+                </span>
+                <span
+                  class="text-[9.5px] sm:text-[10.5px] text-slate-500 dark:text-slate-400 truncate"
+                >
+                  {{
+                    globalAudio.playUrduAudio()
+                      ? 'Urdu Audio will be turned off. Only Arabic Audio will play.'
+                      : 'Urdu Audio will play right after each Arabic Ayah.'
+                  }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Switch Indicator -->
+            <div
+              class="w-[32px] h-[18px] sm:w-[36px] sm:h-[20px] rounded-full p-[2px] transition-colors duration-300 ease-in-out shrink-0 ml-[8px]"
+              [ngClass]="
+                globalAudio.playUrduAudio() ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-700'
+              "
+            >
+              <div
+                class="w-[14px] h-[14px] sm:w-[16px] sm:h-[16px] rounded-full bg-white shadow-md transform transition-transform duration-300 ease-in-out"
+                [ngClass]="
                   globalAudio.playUrduAudio()
-                    ? 'Urdu Audio will be turned off. Only Arabic Audio will play.'
-                    : 'Urdu Audio will play right after each Arabic Ayah.'
-                }}
-              </span>
+                    ? 'translate-x-[14px] sm:translate-x-[16px]'
+                    : 'translate-x-0'
+                "
+              ></div>
             </div>
           </div>
-
-          <!-- Switch Indicator -->
-          <div
-            class="w-[32px] h-[18px] sm:w-[36px] sm:h-[20px] rounded-full p-[2px] transition-colors duration-300 ease-in-out shrink-0 ml-[8px]"
-            [ngClass]="
-              globalAudio.playUrduAudio() ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-700'
-            "
-          >
-            <div
-              class="w-[14px] h-[14px] sm:w-[16px] sm:h-[16px] rounded-full bg-white shadow-md transform transition-transform duration-300 ease-in-out"
-              [ngClass]="
-                globalAudio.playUrduAudio()
-                  ? 'translate-x-[14px] sm:translate-x-[16px]'
-                  : 'translate-x-0'
-              "
-            ></div>
-          </div>
-        </div>
+        }
       </div>
     </div>
   </footer>

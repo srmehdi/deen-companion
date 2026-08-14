@@ -7,11 +7,12 @@ import { StatusModalService } from '../../core/services/status-modal-service/sta
 import { ApiService } from '../../core/services/api-service/api-service';
 import { AudioPlayerService } from '../../core/services/audio-player-service/audio-player-service';
 import { HeaderStateService } from '../../core/services/header-state-service/header-state-service';
+import { StickyHeaderWrapper } from '../../shared/components/sticky-header-wrapper/sticky-header-wrapper';
 
 @Component({
   selector: 'app-media',
   standalone: true,
-  imports: [TitleCasePipe, SafeUrlPipe],
+  imports: [TitleCasePipe, SafeUrlPipe, StickyHeaderWrapper],
   templateUrl: './media.html',
   styleUrls: ['./media.css'],
 })

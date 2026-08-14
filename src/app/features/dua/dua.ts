@@ -10,6 +10,7 @@ import { StatusModal } from '../../shared/modals/status-modal/status-modal';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { StatusModalService } from '../../core/services/status-modal-service/status-modal-service';
 import { HeaderStateService } from '../../core/services/header-state-service/header-state-service';
+import { StickyHeaderWrapper } from '../../shared/components/sticky-header-wrapper/sticky-header-wrapper';
 
 interface DuaItem {
   id: number;
@@ -24,7 +25,7 @@ interface DuaItem {
 @Component({
   selector: 'app-dua',
   standalone: true,
-  imports: [CommonModule, FormsModule, ToastModule, ConfirmDialogModule],
+  imports: [CommonModule, FormsModule, ToastModule, ConfirmDialogModule, StickyHeaderWrapper],
   templateUrl: './dua.html',
   styleUrl: './dua.css',
 })
