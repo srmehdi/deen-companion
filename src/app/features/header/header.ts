@@ -19,6 +19,10 @@ export class Header {
   toggleMenu() {
     this.isToggle.update((v) => !v);
   }
+
+  closeMenu() {
+    this.isToggle.set(false);
+  }
   @HostListener('document:click', ['$event'])
   clickout(event: Event) {
     if (this.isToggle() && !this.eRef.nativeElement.contains(event.target)) {
