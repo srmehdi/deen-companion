@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { Header } from './features/header/header';
 import { Footer } from './features/footer/footer';
@@ -29,6 +29,7 @@ import { filter } from 'rxjs';
   styleUrl: './app.css',
 })
 export class App {
+  @ViewChild('appHeader') appHeader!: Header;
   protected readonly title = signal('islamic-app');
   public modalService = inject(StatusModalService);
   private router = inject(Router);
@@ -48,6 +49,7 @@ export class App {
   }
 
   onMainScroll(event: Event): void {
+    this.appHeader?.closeMenu();
     const target = event.target as HTMLElement;
 
     // Safety check: Restore header if user scrolls back to the very top (≤ 10px)

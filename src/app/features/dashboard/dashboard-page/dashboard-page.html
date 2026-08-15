@@ -330,7 +330,7 @@
           (hasOverflow)="handleOverflow(verseOfTheDay()?.surah?.number + 1, $event)"
           [class.line-clamp-4]="!isExpanded(verseOfTheDay()?.surah?.number + 1)"
           [class.no-mask-image]="!needsReadMore().has(verseOfTheDay()?.surah?.number + 1)"
-          class="font-arabic text-[1.1rem] leading-[2.2] text-center antialiased mb-4 text-emerald-900 dark:text-emerald-300"
+          class="arabic-text-style text-[1.1rem] antialiased mb-4 p-[12px] sm:p-[16px] bg-gray-50/50 dark:bg-white/[0.02] rounded-lg border border-slate-100 dark:border-slate-800/80 text-center leading-[2.2] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
           dir="rtl"
         >
           {{ verseOfTheDay()?.verse?.arabic }}
@@ -537,7 +537,7 @@
           (hasOverflow)="handleOverflow(hadithOfTheDay()?.id + 1, $event)"
           [class.line-clamp-4]="!isExpanded(hadithOfTheDay()?.id + 1)"
           [class.no-mask-image]="!needsReadMore().has(hadithOfTheDay()?.id + 1)"
-          class="font-arabic text-[1.1rem] leading-[2.2] text-center antialiased mb-4 text-emerald-900 dark:text-emerald-300"
+          class="arabic-text-style text-[1.1rem] antialiased mb-4 p-[12px] sm:p-[16px] bg-gray-50/50 dark:bg-white/[0.02] rounded-lg border border-slate-100 dark:border-slate-800/80 text-center leading-[2.2] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
           dir="rtl"
         >
           {{ hadithOfTheDay()?.arabic }}
@@ -637,7 +637,7 @@
           (hasOverflow)="handleOverflow(duaOfTheDay()?.id + 1, $event)"
           [class.line-clamp-4]="!isExpanded(duaOfTheDay()?.id + 1)"
           [class.no-mask-image]="!needsReadMore().has(duaOfTheDay()?.id + 1)"
-          class="font-arabic text-[1.1rem] leading-[2.2] text-center antialiased mb-4 text-emerald-900 dark:text-emerald-300"
+          class="arabic-text-style text-[1.1rem] antialiased mb-4 p-[12px] sm:p-[16px] bg-gray-50/50 dark:bg-white/[0.02] rounded-lg border border-slate-100 dark:border-slate-800/80 text-center leading-[2.2] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
           dir="rtl"
         >
           {{ duaOfTheDay()?.arabic }}

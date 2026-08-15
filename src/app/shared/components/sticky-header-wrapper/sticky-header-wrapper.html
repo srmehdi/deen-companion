@@ -6,51 +6,57 @@
 ></div>
 
 <!-- Sticky Host Container with dynamic top offset -->
-<div
+<!-- <div
   class="sticky z-30 transition-[top] duration-300 ease-out relative overflow-visible"
   [ngClass]="headerState.isHeaderHidden() ? 'top-[-72px]' : 'top-[0]'"
->
-  <!-- Page-specific custom sticky bar contents projected here -->
-  <ng-content></ng-content>
+> -->
+<div class="sticky top-0 z-[60] overflow-visible">
+  <div
+    class="relative overflow-visible transition-transform duration-300 ease-out"
+    [class.-translate-y-[72px]]="headerState.isHeaderHidden()"
+  >
+    <!-- Page-specific custom sticky bar contents projected here -->
+    <ng-content></ng-content>
 
-  <!-- 🌟 ANIMATED DOUBLE CHEVRON PULL-DOWN HANDLE -->
-  @if (headerState.isHeaderHidden() && showPullHandle()) {
-    <button
-      (click)="restoreHeader()"
-      type="button"
-      aria-label="Expand Top Navigation"
-      title="Show Menu"
-      class="group absolute -bottom-[14px] left-1/2 -translate-x-1/2 z-40 flex flex-col items-center justify-center h-[24px] px-[14px] pb-[4px] rounded-b-[8px] bg-emerald-950/80 dark:bg-[#071914]/95 border-x border-b border-sacred-gold/40 shadow-md backdrop-blur-md cursor-pointer transition-all duration-200 hover:h-[24px] hover:bg-emerald-900 active:scale-95 animate-fade-in"
-    >
-      <div class="flex flex-col items-center -space-y-[8px] text-sacred-gold">
-        <!-- Top Arrow (Wave Step 1) -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          class="w-[16px] h-[16px] animate-chevron-wave-1"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-            clip-rule="evenodd"
-          />
-        </svg>
+    <!-- 🌟 ANIMATED DOUBLE CHEVRON PULL-DOWN HANDLE -->
+    @if (headerState.isHeaderHidden() && showPullHandle()) {
+      <button
+        (click)="restoreHeader()"
+        type="button"
+        aria-label="Expand Top Navigation"
+        title="Show Menu"
+        class="group absolute -bottom-[14px] left-1/2 -translate-x-1/2 z-40 flex flex-col items-center justify-center h-[24px] px-[14px] pb-[4px] rounded-b-[8px] bg-emerald-950/80 dark:bg-[#071914]/95 border-x border-b border-sacred-gold/40 shadow-md backdrop-blur-md cursor-pointer transition-all duration-200 hover:h-[24px] hover:bg-emerald-900 active:scale-95 animate-fade-in"
+      >
+        <div class="flex flex-col items-center -space-y-[8px] text-sacred-gold">
+          <!-- Top Arrow (Wave Step 1) -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="w-[16px] h-[16px] animate-chevron-wave-1"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+              clip-rule="evenodd"
+            />
+          </svg>
 
-        <!-- Bottom Arrow (Wave Step 2 - Staggered) -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          class="w-[16px] h-[16px] animate-chevron-wave-2"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </div>
-    </button>
-  }
+          <!-- Bottom Arrow (Wave Step 2 - Staggered) -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="w-[16px] h-[16px] animate-chevron-wave-2"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+      </button>
+    }
+  </div>
 </div>

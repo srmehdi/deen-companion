@@ -1,12 +1,13 @@
 <div class="relative flex flex-col h-screen overflow-hidden">
-  <!-- Fixed Header with GPU Translate Animation -->
+  <!-- Header 1 -->
   <app-header
-    class="fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-out"
+    #appHeader
+    class="fixed top-0 left-0 right-0 z-100 transition-transform duration-300 ease-out will-change-transform"
     [class.-translate-y-full]="headerState.isHeaderHidden()"
     [isHidden]="headerState.isHeaderHidden()"
   ></app-header>
 
-  <!-- Main Scroll Container with Static Top Padding -->
+  <!-- Main scroll container -->
   <main (scroll)="onMainScroll($event)" class="flex-1 overflow-y-auto pt-[72px]">
     <div class="flex min-h-full flex-col">
       <div class="flex-1 px-[12px] sm:px-[16px] pt-[12px] sm:pt-[16px] max-w-6xl mx-auto w-full">
