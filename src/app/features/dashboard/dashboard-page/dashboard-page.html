@@ -189,8 +189,16 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
         <!-- Current Prayer with Wrap-Safe View Guide Button -->
         <div
-          (click)="goToNamazGuide(currentPrayer())"
-          class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 hover:border-amber-500/60 backdrop-blur-sm cursor-pointer transition-all duration-200 group relative flex flex-col justify-between min-h-[5rem]"
+          (click)="
+            prayer_times_data()?.islamic_info?.prayer_names?.[currentPrayer()]
+              ? goToNamazGuide(currentPrayer())
+              : null
+          "
+          class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 backdrop-blur-sm transition-all duration-200 group relative flex flex-col justify-between min-h-[5rem]"
+          [ngClass]="{
+            'cursor-pointer hover:border-amber-500/60':
+              prayer_times_data()?.islamic_info?.prayer_names?.[currentPrayer()],
+          }"
         >
           <div>
             <div class="flex flex-wrap items-center justify-between gap-1.5">
@@ -201,12 +209,14 @@
               </p>
 
               <!-- Responsive Action Badge -->
-              <span
-                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-bold bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-white transition-all whitespace-nowrap shrink-0"
-              >
-                <i class="pi pi-book text-[0.6rem]!"></i>
-                <span>View Guide</span>
-              </span>
+              @if (prayer_times_data()?.islamic_info?.prayer_names?.[currentPrayer()]) {
+                <span
+                  class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-bold bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-white transition-all whitespace-nowrap shrink-0"
+                >
+                  <i class="pi pi-book text-[0.6rem]!"></i>
+                  <span>View Guide</span>
+                </span>
+              }
             </div>
             <h2 class="text-xl font-extrabold text-amber-800 dark:text-amber-300 mt-1 break-words">
               {{ prayer_times_data()?.islamic_info?.prayer_names?.[currentPrayer()] ?? 'N/A' }}
@@ -215,7 +225,16 @@
         </div>
 
         <div
-          class="p-3.5 rounded-xl bg-gray-50 dark:bg-slate-900/40 border border-gray-200/80 dark:border-slate-800 min-h-[5rem]"
+          (click)="
+            prayer_times_data()?.islamic_info?.prayer_names?.[nextPrayer()]
+              ? goToNamazGuide(nextPrayer())
+              : null
+          "
+          class="flex flex-wrap items-center justify-between gap-1.5 p-3.5 rounded-xl bg-gray-50 dark:bg-slate-900/40 border border-gray-200/80 dark:border-slate-800 min-h-[5rem] group"
+          [ngClass]="{
+            'cursor-pointer hover:border-amber-500/60':
+              prayer_times_data()?.islamic_info?.prayer_names?.[nextPrayer()],
+          }"
         >
           <p
             class="text-[0.65rem] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400"
@@ -223,6 +242,12 @@
             Next Prayer
           </p>
           @if (prayer_times_data()?.islamic_info?.prayer_names?.[nextPrayer()]) {
+            <span
+              class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-bold bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-white transition-all whitespace-nowrap shrink-0"
+            >
+              <i class="pi pi-book text-[0.6rem]!"></i>
+              <span>View Guide</span>
+            </span>
             <h2
               class="text-base font-bold text-gray-800 dark:text-gray-200 mt-1 flex flex-wrap items-baseline gap-1"
             >

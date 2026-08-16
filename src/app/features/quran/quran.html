@@ -125,7 +125,6 @@
       >
         @for (surah of paginatedSurahs(); track surah.number) {
           <div
-            [routerLink]="['/quran', surah.number]"
             (click)="loadSurah(surah.number)"
             class="group bg-white dark:bg-[#121816]/60 border border-gray-200 dark:border-sacred-gold/15 rounded-xl p-3 flex justify-between items-center cursor-pointer shadow-sm hover:shadow-md hover:border-sacred-gold transform hover:-translate-y-0.5 transition-all duration-200 min-w-0"
           >
@@ -234,8 +233,11 @@
 
       <app-sticky-header-wrapper>
         <!-- Simply place your toolbar inside -->
-        <div
+        <!-- <div
           class="backdrop-blur-md min-h-[46px] py-[2px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm flex flex-row items-center justify-between gap-[0px] sm:gap-[8px] max-w-full bg-white/95 dark:bg-[#121816]/95"
+        > -->
+        <div
+          class="min-h-[46px] py-[2px] md:px-[24px] flex flex-row items-center justify-between gap-[0px] sm:gap-[8px] max-w-full bg-emerald-950/90 dark:bg-[#071914]/95 border-b! border-sacred-gold/40! backdrop-blur-2xl shadow-[0_8px_40px_rgba(15,23,42,0.08)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.35)]"
         >
           <div class="flex items-center justify-start w-full sm:w-auto">
             <button
@@ -279,7 +281,7 @@
             <!-- Language Switcher -->
             <div class="flex flex-col items-end justify-center gap-[2px]">
               <span
-                class="text-[7px] sm:text-[8px] font-bold tracking-wider text-gray-500 dark:text-gray-400 uppercase leading-none select-none"
+                class="text-[7px] sm:text-[8px] font-bold tracking-wider text-gray-200 dark:text-gray-400 uppercase leading-none select-none"
               >
                 Translation Language
               </span>
@@ -370,7 +372,7 @@
         @for (ayah of paginatedAyahs(); track ayah.numberInSurah) {
           <div
             [id]="'ayah-row-' + ayah.numberInSurah"
-            class="scroll-mt-[140px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-2 md:gap-4 py-4 md:py-5 items-stretch! md:items-start! rounded-[12px] border border-slate-200/80 dark:border-sacred-gold/30 transition-all duration-300 px-2 sm:px-4 max-w-full shadow-lg overflow-hidden"
+            class="scroll-mt-[130px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-2 md:gap-4 py-4 md:py-5 items-stretch! md:items-start! rounded-[12px] border border-slate-200/80 dark:border-sacred-gold/30 transition-all duration-300 px-2 sm:px-4 max-w-full shadow-lg overflow-hidden"
             [class.bg-sacred-gold/6]="
               (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
                 selectedSurah().info.number &&

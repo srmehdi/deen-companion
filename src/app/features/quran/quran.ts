@@ -220,6 +220,7 @@ export class Quran implements OnInit, OnDestroy {
   }
 
   private loadSurahForViewOnly(surahNumber: number): void {
+    this.modal.showLoading();
     this.api.getSurahDetails(surahNumber).subscribe({
       next: (surahData) => {
         if (!this.userInteraction.isInteracting()) {
@@ -228,9 +229,11 @@ export class Quran implements OnInit, OnDestroy {
           this.scrollToAyah(1);
           this.router.navigate(['/quran', surahNumber], { skipLocationChange: false });
         }
+        this.modal.close();
       },
       error: (err) => {
         console.error('Failed updating view state for next Surah:', err);
+        this.modal.close();
       },
     });
   }
@@ -448,7 +451,7 @@ export class Quran implements OnInit, OnDestroy {
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages()) {
       this.currentPage.set(page);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // window.scrollTo({ top: 0, behavior: 'smooth' });
       this.scrollToActivePageButton();
     }
   }
@@ -488,7 +491,7 @@ export class Quran implements OnInit, OnDestroy {
     if (page >= 1 && page <= this.totalAyahPages()) {
       this.currentAyahPage.set(page);
       this.userInteraction.isInteracting.set(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // window.scrollTo({ top: 0, behavior: 'smooth' });
       this.scrollToActiveAyahPageButton();
     }
   }
