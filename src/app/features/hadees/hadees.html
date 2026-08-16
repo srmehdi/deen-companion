@@ -164,8 +164,11 @@
     >
       <!-- FIXED SIZED STICKY TOP BAR: Back / Clear Search Button ONLY -->
       <app-sticky-header-wrapper>
-        <div
+        <!-- <div
           class="z-30 backdrop-blur-md min-h-[46px] py-[2px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm transition-all duration-200 flex items-center justify-between gap-[8px] max-w-full overflow-visible bg-white/80 dark:bg-[#121816]/90"
+        > -->
+        <div
+          class="min-h-[46px] py-[2px] md:px-[24px] flex flex-row items-center justify-between gap-[0px] sm:gap-[8px] max-w-full bg-emerald-950/90 dark:bg-[#071914]/95 border-b! border-sacred-gold/40! backdrop-blur-2xl shadow-[0_8px_40px_rgba(15,23,42,0.08)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.35)]"
         >
           <!-- Fixed Sized Back Button -->
           <button
@@ -193,7 +196,7 @@
 
           <!-- Compact Context Indicator -->
           <span
-            class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider truncate"
+            class="text-[10px] font-bold text-gray-200 dark:text-gray-400 uppercase tracking-wider truncate"
           >
             {{ isSearchingGlobally() ? 'Global Search Results' : current.info.name }}
           </span>
@@ -222,7 +225,7 @@
         </div>
 
         <span
-          class="max-sm:self-center font-serif text-base md:text-xl font-bold text-divine-emerald dark:text-sacred-gold bg-divine-emerald/5 dark:bg-sacred-gold/5 border border-divine-emerald/10 dark:border-sacred-gold/20 px-3 py-1 rounded-lg whitespace-nowrap"
+          class="max-sm:self-center font-serif text-base md:text-xl font-bold arabic-text-style font-serif! bg-divine-emerald/5 dark:bg-sacred-gold/5 border border-divine-emerald/10 dark:border-sacred-gold/20 px-3 py-1 rounded-lg whitespace-nowrap"
         >
           {{ current.info.arabic_name }}
         </span>

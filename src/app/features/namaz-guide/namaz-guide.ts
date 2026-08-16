@@ -79,7 +79,7 @@ export class NamazGuideComponent implements OnInit {
   ngOnInit(): void {
     this.headerState.isHeaderHidden.set(false);
     this.headerState.enableAutoHide();
-    this.checkSubscriptionStatus();
+    // this.checkSubscriptionStatus();
     this.loadPrayers();
   }
 

@@ -251,7 +251,7 @@ export class Hadees implements OnInit {
           if (targetHadithId) {
             this.scrollToHadith(targetHadithId);
           } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // window.scrollTo({ top: 0, behavior: 'smooth' });
           }
         },
         error: (err) => {
@@ -322,7 +322,7 @@ export class Hadees implements OnInit {
     if (page >= 1 && page <= this.totalPages()) {
       if (this.isSearchingGlobally()) {
         this.currentPage.set(page);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         const activeCollection = this.selectedCollection();
         if (activeCollection) {

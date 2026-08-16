@@ -36,7 +36,7 @@
         dir="ltr"
       >
         <div
-          class="p-[4px] sm:p-[10px] bg-white/90 dark:bg-slate-900/90 shadow-md shadow-slate-900/5 space-y-[4px] sm:space-y-[8px]"
+          class="p-[4px] sm:p-[10px] bg-emerald-950/90 dark:bg-[#071914]/95 border-b! border-sacred-gold/40! shadow-md shadow-slate-900/5 space-y-[4px] sm:space-y-[8px]"
         >
           <!-- Row 1: Prayer Navigation Tabs + Fixed Language Switcher -->
           <div class="flex items-center justify-between gap-[8px]">
@@ -68,7 +68,7 @@
                 class="px-[8px] sm:px-[10px] py-[4px] text-[11px] sm:text-[12px] font-bold rounded-[4px] transition-all duration-200"
                 [class]="
                   currentLang() === 'ur'
-                    ? 'bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-xs'
+                    ? 'bg-emerald-600 text-white shadow-xs'
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer'
                 "
                 (click)="setLanguage('ur')"
@@ -79,7 +79,7 @@
                 class="px-[8px] sm:px-[10px] py-[4px] text-[11px] sm:text-[12px] font-bold rounded-[4px] transition-all duration-200"
                 [class]="
                   currentLang() === 'hi'
-                    ? 'bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-xs'
+                    ? 'bg-emerald-600 text-white shadow-xs'
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer'
                 "
                 (click)="setLanguage('hi')"
@@ -90,7 +90,7 @@
                 class="px-[8px] sm:px-[10px] py-[4px] text-[11px] sm:text-[12px] font-bold rounded-[4px] transition-all duration-200"
                 [class]="
                   currentLang() === 'en'
-                    ? 'bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-xs'
+                    ? 'bg-emerald-600 text-white shadow-xs'
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer'
                 "
                 (click)="setLanguage('en')"
@@ -110,12 +110,10 @@
               {{ prayer.name['en'] }} ({{ prayer.totalRakats }} Rakat)
             </span> -->
               <span
-                class="inline-flex flex-wrap items-baseline gap-x-[4px] text-[16px] font-bold text-slate-700 dark:text-slate-300 leading-tight"
+                class="inline-flex flex-wrap items-baseline gap-x-[4px] text-[16px] font-bold text-slate-300 leading-tight"
               >
                 <span class="whitespace-nowrap">{{ prayer.name['en'] }}</span>
-                <span
-                  class="text-[12px] font-normal text-slate-500 dark:text-slate-400 whitespace-nowrap"
-                >
+                <span class="text-[12px] font-normal text-slate-400 whitespace-nowrap">
                   ({{ prayer.totalRakats }} Rakat)
                 </span>
               </span>

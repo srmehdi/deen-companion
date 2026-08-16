@@ -126,7 +126,7 @@ export class Dua {
     });
   }
   getDuaBookmarks(): void {
-    // this.modal.showLoading();
+    this.modal.showLoading();
     const $destroyed: Subject<void> = new Subject();
     const payload = {
       visitorId: localStorage.getItem('visitor_id'),
@@ -135,7 +135,7 @@ export class Dua {
       next: (response) => {
         if (response.success) {
           this.bookmarkedIds.set(response.data.length > 0 ? response.data : []);
-          // this.modal.close();
+          this.modal.close();
         } else {
           this.modal.showError({ message: 'Something went wrong. Please try again later.' });
         }
@@ -204,7 +204,7 @@ export class Dua {
     // this.saveDuaBookmarks();
   }
   saveDuaBookmarks(): void {
-    // this.modal.showLoading();
+    this.modal.showLoading();
     const $destroyed: Subject<void> = new Subject();
     const payload = {
       visitorId: localStorage.getItem('visitor_id'),
@@ -213,7 +213,7 @@ export class Dua {
     this.apiService.saveDuaBookmarkIds(payload).subscribe({
       next: (response) => {
         if (response.success) {
-          // this.modal.close();
+          this.modal.close();
         } else {
           this.modal.showError({ message: 'Something went wrong. Please try again later.' });
         }
@@ -280,7 +280,7 @@ export class Dua {
     if (page >= 1 && page <= this.totalPages()) {
       this.currentPage.set(page);
       // Premium smooth behavior scroll repositioning matching reader transitions
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // window.scrollTo({ top: 0, behavior: 'smooth' });
       this.scrollToActivePageButton();
     }
   }
