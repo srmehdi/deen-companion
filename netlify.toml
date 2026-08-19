@@ -3,6 +3,9 @@
   publish = "dist/islamic-app/browser"
   functions = "netlify/functions"
 
+[build.environment]
+  NPM_FLAGS = "--legacy-peer-deps"
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
