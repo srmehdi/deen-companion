@@ -16,3 +16,6 @@
   padding: 8px 24px 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
+.f-family {
+  font-family: "'Cinzel', 'Trajan Pro', 'Cinzel Decorative', 'Times New Roman', serif" !important;
+}

@@ -20,6 +20,7 @@
         "npm:@angular/forms@21",
         "npm:@angular/platform-browser@21",
         "npm:@angular/router@21",
+        "npm:@angular/service-worker@^21.2.20",
         "npm:@netlify/functions@^5.1.2",
         "npm:@primeuix/themes@^2.0.3",
         "npm:@tailwindcss/postcss@^4.1.12",

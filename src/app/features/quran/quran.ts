@@ -34,7 +34,7 @@ import { StickyHeaderWrapper } from '../../shared/components/sticky-header-wrapp
     FormsModule,
     ConfirmDialogModule,
     ToastModule,
-    RouterLink,
+    // RouterLink,
     StickyHeaderWrapper,
   ],
   templateUrl: './quran.html',
