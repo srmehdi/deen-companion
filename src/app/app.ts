@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { ApplicationRef, Component, inject, output, signal, ViewChild } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { Header } from './features/header/header';
 import { Footer } from './features/footer/footer';
@@ -10,7 +10,9 @@ import { ScrollTopModule } from 'primeng/scrolltop';
 import { StatusModal } from './shared/modals/status-modal/status-modal';
 import { StatusModalService } from './core/services/status-modal-service/status-modal-service';
 import { HeaderStateService } from './core/services/header-state-service/header-state-service';
-import { filter } from 'rxjs';
+import { filter, first } from 'rxjs';
+import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+import { DailyReminderBannerComponent } from './shared/components/daily-reminder-banner/daily-reminder-banner';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +26,7 @@ import { filter } from 'rxjs';
     ScrollTopModule,
     StatusModal,
     CommonModule,
+    DailyReminderBannerComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -35,6 +38,8 @@ export class App {
   private router = inject(Router);
   public headerState = inject(HeaderStateService);
 
+  private swUpdate = inject(SwUpdate);
+  private appRef = inject(ApplicationRef);
   constructor() {
     // Reset header state on ANY route navigation
     this.router.events
@@ -42,6 +47,24 @@ export class App {
       .subscribe(() => {
         this.resetHeader();
       });
+
+    if (this.swUpdate.isEnabled) {
+      // Check for update once app is stable
+      const isStable$ = this.appRef.isStable.pipe(first((isStable) => isStable === true));
+      isStable$.subscribe(() => {
+        this.swUpdate.checkForUpdate();
+      });
+
+      // Listen for when the new version finishes downloading
+      this.swUpdate.versionUpdates
+        .pipe(filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'))
+        .subscribe(() => {
+          // if (confirm('New version available. Load new version?')) {
+          //   window.location.reload();
+          // }
+          this.hasUpdate.set(true);
+        });
+    }
   }
 
   private resetHeader(): void {
@@ -56,5 +79,11 @@ export class App {
     if (target.scrollTop <= 10 && this.headerState.isHeaderHidden()) {
       this.headerState.isHeaderHidden.set(false);
     }
+  }
+
+  dismiss = output<void>();
+  hasUpdate = signal(false);
+  reloadApp() {
+    window.location.reload();
   }
 }

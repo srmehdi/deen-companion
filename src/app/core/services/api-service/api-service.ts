@@ -164,4 +164,10 @@ export class ApiService {
   getIpLocation(): Observable<any> {
     return this.http.get('https://ipwho.is/');
   }
+  sendPush(payload: any) {
+    return this.http.post<any>(Endpoints.SEND_PUSH, payload);
+  }
+  saveSubscription(payload: any) {
+    return this.http.post<any>(Endpoints.SAVE_SUBSCRIPTION, payload);
+  }
 }

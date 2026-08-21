@@ -1,79 +1,4 @@
-<!-- <footer class="backdrop-blur-sm p-4">
-  <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-    <div class="flex items-center gap-2 order-1 md:order-1">
-      <div class="flex flex-col">
-        <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold"
-          >Total Visits</span
-        >
-        <span class="text-sm text-center font-semibold text-slate-700 dark:text-slate-300">{{
-          activityStats()?.totalUsers?.[0]?.count || 0
-        }}</span>
-      </div>
-      <div class="h-8 w-[1px] bg-gray-700"></div>
-      <div class="flex flex-col">
-        <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold"
-          >Unique Visitors</span
-        >
-        <span class="text-sm text-center font-semibold text-slate-700 dark:text-slate-300">{{
-          activityStats()?.totalUniqueUsers?.[0]?.count || 0
-        }}</span>
-      </div>
-      <div class="h-8 w-[1px] bg-gray-700"></div>
-      <div class="flex flex-col">
-        <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold"
-          >Your Visits</span
-        >
-        <span class="text-sm text-center font-semibold text-slate-700 dark:text-slate-300">{{
-          pingResponse()?.visitCount || 0
-        }}</span>
-      </div>
-      <div class="h-8 w-[1px] bg-gray-700"></div>
-      <div class="flex flex-col">
-        <div class="flex items-center gap-1.5">
-          <span class="relative flex h-2 w-2">
-            <span
-              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
-            ></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-          </span>
-          <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold"
-            >Active Now</span
-          >
-        </div>
-        <span class="text-sm text-center font-semibold text-slate-700 dark:text-slate-300">{{
-          activityStats()?.activeUsers?.[0]?.count || 0
-        }}</span>
-      </div>
-    </div>
-    <div class="order-3 md:order-2 text-center">
-      <div class="flex flex-col gap-1">
-        <p class="text-[12px] text-slate-500 dark:text-slate-400">
-          © 2026 <span class="font-bold text-indigo-600 dark:text-indigo-400">Deen Companion</span>.
-        </p>
-        <p class="text-[.625rem] text-slate-500 dark:text-slate-400">
-          Developed by
-          <span class="font-bold text-indigo-600 dark:text-indigo-400" title="srmthisside@gmail.com"
-            >SRM</span
-          >
-          for <span class="font-bold text-indigo-600 dark:text-indigo-400">UMMAH</span>.
-        </p>
-      </div>
-    </div>
-    <div class="order-2 md:order-3 flex flex-col items-center md:items-end">
-      <p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">
-        Get in Touch
-      </p>
-      <a
-        href="mailto:srmthisside@gmail.com"
-        class="cursor-pointer text-sm text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors underline decoration-slate-300 dark:decoration-slate-700 underline-offset-4"
-      >
-        srmthisside@gmail.com
-      </a>
-    </div>
-  </div>
-</footer> -->
-
-<footer class="relative backdrop-blur-sm px-[16px] pb-[16px]">
+<footer class="relative px-[16px] py-[8px]">
   <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
     <!-- Stat Badges Bar (Strict 2x2 Grid for All Screen Sizes) -->
     <div class="order-1 grid grid-cols-2 gap-1 w-full md:w-auto">
@@ -163,21 +88,33 @@
           </span>
           for <span class="font-semibold text-slate-700 dark:text-slate-300">UMMAH</span>
         </p>
+        <!-- <a
+          href="mailto:srmthisside@gmail.com"
+          class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 bg-slate-100 dark:bg-slate-900 hover:bg-slate-200/80 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800 px-3 py-1.5 rounded-lg transition-all duration-200 shadow-sm"
+        >
+          <span>✉️</span>
+          <span>srmthisside@gmail.com</span>
+        </a> -->
       </div>
     </div>
 
-    <!-- Right Contact Button -->
-    <div class="order-2 md:order-3 flex flex-col items-center md:items-end">
-      <p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">
-        Get in Touch
-      </p>
-      <a
-        href="mailto:srmthisside@gmail.com"
-        class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 bg-slate-100 dark:bg-slate-900 hover:bg-slate-200/80 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800 px-3 py-1.5 rounded-lg transition-all duration-200 shadow-sm"
-      >
-        <span>✉️</span>
-        <span>srmthisside@gmail.com</span>
-      </a>
+    <!-- Right Actions: Daily Reminders Toggle + Contact -->
+    <div
+      class="order-2 md:order-3 flex flex-col items-center md:items-end gap-[10px] w-full md:w-auto"
+    >
+      <!-- 🔔 Daily Hadith & Dua Toggle -->
+      <app-footer-reminder-toggle class="w-full md:w-auto"></app-footer-reminder-toggle>
+
+      <div class="flex flex-col items-center gap-2">
+        <!-- <app-notification-test></app-notification-test> -->
+        <a
+          href="mailto:srmthisside@gmail.com"
+          class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 bg-slate-100 dark:bg-slate-900 hover:bg-slate-200/80 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800 px-3 py-1.5 rounded-lg transition-all duration-200 shadow-sm"
+        >
+          <span>✉️</span>
+          <span>srmthisside@gmail.com</span>
+        </a>
+      </div>
     </div>
   </div>
 </footer>

@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { ApiService } from '../../core/services/api-service/api-service';
 import { Activity } from '../../core/services/activity/activity';
+import { FooterReminderToggle } from '../../shared/components/footer-reminder-toggle/footer-reminder-toggle';
 
 @Component({
   selector: 'app-footer',
-  imports: [CommonModule],
+  imports: [CommonModule, FooterReminderToggle],
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })
