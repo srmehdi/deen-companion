@@ -25,6 +25,7 @@
         "npm:@primeuix/themes@^2.0.3",
         "npm:@tailwindcss/postcss@^4.1.12",
         "npm:@types/node@^25.7.0",
+        "npm:@types/web-push@^3.6.4",
         "npm:jsdom@^27.1.0",
         "npm:pg@^8.17.0",
         "npm:postcss@^8.5.3",
@@ -34,7 +35,8 @@
         "npm:tailwindcss@^4.1.12",
         "npm:tslib@^2.3.0",
         "npm:typescript@~5.9.2",
-        "npm:vitest@^4.0.8"
+        "npm:vitest@^4.0.8",
+        "npm:web-push@^3.6.7"
       ]
     }
   }

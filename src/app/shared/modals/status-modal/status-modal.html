@@ -70,8 +70,9 @@
 
       <p
         class="text-[0.8rem] sm:text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wide leading-relaxed"
+        [innerHTML]="message()"
       >
-        {{ message() }}
+        <!-- {{ message() }} -->
       </p>
 
       @if (state() === 'error' || state() === 'success') {

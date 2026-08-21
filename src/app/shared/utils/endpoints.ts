@@ -21,4 +21,6 @@ export const Endpoints = {
   HADITHS_BY_COLLECTION: '/api/hadith/',
   HADITHS_SEARCH: '/api/hadith/search',
   GET_VIDEOS: '/api/get-videos',
+  SEND_PUSH: '/api/send-push',
+  SAVE_SUBSCRIPTION: '/api/save-subscription',
 };

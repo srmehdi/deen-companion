@@ -1,4 +1,4 @@
-<div
+<!-- <div
   class="relative overflow-hidden h-full p-4 rounded-md transition-all duration-300 bg-cream-bg dark:bg-bg-green backdrop-blur-md border border-gray-200/80 dark:border-amber-500/20 shadow-xl shadow-slate-900/5 dark:shadow-emerald-950/20 hover:border-amber-500/30 dark:hover:border-amber-500/40"
 >
   <div
@@ -6,4 +6,27 @@
   ></div>
 
   <ng-content />
+</div> -->
+
+<div
+  class="relative overflow-hidden h-full p-4 rounded-xl transition-all duration-500 ease-out bg-gradient-to-b from-cream-bg/95 via-cream-bg/80 to-cream-bg/60 dark:from-bg-green/90 dark:via-bg-green/75 dark:to-bg-green/60 backdrop-blur-xl border border-amber-500/20 dark:border-amber-400/25 shadow-[0_8px_32px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.6)] dark:shadow-[0_12px_40px_rgba(3,20,15,0.45),inset_0_1px_1px_rgba(251,191,36,0.15)] hover:-translate-y-1 hover:border-amber-500/40 dark:hover:border-amber-400/50 hover:shadow-[0_20px_48px_rgba(191,149,63,0.12),inset_0_1px_1px_rgba(255,255,255,0.9)] dark:hover:shadow-[0_24px_50px_rgba(0,0,0,0.6),0_0_24px_rgba(251,191,36,0.1),inset_0_1px_1px_rgba(251,191,36,0.3)]"
+>
+  <!-- Top-Right Ambient Warm Glow -->
+  <div
+    class="pointer-events-none absolute -top-16 -right-16 w-44 h-44 bg-gradient-to-br from-amber-400/15 to-amber-600/5 rounded-full blur-3xl transition-transform duration-700 ease-out"
+  ></div>
+
+  <!-- Bottom-Left Ambient Subdued Glow -->
+  <div
+    class="pointer-events-none absolute -bottom-16 -left-16 w-40 h-40 bg-emerald-500/10 dark:bg-amber-400/5 rounded-full blur-3xl transition-transform duration-700 ease-out"
+  ></div>
+
+  <!-- Subtle Top Edge Light Reflection -->
+  <div
+    class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent dark:via-amber-300/50"
+  ></div>
+
+  <div class="relative z-10">
+    <ng-content />
+  </div>
 </div>

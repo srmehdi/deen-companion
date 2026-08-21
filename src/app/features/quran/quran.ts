@@ -187,6 +187,7 @@ export class Quran implements OnInit, OnDestroy {
             this.currentAyahPage.set(1);
             if (!this.globalAudio.isAudioPlaying()) {
               this.confirmAudioRecitation();
+              this.scrollToAyah(1);
             }
           }
         }

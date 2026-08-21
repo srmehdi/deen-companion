@@ -1,0 +1,93 @@
+<p-dialog
+  [(visible)]="isVisible"
+  position="top"
+  [modal]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="false"
+  [showHeader]="false"
+  [dismissableMask]="false"
+  styleClass="daily-reminder-dialog-container !border-0 !bg-transparent !p-0"
+  [style]="{ width: '92vw', maxWidth: '580px', marginTop: '16px' }"
+>
+  <div
+    class="relative flex flex-col gap-[14px] rounded-[16px] border border-emerald-500/30 bg-emerald-950/95 p-[16px] text-slate-100 shadow-2xl backdrop-blur-md sm:gap-[16px] sm:p-[20px]"
+    role="region"
+    aria-label="Daily Islamic Reminders"
+  >
+    <!-- Close Button -->
+    <button
+      type="button"
+      (click)="dismiss()"
+      class="absolute right-[12px] top-[12px] rounded-[8px] p-[4px] text-slate-400 transition hover:bg-white/10 hover:text-white focus:outline-none sm:right-[14px] sm:top-[14px] cursor-pointer"
+      aria-label="Dismiss reminder"
+    >
+      <svg
+        class="h-[16px] w-[16px]"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Content Section -->
+    <div class="flex items-start gap-[12px] sm:gap-[16px] sm:pr-[24px]">
+      <div
+        class="flex h-[40px] w-[40px] sm:h-[48px] sm:w-[48px] shrink-0 items-center justify-center rounded-[12px] bg-emerald-500/15 text-[20px] sm:text-[24px]"
+      >
+        📖
+      </div>
+      <div class="space-y-[2px] sm:space-y-[4px] pr-[24px] sm:pr-0">
+        <h3 class="text-[14px] sm:text-[16px] font-semibold text-white">
+          Daily Hadith &amp; Dua Reminders
+        </h3>
+        <p class="text-[12px] sm:text-[14px] leading-[18px] sm:leading-[20px] text-slate-300">
+          Receive authentic Hadith and selected Dua daily on your device.
+        </p>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center justify-end gap-[10px] sm:gap-[12px] pt-[4px]">
+      <button
+        type="button"
+        (click)="dismiss()"
+        [disabled]="isLoading"
+        class="rounded-[8px] px-[12px] py-[6px] sm:px-[14px] sm:py-[8px] text-[12px] sm:text-[14px] font-medium text-slate-300 transition hover:bg-white/5 hover:text-white disabled:opacity-50 focus:outline-none focus:ring-[2px] focus:ring-slate-300 border border-slate-200 dark:border-slate-700 cursor-pointer disabled:cursor-not-allowed"
+      >
+        Maybe Later
+      </button>
+      <button
+        type="button"
+        (click)="notificationService.enableReminders(); isVisible = false"
+        [disabled]="isLoading"
+        class="inline-flex items-center gap-[8px] rounded-[8px] bg-emerald-500 px-[14px] py-[6px] sm:px-[16px] sm:py-[8px] text-[12px] sm:text-[14px] font-semibold text-emerald-950 shadow-sm transition hover:bg-emerald-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+      >
+        <svg
+          *ngIf="isLoading"
+          class="h-[14px] w-[14px] sm:h-[16px] sm:w-[16px] animate-spin text-emerald-950"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        <span>{{ isLoading ? 'Subscribing...' : '🔔 Enable Reminders' }}</span>
+      </button>
+    </div>
+  </div>
+</p-dialog>

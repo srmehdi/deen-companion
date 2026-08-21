@@ -1,0 +1,47 @@
+<div
+  class="flex items-center justify-between gap-[16px] rounded-[12px] border dark:border-emerald-500/20! dark:bg-emerald-950/40! px-[16px] py-[12px] text-slate-100! bg-emerald-500/10 border border-emerald-500/20"
+>
+  <div class="flex items-center gap-[12px]">
+    <div
+      class="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-[8px] bg-emerald-500/15 text-[18px]"
+    >
+      🔔
+    </div>
+    <div>
+      <h4 class="text-[14px] font-semibold text-slate-900 dark:text-white leading-[18px]">
+        Daily Reminders
+      </h4>
+      <p class="text-[12px] text-slate-600 dark:text-slate-400! leading-[16px]">
+        Receive daily Hadith &amp; Dua alerts
+      </p>
+    </div>
+  </div>
+
+  <!-- Toggle Switch Button -->
+  <button
+    type="button"
+    role="switch"
+    [attr.aria-checked]="notificationService.isSubscribed()"
+    (click)="onToggle()"
+    [ngClass]="{
+      'bg-emerald-500': notificationService.isSubscribed(),
+      'bg-slate-700': !notificationService.isSubscribed(),
+    }"
+    class="relative inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+  >
+    <span class="sr-only">Toggle daily reminders</span>
+    <span
+      [ngClass]="{
+        'translate-x-[20px]': notificationService.isSubscribed(),
+        'translate-x-[0px]': !notificationService.isSubscribed(),
+      }"
+      class="pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white shadow-md transition duration-200 ease-in-out"
+    >
+      <!-- Tiny Spinner inside knob when loading -->
+      <!-- <span
+        *ngIf="isLoading"
+        class="block h-full w-full rounded-full border-[2px] border-emerald-900 border-t-transparent animate-spin"
+      ></span> -->
+    </span>
+  </button>
+</div>
