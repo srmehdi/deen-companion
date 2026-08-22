@@ -49,7 +49,7 @@ export const handler = schedule('*/10 * * * *', async () => {
               title: notificationContent.title,
               body: notificationContent.body,
               icon: '/logo.svg',
-              badge: '/logo.svg',
+              badge: '/badge.svg',
               // Custom vibration rhythm: 200ms vibe, 100ms pause, 200ms vibe, 100ms pause, 400ms vibe
               vibrate: [200, 100, 200, 100, 400],
               // vibrate: [100, 50, 100],

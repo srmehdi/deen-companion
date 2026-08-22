@@ -45,7 +45,7 @@ export const handler: Handler = async (event) => {
         title: title,
         body: body,
         icon: '/logo.svg',
-        badge: '/logo.svg',
+        badge: '/badge.svg',
         vibrate: [100, 50, 100],
         actions: [
           {
