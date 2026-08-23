@@ -1,5 +1,7 @@
 @if (globalAudio.isCardClicked()) {
-  <footer class="fixed bottom-0 left-0 right-0 z-[1005] px-[12px] sm:px-[16px] pointer-events-none">
+  <footer
+    class="fixed bottom-[60px] lg:bottom-0 left-0 right-0 z-[1005] px-[8px] sm:px-[16px] pointer-events-none"
+  >
     <div
       class="max-w-5xl mx-auto pointer-events-auto relative rounded-t-[12px] bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border border-amber-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-300"
       [ngClass]="isAudioPlayerMinimized() ? 'p-[8px] sm:p-[10px]' : 'p-[12px] sm:p-[16px]'"
@@ -286,7 +288,7 @@
         @if (!isAudioPlayerMinimized()) {
           <div
             (click)="confirmUrduRecitation($event)"
-            class="flex items-center justify-between px-[12px] py-[6px] rounded-[12px] border transition-all duration-300 cursor-pointer select-none"
+            class="flex items-center justify-between pl-[12px] pr-[30px] lg:pr-[12px] py-[6px] rounded-[12px] border transition-all duration-300 cursor-pointer select-none"
             [ngClass]="{
               'bg-amber-500/10 dark:bg-amber-500/15 hover:bg-amber-500/20 border-amber-500/40 shadow-sm shadow-amber-500/5':
                 globalAudio.playUrduAudio(),

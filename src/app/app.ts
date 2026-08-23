@@ -13,6 +13,7 @@ import { HeaderStateService } from './core/services/header-state-service/header-
 import { filter, first } from 'rxjs';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { DailyReminderBannerComponent } from './shared/components/daily-reminder-banner/daily-reminder-banner';
+import { MobileBottomNav } from './shared/components/mobile-bottom-nav/mobile-bottom-nav';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,7 @@ import { DailyReminderBannerComponent } from './shared/components/daily-reminder
     StatusModal,
     CommonModule,
     DailyReminderBannerComponent,
+    MobileBottomNav,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',

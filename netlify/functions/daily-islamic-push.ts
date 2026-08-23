@@ -21,8 +21,8 @@ interface UmmahApiResponse {
   title?: string;
 }
 
-// Netlify Cron Syntax:
-export const handler = schedule('*/10 * * * *', async () => {
+// Netlify Cron Syntax: runs every hour
+export const handler = schedule('0 * * * *', async () => {
   console.log('📖 Fetching daily Islamic reminder and preparing push...');
 
   try {
@@ -157,7 +157,7 @@ async function fetchDailyIslamicContent(): Promise<{
         const duaId = data?.data.id;
         return {
           title: `🤲 ${title}`,
-          body: duaTextArabic + '\n' + duaText,
+          body: duaTextArabic + '\n\n' + duaText,
           goToContentUrl: `/dua?duaId=${duaId}`,
           openContentPageUrl: '/dua',
         };
