@@ -1,7 +1,9 @@
-<div class="container mx-auto max-w-6xl font-sans transition-all duration-300 mb-[16px]">
+<div
+  class="container mx-auto max-w-6xl font-sans transition-all duration-300 mb-[12px] md:mb-[16px]"
+>
   <!-- Premium Hero Banner -->
   <div
-    class="relative overflow-hidden rounded-xl md:rounded-2xl mb-[16px] p-[16px] md:p-[24px] bg-gradient-to-br from-divine-emerald to-[#0b251e] dark:from-[#071914] dark:to-[#020706] border border-sacred-gold/20 shadow-xl max-w-full"
+    class="relative overflow-hidden rounded-xl md:rounded-2xl mb-[12px] md:mb-[16px] p-[16px] md:p-[24px] bg-gradient-to-br from-divine-emerald to-[#0b251e] dark:from-[#071914] dark:to-[#020706] border border-sacred-gold/20 shadow-xl max-w-full"
   >
     <div
       class="absolute left-0 right-0 text-center text-sacred-gold/5 text-8xl font-serif select-none pointer-events-none"
@@ -237,6 +239,10 @@
           <div
             [id]="'hadith-row-' + hadith.id"
             class="scroll-mt-[140px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
+            [class.ring-2]="highlightedHadithId() === hadith.id"
+            [class.ring-[#dfb76c]]="highlightedHadithId() === hadith.id"
+            [class.bg-[#dfb76c]/10]="highlightedHadithId() === hadith.id"
+            [class.animate-pulse]="highlightedHadithId() === hadith.id"
             [class.bg-sacred-gold/5]="
               !isSearchingGlobally() &&
               currentBookmark()?.collectionKey === selectedCollection().info.key &&

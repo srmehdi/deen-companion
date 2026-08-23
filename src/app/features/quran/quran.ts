@@ -59,6 +59,8 @@ export class Quran implements OnInit, OnDestroy {
 
   selectedLanguage = signal<'en' | 'ur' | 'hi'>(this.loadLanguage());
   currentBookmark = signal<Bookmark | null>(this.loadBookmark());
+  isLoadingSurah = signal<boolean>(false);
+  highlightedAyahId = signal<number | null>(null);
 
   constructor() {
     effect(() => {
@@ -98,6 +100,9 @@ export class Quran implements OnInit, OnDestroy {
           const isManualBookmarkJump = navigationState?.isManualBookmarkJump ?? false;
           const autoPlay = navigationState?.autoPlay ?? false;
           const autoPlayAyahNumber = navigationState?.autoPlayAyahNumber;
+          if (targetAyahNumber) {
+            this.highlightedAyahId.set(targetAyahNumber);
+          }
 
           this.fetchAndSetSurah(
             surahNumber,
@@ -137,12 +142,13 @@ export class Quran implements OnInit, OnDestroy {
     ) {
       return;
     }
-
+    this.isLoadingSurah.set(true);
     this.modal.showLoading();
     this.api.getSurahDetails(number).subscribe({
       next: (surahData) => {
         this.selectedSurah.set(surahData);
         this.modal.close();
+        this.isLoadingSurah.set(false);
 
         // Priority 1: Resume specific Ayah audio playback (e.g., from resumeAudioJourney)
         if (autoPlayAyahNumber && surahData.ayahs) {
@@ -186,6 +192,7 @@ export class Quran implements OnInit, OnDestroy {
           } else {
             this.currentAyahPage.set(1);
             if (!this.globalAudio.isAudioPlaying()) {
+              this.highlightedAyahId.set(1);
               this.confirmAudioRecitation();
               this.scrollToAyah(1);
             }
@@ -195,6 +202,7 @@ export class Quran implements OnInit, OnDestroy {
       error: (err) => {
         console.error('Failed loading surah details:', err);
         this.modal.close();
+        this.isLoadingSurah.set(false);
       },
     });
   }
@@ -221,6 +229,7 @@ export class Quran implements OnInit, OnDestroy {
   }
 
   private loadSurahForViewOnly(surahNumber: number): void {
+    this.isLoadingSurah.set(false);
     this.modal.showLoading();
     this.api.getSurahDetails(surahNumber).subscribe({
       next: (surahData) => {
@@ -231,10 +240,12 @@ export class Quran implements OnInit, OnDestroy {
           this.router.navigate(['/quran', surahNumber], { skipLocationChange: false });
         }
         this.modal.close();
+        this.isLoadingSurah.set(false);
       },
       error: (err) => {
         console.error('Failed updating view state for next Surah:', err);
         this.modal.close();
+        this.isLoadingSurah.set(false);
       },
     });
   }
@@ -295,6 +306,11 @@ export class Quran implements OnInit, OnDestroy {
       if (element) {
         this.scrollToActiveAyahPageButton();
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          if (this.highlightedAyahId() === ayahNumber) {
+            this.highlightedAyahId.set(null);
+          }
+        }, 6000);
       }
     }, 100);
   }

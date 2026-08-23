@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev": "netlify dev",
-    "pwa": "ng build --configuration production && npx netlify dev --dir dist/islamic-app/browser"
+    "pwa": "ng build --configuration production && npx netlify dev --dir dist/islamic-app/browser",
+    "notify": "npx netlify functions:invoke daily-islamic-push"
   },
   "prettier": {
     "printWidth": 100,

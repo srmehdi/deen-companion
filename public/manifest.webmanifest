@@ -3,8 +3,8 @@
   "short_name": "Deen Companion",
   "description": "Stay connected to your faith with Deen Companion. Read & listen to the Holy Quran with Urdu translation, track prayer times with complete Namaz guides, explore authentic Hadiths, watch inspiring Islamic videos, and find essential daily Duas.",
   "display": "standalone",
-  "scope": "./",
-  "start_url": "./",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
       "src": "icons/icon-48x48.png",

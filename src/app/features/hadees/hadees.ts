@@ -67,6 +67,7 @@ export class Hadees implements OnInit {
   currentBookmark = signal<any | null>(this.loadBookmark());
 
   private lastFetchKey = '';
+  highlightedHadithId = signal<string | number | null>(null);
 
   constructor() {
     // auditTime(0, asapScheduler) collapse split micro-tick emissions from paramMap & queryParamMap during route transitions
@@ -76,21 +77,41 @@ export class Hadees implements OnInit {
         map(([params, queryParams]) => {
           const collectionKey = params.get('collectionKey');
           const targetPage = Number(queryParams.get('page')) || 1;
+          const targetHadithNumber = queryParams.get('hadithNumber') || null;
           const targetHadithId = queryParams.get('hadithId') || undefined;
-          return { collectionKey, targetPage, targetHadithId };
+          return { collectionKey, targetPage, targetHadithNumber, targetHadithId };
         }),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe(({ collectionKey, targetPage, targetHadithId }) => {
-        if (collectionKey) {
-          const fetchKey = `${collectionKey}_${targetPage}_${targetHadithId || ''}`;
-          if (this.lastFetchKey !== fetchKey) {
-            this.loadCollectionDetails(collectionKey, targetPage, targetHadithId);
+      .subscribe(({ collectionKey, targetPage, targetHadithNumber, targetHadithId }) => {
+        // if (collectionKey) {
+        //   const fetchKey = `${collectionKey}_${targetPage}_${targetHadithId || ''}`;
+        //   if (this.lastFetchKey !== fetchKey) {
+        //     this.loadCollectionDetails(collectionKey, targetPage, targetHadithId);
+        //   }
+        // } else if (!this.isSearchingGlobally()) {
+        //   this.lastFetchKey = '';
+        //   this.selectedCollection.set(null);
+        //   this.hadiths.set([]);
+        // }
+        if (!collectionKey) {
+          if (!this.isSearchingGlobally()) {
+            this.selectedCollection.set(null);
+            this.hadiths.set([]);
+            this.highlightedHadithId.set(null);
           }
-        } else if (!this.isSearchingGlobally()) {
-          this.lastFetchKey = '';
-          this.selectedCollection.set(null);
-          this.hadiths.set([]);
+          return;
+        }
+
+        // Case A: Opened from deep link via Notification (hadithNumber specified)
+        if (targetHadithNumber) {
+          this.highlightedHadithId.set(targetHadithId || targetHadithNumber);
+          this.loadSpecificHadith(collectionKey, targetHadithNumber);
+        }
+        // Case B: Standard Paginated Navigation
+        else {
+          const page = targetPage || 1;
+          this.loadCollectionDetails(collectionKey, page, targetHadithId);
         }
       });
 
@@ -162,6 +183,50 @@ export class Hadees implements OnInit {
       }
     });
   }
+  // Loads single notified Hadith directly without guessing page index
+  loadSpecificHadith(collectionKey: string, hadithNumber: string | number) {
+    this.modal.showLoading();
+    this.numberSearchQuery.set(String(hadithNumber));
+
+    this.apiService.getHadithByNumber<any>(collectionKey, hadithNumber).subscribe({
+      next: (response) => {
+        if (response?.success && response?.data) {
+          const h = response.data;
+          const info = this.collections().find((c) => c.key === collectionKey);
+
+          this.currentPage.set(1);
+          this.totalItems.set(1);
+          this.totalPages.set(1);
+
+          this.hadiths.set([
+            {
+              id: h.id,
+              hadithNumber: h.hadithnumber,
+              arabic: h.arabic,
+              translation: h.english || '',
+              reference: h.grade
+                ? `Grade: ${h.grade}`
+                : `${info?.name || collectionKey} Hadith ${h.hadithnumber}`,
+            },
+          ]);
+
+          this.selectedCollection.set({
+            info: info || { key: collectionKey, name: h.collection_name || collectionKey },
+          });
+
+          this.modal.close();
+          this.scrollToHadith(h.id);
+        } else {
+          this.modal.close();
+          this.loadCollectionDetails(collectionKey, 1);
+        }
+      },
+      error: () => {
+        this.modal.close();
+        this.loadCollectionDetails(collectionKey, 1);
+      },
+    });
+  }
   private headerState = inject(HeaderStateService);
   ngOnInit() {
     const cachedCollections = localStorage.getItem('collections');
@@ -189,17 +254,32 @@ export class Hadees implements OnInit {
     });
   }
 
+  // navigateToCollection(collectionKey: string, page: number = 1, hadithId?: string | number) {
+  //   const queryParams: Record<string, any> = {};
+  //   if (page > 1) queryParams['page'] = page;
+  //   if (hadithId) queryParams['hadithId'] = hadithId;
+
+  //   // this.router.navigate(['/hadees', collectionKey], { queryParams });
+  //   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+  //     this.router.navigate(['/hadees', collectionKey], { queryParams });
+  //     this.headerState.isHeaderHidden.set(false);
+  //     this.headerState.enableAutoHide();
+  //   });
+  // }
+
   navigateToCollection(collectionKey: string, page: number = 1, hadithId?: string | number) {
     const queryParams: Record<string, any> = {};
     if (page > 1) queryParams['page'] = page;
     if (hadithId) queryParams['hadithId'] = hadithId;
 
-    // this.router.navigate(['/hadees', collectionKey], { queryParams });
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/hadees', collectionKey], { queryParams });
-      this.headerState.isHeaderHidden.set(false);
-      this.headerState.enableAutoHide();
+    // Direct route update with smooth queryParam replacement
+    this.router.navigate(['/hadees', collectionKey], {
+      queryParams,
+      queryParamsHandling: 'merge',
     });
+
+    this.headerState.isHeaderHidden.set(false);
+    this.headerState.enableAutoHide();
   }
 
   loadCollectionDetails(
@@ -399,7 +479,13 @@ export class Hadees implements OnInit {
     setTimeout(() => {
       const element = document.getElementById(`hadith-row-${hadithId}`);
       if (element) {
-        this.scrollToActiveHadithPageButton();
+        if (this.highlightedHadithId() === hadithId) {
+          setTimeout(() => {
+            this.highlightedHadithId.set(null);
+          }, 6000);
+        } else {
+          this.scrollToActiveHadithPageButton();
+        }
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 100);

@@ -1,7 +1,9 @@
-<div class="container mx-auto max-w-6xl font-sans transition-all duration-300 mb-[16px]">
+<div
+  class="container mx-auto max-w-6xl font-sans transition-all duration-300 mb-[12px] md:mb-[16px]"
+>
   <!-- Premium Hero Banner -->
   <div
-    class="relative overflow-hidden rounded-xl md:rounded-2xl mb-[16px] p-[16px] md:p-[24px] bg-gradient-to-br from-divine-emerald to-[#0b251e] dark:from-[#071914] dark:to-[#020706] border border-sacred-gold/20 shadow-xl max-w-full"
+    class="relative overflow-hidden rounded-xl md:rounded-2xl mb-[12px] md:mb-[16px] p-[16px] md:p-[24px] bg-gradient-to-br from-divine-emerald to-[#0b251e] dark:from-[#071914] dark:to-[#020706] border border-sacred-gold/20 shadow-xl max-w-full"
   >
     <div
       class="absolute left-0 right-0 text-center text-sacred-gold/5 text-8xl font-serif select-none pointer-events-none"
@@ -97,176 +99,192 @@
     </div>
   </div>
 
-  <!-- Surah Directory Grid View -->
-  @if (!selectedSurah()) {
+  @if (isLoadingSurah()) {
     <div
-      class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 dark:border-white/5 pb-3 mb-[16px] gap-3 max-w-full"
+      class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[24px] shadow-2xl flex flex-col items-center justify-center min-h-[450px] gap-4 animate-fade-in"
     >
       <div
-        class="w-full sm:max-w-xs max-sm:self-stretch flex-1 flex items-center px-3 py-2 transition-all duration-300 border shadow-sm rounded-lg bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border-white/40 dark:border-slate-700/50 focus-within:ring-2 focus-within:ring-indigo-500/50"
-      >
-        <i class="pi pi-search text-gray-400 text-xs! sm:self-end"></i>
-        <input
-          type="text"
-          class="w-full ml-2 bg-transparent border-none outline-none text-[0.8rem] text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
-          [value]="searchQuery()"
-          (input)="searchQuery.set($any($event.target).value); currentPage.set(1)"
-          placeholder="Search surahs..."
-        />
-        @if (searchQuery().length > 0) {
-          <i class="pi pi-times text-gray-400 text-xs! cursor-pointer" (click)="clearSearch()"></i>
-        }
-      </div>
+        class="w-12 h-12 rounded-full border-4 border-divine-emerald dark:border-sacred-gold border-t-transparent animate-spin"
+      ></div>
+      <p class="text-xs md:text-sm font-semibold text-gray-600 dark:text-sacred-gold tracking-wide">
+        Loading... Please wait
+      </p>
     </div>
-
-    @if (filteredSurahs().length > 0) {
+  } @else {
+    <!-- Surah Directory Grid View -->
+    @if (!selectedSurah()) {
       <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] md:gap-[16px] animate-fade-in max-w-full"
+        class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 dark:border-white/5 pb-3 mb-[16px] gap-3 max-w-full"
       >
-        @for (surah of paginatedSurahs(); track surah.number) {
-          <div
-            (click)="loadSurah(surah.number)"
-            class="group bg-white dark:bg-[#121816]/60 border border-gray-200 dark:border-sacred-gold/15 rounded-xl p-3 flex justify-between items-center cursor-pointer shadow-sm hover:shadow-md hover:border-sacred-gold transform hover:-translate-y-0.5 transition-all duration-200 min-w-0"
-          >
-            <div class="flex items-center gap-3 min-w-0">
-              <div
-                class="w-9 h-9 flex-shrink-0 bg-divine-emerald/5 dark:bg-sacred-gold/5 text-divine-emerald dark:text-sacred-gold border border-divine-emerald/10 dark:border-sacred-gold/20 flex items-center justify-center rounded-lg font-bold font-mono text-sm"
-              >
-                {{ surah.number }}
+        <div
+          class="w-full sm:max-w-xs max-sm:self-stretch flex-1 flex items-center px-3 py-2 transition-all duration-300 border shadow-sm rounded-lg bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border-white/40 dark:border-slate-700/50 focus-within:ring-2 focus-within:ring-indigo-500/50"
+        >
+          <i class="pi pi-search text-gray-400 text-xs! sm:self-end"></i>
+          <input
+            type="text"
+            class="w-full ml-2 bg-transparent border-none outline-none text-[0.8rem] text-slate-700 dark:text-slate-200 placeholder:text-slate-400"
+            [value]="searchQuery()"
+            (input)="searchQuery.set($any($event.target).value); currentPage.set(1)"
+            placeholder="Search surahs..."
+          />
+          @if (searchQuery().length > 0) {
+            <i
+              class="pi pi-times text-gray-400 text-xs! cursor-pointer"
+              (click)="clearSearch()"
+            ></i>
+          }
+        </div>
+      </div>
+
+      @if (filteredSurahs().length > 0) {
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] md:gap-[16px] animate-fade-in max-w-full"
+        >
+          @for (surah of paginatedSurahs(); track surah.number) {
+            <div
+              (click)="loadSurah(surah.number)"
+              class="group bg-white dark:bg-[#121816]/60 border border-gray-200 dark:border-sacred-gold/15 rounded-xl p-3 flex justify-between items-center cursor-pointer shadow-sm hover:shadow-md hover:border-sacred-gold transform hover:-translate-y-0.5 transition-all duration-200 min-w-0"
+            >
+              <div class="flex items-center gap-3 min-w-0">
+                <div
+                  class="w-9 h-9 flex-shrink-0 bg-divine-emerald/5 dark:bg-sacred-gold/5 text-divine-emerald dark:text-sacred-gold border border-divine-emerald/10 dark:border-sacred-gold/20 flex items-center justify-center rounded-lg font-bold font-mono text-sm"
+                >
+                  {{ surah.number }}
+                </div>
+                <div class="min-w-0 truncate">
+                  <h3
+                    class="font-bold text-gray-800 dark:text-gray-200 text-xs md:text-sm truncate"
+                  >
+                    {{ surah.englishName }}
+                  </h3>
+                  <p class="text-[10px] text-gray-500 dark:text-gray-400 font-medium truncate">
+                    {{ surah.englishNameTranslation }}
+                  </p>
+                </div>
               </div>
-              <div class="min-w-0 truncate">
-                <h3 class="font-bold text-gray-800 dark:text-gray-200 text-xs md:text-sm truncate">
-                  {{ surah.englishName }}
-                </h3>
-                <p class="text-[10px] text-gray-500 dark:text-gray-400 font-medium truncate">
-                  {{ surah.englishNameTranslation }}
-                </p>
+              <div class="text-right flex flex-col items-end gap-0.5 flex-shrink-0 ml-2">
+                <span
+                  class="font-arabic text-sm md:text-base font-bold arabic-text-style tracking-tight"
+                >
+                  {{ surah.name }}
+                </span>
+                <span
+                  class="text-[9px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
+                >
+                  {{ surah.numberOfAyahs }} Verses
+                </span>
               </div>
             </div>
-            <div class="text-right flex flex-col items-end gap-0.5 flex-shrink-0 ml-2">
-              <span
-                class="font-arabic text-sm md:text-base font-bold arabic-text-style tracking-tight"
+          }
+        </div>
+        @if (filteredSurahs().length > pageSize()) {
+          <div
+            class="flex flex-col md:flex-row justify-between items-center border-t border-gray-100 dark:border-white/5 pt-4 mt-4 gap-3 max-w-full"
+          >
+            <span class="text-[0.625rem] font-medium text-gray-400 dark:text-gray-500 font-mono">
+              Showing {{ (currentPage() - 1) * pageSize() + 1 }} -
+              {{ Math.min(currentPage() * pageSize(), filteredSurahs().length) }} of
+              {{ filteredSurahs().length }} Chapters
+            </span>
+
+            <div class="flex items-center gap-1">
+              <button
+                (click)="changePage(currentPage() - 1)"
+                [disabled]="currentPage() === 1"
+                class="w-7 sm:w-10 h-7 sm:h-10 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-sacred-gold border border-gray-200 dark:border-white/10 transition-all hover:bg-gray-200 dark:hover:bg-sacred-gold/20 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
               >
-                {{ surah.name }}
-              </span>
-              <span
-                class="text-[9px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
+                <i class="pi pi-chevron-left text-[10px]"></i>
+              </button>
+
+              <div
+                class="flex items-center gap-1 overflow-x-auto no-scrollbar max-w-[200px] sm:max-w-[400px] lg:max-w-[600px] py-0.5"
               >
-                {{ surah.numberOfAyahs }} Verses
-              </span>
+                @for (pageIdx of [].constructor(totalPages()); track $index) {
+                  <button
+                    (click)="changePage($index + 1)"
+                    class="page-btn w-7 h-7 rounded-lg text-xs font-bold font-mono border transition-all duration-200 cursor-pointer flex-shrink-0"
+                    [class.page-btn-active]="currentPage() === $index + 1"
+                    [class.bg-divine-emerald]="currentPage() === $index + 1"
+                    [class.text-white]="currentPage() === $index + 1"
+                    [class.border-divine-emerald]="currentPage() === $index + 1"
+                    [class.bg-white]="currentPage() !== $index + 1"
+                    [class.dark:bg-[#121816]/30]="currentPage() !== $index + 1"
+                    [class.text-gray-600]="currentPage() !== $index + 1"
+                    [class.dark:text-gray-400]="currentPage() !== $index + 1"
+                    [class.border-gray-200]="currentPage() !== $index + 1"
+                    [class.dark:border-white/10]="currentPage() !== $index + 1"
+                  >
+                    {{ $index + 1 }}
+                  </button>
+                }
+              </div>
+
+              <button
+                (click)="changePage(currentPage() + 1)"
+                [disabled]="currentPage() === totalPages()"
+                class="w-7 sm:w-10 h-7 sm:h-10 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-sacred-gold border border-gray-200 dark:border-white/10 transition-all hover:bg-gray-200 dark:hover:bg-sacred-gold/20 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+              >
+                <i class="pi pi-chevron-right text-[10px]"></i>
+              </button>
             </div>
           </div>
         }
-      </div>
-      @if (filteredSurahs().length > pageSize()) {
+      } @else {
         <div
-          class="flex flex-col md:flex-row justify-between items-center border-t border-gray-100 dark:border-white/5 pt-4 mt-4 gap-3 max-w-full"
+          class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[12px] md:p-[24px] shadow-2xl animate-fade-in max-w-full overflow-hidden"
         >
-          <span class="text-[0.625rem] font-medium text-gray-400 dark:text-gray-500 font-mono">
-            Showing {{ (currentPage() - 1) * pageSize() + 1 }} -
-            {{ Math.min(currentPage() * pageSize(), filteredSurahs().length) }} of
-            {{ filteredSurahs().length }} Chapters
-          </span>
-
-          <div class="flex items-center gap-1">
-            <button
-              (click)="changePage(currentPage() - 1)"
-              [disabled]="currentPage() === 1"
-              class="w-7 sm:w-10 h-7 sm:h-10 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-sacred-gold border border-gray-200 dark:border-white/10 transition-all hover:bg-gray-200 dark:hover:bg-sacred-gold/20 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
-            >
-              <i class="pi pi-chevron-left text-[10px]"></i>
-            </button>
-
-            <div
-              class="flex items-center gap-1 overflow-x-auto no-scrollbar max-w-[200px] sm:max-w-[400px] lg:max-w-[600px] py-0.5"
-            >
-              @for (pageIdx of [].constructor(totalPages()); track $index) {
-                <button
-                  (click)="changePage($index + 1)"
-                  class="page-btn w-7 h-7 rounded-lg text-xs font-bold font-mono border transition-all duration-200 cursor-pointer flex-shrink-0"
-                  [class.page-btn-active]="currentPage() === $index + 1"
-                  [class.bg-divine-emerald]="currentPage() === $index + 1"
-                  [class.text-white]="currentPage() === $index + 1"
-                  [class.border-divine-emerald]="currentPage() === $index + 1"
-                  [class.bg-white]="currentPage() !== $index + 1"
-                  [class.dark:bg-[#121816]/30]="currentPage() !== $index + 1"
-                  [class.text-gray-600]="currentPage() !== $index + 1"
-                  [class.dark:text-gray-400]="currentPage() !== $index + 1"
-                  [class.border-gray-200]="currentPage() !== $index + 1"
-                  [class.dark:border-white/10]="currentPage() !== $index + 1"
-                >
-                  {{ $index + 1 }}
-                </button>
-              }
-            </div>
-
-            <button
-              (click)="changePage(currentPage() + 1)"
-              [disabled]="currentPage() === totalPages()"
-              class="w-7 sm:w-10 h-7 sm:h-10 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-sacred-gold border border-gray-200 dark:border-white/10 transition-all hover:bg-gray-200 dark:hover:bg-sacred-gold/20 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
-            >
-              <i class="pi pi-chevron-right text-[10px]"></i>
-            </button>
+          <div class="text-center py-12 bg-gray-50/50 dark:bg-white/[0.02] rounded-xl my-4">
+            <i class="pi pi-info-circle text-gray-400 dark:text-[#dfb76c] text-2xl mb-2"></i>
+            <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 font-medium">
+              No Chapter index matched your search criteria context parameters.
+            </p>
           </div>
         </div>
       }
-    } @else {
-      <div
-        class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[12px] md:p-[24px] shadow-2xl animate-fade-in max-w-full overflow-hidden"
-      >
-        <div class="text-center py-12 bg-gray-50/50 dark:bg-white/[0.02] rounded-xl my-4">
-          <i class="pi pi-info-circle text-gray-400 dark:text-[#dfb76c] text-2xl mb-2"></i>
-          <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 font-medium">
-            No Chapter index matched your search criteria context parameters.
-          </p>
-        </div>
-      </div>
     }
-  }
+    <!-- Immersive Reader Panel Layout -->
+    @if (selectedSurah()) {
+      <div
+        class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[12px] md:p-[24px] pt-[4px]! shadow-2xl animate-fade-in origin-top-right max-w-full overflow-visible"
+      >
+        <!-- RESPONSIVE STICKY TOP BAR -->
 
-  <!-- Immersive Reader Panel Layout -->
-  @if (selectedSurah()) {
-    <div
-      class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[12px] md:p-[24px] pt-[4px]! shadow-2xl animate-fade-in origin-top-right max-w-full overflow-visible"
-    >
-      <!-- RESPONSIVE STICKY TOP BAR -->
-
-      <app-sticky-header-wrapper>
-        <!-- Simply place your toolbar inside -->
-        <!-- <div
+        <app-sticky-header-wrapper>
+          <!-- Simply place your toolbar inside -->
+          <!-- <div
           class="backdrop-blur-md min-h-[46px] py-[2px] md:px-[24px] border-b border-gray-100 dark:border-white/10 shadow-sm flex flex-row items-center justify-between gap-[0px] sm:gap-[8px] max-w-full bg-white/95 dark:bg-[#121816]/95"
         > -->
-        <div
-          class="min-h-[46px] py-[2px] md:px-[24px] flex flex-row items-center justify-between gap-[0px] sm:gap-[8px] max-w-full bg-emerald-950/90 dark:bg-[#071914]/95 border-b! border-sacred-gold/40! backdrop-blur-2xl shadow-[0_8px_40px_rgba(15,23,42,0.08)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.35)]"
-        >
-          <div class="flex items-center justify-start w-full sm:w-auto">
-            <button
-              (click)="closeReader()"
-              class="flex-shrink-0 flex items-center gap-[6px] h-[30px] px-[12px] bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold rounded-full text-[11px] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2.5"
-                stroke="currentColor"
-                class="w-[12px] h-[12px] flex-shrink-0"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-                />
-              </svg>
-              <span class="leading-none">Back to Surahs</span>
-            </button>
-          </div>
-
           <div
-            class="flex items-center justify-between w-full sm:w-auto justify-end gap-[8px] sm:gap-[16px] sm:ml-auto"
+            class="min-h-[46px] py-[2px] md:px-[24px] flex flex-row items-center justify-between gap-[0px] sm:gap-[8px] max-w-full bg-emerald-950/90 dark:bg-[#071914]/95 border-b! border-sacred-gold/40! backdrop-blur-2xl shadow-[0_8px_40px_rgba(15,23,42,0.08)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.35)]"
           >
-            <!-- Urdu Audio Toggle -->
-            <!-- <label
+            <div class="flex items-center justify-start w-full sm:w-auto">
+              <button
+                (click)="closeReader()"
+                class="flex-shrink-0 flex items-center gap-[6px] h-[30px] px-[12px] bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-sacred-gold/20 text-gray-700 dark:text-sacred-gold rounded-full text-[11px] font-bold transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="currentColor"
+                  class="w-[12px] h-[12px] flex-shrink-0"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
+                <span class="leading-none">Back to Surahs</span>
+              </button>
+            </div>
+
+            <div
+              class="flex items-center justify-between w-full sm:w-auto justify-end gap-[8px] sm:gap-[16px] sm:ml-auto"
+            >
+              <!-- Urdu Audio Toggle -->
+              <!-- <label
             class="flex self-end items-center gap-[6px] text-[10px] sm:text-[11px] font-bold text-gray-700 dark:text-sacred-gold cursor-pointer select-none bg-gray-100 dark:bg-white/5 px-[8px] py-[6px] rounded-[6px] border border-gray-200 dark:border-white/10"
           >
             <input
@@ -278,199 +296,204 @@
             <span>Urdu Recitation (اردو) 🔊</span>
           </label> -->
 
-            <!-- Language Switcher -->
-            <div class="flex flex-col items-end justify-center gap-[2px]">
-              <span
-                class="text-[7px] sm:text-[8px] font-bold tracking-wider text-gray-200 dark:text-gray-400 uppercase leading-none select-none"
-              >
-                Translation Language
-              </span>
-              <div
-                class="flex items-center h-[24px] sm:h-[26px] bg-gray-100 dark:bg-white/5 p-[2px] rounded-[6px] border border-gray-200 dark:border-white/10"
-              >
-                <button
-                  (click)="setLanguage('ur')"
-                  class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold font-urdu leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
-                  [class.bg-divine-emerald]="selectedLanguage() === 'ur'"
-                  [class.text-white]="selectedLanguage() === 'ur'"
-                  [class.dark:bg-sacred-gold]="selectedLanguage() === 'ur'"
-                  [class.dark:text-black]="selectedLanguage() === 'ur'"
-                  [class.text-gray-600]="selectedLanguage() !== 'ur'"
-                  [class.dark:text-gray-400]="selectedLanguage() !== 'ur'"
+              <!-- Language Switcher -->
+              <div class="flex flex-col items-end justify-center gap-[2px]">
+                <span
+                  class="text-[7px] sm:text-[8px] font-bold tracking-wider text-gray-200 dark:text-gray-400 uppercase leading-none select-none"
                 >
-                  اردو
-                </button>
-                <button
-                  (click)="setLanguage('hi')"
-                  class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
-                  [class.bg-divine-emerald]="selectedLanguage() === 'hi'"
-                  [class.text-white]="selectedLanguage() === 'hi'"
-                  [class.dark:bg-sacred-gold]="selectedLanguage() === 'hi'"
-                  [class.dark:text-black]="selectedLanguage() === 'hi'"
-                  [class.text-gray-600]="selectedLanguage() !== 'hi'"
-                  [class.dark:text-gray-400]="selectedLanguage() !== 'hi'"
+                  Translation Language
+                </span>
+                <div
+                  class="flex items-center h-[24px] sm:h-[26px] bg-gray-100 dark:bg-white/5 p-[2px] rounded-[6px] border border-gray-200 dark:border-white/10"
                 >
-                  हिंदी
-                </button>
-                <button
-                  (click)="setLanguage('en')"
-                  class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
-                  [class.bg-divine-emerald]="selectedLanguage() === 'en'"
-                  [class.text-white]="selectedLanguage() === 'en'"
-                  [class.dark:bg-sacred-gold]="selectedLanguage() === 'en'"
-                  [class.dark:text-black]="selectedLanguage() === 'en'"
-                  [class.text-gray-600]="selectedLanguage() !== 'en'"
-                  [class.dark:text-gray-400]="selectedLanguage() !== 'en'"
-                >
-                  English
-                </button>
+                  <button
+                    (click)="setLanguage('ur')"
+                    class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold font-urdu leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
+                    [class.bg-divine-emerald]="selectedLanguage() === 'ur'"
+                    [class.text-white]="selectedLanguage() === 'ur'"
+                    [class.dark:bg-sacred-gold]="selectedLanguage() === 'ur'"
+                    [class.dark:text-black]="selectedLanguage() === 'ur'"
+                    [class.text-gray-600]="selectedLanguage() !== 'ur'"
+                    [class.dark:text-gray-400]="selectedLanguage() !== 'ur'"
+                  >
+                    اردو
+                  </button>
+                  <button
+                    (click)="setLanguage('hi')"
+                    class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
+                    [class.bg-divine-emerald]="selectedLanguage() === 'hi'"
+                    [class.text-white]="selectedLanguage() === 'hi'"
+                    [class.dark:bg-sacred-gold]="selectedLanguage() === 'hi'"
+                    [class.dark:text-black]="selectedLanguage() === 'hi'"
+                    [class.text-gray-600]="selectedLanguage() !== 'hi'"
+                    [class.dark:text-gray-400]="selectedLanguage() !== 'hi'"
+                  >
+                    हिंदी
+                  </button>
+                  <button
+                    (click)="setLanguage('en')"
+                    class="h-[20px] sm:h-[22px] px-[8px] sm:px-[10px] rounded-[4px] text-[11px] sm:text-[12px] font-bold leading-none transition-all duration-200 cursor-pointer flex items-center justify-center whitespace-nowrap"
+                    [class.bg-divine-emerald]="selectedLanguage() === 'en'"
+                    [class.text-white]="selectedLanguage() === 'en'"
+                    [class.dark:bg-sacred-gold]="selectedLanguage() === 'en'"
+                    [class.dark:text-black]="selectedLanguage() === 'en'"
+                    [class.text-gray-600]="selectedLanguage() !== 'en'"
+                    [class.dark:text-gray-400]="selectedLanguage() !== 'en'"
+                  >
+                    English
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </app-sticky-header-wrapper>
-      <!-- NON-STICKY SECTION: Surah Titles (Will scroll naturally with page) -->
-      <div
-        class="flex flex-col sm:flex-row sm:ml-11 justify-between sm:justify-center items-center py-2 sm:py-4 border-b border-gray-100 dark:border-white/5 gap-2 max-w-full"
-      >
-        <div class="text-center sm:text-left min-w-0">
-          <h2 class="text-lg md:text-xl font-black text-gray-800 dark:text-gray-100 truncate">
-            {{ selectedSurah().info.englishName }}
-          </h2>
-          <p
-            class="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide truncate"
-          >
-            {{ selectedSurah().info.englishNameTranslation }} •
-            {{ selectedSurah().info.revelationType }}
-          </p>
-        </div>
-
-        <span
-          class="font-serif! text-base md:text-xl font-bold arabic-text-style bg-divine-emerald/5 dark:bg-sacred-gold/5 border border-divine-emerald/10 dark:border-sacred-gold/20 px-3 py-1 rounded-lg whitespace-nowrap"
+        </app-sticky-header-wrapper>
+        <!-- NON-STICKY SECTION: Surah Titles (Will scroll naturally with page) -->
+        <div
+          class="flex flex-col sm:flex-row sm:ml-11 justify-between sm:justify-center items-center py-2 sm:py-4 border-b border-gray-100 dark:border-white/5 gap-2 max-w-full"
         >
-          {{ selectedSurah().info.name }}
-        </span>
-      </div>
+          <div class="text-center sm:text-left min-w-0">
+            <h2 class="text-lg md:text-xl font-black text-gray-800 dark:text-gray-100 truncate">
+              {{ selectedSurah().info.englishName }}
+            </h2>
+            <p
+              class="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide truncate"
+            >
+              {{ selectedSurah().info.englishNameTranslation }} •
+              {{ selectedSurah().info.revelationType }}
+            </p>
+          </div>
 
-      <!-- <div
+          <span
+            class="font-serif! text-base md:text-xl font-bold arabic-text-style bg-divine-emerald/5 dark:bg-sacred-gold/5 border border-divine-emerald/10 dark:border-sacred-gold/20 px-3 py-1 rounded-lg whitespace-nowrap"
+          >
+            {{ selectedSurah().info.name }}
+          </span>
+        </div>
+
+        <!-- <div
         class="flex flex-col divide-y divide-gray-100 dark:divide-white/5 max-w-full mt-2 min-h-[500px]"
       > -->
-      @if (
-        selectedSurah().info.number !== 1 &&
-        selectedSurah().info.number !== 9 &&
-        currentAyahPage() === 1
-      ) {
-        <div
-          class="text-center font-arabic text-xl md:ml-11 md:text-2xl arabic-text-style py-4 md:py-6 break-words px-2"
-        >
-          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-        </div>
-      }
-
-      <div class="space-y-[12px] sm:space-y-[16px] max-w-full mt-2 min-h-[500px]">
-        <!-- Verse Blocks Loop -->
-        @for (ayah of paginatedAyahs(); track ayah.numberInSurah) {
+        @if (
+          selectedSurah().info.number !== 1 &&
+          selectedSurah().info.number !== 9 &&
+          currentAyahPage() === 1
+        ) {
           <div
-            [id]="'ayah-row-' + ayah.numberInSurah"
-            class="scroll-mt-[130px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-2 md:gap-4 py-4 md:py-5 items-stretch! md:items-start! rounded-[12px] border border-slate-200/80 dark:border-sacred-gold/30 transition-all duration-300 px-2 sm:px-4 max-w-full shadow-lg overflow-hidden"
-            [class.bg-sacred-gold/6]="
-              (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
-                selectedSurah().info.number &&
-              (globalAudio.currentPlayingAyah()?.numberInSurah || currentBookmark()?.ayahNumber) ===
-                ayah.numberInSurah
-            "
-            [class.border-2!]="
-              (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
-                selectedSurah().info.number &&
-              (globalAudio.currentPlayingAyah()?.numberInSurah || currentBookmark()?.ayahNumber) ===
-                ayah.numberInSurah
-            "
-            [class.border-[#dfb76c]!]="
-              (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
-                selectedSurah().info.number &&
-              (globalAudio.currentPlayingAyah()?.numberInSurah || currentBookmark()?.ayahNumber) ===
-                ayah.numberInSurah
-            "
+            class="text-center font-arabic text-xl md:ml-11 md:text-2xl arabic-text-style py-4 md:py-6 break-words px-2"
           >
+            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+          </div>
+        }
+
+        <div class="space-y-[12px] sm:space-y-[16px] max-w-full mt-2 min-h-[500px]">
+          <!-- Verse Blocks Loop -->
+          @for (ayah of paginatedAyahs(); track ayah.numberInSurah) {
             <div
-              class="flex flex-row md:flex-col items-center justify-between md:justify-start gap-2 md:gap-3 flex-shrink-0 bg-gray-50/50 dark:bg-white/[0.02] md:bg-transparent dark:md:bg-transparent p-2 md:p-0 rounded-lg max-md:border border-slate-100 dark:border-slate-800/80"
+              [id]="'ayah-row-' + ayah.numberInSurah"
+              class="scroll-mt-[130px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-2 md:gap-4 py-4 md:py-5 items-stretch! md:items-start! rounded-[12px] border border-slate-200/80 dark:border-sacred-gold/30 transition-all duration-300 px-2 sm:px-4 max-w-full shadow-lg overflow-hidden"
+              [class.ring-2]="highlightedAyahId() === ayah.numberInSurah"
+              [class.ring-[#dfb76c]]="highlightedAyahId() === ayah.numberInSurah"
+              [class.bg-[#dfb76c]/10]="highlightedAyahId() === ayah.numberInSurah"
+              [class.animate-pulse]="highlightedAyahId() === ayah.numberInSurah"
+              [class.bg-sacred-gold/6]="
+                (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
+                  selectedSurah().info.number &&
+                (globalAudio.currentPlayingAyah()?.numberInSurah ||
+                  currentBookmark()?.ayahNumber) === ayah.numberInSurah
+              "
+              [class.border-2!]="
+                (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
+                  selectedSurah().info.number &&
+                (globalAudio.currentPlayingAyah()?.numberInSurah ||
+                  currentBookmark()?.ayahNumber) === ayah.numberInSurah
+              "
+              [class.border-[#dfb76c]!]="
+                (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
+                  selectedSurah().info.number &&
+                (globalAudio.currentPlayingAyah()?.numberInSurah ||
+                  currentBookmark()?.ayahNumber) === ayah.numberInSurah
+              "
             >
               <div
-                class="w-7 h-7 md:w-8 md:h-8 bg-white dark:bg-[#18221f] border border-gray-200 dark:border-sacred-gold/30 text-gray-600 dark:text-sacred-gold rounded-full flex items-center justify-center text-xs font-bold font-mono shadow-inner"
+                class="flex flex-row md:flex-col items-center justify-between md:justify-start gap-2 md:gap-3 flex-shrink-0 bg-gray-50/50 dark:bg-white/[0.02] md:bg-transparent dark:md:bg-transparent p-2 md:p-0 rounded-lg max-md:border border-slate-100 dark:border-slate-800/80"
               >
-                {{ ayah.numberInSurah }}
-              </div>
-
-              <div class="flex flex-row md:flex-col gap-2">
-                <!-- Media Streaming Playback Action Trigger -->
-                <button
-                  (click)="toggleAyahAudio(ayah)"
-                  class="relative w-7 h-7 md:w-8 md:h-8 rounded-full bg-divine-emerald/10 dark:bg-sacred-gold/10 text-divine-emerald dark:text-sacred-gold flex items-center justify-center hover:bg-divine-emerald hover:text-white dark:hover:bg-sacred-gold dark:hover:text-black transition-all duration-200 cursor-pointer shadow-sm group overflow-visible"
+                <div
+                  class="w-7 h-7 md:w-8 md:h-8 bg-white dark:bg-[#18221f] border border-gray-200 dark:border-sacred-gold/30 text-gray-600 dark:text-sacred-gold rounded-full flex items-center justify-center text-xs font-bold font-mono shadow-inner"
                 >
-                  @if (
-                    globalAudio.playingSurahInfo()?.surahNumber === selectedSurah().info.number &&
-                    globalAudio.currentPlayingAyah()?.numberInSurah === ayah.numberInSurah &&
-                    globalAudio.isAudioPlaying()
-                  ) {
-                    <span
-                      class="absolute inset-0 rounded-full bg-divine-emerald/30 dark:bg-sacred-gold/30 animate-ping pointer-events-none"
-                    ></span>
-                  }
-                  <span class="material-icons text-sm md:text-base relative z-10">
-                    {{
+                  {{ ayah.numberInSurah }}
+                </div>
+
+                <div class="flex flex-row md:flex-col gap-2">
+                  <!-- Media Streaming Playback Action Trigger -->
+                  <button
+                    (click)="toggleAyahAudio(ayah)"
+                    class="relative w-7 h-7 md:w-8 md:h-8 rounded-full bg-divine-emerald/10 dark:bg-sacred-gold/10 text-divine-emerald dark:text-sacred-gold flex items-center justify-center hover:bg-divine-emerald hover:text-white dark:hover:bg-sacred-gold dark:hover:text-black transition-all duration-200 cursor-pointer shadow-sm group overflow-visible"
+                  >
+                    @if (
                       globalAudio.playingSurahInfo()?.surahNumber === selectedSurah().info.number &&
                       globalAudio.currentPlayingAyah()?.numberInSurah === ayah.numberInSurah &&
                       globalAudio.isAudioPlaying()
-                        ? '⏸️'
-                        : '▶️'
-                    }}
-                  </span>
-                </button>
+                    ) {
+                      <span
+                        class="absolute inset-0 rounded-full bg-divine-emerald/30 dark:bg-sacred-gold/30 animate-ping pointer-events-none"
+                      ></span>
+                    }
+                    <span class="material-icons text-sm md:text-base relative z-10">
+                      {{
+                        globalAudio.playingSurahInfo()?.surahNumber ===
+                          selectedSurah().info.number &&
+                        globalAudio.currentPlayingAyah()?.numberInSurah === ayah.numberInSurah &&
+                        globalAudio.isAudioPlaying()
+                          ? '⏸️'
+                          : '▶️'
+                      }}
+                    </span>
+                  </button>
 
-                <!-- Journey Bookmark Tracking Action Trigger -->
-                <button
-                  (click)="bookmarkAyah(ayah)"
-                  class="relative w-7 h-7 md:w-8 md:h-8 rounded-full bg-divine-emerald/10 dark:bg-sacred-gold/10 text-divine-emerald dark:text-sacred-gold flex items-center justify-center hover:bg-divine-emerald hover:text-white dark:hover:bg-sacred-gold dark:hover:text-black transition-all duration-200 cursor-pointer shadow-sm border-transparent!"
-                  [title]="'Mark Ayah ' + ayah.numberInSurah + ' as Last Read'"
-                  [class.bg-sacred-gold!]="
-                    currentBookmark()?.surahNumber === selectedSurah().info.number &&
-                    currentBookmark()?.ayahNumber === ayah.numberInSurah
-                  "
-                  [class.text-black!]="
-                    currentBookmark()?.surahNumber === selectedSurah().info.number &&
-                    currentBookmark()?.ayahNumber === ayah.numberInSurah
-                  "
-                >
-                  <i
-                    class="pi text-xs! z-10"
-                    [class.pi-bookmark-fill]="
+                  <!-- Journey Bookmark Tracking Action Trigger -->
+                  <button
+                    (click)="bookmarkAyah(ayah)"
+                    class="relative w-7 h-7 md:w-8 md:h-8 rounded-full bg-divine-emerald/10 dark:bg-sacred-gold/10 text-divine-emerald dark:text-sacred-gold flex items-center justify-center hover:bg-divine-emerald hover:text-white dark:hover:bg-sacred-gold dark:hover:text-black transition-all duration-200 cursor-pointer shadow-sm border-transparent!"
+                    [title]="'Mark Ayah ' + ayah.numberInSurah + ' as Last Read'"
+                    [class.bg-sacred-gold!]="
                       currentBookmark()?.surahNumber === selectedSurah().info.number &&
                       currentBookmark()?.ayahNumber === ayah.numberInSurah
                     "
-                    [class.pi-bookmark]="
-                      !(
+                    [class.text-black!]="
+                      currentBookmark()?.surahNumber === selectedSurah().info.number &&
+                      currentBookmark()?.ayahNumber === ayah.numberInSurah
+                    "
+                  >
+                    <i
+                      class="pi text-xs! z-10"
+                      [class.pi-bookmark-fill]="
                         currentBookmark()?.surahNumber === selectedSurah().info.number &&
                         currentBookmark()?.ayahNumber === ayah.numberInSurah
-                      )
-                    "
-                  ></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Main Scripture Content Panel -->
-            <div class="flex-grow flex flex-col gap-2 w-full min-w-0">
-              <div class="text-left w-full">
-                <span
-                  class="text-[12px] font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider"
-                >
-                  Surah {{ selectedSurah().info.englishName }} • Surah
-                  {{ selectedSurah().info.number }} • Ayah {{ ayah.numberInSurah }}
-                </span>
+                      "
+                      [class.pi-bookmark]="
+                        !(
+                          currentBookmark()?.surahNumber === selectedSurah().info.number &&
+                          currentBookmark()?.ayahNumber === ayah.numberInSurah
+                        )
+                      "
+                    ></i>
+                  </button>
+                </div>
               </div>
 
-              <!-- Arabic Text Stream Panel -->
-              <!-- <p
+              <!-- Main Scripture Content Panel -->
+              <div class="flex-grow flex flex-col gap-2 w-full min-w-0">
+                <div class="text-left w-full">
+                  <span
+                    class="text-[12px] font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider"
+                  >
+                    Surah {{ selectedSurah().info.englishName }} • Surah
+                    {{ selectedSurah().info.number }} • Ayah {{ ayah.numberInSurah }}
+                  </span>
+                </div>
+
+                <!-- Arabic Text Stream Panel -->
+                <!-- <p
                 class="font-arabic text-lg md:text-2xl text-emerald-900 dark:text-emerald-300 text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
                 dir="rtl"
               >
@@ -481,107 +504,108 @@
                 }}
               </p> -->
 
-              <div
-                class="arabic-text-style text-lg md:text-2xl p-[12px] sm:p-[16px] bg-gray-50/50 dark:bg-white/[0.02] rounded-lg border border-slate-100 dark:border-slate-800/80 text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
-              >
-                {{
-                  selectedSurah().info.number !== 1 && ayah.numberInSurah === 1
-                    ? ayah.text.replace('بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', '')
-                    : ayah.text
-                }}
-              </div>
-              <!-- Phonetic Guide (Transliteration) -->
-              @if (ayah.transliteration) {
-                <p
-                  class="text-xs md:text-sm text-amber-700 dark:text-sacred-gold italic tracking-wide break-words w-full text-center mt-1 font-medium"
+                <div
+                  class="arabic-text-style text-lg md:text-2xl p-[12px] sm:p-[16px] bg-gray-50/50 dark:bg-white/[0.02] rounded-lg border border-slate-100 dark:border-slate-800/80 text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
                 >
-                  {{ ayah.transliteration }}
-                </p>
-              }
+                  {{
+                    selectedSurah().info.number !== 1 && ayah.numberInSurah === 1
+                      ? ayah.text.replace('بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', '')
+                      : ayah.text
+                  }}
+                </div>
+                <!-- Phonetic Guide (Transliteration) -->
+                @if (ayah.transliteration) {
+                  <p
+                    class="text-xs md:text-sm text-amber-700 dark:text-sacred-gold italic tracking-wide break-words w-full text-center mt-1 font-medium"
+                  >
+                    {{ ayah.transliteration }}
+                  </p>
+                }
 
-              <!-- Urdu / Hindi / English Translation Render Switch -->
-              @if (selectedLanguage() === 'ur') {
-                <p
-                  class="font-arabic text-lg md:text-xl text-gray-900 dark:text-white font-normal leading-[2.2rem] md:leading-[2.5rem] tracking-wide break-words w-full text-center mt-1"
-                  dir="rtl"
-                >
-                  {{ ayah.translationUr || ayah.translation }}
-                </p>
-              } @else if (selectedLanguage() === 'hi') {
-                <p
-                  class="text-sm md:text-base text-gray-900 dark:text-white font-normal leading-relaxed tracking-wide break-words w-full text-center mt-1"
-                  dir="ltr"
-                >
-                  {{ ayah.translationHi || ayah.translation }}
-                </p>
-              } @else {
-                <p
-                  class="text-xs md:text-sm text-gray-900 dark:text-white font-normal leading-relaxed break-words w-full text-center mt-0.5"
-                  dir="ltr"
-                >
-                  {{ ayah.translationEn || ayah.translation }}
-                </p>
-              }
+                <!-- Urdu / Hindi / English Translation Render Switch -->
+                @if (selectedLanguage() === 'ur') {
+                  <p
+                    class="font-arabic text-lg md:text-xl text-gray-900 dark:text-white font-normal leading-[2.2rem] md:leading-[2.5rem] tracking-wide break-words w-full text-center mt-1"
+                    dir="rtl"
+                  >
+                    {{ ayah.translationUr || ayah.translation }}
+                  </p>
+                } @else if (selectedLanguage() === 'hi') {
+                  <p
+                    class="text-sm md:text-base text-gray-900 dark:text-white font-normal leading-relaxed tracking-wide break-words w-full text-center mt-1"
+                    dir="ltr"
+                  >
+                    {{ ayah.translationHi || ayah.translation }}
+                  </p>
+                } @else {
+                  <p
+                    class="text-xs md:text-sm text-gray-900 dark:text-white font-normal leading-relaxed break-words w-full text-center mt-0.5"
+                    dir="ltr"
+                  >
+                    {{ ayah.translationEn || ayah.translation }}
+                  </p>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- </div> -->
+
+        @if (selectedSurah().ayahs.length > ayahPageSize()) {
+          <div
+            class="flex flex-col md:flex-row justify-between items-center border-t border-gray-100 dark:border-white/5 pt-4 mt-4 gap-3 max-w-full"
+          >
+            <span class="text-[0.625rem] font-medium text-gray-400 dark:text-gray-500 font-mono">
+              Showing {{ (currentAyahPage() - 1) * ayahPageSize() + 1 }} -
+              {{ Math.min(currentAyahPage() * ayahPageSize(), selectedSurah().ayahs.length) }} of
+              {{ selectedSurah().ayahs.length }} Verses
+            </span>
+
+            <div class="flex items-center gap-1">
+              <button
+                (click)="changeAyahPage(currentAyahPage() - 1)"
+                [disabled]="currentAyahPage() === 1"
+                class="w-7 sm:w-10 h-7 sm:h-10 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-sacred-gold border border-gray-200 dark:border-white/10 transition-all hover:bg-gray-200 dark:hover:bg-sacred-gold/20 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+              >
+                <i class="pi pi-chevron-left text-[10px]"></i>
+              </button>
+
+              <div
+                class="flex items-center gap-1 overflow-x-auto no-scrollbar max-w-[200px] sm:max-w-[400px] lg:max-w-[600px] py-0.5"
+              >
+                @for (pageIdx of [].constructor(totalAyahPages()); track $index) {
+                  <button
+                    (click)="changeAyahPage($index + 1)"
+                    class="ayah-page-btn w-7 h-7 rounded-lg text-xs font-bold font-mono border transition-all duration-200 cursor-pointer flex-shrink-0"
+                    [class.ayah-page-btn-active]="currentAyahPage() === $index + 1"
+                    [class.bg-divine-emerald]="currentAyahPage() === $index + 1"
+                    [class.text-white]="currentAyahPage() === $index + 1"
+                    [class.border-divine-emerald]="currentAyahPage() === $index + 1"
+                    [class.bg-white]="currentAyahPage() !== $index + 1"
+                    [class.dark:bg-[#121816]/30]="currentAyahPage() !== $index + 1"
+                    [class.text-gray-600]="currentAyahPage() !== $index + 1"
+                    [class.dark:text-gray-400]="currentAyahPage() !== $index + 1"
+                    [class.border-gray-200]="currentAyahPage() !== $index + 1"
+                    [class.dark:border-white/10]="currentAyahPage() !== $index + 1"
+                  >
+                    {{ $index + 1 }}
+                  </button>
+                }
+              </div>
+
+              <button
+                (click)="changeAyahPage(currentAyahPage() + 1)"
+                [disabled]="currentAyahPage() === totalAyahPages()"
+                class="w-7 sm:w-10 h-7 sm:h-10 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-sacred-gold border border-gray-200 dark:border-white/10 transition-all hover:bg-gray-200 dark:hover:bg-sacred-gold/20 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+              >
+                <i class="pi pi-chevron-right text-[10px]"></i>
+              </button>
             </div>
           </div>
         }
       </div>
-
-      <!-- </div> -->
-
-      @if (selectedSurah().ayahs.length > ayahPageSize()) {
-        <div
-          class="flex flex-col md:flex-row justify-between items-center border-t border-gray-100 dark:border-white/5 pt-4 mt-4 gap-3 max-w-full"
-        >
-          <span class="text-[0.625rem] font-medium text-gray-400 dark:text-gray-500 font-mono">
-            Showing {{ (currentAyahPage() - 1) * ayahPageSize() + 1 }} -
-            {{ Math.min(currentAyahPage() * ayahPageSize(), selectedSurah().ayahs.length) }} of
-            {{ selectedSurah().ayahs.length }} Verses
-          </span>
-
-          <div class="flex items-center gap-1">
-            <button
-              (click)="changeAyahPage(currentAyahPage() - 1)"
-              [disabled]="currentAyahPage() === 1"
-              class="w-7 sm:w-10 h-7 sm:h-10 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-sacred-gold border border-gray-200 dark:border-white/10 transition-all hover:bg-gray-200 dark:hover:bg-sacred-gold/20 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
-            >
-              <i class="pi pi-chevron-left text-[10px]"></i>
-            </button>
-
-            <div
-              class="flex items-center gap-1 overflow-x-auto no-scrollbar max-w-[200px] sm:max-w-[400px] lg:max-w-[600px] py-0.5"
-            >
-              @for (pageIdx of [].constructor(totalAyahPages()); track $index) {
-                <button
-                  (click)="changeAyahPage($index + 1)"
-                  class="ayah-page-btn w-7 h-7 rounded-lg text-xs font-bold font-mono border transition-all duration-200 cursor-pointer flex-shrink-0"
-                  [class.ayah-page-btn-active]="currentAyahPage() === $index + 1"
-                  [class.bg-divine-emerald]="currentAyahPage() === $index + 1"
-                  [class.text-white]="currentAyahPage() === $index + 1"
-                  [class.border-divine-emerald]="currentAyahPage() === $index + 1"
-                  [class.bg-white]="currentAyahPage() !== $index + 1"
-                  [class.dark:bg-[#121816]/30]="currentAyahPage() !== $index + 1"
-                  [class.text-gray-600]="currentAyahPage() !== $index + 1"
-                  [class.dark:text-gray-400]="currentAyahPage() !== $index + 1"
-                  [class.border-gray-200]="currentAyahPage() !== $index + 1"
-                  [class.dark:border-white/10]="currentAyahPage() !== $index + 1"
-                >
-                  {{ $index + 1 }}
-                </button>
-              }
-            </div>
-
-            <button
-              (click)="changeAyahPage(currentAyahPage() + 1)"
-              [disabled]="currentAyahPage() === totalAyahPages()"
-              class="w-7 sm:w-10 h-7 sm:h-10 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-sacred-gold border border-gray-200 dark:border-white/10 transition-all hover:bg-gray-200 dark:hover:bg-sacred-gold/20 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
-            >
-              <i class="pi pi-chevron-right text-[10px]"></i>
-            </button>
-          </div>
-        </div>
-      }
-    </div>
+    }
   }
 </div>
 

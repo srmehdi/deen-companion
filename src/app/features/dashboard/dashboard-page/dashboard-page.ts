@@ -434,14 +434,23 @@ export class DashboardPage implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['/hadees']);
   }
 
+  // navigateToDua(): void {
+  //   const dua = this.duaOfTheDay();
+  //   if (!dua) {
+  //     this.router.navigate(['/dua']);
+  //     return;
+  //   }
+
+  //   this.router.navigate(['/dua']);
+  // }
   navigateToDua(): void {
     const dua = this.duaOfTheDay();
     if (!dua) {
-      this.router.navigate(['/dua']);
+      this.router.navigateByUrl('/dua');
       return;
     }
 
-    this.router.navigate(['/dua']);
+    this.router.navigateByUrl(`/dua?duaId=${dua.id}`);
   }
 
   goToNamazGuide(prayerKey: string): void {
