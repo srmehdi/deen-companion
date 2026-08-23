@@ -54,21 +54,29 @@ export const handler = schedule('*/10 * * * *', async () => {
               vibrate: [200, 100, 200, 100, 400],
               // vibrate: [100, 50, 100],
               actions: [
+                // {
+                //   action: 'dismiss',
+                //   title: '❌ Dismiss',
+                // },
                 {
-                  action: 'dismiss',
-                  title: '❌ Dismiss',
+                  action: 'go-to-content',
+                  title: '👀 View Content',
                 },
                 {
-                  action: 'open-website',
-                  title: '✨ View More',
+                  action: 'open-content-page',
+                  title: '✨ More Like This',
                 },
               ],
               data: {
                 onActionClick: {
-                  default: { operation: 'openWindow', url: '/' },
-                  'open-website': {
+                  default: { operation: 'openWindow', url: notificationContent.goToContentUrl },
+                  'go-to-content': {
                     operation: 'openWindow',
-                    url: notificationContent.url,
+                    url: notificationContent.goToContentUrl,
+                  },
+                  'open-content-page': {
+                    operation: 'openWindow',
+                    url: notificationContent.openContentPageUrl,
                   },
                 },
               },
@@ -105,7 +113,12 @@ export const handler = schedule('*/10 * * * *', async () => {
 });
 
 // Helper: Fetches dynamic content from UmmahAPI with fallbacks
-async function fetchDailyIslamicContent(): Promise<{ title: string; body: string; url: string }> {
+async function fetchDailyIslamicContent(): Promise<{
+  title: string;
+  body: string;
+  goToContentUrl: string;
+  openContentPageUrl: string;
+}> {
   // Alternate between Hadith and Dua (or choose randomly)
   const isHadith = Math.random() > 0.5;
 
@@ -123,23 +136,30 @@ async function fetchDailyIslamicContent(): Promise<{ title: string; body: string
         //   body: truncateText(hadithText, 140),
         //   url: '/hadees',
         // };
+        const collectionKey = data?.data.collection || 'bukhari';
+        const hadithNumber = data?.data.hadithnumber;
+        const hadithId = data?.data.id;
         return {
           title: `📖 Daily Hadith (${narrator})`,
           body: hadithText,
-          url: '/hadees',
+          goToContentUrl: `/hadees/${collectionKey}?hadithNumber=${hadithNumber}&hadithId=${encodeURIComponent(hadithId)}`,
+          openContentPageUrl: '/hadees',
         };
       }
     } else {
       const response = await fetch('https://ummahapi.com/api/duas/random');
       if (response.ok) {
         const data: any = await response.json();
+        const duaTextArabic = data?.data.arabic || '...';
         const duaText =
           data?.data.translation || data?.dua || data?.meaning || 'Daily Dua reflection';
         const title = data?.data.title || 'Daily Dua Reminder';
+        const duaId = data?.data.id;
         return {
           title: `🤲 ${title}`,
-          body: duaText,
-          url: '/dua',
+          body: duaTextArabic + '\n' + duaText,
+          goToContentUrl: `/dua?duaId=${duaId}`,
+          openContentPageUrl: '/dua',
         };
         // return {
         //   title: `🤲 ${title.slice(0, 35)}`,
@@ -156,7 +176,8 @@ async function fetchDailyIslamicContent(): Promise<{ title: string; body: string
   return {
     title: '🌿 Daily Islamic Reminder',
     body: '“Verily, in the remembrance of Allah do hearts find rest.” [Surah Ar-Ra’d: 28]',
-    url: '/',
+    goToContentUrl: `/`,
+    openContentPageUrl: '/',
   };
 }
 

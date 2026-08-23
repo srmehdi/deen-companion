@@ -1,5 +1,5 @@
 <div class="container mx-auto max-w-6xl font-sans transition-all duration-300 mb-[16px]">
-  <!-- Premium Hero Banner (Synchronized with Quran layout styles) -->
+  <!-- Premium Hero Banner -->
   <div
     class="relative overflow-hidden rounded-xl md:rounded-2xl mb-[16px] p-[16px] md:p-[24px] bg-gradient-to-br from-divine-emerald to-[#0b251e] dark:from-[#071914] dark:to-[#020706] border border-sacred-gold/20 shadow-xl max-w-full"
   >
@@ -27,12 +27,12 @@
       </div>
       <span
         (click)="
-          bookmarkedIds()?.length > 0 ? showOnlyBookmarks.set(!showOnlyBookmarks()) : null;
+          bookmarkedIds().length > 0 ? showOnlyBookmarks.set(!showOnlyBookmarks()) : null;
           currentPage.set(1)
         "
-        [class.cursor-pointer]="bookmarkedIds()?.length > 0"
-        [class.opacity-50]="bookmarkedIds()?.length === 0"
-        [class.pointer-events-none]="bookmarkedIds()?.length === 0"
+        [class.cursor-pointer]="bookmarkedIds().length > 0"
+        [class.opacity-50]="bookmarkedIds().length === 0"
+        [class.pointer-events-none]="bookmarkedIds().length === 0"
         class="max-sm:self-center flex items-center gap-1.5 font-serif text-xs font-bold px-3 py-2 rounded-lg bg-sacred-gold/10 border border-sacred-gold/30 hover:bg-sacred-gold/20 text-sacred-gold transition-all duration-200 shadow-sm cursor-pointer whitespace-nowrap"
         [class.bg-sacred-gold/20]="showOnlyBookmarks()"
         [class.border]="true"
@@ -41,30 +41,18 @@
         [class.border-sacred-gold/20]="!showOnlyBookmarks()"
       >
         <i class="pi pi-bookmark-fill text-xs!"></i>
-        <span>Saved Supplications: {{ bookmarkedIds()?.length }}</span>
-        @if (showOnlyBookmarks() && bookmarkedIds()?.length > 0) {
+        <span>Saved Supplications: {{ bookmarkedIds().length }}</span>
+        @if (showOnlyBookmarks() && bookmarkedIds().length > 0) {
           <i class="pi pi-times text-xs! ml-1 opacity-70"></i>
         }
       </span>
     </div>
   </div>
 
-  <!-- Live Search & Bookmarks Dashboard Control Bar View -->
+  <!-- Live Search & Bookmarks Control Bar -->
   <div
     class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 dark:border-white/5 pb-3 mb-[16px] gap-3 max-w-full"
   >
-    <!-- PrimeIcons Styled Search Control -->
-    <!-- <div class="relative w-full sm:max-w-xs max-sm:self-stretch">
-      <i class="pi pi-search absolute left-3 top-2 text-gray-400 text-xs"></i>
-      <input
-        type="text"
-        [value]="searchQuery()"
-        (input)="searchQuery.set($any($event.target).value); currentPage.set(1)"
-        placeholder="Search supplications..."
-        class="w-full pl-9 pr-3 py-1.5 text-xs rounded-full bg-gray-100 dark:bg-white/5 border border-gray-400 dark:border-white/30 text-gray-700 dark:text-sacred-gold focus:outline-none focus:border-sacred-gold transition-all duration-200 placeholder-gray-400 dark:placeholder-gray-500"
-      />
-    </div> -->
-
     <div
       class="w-full sm:max-w-xs max-sm:self-stretch flex-1 flex items-center px-3 py-2 transition-all duration-300 border shadow-sm rounded-lg bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border-white/40 dark:border-slate-700/50 focus-within:ring-2 focus-within:ring-indigo-500/50"
     >
@@ -108,19 +96,24 @@
     </div>
   </app-sticky-header-wrapper>
 
-  <!-- Supplications Content Stream Layout (Mirrors Surah Grid/Reader hybrid spacing metrics) -->
+  <!-- Supplications Content Stream Layout -->
   <div
     class="bg-white dark:bg-[#121816]/70 border border-gray-200 dark:border-sacred-gold/20 rounded-xl md:rounded-2xl p-[12px] md:p-[24px] shadow-2xl animate-fade-in max-w-full overflow-hidden"
   >
     <div class="flex flex-col divide-y divide-gray-100 dark:divide-white/5 max-w-full">
       @for (dua of paginatedDuas(); track dua.id) {
         <div
-          class="flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-300 px-2 sm:px-4 max-w-full overflow-hidden"
-          [class.bg-sacred-gold/5]="bookmarkedIds()?.includes(dua.id)"
-          [class.border-2]="bookmarkedIds()?.includes(dua.id)"
-          [class.border-[#dfb76c]]="bookmarkedIds()?.includes(dua.id)"
+          [id]="'dua-row-' + dua.id"
+          class="scroll-mt-[140px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-3 md:gap-4 py-4 md:py-5 items-stretch md:items-start rounded-xl transition-all duration-500 px-2 sm:px-4 max-w-full overflow-hidden"
+          [class.ring-2]="highlightedDuaId() === dua.id"
+          [class.ring-[#dfb76c]]="highlightedDuaId() === dua.id"
+          [class.bg-[#dfb76c]/10]="highlightedDuaId() === dua.id"
+          [class.animate-pulse]="highlightedDuaId() === dua.id"
+          [class.bg-sacred-gold/5]="bookmarkedIds().includes(dua.id)"
+          [class.border-2]="bookmarkedIds().includes(dua.id)"
+          [class.border-[#dfb76c]]="bookmarkedIds().includes(dua.id)"
         >
-          <!-- Controls Pillar Panel (Left-Aligned in desktop layouts) -->
+          <!-- Controls Pillar Panel -->
           <div
             class="flex flex-row md:flex-col items-center justify-between md:justify-start gap-2 md:gap-3 flex-shrink-0 bg-gray-50/50 dark:bg-white/[0.02] md:bg-transparent dark:md:bg-transparent p-2 md:p-0 rounded-lg"
           >
@@ -131,23 +124,21 @@
               {{ (currentPage() - 1) * pageSize() + $index + 1 }}
             </div>
 
-            <!-- Interactivity Toolbar Matrix Grid -->
+            <!-- Interactivity Buttons -->
             <div class="flex flex-row md:flex-col gap-2">
-              <!-- Bookmark Supplication Button Toggle Link -->
               <button
                 (click)="toggleBookmark(dua.id)"
                 class="relative w-7 h-7 md:w-8 md:h-8 rounded-full bg-divine-emerald/10 dark:bg-sacred-gold/10 text-divine-emerald dark:text-sacred-gold flex items-center justify-center hover:bg-divine-emerald hover:text-white dark:hover:bg-sacred-gold dark:hover:text-black transition-all duration-200 cursor-pointer shadow-sm group overflow-visible"
               >
                 <i
                   [class]="
-                    bookmarkedIds()?.includes(dua.id)
+                    bookmarkedIds().includes(dua.id)
                       ? 'pi pi-bookmark-fill text-xs z-10'
                       : 'pi pi-bookmark text-xs z-10'
                   "
                 ></i>
               </button>
 
-              <!-- Clipboard Content Copy Command Button -->
               <button
                 (click)="copyToClipboard(dua, $event)"
                 class="relative w-7 h-7 md:w-8 md:h-8 rounded-full bg-divine-emerald/10 dark:bg-sacred-gold/10 text-divine-emerald dark:text-sacred-gold flex items-center justify-center hover:bg-divine-emerald hover:text-white dark:hover:bg-sacred-gold dark:hover:text-black transition-all duration-200 cursor-pointer shadow-sm group overflow-visible"
@@ -157,9 +148,8 @@
             </div>
           </div>
 
-          <!-- Main Supplication Scripture Content Panel Layout -->
+          <!-- Main Supplication Scripture Content Panel -->
           <div class="flex-grow flex flex-col gap-2 w-full min-w-0">
-            <!-- Categorization Metadata Badge Overlay -->
             <div class="text-left w-full">
               <span
                 class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
@@ -168,28 +158,24 @@
               </span>
             </div>
 
-            <!-- Arabic Supplication Scripture Stream Panel -->
             <p
               class="font-arabic text-lg md:text-2xl text-emerald-900 dark:text-emerald-300 text-center leading-[2.2rem] md:leading-[3rem] tracking-wide font-normal break-words whitespace-normal normal-case block w-full overflow-wrap-anywhere"
             >
               {{ dua.arabic }}
             </p>
 
-            <!-- Right-Aligned Latin Transliteration Phonetic Guide Line -->
             <p
               class="text-xs md:text-sm text-amber-700 dark:text-sacred-gold italic tracking-wide break-words w-full text-center mt-1 font-medium"
             >
               {{ dua.transliteration }}
             </p>
 
-            <!-- Right-Aligned English Translation Block Elements -->
             <p
               class="text-xs md:text-sm text-gray-900 dark:text-white font-normal leading-relaxed break-words w-full text-center mt-0.5"
             >
               {{ dua.translation }}
             </p>
 
-            <!-- Footnote Reference Badge Row Structure -->
             <div
               class="text-left w-full mt-1 border-t border-gray-50 dark:border-white/[0.02] pt-1"
             >
@@ -200,7 +186,6 @@
           </div>
         </div>
       } @empty {
-        <!-- Empty Query Result Matrix Response -->
         <div class="text-center py-12 bg-gray-50/50 dark:bg-white/[0.02] rounded-xl my-4">
           <i class="pi pi-info-circle text-gray-400 dark:text-[#dfb76c] text-2xl mb-2"></i>
           <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 font-medium">
@@ -209,6 +194,8 @@
         </div>
       }
     </div>
+
+    <!-- Unified Pagination Control Section -->
     @if (filteredDuas().length > pageSize()) {
       <div
         class="flex flex-col md:flex-row justify-between items-center border-t border-gray-100 dark:border-white/5 pt-4 mt-4 gap-3 max-w-full"
@@ -263,9 +250,10 @@
     }
   </div>
 </div>
+
 <p-toast position="bottom-left" class="left-0! mx-[16px]! w-auto! z-[10000]!"></p-toast>
 
 <p-confirmdialog
   key="bookmarkRemovePrompt"
-  styleClass="  max-md:m-4 bg-white! dark:bg-bg-green/95! text-[#18181B]! dark:text-[#FFFFFF]! border border-gray-200! dark:border-gold-tint/20! rounded-xl! shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-md overflow-hidden"
+  styleClass="max-md:m-4 bg-white! dark:bg-bg-green/95! text-[#18181B]! dark:text-[#FFFFFF]! border border-gray-200! dark:border-gold-tint/20! rounded-xl! shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-md overflow-hidden"
 />
