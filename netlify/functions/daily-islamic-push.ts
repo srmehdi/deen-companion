@@ -68,6 +68,9 @@ export const handler = schedule('0 * * * *', async () => {
                 },
               ],
               data: {
+                url: notificationContent.goToContentUrl,
+                goToContentUrl: notificationContent.goToContentUrl,
+                openContentPageUrl: notificationContent.openContentPageUrl,
                 onActionClick: {
                   default: { operation: 'openWindow', url: notificationContent.goToContentUrl },
                   'go-to-content': {
@@ -157,7 +160,7 @@ async function fetchDailyIslamicContent(): Promise<{
         const duaId = data?.data.id;
         return {
           title: `🤲 ${title}`,
-          body: duaTextArabic + '\n\n' + duaText,
+          body: duaTextArabic + '\n' + duaText,
           goToContentUrl: `/dua?duaId=${duaId}`,
           openContentPageUrl: '/dua',
         };
