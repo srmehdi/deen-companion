@@ -38,9 +38,9 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
-    provideAppInitializer(() => {
-      const notificationService = inject(NotificationService);
-      return notificationService.checkSubscriptionState();
-    }),
+    // provideAppInitializer(() => {
+    //   const notificationService = inject(NotificationService);
+    //   return notificationService.checkSubscriptionState();
+    // }),
   ],
 };

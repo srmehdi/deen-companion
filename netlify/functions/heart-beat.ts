@@ -1,10 +1,14 @@
 import { Handler } from '@netlify/functions';
 import { query } from './db';
 
-function extractGeoLocation(headers: Record<string, string | undefined>): {
+interface GeoLocationResult {
   city: string;
   country: string;
-} {
+  latitude: number | null;
+  longitude: number | null;
+  timeZone: string;
+}
+function extractGeoLocation(headers: Record<string, string | undefined>): GeoLocationResult {
   const geoHeader = headers['x-nf-geo'];
 
   if (geoHeader) {
@@ -18,6 +22,9 @@ function extractGeoLocation(headers: Record<string, string | undefined>): {
       return {
         city: geoData.city || 'Unknown City',
         country: geoData.country?.name || 'Unknown Country',
+        latitude: typeof geoData.latitude === 'number' ? geoData.latitude : null,
+        longitude: typeof geoData.longitude === 'number' ? geoData.longitude : null,
+        timeZone: geoData.timezone || '',
       };
     } catch (err) {
       console.error('Error parsing x-nf-geo header:', err);
@@ -27,6 +34,9 @@ function extractGeoLocation(headers: Record<string, string | undefined>): {
   return {
     city: headers['x-city'] || 'Unknown City',
     country: headers['x-country-name'] || 'Unknown Country',
+    latitude: headers['x-latitude'] ? parseFloat(headers['x-latitude']) : null,
+    longitude: headers['x-longitude'] ? parseFloat(headers['x-longitude']) : null,
+    timeZone: headers['x-timezone'] || '',
   };
 }
 export const handler: Handler = async (event) => {
@@ -43,7 +53,9 @@ export const handler: Handler = async (event) => {
     }
 
     // Decode Netlify Base64 Geo Location Header
-    const { city, country } = extractGeoLocation(event.headers);
+    // const { city, country } = extractGeoLocation(event.headers);
+    const geo = extractGeoLocation(event.headers);
+    const resolvedTimeZone = timeZone || geo.timeZone;
 
     const result = await query(
       `
@@ -56,10 +68,12 @@ export const handler: Handler = async (event) => {
         language, 
         time_zone, 
         city, 
-        country, 
+        country,
+        latitude,
+        longitude,
         last_seen
       )
-      VALUES ($1, 1, $2, $3, $4, $5, $6, $7, $8, NOW())
+      VALUES ($1, 1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW())
       ON CONFLICT (visitor_id)
       DO UPDATE SET 
         visit_count = visitors.visit_count + 1,
@@ -70,6 +84,8 @@ export const handler: Handler = async (event) => {
         time_zone = COALESCE(EXCLUDED.time_zone, visitors.time_zone),
         city = COALESCE(EXCLUDED.city, visitors.city),
         country = COALESCE(EXCLUDED.country, visitors.country),
+        latitude = COALESCE(EXCLUDED.latitude, visitors.latitude),
+        longitude = COALESCE(EXCLUDED.longitude, visitors.longitude),
         last_seen = NOW()
       RETURNING visit_count;
     `,
@@ -79,9 +95,11 @@ export const handler: Handler = async (event) => {
         userAgent || '',
         screenResolution || '',
         language || '',
-        timeZone || '',
-        city,
-        country,
+        resolvedTimeZone,
+        geo.city,
+        geo.country,
+        geo.latitude,
+        geo.longitude,
       ],
     );
 
@@ -93,7 +111,12 @@ export const handler: Handler = async (event) => {
       body: JSON.stringify({
         success: true,
         visitCount: totalVisits,
-        location: { city, country },
+        location: {
+          city: geo.city,
+          country: geo.country,
+          latitude: geo.latitude,
+          longitude: geo.longitude,
+        },
       }),
     };
   } catch (err: any) {

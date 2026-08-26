@@ -310,7 +310,7 @@ export class Quran implements OnInit, OnDestroy {
           if (this.highlightedAyahId() === ayahNumber) {
             this.highlightedAyahId.set(null);
           }
-        }, 6000);
+        }, 4000);
       }
     }, 100);
   }

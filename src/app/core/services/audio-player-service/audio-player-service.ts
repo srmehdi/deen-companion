@@ -1,6 +1,7 @@
 import { Injectable, signal, computed, effect, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ApiService } from '../api-service/api-service';
+import { StatusModalService } from '../status-modal-service/status-modal-service';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,7 @@ export class AudioPlayerService {
 
   public playNextSurah$ = new Subject<number>();
 
+  modal = inject(StatusModalService);
   constructor() {
     this.audioPlayer.volume = this.volume();
 
@@ -66,6 +68,9 @@ export class AudioPlayerService {
 
     this.audioPlayer.onstalled = () => {
       console.warn('Audio stream stalled due to network slowdown. Silently pausing player.');
+      this.modal.showError({
+        message: 'Audio stream stalled due to network slowdown. Silently pausing player.',
+      });
       this.hasNetworkError = true;
       this.pauseAudio();
     };
@@ -93,6 +98,8 @@ export class AudioPlayerService {
         this.audioPlayer.load();
         this.audioPlayer.play().catch((err) => {
           console.warn('Urdu audio playback failed. Silently pausing:', err);
+          this.modal.showError({ message: 'Urdu audio playback failed. Silently pausing.' });
+
           this.hasNetworkError = true;
           this.pauseAudio();
         });
@@ -154,6 +161,8 @@ export class AudioPlayerService {
         })
         .catch((err) => {
           console.warn('Audio play failed. Network may still be offline:', err);
+          this.modal.showError({ message: 'Audio play failed. Network may still be offline.' });
+
           this.hasNetworkError = true;
           this.pauseAudio();
         });
@@ -170,6 +179,10 @@ export class AudioPlayerService {
         })
         .catch((err) => {
           console.warn('Audio load/play failed. Network may still be offline:', err);
+          this.modal.showError({
+            message: 'Audio load/play failed. Network may still be offline.',
+          });
+
           this.hasNetworkError = true;
           this.pauseAudio();
         });
@@ -252,6 +265,8 @@ export class AudioPlayerService {
       },
       error: (err) => {
         console.warn('Failed to load next Surah globally. Silently pausing:', err);
+        this.modal.showError({ message: 'Failed to load next Surah globally. Silently pausing.' });
+
         this.hasNetworkError = true;
         this.pauseAudio();
       },
@@ -289,6 +304,8 @@ export class AudioPlayerService {
       })
       .catch((err) => {
         console.warn('Replay failed. Silently pausing:', err);
+        this.modal.showError({ message: 'Replay failed. Silently pausing.' });
+
         this.hasNetworkError = true;
         this.pauseAudio();
       });

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ApiService } from '../../core/services/api-service/api-service';
 import { Activity } from '../../core/services/activity/activity';
 import { FooterReminderToggle } from '../../shared/components/footer-reminder-toggle/footer-reminder-toggle';
+import { NotificationService } from '../../core/services/notification-service/notification-service';
 
 @Component({
   selector: 'app-footer',
@@ -13,6 +14,7 @@ import { FooterReminderToggle } from '../../shared/components/footer-reminder-to
 export class Footer {
   activityStats: any;
   pingResponse: any;
+  public notificationService = inject(NotificationService);
   constructor(
     private http: ApiService,
     private activity: Activity,
