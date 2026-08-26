@@ -331,7 +331,8 @@ export const handler = schedule('* * * * *', async () => {
               await webpush.sendNotification(sub.subscription, payload);
             } catch (err: any) {
               if (err.statusCode === 410 || err.statusCode === 404) {
-                expiredSubscriberIds.push(sub.id);
+                // expiredSubscriberIds.push(sub.id);
+                console.error(`Failed sending push to subscriber ${sub.id}:`, err.message);
               } else {
                 console.error(`Failed sending push to subscriber ${sub.id}:`, err.message);
               }
