@@ -26,9 +26,14 @@
         </button>
 
         <!-- Premium Close Button Badge -->
-        <button
+        <!-- <button
           (click)="confirmAudioPlayerClose()"
           class="bg-red-900/90! hover:bg-red-950/90! text-white! border border-white/40 hover:border-red-500/50 backdrop-blur-md rounded-full px-[10px] py-[4px] flex items-center gap-[6px] shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer group"
+          title="Close Audio Player"
+        > -->
+        <button
+          (click)="confirmAudioPlayerClose()"
+          class="bg-slate-900/90 dark:bg-slate-950/90 hover:bg-amber-950/80 text-red-500 border border-red-600/40 hover:border-red-600/60 backdrop-blur-md rounded-full px-[10px] py-[4px] flex items-center gap-[6px] shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer group"
           title="Close Audio Player"
         >
           <i class="pi pi-times text-[11px]! transition-transform group-hover:rotate-90"></i>

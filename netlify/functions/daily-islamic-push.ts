@@ -90,7 +90,8 @@ export const handler = schedule('0 * * * *', async () => {
         } catch (err: any) {
           // 410 Gone / 404 Not Found: User uninstalled or revoked permissions
           if (err.statusCode === 410 || err.statusCode === 404) {
-            expiredSubscriberIds.push(sub.id);
+            // expiredSubscriberIds.push(sub.id);
+            console.error(`Failed to send to subscriber ${sub.id}:`, err.message);
           } else {
             console.error(`Failed to send to subscriber ${sub.id}:`, err.message);
           }
@@ -178,7 +179,7 @@ async function fetchDailyIslamicContent(): Promise<{
   // Safe fallback if the external API is temporarily down
   return {
     title: '🌿 Daily Islamic Reminder',
-    body: '“Verily, in the remembrance of Allah do hearts find rest.” [Surah Ar-Ra’d: 28]',
+    body: '"Verily, in the remembrance of Allah do hearts find rest." [Surah Ar-Ra`d: 28]',
     goToContentUrl: `/`,
     openContentPageUrl: '/',
   };

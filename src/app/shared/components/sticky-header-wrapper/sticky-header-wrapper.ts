@@ -50,6 +50,13 @@ export class StickyHeaderWrapper implements OnDestroy {
         ([entry]) => {
           const isTouchingHeader = !entry.isIntersecting && entry.boundingClientRect.top <= offset;
 
+          // 🛡️ POINT 3 GUARD:
+          // If the page is scrolled way down (sentinel is far above the viewport),
+          // don't let rapid programmatic jumps falsely set isHeaderHidden to false.
+          if (!isTouchingHeader && entry.boundingClientRect.top < 0) {
+            return;
+          }
+
           this.ngZone.run(() => {
             this.headerState.isHeaderHidden.set(isTouchingHeader);
           });

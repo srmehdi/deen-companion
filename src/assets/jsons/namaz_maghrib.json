@@ -31,14 +31,14 @@
               "description": {
                 "en": "Stand facing the Qibla and make the intention in your heart to perform 3 Rakat Fard of Maghrib for Allah.",
                 "ur": "قبلہ رخ ہو کر کھڑے ہوں اور دل میں اللہ کے لیے مغرب کی ۳ رکعت فرض کی نیت کریں۔",
-                "hi": "क़िबला रुख होकर खड़े हों और दिल में अल्लाह के लिए मग़रिब की 3 रकात फर्ज़ की निय्यत करें।"
+                "hi": "क़िबला की ओर मुँह करके खड़े हों और दिल में अल्लाह के लिए मग़रिब की 3 रकात फर्ज़ की निय्यत करें।"
               },
               "arabic": "نَوَيْتُ أَنْ أُصَلِّيَ لِلَّهِ تَعَالَى ثَلاَثَ رَكَعَاتِ صَلاَةِ الْمَغْرِبِ فَرْضُ اللَّهِ تَعَالَى مُتَوَجِّهًا إِلَى جِهَةِ الْكَعْبَةِ الشَّرِيفَةِ",
               "transliteration": "Nawaitu an usalliya lillahi ta'ala thalatha raka'ati salatil-maghribi fardullahi ta'ala mutawajjihan ila jihatil-Ka'batish-Sharifah.",
               "translation": {
                 "en": "I intend to pray 3 Rakats of Maghrib prayer, Fard for Allah the Almighty, facing the direction of the Noble Kaaba.",
                 "ur": "میں نیت کرتا/کرتی ہوں تین رکعت نماز مغرب فرض کی، اللہ تعالیٰ کے لیے، منہ قبلہ شریف کی طرف۔",
-                "hi": "मैं निय्यत करता/करती हूँ तीन रकात नमाज़-ए-मग़रिब फर्ज़ की, अल्लाह तआला के लिए, मुँह काبا शरीफ की तरफ।"
+                "hi": "मैं निय्यत करता/करती हूँ तीन रकात नमाज़-ए-मग़रिब फर्ज़ की, अल्लाह तआला के लिए, मुँह काबा शरीफ़ की तरफ।"
               }
             },
             {
@@ -66,19 +66,19 @@
               "title": {
                 "en": "1st Rakat - Sana (Opening Praise)",
                 "ur": "پہلی رکعت - ثناء",
-                "hi": "पहली रकात - सना (शुरुआती दुआ)"
+                "hi": "पहली रकात - सना (शुरुआती स्तुति)"
               },
               "description": {
                 "en": "Keep your gaze on the place of prostration and recite Sana quietly.",
                 "ur": "سجدے کی جگہ نظر رکھتے ہوئے آہستگی سے ثناء پڑھیں۔",
-                "hi": "सजदे की जगह नज़र रखते हुए आहिस्ता से सना पढ़ें।"
+                "hi": "सजदे की जगह पर नज़र रखते हुए आहिस्ता से सना पढ़ें।"
               },
               "arabic": "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلاَ إِلَهَ غَيْرُكَ",
               "transliteration": "Subhanaka Allahumma wa bihamdika wa tabarakasmuka wa ta'ala jadduka wa la ilaha ghairuk.",
               "translation": {
                 "en": "Glory be to You, O Allah, and praise be to You, blessed is Your name, exalted is Your majesty, and there is no deity except You.",
                 "ur": "پاک ہے تو اے اللہ! اپنی تعریفوں کے ساتھ، اور مبارک ہے تیرا نام، اور بلند ہے تیری شان، اور نہیں ہے کوئی معبود تیرے سوا۔",
-                "hi": "पाक है तू ऐ अल्लाह! अपनी तारीफों के साथ, और मुबारक है तेरा नाम, और बुलंद है तेरी शान, और नहीं है कोई माबूद तेरे सिवा।"
+                "hi": "पाक है तू ऐ अल्लाह अपनी तारीफों के साथ, और मुबारक है तेरा नाम, और बुलंद है तेरी शान, और नहीं है कोई पूज्य तेरे सिवा।"
               }
             },
             {
@@ -86,19 +86,19 @@
               "title": {
                 "en": "1st Rakat - Ta'awwudh & Basmala",
                 "ur": "پہلی رکعت - تعوذ اور تسمیہ",
-                "hi": "पहली रकात - ताऊज़ और तस्मिया"
+                "hi": "पहली रकात - तअव्वुज़ और तस्मिया"
               },
               "description": {
                 "en": "Recite Ta'awwudh and Basmala quietly before starting Surah Al-Fatiha.",
                 "ur": "سورۃ الفاتحہ شروع کرنے سے پہلے آہستگی سے تعوذ اور تسمیہ پڑھیں۔",
-                "hi": "सूरह अल-फातिहा शुरू करने से पहले आहिस्ता से ताऊज़ और तस्मिया पढ़ें।"
+                "hi": "सूरह अल-फातिहा शुरू करने से पहले आहिस्ता से तअव्वुज़ और तस्मिया पढ़ें।"
               },
               "arabic": "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ ۝ بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ",
               "transliteration": "A'udhu billahi minash-shaitanir-rajim. Bismillahir-Rahmanir-Rahim.",
               "translation": {
                 "en": "I seek refuge in Allah from Satan the outcast. In the name of Allah, Most Gracious, Most Merciful.",
                 "ur": "میں شیطان مردود سے اللہ کی پناہ مانگتا/مانگتی ہوں۔ اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔",
-                "hi": "मैं शैतान मरदूद से अल्लाह की पनाह मांगता/मांगती हूँ। अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है।"
+                "hi": "मैं शैतान मरदूद से अल्लाह की पनाह मांगता/मांगती हूँ। शुरू अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है।"
               }
             },
             {
@@ -111,34 +111,34 @@
               "description": {
                 "en": "In Maghrib Fard, recite Surah Al-Fatiha aloud (Jahri) in the first 2 Rakats, and say 'Amen' quietly at the end.",
                 "ur": "مغرب کے فرض کی پہلی اور دوسری رکعت میں سورۃ الفاتحہ بلند آواز سے پڑھی جاتی ہے۔ آخر میں آہستگی سے 'آمین' کہیں۔",
-                "hi": "मग़रिब के फर्ज़ की पहली और दूसरी रकात में सूरह अल-फातिहा बुलंद आवाज में पढ़ी जाती है। आखिर में आहिस्ता से 'आमीन' कहें।"
+                "hi": "मग़रिब के फर्ज़ की पहली और दूसरी रकात में सूरह अल-फातिहा बुलंद आवाज़ में पढ़ी जाती है। अंत में आहिस्ता से 'आमीन' कहें।"
               },
               "arabic": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلاَ الضَّالِّينَ",
               "transliteration": "Alhamdu lillahi Rabbil-'alamin. Ar-Rahmanir-Rahim. Maliki Yawmid-Din. Iyyaka na'budu wa iyyaka nasta'in. Ihdinas-siratal-mustaqim. Siratal-ladhina an'amta 'alaihim ghairil-maghdubi 'alaihim wa lad-dallin.",
               "translation": {
                 "en": "Praise be to Allah, Lord of the worlds. The Most Gracious, the Most Merciful. Master of the Day of Judgment. You alone we worship, and You alone we ask for help. Guide us to the straight path, the path of those upon whom You have bestowed favor, not of those who have evoked Your anger or of those who are astray.",
                 "ur": "تمام تعریفیں اللہ ہی کے لیے ہیں جو تمام جہانوں کا پروردگار ہے۔ بہت مہربان، نہایت رحم والا۔ روز جزا کا مالک۔ ہم تیری ہی عبادت کرتے ہیں اور تجھ ہی سے مدد چاہتے ہیں۔ ہمیں سیدھا راستہ دکھا، ان لوگوں کا راستہ جن پر تو نے انعام فرمایا، ان کا نہیں جن پر غضب ہوا اور نہ گمراہوں کا۔",
-                "hi": "तमाम तारीफें अल्लाह ही के लिए हैं जो सारे जहानों का पालने वाला है। बहुत मेहरबान, निहायत रहम वाला। बदले के दिन का मालिक। हम तेरी ही इबादत करते हैं और तुझ ही से मदद चाहते हैं। हमें सीधा रास्ता दिखा, उन लोगों का रास्ता जिन पर तूने इनाम फरमाया, उन का नहीं जिन पर गज़ब हुआ और न गुमराहों का।"
+                "hi": "तमाम तारीफें अल्लाह ही के लिए हैं जो सारे जहानों का पालने वाला है। बहुत मेहरबान, निहायत रहम वाला। बदले के दिन का मालिक। हम तेरी ही इबादत करते हैं और तुझ ही से मदद मांगते हैं। हमें सीधा रास्ता दिखा, उन लोगों का रास्ता जिन पर तूने इनाम फरमाया, उन का नहीं जिन पर गज़ब हुआ और न गुमराहों का।"
               }
             },
             {
               "stepNumber": 6,
               "title": {
-                "en": "1st Rakat - Additional Surah (e.g., Surah Al-Ikhlas - Recited Aloud)",
-                "ur": "پہلی رکعت - ضم سورۃ (مثلاً سورۃ الاخلاص - بلند آواز)",
-                "hi": "पहली रकात - ज़म सूरह (जैसे सूरह अल-इखलास - तेज़ आवाज़)"
+                "en": "1st Rakat - Additional Surah (e.g., Surah Al-Masad - Recited Aloud)",
+                "ur": "پہلی رکعت - ضم سورۃ (مثلاً سورۃ المسد - بلند آواز)",
+                "hi": "पहली रकात - ज़म सूरह (जैसे सूरह अल-मसद - तेज़ आवाज़)"
               },
               "description": {
-                "en": "Recite Bismillah followed by an additional Surah (e.g., Surah Al-Ikhlas) aloud.",
-                "ur": "بسم اللہ پڑھ کر قرآن مجید سے کوئی سورت (مثلاً سورۃ الاخلاص) بلند آواز سے پڑھیں۔",
-                "hi": "बिस्मिल्लाह पढ़कर कुरआन मजीद से कोई सूरह (जैसे सूरह अल-इखलास) बुलंद आवाज में पढ़ें।"
+                "en": "Recite Bismillah followed by an additional Surah (e.g., Surah Al-Masad) or at least 3 verses of the Quran aloud.",
+                "ur": "بسم اللہ پڑھ کر قرآن مجید سے کوئی سورت (مثلاً سورۃ المسد) یا کم از کم تین آیات بلند آواز سے پڑھیں۔",
+                "hi": "बिस्मिल्लाह पढ़कर क़ुरआन मजीद से कोई सूरह (जैसे सूरह अल-मसद) या कम से कम तीन आयतें बुलंद आवाज़ में पढ़ें।"
               },
-              "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
-              "transliteration": "Bismillahir-Rahmanir-Rahim. Qul huwal-lahu ahad. Allahus-samad. Lam yalid wa lam yulad. Wa lam yakul-lahu kufuwan ahad.",
+              "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ ۝ مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ ۝ سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ ۝ وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ ۝ فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ",
+              "transliteration": "Bismillahir-Rahmanir-Rahim. Tabbat yada abi lahabiw-wa tabb. Ma aghna 'anhu maluhu wa ma kasab. Sayasla naran dhata lahab. Wamra'atuhu hammalatal-hatab. Fi jidiha hablum-mim-masad.",
               "translation": {
-                "en": "In the name of Allah, Most Gracious, Most Merciful. Say, He is Allah, [who is] One. Allah, the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent.",
-                "ur": "اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ کہہ دیجیے کہ وہ اللہ ایک ہے۔ اللہ بے نیاز ہے۔ نہ اس کی کوئی اولاد ہے اور نہ وہ کسی کی اولاد ہے۔ اور نہ کوئی اس کا ہمسر ہے۔",
-                "hi": "अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है। कह दीजिए कि वह अल्लाह एक है। अल्लाह बेनियाज़ है। न उसकी कोई औलाद है और न वह किसी की औलाद है। और न कोई उसका बराबर का है।"
+                "en": "In the name of Allah, Most Gracious, Most Merciful. May the hands of Abu Lahab be ruined, and ruined is he. His wealth will not avail him or that which he gained. He will [enter to] burn in a Fire of [blazing] flame, and his wife [as well] - the carrier of firewood. Around her neck is a rope of twisted fiber.",
+                "ur": "اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ ابولہب کے دونوں ہاتھ ٹوٹ جائیں اور وہ برباد ہو جائے۔ نہ تو اس کا مال ہی اس کے کچھ کام آیا اور نہ وہ جو اس نے کمایا۔ وہ عنقریب شعلہ مارتی ہوئی آگ میں داخل ہوگا۔ اور اس کی عورت بھی جو لکڑیاں سر پر اٹھائے پھرتی ہے۔ اس کے گلے میں بٹی ہوئی رسی ہوگی۔",
+                "hi": "अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है। टूट गए अबू लहब के दोनों हाथ और वह बर्बाद हो गया। न उसका धन उसके किसी काम आया और न जो उसने कमाया। वह जल्द ही भड़कती हुई आग में दाख़िल होगा, और उसकी पत्नी भी जो लकड़ियां ढोने वाली है, उसके गले में बटी हुई रस्सी होगी।"
               }
             },
             {
@@ -151,14 +151,14 @@
               "description": {
                 "en": "Say Allahu Akbar, bow down horizontally holding your knees with spread fingers, keep your back straight, and recite Subhana Rabbiyal 'Adheem 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے رکوع میں جائیں، کمر سیدھی رکھیں، ہاتھوں سے گھٹنوں کو پکڑیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए रुकू में जाएं, पीठ सीधी रखें, हाथों से घुटनों को पकड़ें और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए रुकू में जाएं, पीठ सीधी रखें, हाथों से घुटनों को पकड़ें और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
               "transliteration": "Subhana Rabbiyal 'Adheem (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most Great.",
                 "ur": "پاک ہے میرا پروردگار عظمت والا۔",
-                "hi": "पाक है मेरा परवरदिगार महान।"
+                "hi": "पाक है मेरा रब महानता वाला।"
               }
             },
             {
@@ -171,14 +171,14 @@
               "description": {
                 "en": "Rise up from Ruku saying 'Sami'allahu liman hamidah', stand completely straight with arms at your sides, and say 'Rabbana lakal-hamd'.",
                 "ur": "رکوع سے سیدھے کھڑے ہوتے ہوئے 'سمع اللہ لمن حمدہ' کہیں اور بالکل سیدھے کھڑے ہو کر 'ربنا ولك الحمد' کہیں۔",
-                "hi": "रुकू से सीधे खड़े होते हुए 'समिअल्लाहु लिमन हमिदह' कहें और बिल्कुल सीधे खड़े होकर 'रब्बना व लकल-हम्द' कहें।"
+                "hi": "रुकू से सीधे खड़े होते हुए 'समिअल्लाहु लिमन हमिदह' कहें और बिल्कुल सीधे खड़े होकर 'रब्बना लकल-हम्द' कहें।"
               },
               "arabic": "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ ۝ رَبَّنَا وَلَكَ الْحَمْدُ",
               "transliteration": "Sami'allahu liman hamidah. Rabbana wa lakal-hamd.",
               "translation": {
                 "en": "Allah hears the one who praises Him. Our Lord, to You belongs all praise.",
                 "ur": "اللہ نے سن لیا اس کی تعریف کو جس نے اس کی تعریف کی۔ اے ہمارے رب! تمام تعریفیں تیرے ہی لیے ہیں۔",
-                "hi": "अल्लाह ने सुन लिया उसकी तारीफ को जिसने उसकी तारीफ की। ऐ हमारे रब! तमाम तारीफें तेरे ही लिए हैं।"
+                "hi": "अल्लाह ने सुन ली उसकी प्रशंसा जिसने उसकी प्रशंसा की। ऐ हमारे रब! तमाम तारीफें तेरे ही लिए हैं।"
               }
             },
             {
@@ -191,14 +191,14 @@
               "description": {
                 "en": "Say Allahu Akbar and go down to prostrate. Place your knees first, then palms, nose, and forehead on the ground. Recite Subhana Rabbiyal A'la 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے سجدے میں جائیں۔ پہلے گھٹنے، پھر ہاتھ، پھر ناک اور پیشانی زمین پر رکھیں۔ ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए सजदे में जाएं। पहले घुटने, फिर हाथ, फिर नाक और पेशानी ज़मीन पर रखें। 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए सजदे में जाएं। पहले घुटने, फिर हाथ, फिर नाक और माथा ज़मीन पर रखें। 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْأَعْلَى",
               "transliteration": "Subhana Rabbiyal A'la (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most High.",
                 "ur": "پاک ہے میرا پروردگار جو سب سے بلند ہے۔",
-                "hi": "पाक है मेरा परवरदिगार जो सबसे ऊंचा है।"
+                "hi": "पाक है मेरा रब जो सबसे ऊँचा है।"
               }
             },
             {
@@ -218,7 +218,7 @@
               "translation": {
                 "en": "O my Lord! Forgive me and have mercy on me.",
                 "ur": "اے میرے رب! مجھے بخش دے اور مجھ پر رحم فرما۔",
-                "hi": "ऐ मेरे रब! मुझे बख्श दे और मुझ पर रहम फरमा।"
+                "hi": "ऐ मेरे रब! मुझे क्षमा कर दे और मुझ पर दया फरमा।"
               }
             },
             {
@@ -231,14 +231,14 @@
               "description": {
                 "en": "Say Allahu Akbar and perform the 2nd Sujood in the exact same manner, reciting Subhana Rabbiyal A'la 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے دوبارہ سجدے میں جائیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए दोबारा सजदे में जाएं और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए दोबारा सजदे में जाएं और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْأَعْلَى",
               "transliteration": "Subhana Rabbiyal A'la (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most High.",
                 "ur": "پاک ہے میرا پروردگار جو سب سے بلند ہے۔",
-                "hi": "पाक है मेरा परवरदिगार जो सबसे ऊंचा है।"
+                "hi": "पाक है मेरा रब जो सबसे ऊँचा है।"
               }
             },
             {
@@ -258,7 +258,7 @@
               "translation": {
                 "en": "In the name of Allah, Most Gracious, Most Merciful.",
                 "ur": "اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔",
-                "hi": "अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है।"
+                "hi": "शुरू अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है।"
               }
             },
             {
@@ -271,34 +271,34 @@
               "description": {
                 "en": "Recite Surah Al-Fatiha aloud in the 2nd Rakat of Maghrib Fard, and say 'Amen' quietly at the end.",
                 "ur": "دوسری رکعت میں دوبارہ پوری سورۃ الفاتحہ بلند آواز سے پڑھیں اور آخر میں 'آمین' کہیں۔",
-                "hi": "दूसरी रकात में दोबारा पूरी सूरह अल-फातिहा बुलंद आवाज में पढ़ें और आखिर में 'आमीन' कहें।"
+                "hi": "दूसरी रकात में दोबारा पूरी सूरह अल-फातिहा बुलंद आवाज़ में पढ़ें और अंत में 'आमीन' कहें।"
               },
               "arabic": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلاَ الضَّالِّينَ",
               "transliteration": "Alhamdu lillahi Rabbil-'alamin. Ar-Rahmanir-Rahim. Maliki Yawmid-Din. Iyyaka na'budu wa iyyaka nasta'in. Ihdinas-siratal-mustaqim. Siratal-ladhina an'amta 'alaihim ghairil-maghdubi 'alaihim wa lad-dallin.",
               "translation": {
                 "en": "Praise be to Allah, Lord of the worlds. The Most Gracious, the Most Merciful. Master of the Day of Judgment. You alone we worship, and You alone we ask for help. Guide us to the straight path...",
                 "ur": "تمام تعریفیں اللہ ہی کے لیے ہیں جو تمام جہانوں کا پروردگار ہے۔ بہت مہربان، نہایت رحم والا۔ روز جزا کا مالک۔ ہم تیری ہی عبادت کرتے ہیں اور تجھ ہی سے مدد چاہتے ہیں۔ ہمیں سیدھا راستہ دکھا...",
-                "hi": "तमाम तारीफें अल्लाह ही के लिए हैं जो सारे जहानों का पालने वाला है। बहुत मेहरबान, निहायत रहम वाला। बदले के दिन का मालिक। हम तेरी ही इबादत करते हैं और तुझ ही से मदद चाहते हैं। हमें सीधा रास्ता दिखा..."
+                "hi": "तमाम तारीफें अल्लाह ही के लिए हैं जो सारे जहानों का पालने वाला है। बहुत मेहरबान, निहायत रहम वाला। बदले के दिन का मालिक। हम तेरी ही इबादत करते हैं और तुझ ही से मदद मांगते हैं। हमें सीधा रास्ता दिखा..."
               }
             },
             {
               "stepNumber": 14,
               "title": {
-                "en": "2nd Rakat - Additional Surah (e.g., Surah Al-Falaq - Recited Aloud)",
-                "ur": "دوسری رکعت - ضم سورۃ (مثلاً سورۃ الفلق - بلند آواز)",
-                "hi": "दूसरी रकात - ज़म सूरह (जैसे सूरह अल-फलक - तेज़ आवाज़)"
+                "en": "2nd Rakat - Additional Surah (e.g., Surah Al-Ikhlas - Recited Aloud)",
+                "ur": "دوسری رکعت - ضم سورۃ (مثلاً سورۃ الاخلاص - بلند آواز)",
+                "hi": "दूसरी रकात - ज़म सूरह (जैसे सूरह अल-इखलास - तेज़ आवाज़)"
               },
               "description": {
-                "en": "Recite Bismillah followed by an additional Surah (e.g., Surah Al-Falaq) aloud.",
-                "ur": "بسم اللہ پڑھ کر قرآن مجید سے کوئی دوسری سورت (مثلاً سورۃ الفلق) بلند آواز سے پڑھیں۔",
-                "hi": "बिस्मिल्लाह पढ़कर कुरआन मजीद से कोई दूसरी सूरह (जैसे सूरह अल-फलक) बुलंद आवाज में पढ़ें।"
+                "en": "Recite Bismillah followed by an additional Surah (e.g., Surah Al-Ikhlas) or at least 3 verses of the Quran aloud.",
+                "ur": "بسم اللہ پڑھ کر قرآن مجید سے کوئی سورت (مثلاً سورۃ الاخلاص) یا کم از کم تین آیات بلند آواز سے پڑھیں۔",
+                "hi": "बिस्मिल्लाह पढ़कर क़ुरआन मजीद से कोई सूरह (जैसे सूरह अल-इखलास) या कम से कम तीन आयतें बुलंद आवाज़ में पढ़ें।"
               },
-              "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ ۝ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
-              "transliteration": "Bismillahir-Rahmanir-Rahim. Qul a'udhu birabbil-falaq. Min sharri ma khalaq. Wa min sharri ghasiqin idha waqab. Wa min sharrin-naffathati fil-'uqad. Wa min sharri hasidin idha hasad.",
+              "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+              "transliteration": "Bismillahir-Rahmanir-Rahim. Qul huwal-lahu ahad. Allahus-samad. Lam yalid wa lam yulad. Wa lam yakul-lahu kufuwan ahad.",
               "translation": {
-                "en": "In the name of Allah, Most Gracious, Most Merciful. Say, I seek refuge in the Lord of daybreak, from the evil of that which He created, and from the evil of darkness when it settles, and from the evil of the blowers in knots, and from the evil of an envier when he envies.",
-                "ur": "اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ کہہ دیجیے کہ میں صبح کے رب کی پناہ مانگتا ہوں، اس کی پیدا کی ہوئی ہر چیز کے شر سے، اور اندھیری رات کے شر سے جب وہ چھا جائے، اور گرہوں میں پھونکنے والیوں کے شر سے، اور حسد کرنے والے کے شر سے جب وہ حسد کرے۔",
-                "hi": "अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है। कह दीजिए कि मैं सुबह के रब की पनाह मांगता हूँ, उसकी पैदा की हुई हर चीज़ के शर से, और अंधेरी रात के शर से जब वह छा जाए, और गिरहों में फूंकने वालियों के शर से, और हसद करने वाले के शर से जब वह हसद करे।"
+                "en": "In the name of Allah, Most Gracious, Most Merciful. Say, He is Allah, [who is] One. Allah, the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent.",
+                "ur": "اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ کہہ دیجیے کہ وہ اللہ ایک ہے۔ اللہ بے نیاز ہے۔ نہ اس کی کوئی اولاد ہے اور نہ وہ کسی کی اولاد ہے۔ اور نہ کوئی اس کا ہمسر ہے۔",
+                "hi": "अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है। कह दीजिए कि वह अल्लाह एक है। अल्लाह बेनियाज़ है। न उसकी कोई संतान है और न वह किसी की संतान है। और न कोई उसके बराबर का है।"
               }
             },
             {
@@ -311,14 +311,14 @@
               "description": {
                 "en": "Say Allahu Akbar, bow down horizontally holding knees with spread fingers, and recite Subhana Rabbiyal 'Adheem 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے رکوع میں جائیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु Akbar कहते हुए रुकू में जाएं और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए रुकू में जाएं और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
               "transliteration": "Subhana Rabbiyal 'Adheem (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most Great.",
                 "ur": "پاک ہے میرا پروردگار عظمت والا۔",
-                "hi": "पाक है मेरा परवरदिगार महान।"
+                "hi": "पाक है मेरा रब महानता वाला।"
               }
             },
             {
@@ -326,19 +326,19 @@
               "title": {
                 "en": "2nd Rakat - Qauma (Standing Up from Ruku)",
                 "ur": "دوسری رکعت - قومہ (رکوع سے سیدھے کھڑے ہونا)",
-                "hi": "दूसरी रकात - क़ौما (रुकू से सीधे खड़े होना)"
+                "hi": "दूसरी रकात - क़ौमा (रुकू से सीधे खड़े होना)"
               },
               "description": {
                 "en": "Rise up from Ruku saying 'Sami'allahu liman hamidah', stand completely straight, and say 'Rabbana lakal-hamd'.",
                 "ur": "رکوع سے سیدھے کھڑے ہوتے ہوئے 'سمع اللہ لمن حمدہ' کہیں اور بالکل سیدھے کھڑے ہو کر 'ربنا ولك الحمد' کہیں۔",
-                "hi": "रुकू से सीधे खड़े होते हुए 'समिअल्लाहु लिमन हमिदह' कहें और बिल्कुल सीधे खड़े होकर 'रब्बना व लकल-हम्द' कहें।"
+                "hi": "रुकू से सीधे खड़े होते हुए 'समिअल्लाहु लिमन हमिदह' कहें और बिल्कुल सीधे खड़े होकर 'रब्बना लकल-हम्द' कहें।"
               },
               "arabic": "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ ۝ رَبَّنَا وَلَكَ الْحَمْدُ",
               "transliteration": "Sami'allahu liman hamidah. Rabbana wa lakal-hamd.",
               "translation": {
                 "en": "Allah hears the one who praises Him. Our Lord, to You belongs all praise.",
                 "ur": "اللہ نے سن لیا اس کی تعریف کو جس نے اس کی تعریف کی۔ اے ہمارے رب! تمام تعریفیں تیرے ہی لیے ہیں۔",
-                "hi": "अल्लाह ने सुन लिया उसकी तारीफ को जिसने उसकी तारीफ की। ऐ हमारे रब! तमाम तारीफें तेरे ही लिए हैं।"
+                "hi": "अल्लाह ने सुन ली उसकी प्रशंसा जिसने उसकी प्रशंसा की। ऐ हमारे रब! तमाम तारीफें तेरे ही लिए हैं।"
               }
             },
             {
@@ -351,14 +351,14 @@
               "description": {
                 "en": "Say Allahu Akbar and perform the 1st Sujood of the 2nd Rakat, reciting Subhana Rabbiyal A'la 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے سجدے میں جائیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए सजदे में जाएं और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए सजदे में जाएं और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْأَعْلَى",
               "transliteration": "Subhana Rabbiyal A'la (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most High.",
                 "ur": "پاک ہے میرا پروردگار جو سب سے بلند ہے۔",
-                "hi": "पाक है मेरा परवरदिगार जो सबसे ऊंचा है।"
+                "hi": "पाक है मेरा रब जो सबसे ऊँचा है।"
               }
             },
             {
@@ -371,14 +371,14 @@
               "description": {
                 "en": "Say Allahu Akbar, sit up straight briefly in Jalsa, and ask Allah for forgiveness.",
                 "ur": "سجدے سے اٹھ کر جلسہ میں سیدھے بیٹھیں اور مختصر دعائے مغفرت پڑھیں۔",
-                "hi": "सजदे से उठकर जलसा में सीधे बैठें और संक्षिप्त दुआ-ए-मगफिरत पढ़ें।"
+                "hi": "सजदे से उठकर जलसा में सीधे बैठें और संक्षिप्त क्षमा प्रार्थना पढ़ें।"
               },
               "arabic": "رَبِّ اغْفِرْ لِي وَارْحَمْنِي",
               "transliteration": "Rabbighfir li warhamni",
               "translation": {
                 "en": "O my Lord! Forgive me and have mercy on me.",
                 "ur": "اے میرے رب! مجھے بخش دے اور مجھ پر رحم فرما۔",
-                "hi": "ऐ मेरे रब! मुझे बख्श दे और मुझ पर रहम फरमा।"
+                "hi": "ऐ मेरे रब! मुझे क्षमा कर दे और मुझ पर दया फरमा।"
               }
             },
             {
@@ -391,14 +391,14 @@
               "description": {
                 "en": "Say Allahu Akbar and perform the 2nd Sujood of the 2nd Rakat, reciting Subhana Rabbiyal A'la 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے دوبارہ سجدے میں جائیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए दोबारा सजदे में जाएं और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए दोबारा सजदे में जाएं और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْأَعْلَى",
               "transliteration": "Subhana Rabbiyal A'la (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most High.",
                 "ur": "پاک ہے میرا پروردگار جو سب سے بلند ہے۔",
-                "hi": "पाक है मेरा परवरदिगार जो सबसे ऊंचा है।"
+                "hi": "पाक है मेरा रब जो सबसे ऊँचा है।"
               }
             },
             {
@@ -411,14 +411,14 @@
               "description": {
                 "en": "Sit after the 2nd Rakat and recite Tashahhud (At-Tahiyyat) only. Do not recite Durood here. Stand up immediately for the 3rd Rakat saying Allahu Akbar.",
                 "ur": "دوسری رکعت کے بعد بیٹھ کر صرف التحیات پڑھیں۔ یہاں درود شریف نہ پڑھیں۔ پھر اللہ اکبر کہتے ہوئے تیسری رکعت کے لیے کھڑے ہو جائیں۔",
-                "hi": "दूसरी रकात के बाद बैठकर सिर्फ अत्तहिय्यात पढ़ें। यहां दुरुद शरीफ न पढ़ें। फिर अल्लाहु अकबर कहते हुए तीसरी रकात के लिए खड़े हो जाएं।"
+                "hi": "दूसरी रकात के बाद बैठकर सिर्फ अत्तहिय्यात पढ़ें। यहाँ दुरुद शरीफ़ न पढ़ें। फिर अल्लाहु अकबर कहते हुए तीसरी रकात के लिए खड़े हो जाएं।"
               },
               "arabic": "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ السَّلاَمُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلاَمُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
               "transliteration": "At-tahiyyatu lillahi was-salawatu wat-tayyibat. As-salamu 'alaika ayyuhan-Nabiyyu wa rahmatullahi wa barakatuh. As-salamu 'alaina wa 'ala 'ibadillahis-salihin. Ash-hadu alla ilaha illallahu wa ash-hadu anna Muhammadan 'abduhu wa rasuluh.",
               "translation": {
                 "en": "All compliments, prayers, and pure worship are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah. I bear witness that there is no deity except Allah, and I bear witness that Muhammad is His servant and Messenger.",
                 "ur": "تمام زبان کی، بدن کی اور مال کی عبادتیں اللہ کے لیے ہیں۔ سلام ہو آپ پر اے نبی اور اللہ کی رحمت اور اس کی برکتیں ہوں۔ سلام ہو ہم پر اور اللہ کے نیک بندوں پر۔ میں گواہی دیتا/دیتی ہوں کہ اللہ کے سوا کوئی معبود نہیں اور میں گواہی دیتا/دیتی ہوں کہ محمد اللہ کے بندے اور اس کے رسول ہیں۔",
-                "hi": "तमाम जबान की, बदन की और माल की इबादतें अल्लाह के लिए हैं। सलाम हो आप पर ऐ नबी और अल्लाह की रहमत और उसकी बरकतें हों। सलाम हो हम पर और अल्लाह के नेक बंदों पर। मैं गवाही देता/देती हूँ कि अल्लाह के सिवा कोई माबूद नहीं और मैं गवाही देता/देती हूँ कि मोहम्मद अल्लाह के बंदे और उसके रसूल हैं।"
+                "hi": "तमाम ज़बान की, शरीर की और धन की इबादतें अल्लाह के लिए हैं। सलाम हो आप पर ऐ नबी और अल्लाह की रहमत और उसकी बरकतें हों। सलाम हो हम पर और अल्लाह के नेक बंदों पर। मैं गवाही देता/देती हूँ कि अल्लाह के सिवा कोई पूज्य नहीं और मैं गवाही देता/देती हूँ कि मुहम्मद अल्लाह के बंदे और उसके रसूल हैं।"
               }
             },
             {
@@ -438,7 +438,7 @@
               "translation": {
                 "en": "In the name of Allah, Most Gracious, Most Merciful.",
                 "ur": "اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔",
-                "hi": "अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है।"
+                "hi": "शुरू अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है।"
               }
             },
             {
@@ -451,14 +451,14 @@
               "description": {
                 "en": "In the 3rd Rakat of Fard prayer, recite ONLY Surah Al-Fatiha quietly. Do NOT attach an additional Surah in Fard.",
                 "ur": "فرض نماز کی تیسری رکعت میں صرف سورۃ الفاتحہ پڑھیں (کوئی سورت نہ ملائیں)۔",
-                "hi": "फर्ज़ नमाज़ की तीसरी रकात में सिर्फ सूरह अल-फातिहा पढ़ें (कोई सूरह न मिलाएं)।"
+                "hi": "फर्ज़ नमाज़ की तीसरी रकात में सिर्फ सूरह अल-फातिहा आहिस्ता पढ़ें (कोई सूरह न मिलाएं)।"
               },
               "arabic": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلاَ الضَّالِّينَ",
               "transliteration": "Alhamdu lillahi Rabbil-'alamin. Ar-Rahmanir-Rahim. Maliki Yawmid-Din. Iyyaka na'budu wa iyyaka nasta'in. Ihdinas-siratal-mustaqim. Siratal-ladhina an'amta 'alaihim ghairil-maghdubi 'alaihim wa lad-dallin.",
               "translation": {
-                "en": "Praise be to Allah, Lord of the worlds. The Most Gracious, the Most Merciful. Master of the Day of Judgment. You alone we worship, and You alone we ask for help. Guide us to the straight path, the path of those upon whom You have bestowed favor, not of those who have evoked Your anger or of those who are astray.",
-                "ur": "تمام تعریفیں اللہ ہی کے لیے ہیں جو تمام جہانوں کا پروردگار ہے۔ بہت مہربان، نہایت رحم والا۔ روز جزا کا مالک۔ ہم تیری ہی عبادت کرتے ہیں اور تجھ ہی سے مدد چاہتے ہیں۔ ہمیں سیدھا راستہ دکھا، ان لوگوں کا راستہ جن پر تو نے انعام فرمایا، ان کا نہیں جن پر غضب ہوا اور نہ گمراہوں کا۔",
-                "hi": "तमाम तारीफें अल्लाह ही के लिए हैं जो सारे जहानों का पालने वाला है। बहुत मेहरबान, निहायत रहम वाला। बदले के दिन का मालिक। हम तेरी ही इबादत करते हैं और तुझ ही से मदद चाहते हैं। हमें सीधा रास्ता दिखा, उन लोगों का रास्ता जिन पर तूने इनाम फरमाया, उन का नहीं जिन पर गज़ब हुआ और न गुमराहों का।"
+                "en": "Praise be to Allah, Lord of the worlds. The Most Gracious, the Most Merciful. Master of the Day of Judgment. You alone we worship, and You alone we ask for help. Guide us to the straight path...",
+                "ur": "تمام تعریفیں اللہ ہی کے لیے ہیں... ہمیں سیدھا راستہ دکھا...",
+                "hi": "तमाम तारीफें अल्लाह ही के लिए हैं... हमें सीधा रास्ता दिखा..."
               }
             },
             {
@@ -471,14 +471,14 @@
               "description": {
                 "en": "Say Allahu Akbar, bow down holding knees with spread fingers, and recite Subhana Rabbiyal 'Adheem 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے رکوع میں جائیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए रुकू में जाएं और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए रुकू में जाएं, पीठ सीधी रखें, हाथों से घुटनों को पकड़ें और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
               "transliteration": "Subhana Rabbiyal 'Adheem (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most Great.",
                 "ur": "پاک ہے میرا پروردگار عظمت والا۔",
-                "hi": "पाक है मेरा परवरदिगार महान।"
+                "hi": "पाक है मेरा रब महानता वाला।"
               }
             },
             {
@@ -491,14 +491,14 @@
               "description": {
                 "en": "Rise from Ruku saying 'Sami'allahu liman hamidah', stand completely straight, and say 'Rabbana lakal-hamd'.",
                 "ur": "رکوع سے سیدھے کھڑے ہوتے ہوئے 'سمع اللہ لمن حمدہ' کہیں اور بالکل سیدھے کھڑے ہو کر 'ربنا ولك الحمد' کہیں۔",
-                "hi": "रुकू से सीधे खड़े होते हुए 'समिअल्लाहु लिमन हमिदह' कहें और बिल्कुल सीधे खड़े होकर 'रब्बना व लकल-हम्द' कहें।"
+                "hi": "रुकू से सीधे खड़े होते हुए 'समिअल्लाहु लिमन हमिदह' कहें और बिल्कुल सीधे खड़े होकर 'रब्बना लकल-हम्द' कहें।"
               },
               "arabic": "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ ۝ رَبَّنَا وَلَكَ الْحَمْدُ",
               "transliteration": "Sami'allahu liman hamidah. Rabbana wa lakal-hamd.",
               "translation": {
                 "en": "Allah hears the one who praises Him. Our Lord, to You belongs all praise.",
                 "ur": "اللہ نے سن لیا اس کی تعریف کو جس نے اس کی تعریف کی۔ اے ہمارے رب! تمام تعریفیں تیرے ہی لیے ہیں۔",
-                "hi": "अल्लाह ने सुन लिया उसकी तारीफ को जिसने उसकी तारीफ की। ऐ हमारे रब! तमाम तारीफें तेरे ही लिए हैं।"
+                "hi": "अल्लाह ने सुन ली उसकी प्रशंसा जिसने उसकी प्रशंसा की। ऐ हमारे रब! तमाम तारीफें तेरे ही लिए हैं।"
               }
             },
             {
@@ -511,14 +511,14 @@
               "description": {
                 "en": "Say Allahu Akbar and perform the 1st Sujood of the 3rd Rakat, reciting Subhana Rabbiyal A'la 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے سجدے میں جائیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए सजदे में जाएं और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए सजदे में जाएं और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْأَعْلَى",
               "transliteration": "Subhana Rabbiyal A'la (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most High.",
                 "ur": "پاک ہے میرا پروردگار جو سب سے بلند ہے۔",
-                "hi": "पाक है मेरा परवरदिगार जो सबसे ऊंचा है।"
+                "hi": "पाक है मेरा रब जो सबसे ऊँचा है।"
               }
             },
             {
@@ -531,14 +531,14 @@
               "description": {
                 "en": "Say Allahu Akbar, sit up straight briefly in Jalsa, and ask Allah for forgiveness.",
                 "ur": "سجدے سے اٹھ کر جلسہ میں سیدھے بیٹھیں اور مختصر دعائے مغفرت پڑھیں۔",
-                "hi": "सजदे से उठकर जलसा में सीधे बैठें और संक्षिप्त दुआ-ए-मगफिरत पढ़ें।"
+                "hi": "सजदे से उठकर जलसा में सीधे बैठें और संक्षिप्त क्षमा प्रार्थना पढ़ें।"
               },
               "arabic": "رَبِّ اغْفِرْ لِي وَارْحَمْنِي",
               "transliteration": "Rabbighfir li warhamni",
               "translation": {
                 "en": "O my Lord! Forgive me and have mercy on me.",
                 "ur": "اے میرے رب! مجھے بخش دے اور مجھ پر رحم فرما۔",
-                "hi": "ऐ मेरे रब! मुझे बख्श दे और मुझ पर रहम फरमा।"
+                "hi": "ऐ मेरे रब! मुझे क्षमा कर दे और मुझ पर दया फरमा।"
               }
             },
             {
@@ -551,14 +551,14 @@
               "description": {
                 "en": "Say Allahu Akbar and perform the 2nd Sujood of the 3rd Rakat, reciting Subhana Rabbiyal A'la 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے دوبارہ سجدے میں جائیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए दोबारा सजदे में जाएं और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए दोबारा सजदे में जाएं और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْأَعْلَى",
               "transliteration": "Subhana Rabbiyal A'la (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most High.",
                 "ur": "پاک ہے میرا پروردگار جو سب سے بلند ہے۔",
-                "hi": "पाक है मेरा परवरदिगार जो सबसे ऊंचा है।"
+                "hi": "पाक है मेरा रब जो सबसे ऊँचा है।"
               }
             },
             {
@@ -566,19 +566,19 @@
               "title": {
                 "en": "Final Sitting - Tashahhud (At-Tahiyyat)",
                 "ur": "قعدہ اخیرہ - التشہد (التحیات)",
-                "hi": "क़अدا अखीरा - तशहहुد (अत्तहिय्यात)"
+                "hi": "क़अदा अखीरा - तशहहुद (अत्तहिय्यात)"
               },
               "description": {
                 "en": "Sit in final Qa'dah after completing the 3rd Rakat and recite At-Tahiyyat, raising right index finger at Shahada.",
                 "ur": "تیسری رکعت مکمل کرنے کے بعد قعدہ اخیرہ میں بیٹھ کر التحیات پڑھیں اور شہادت کی انگلی اٹھائیں۔",
-                "hi": "तीसरी रकात मुकम्मल करने के बाद क़अदा अखीरा में बैठकर अत्तहिय्यात पढ़ें और शहादत की उंगली उठाएं।"
+                "hi": "तीसरी रकात पूरी करने के बाद क़अदा अखीरा में बैठकर अत्तहिय्यात पढ़ें और शहादत की उंगली उठाएं।"
               },
               "arabic": "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ السَّلاَمُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلاَمُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
               "transliteration": "At-tahiyyatu lillahi was-salawatu wat-tayyibat. As-salamu 'alaika ayyuhan-Nabiyyu wa rahmatullahi wa barakatuh. As-salamu 'alaina wa 'ala 'ibadillahis-salihin. Ash-hadu alla ilaha illallahu wa ash-hadu anna Muhammadan 'abduhu wa rasuluh.",
               "translation": {
                 "en": "All compliments, prayers, and pure worship are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah. I bear witness that there is no deity except Allah, and I bear witness that Muhammad is His servant and Messenger.",
                 "ur": "تمام زبان کی، بدن کی اور مال کی عبادتیں اللہ کے لیے ہیں۔ سلام ہو آپ پر اے نبی اور اللہ کی رحمت اور اس کی برکتیں ہوں۔ سلام ہو ہم پر اور اللہ کے نیک بندوں پر۔ میں گواہی دیتا/دیتی ہوں کہ اللہ کے سوا کوئی معبود نہیں اور میں گواہی دیتا/دیتی ہوں کہ محمد اللہ کے بندے اور اس کے رسول ہیں۔",
-                "hi": "तमाम जबान की, बदन की और माल की इबादतें अल्लाह के लिए हैं। सलाम हो आप पर ऐ नबी और अल्लाह की रहमत और उसकी बरकतें हों। सलाम हो हम पर और अल्लाह के नेक बंदों पर। मैं गवाही देता/देती हूँ कि अल्लाह के सिवा कोई माबूद नहीं और मैं गवाही देता/देती हूँ कि मोहम्मद अल्लाह के बंदे और उसके रसूल हैं।"
+                "hi": "तमाम ज़बान की, शरीर की और धन की इबादतें अल्लाह के लिए हैं। सलाम हो आप पर ऐ नबी और अल्लाह की रहमत और उसकी बरकतें हों। सलाम हो हम पर और अल्लाह के नेक बंदों पर। मैं गवाही देता/देती हूँ कि अल्लाह के सिवा कोई पूज्य नहीं और मैं गवाही देता/देती हूँ कि मुहम्मद अल्लाह के बंदे और उसके रसूल हैं।"
               }
             },
             {
@@ -586,19 +586,19 @@
               "title": {
                 "en": "Final Sitting - Durood-e-Ibrahim",
                 "ur": "قعدہ اخیرہ - درود ابراہیم",
-                "hi": "क़अدا अखीरा - दुरुद-ए-इब्राहिम"
+                "hi": "क़अदा अखीरा - दुरुद-ए-इब्राहीम"
               },
               "description": {
                 "en": "Recite complete Durood-e-Ibrahim in full length.",
                 "ur": "پوری لمبائی کے ساتھ درود ابراہیم پڑھیں۔",
-                "hi": "पूरी लंबाई के साथ दुरुद-ए-इब्राहिम पढ़ें।"
+                "hi": "पूरी लंबाई के साथ दुरुद-ए-इब्राहीम पढ़ें।"
               },
               "arabic": "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ ۝ اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
               "transliteration": "Allahumma salli 'ala Muhammadin wa 'ala ali Muhammadin kama sallaita 'ala Ibrahima wa 'ala ali Ibrahima innaka Hamidum-Majid. Allahumma barik 'ala Muhammadin wa 'ala ali Muhammadin kama barakta 'ala Ibrahima wa 'ala ali Ibrahima innaka Hamidum-Majid.",
               "translation": {
                 "en": "O Allah, send blessings upon Muhammad and upon the family of Muhammad, as You sent blessings upon Ibrahim and upon the family of Ibrahim; indeed, You are Praiseworthy and Glorious. O Allah, send grace upon Muhammad and upon the family of Muhammad, as You sent grace upon Ibrahim and upon the family of Ibrahim; indeed, You are Praiseworthy and Glorious.",
                 "ur": "اے اللہ! رحمت نازل فرما محمد پر اور آل محمد پر جیسے تو نے رحمت نازل فرمائی ابراہیم اور آل ابراہیم پر، بے شک تو تعریف کیا ہوا اور بزرگ ہے۔ اے اللہ! برکت نازل فرما محمد پر اور آل محمد پر جیسے تو نے برکت نازل فرمائی ابراہیم اور آل ابراہیم پر، بے شک تو تعریف کیا ہوا اور بزرگ ہے۔",
-                "hi": "ऐ अल्लाह! रहमत नाज़िल फरमा मोहम्मद पर और आल-ए-मोहम्मद पर जैसे तूने रहमत नाज़िल फरमाई इब्राहिम और आल-ए-इब्राहिम पर, बेशक तू तारीफ किया हुआ और बुजुर्ग है। ऐ अल्लाह! बरकत नाज़िल फरमा मोहम्मद पर और आल-ए-मोहम्मद पर जैसे तूने रहमत नाज़िल फरमाई इब्राहिम और आल-ए-इब्राहिम पर, बेशक तू तारीफ किया हुआ और बुजुर्ग है।"
+                "hi": "ऐ अल्लाह! रहमत नाज़िल फरमा मुहम्मद पर और आल-ए-मुहम्मद पर जैसे तूने रहमत नाज़िल फरमाई इब्राहीम और आल-ए-इब्राहीम पर, बेशक तू तारीफ के योग्य और महान है। ऐ अल्लाह! बरकत नाज़िल फरमा मुहम्मद पर और आल-ए-मुहम्मद पर जैसे तूने बरकत नाज़िल फरमाई इब्राहीम और आल-ए-इब्राहीम पर, बेशक तू तारीफ के योग्य और महान है।"
               }
             },
             {
@@ -606,19 +606,19 @@
               "title": {
                 "en": "Final Sitting - Dua-e-Masura",
                 "ur": "قعدہ اخیرہ - دعائے ماثورہ",
-                "hi": "क़अدا अखीरा - दुआ-ए-मासूरा"
+                "hi": "क़अदा अखीरा - दुआ-ए-मासूरा"
               },
               "description": {
                 "en": "Recite Dua-e-Masura before completing the prayer.",
                 "ur": "درود شریف کے بعد دعائے ماثورہ پڑھیں۔",
-                "hi": "दुरुद शरीफ के बाद दुआ-ए-मासूरा पढ़ें।"
+                "hi": "दुरुद शरीफ़ के बाद दुआ-ए-मासूरा पढ़ें।"
               },
               "arabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
               "transliteration": "Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan wa qina 'adhaban-nar.",
               "translation": {
                 "en": "Our Lord, grant us good in this world and good in the Hereafter, and protect us from the punishment of the Fire.",
                 "ur": "اے ہمارے رب! ہمیں دنیا میں بھی بھلائی دے اور آخرت میں بھی بھلائی دے اور ہمیں آگ کے عذاب سے بچا۔",
-                "hi": "ऐ हमारे रब! हमें दुनिया में भी भलाई दे और आखिरत में भी भलाई दे और हमें आग के अज़ाब से बचा।"
+                "hi": "ऐ हमारे रब! हमें दुनिया में भी भलाई दे और आख़िरत में भी भलाई दे और हमें आग के अज़ाब से बचा।"
               }
             },
             {
@@ -626,12 +626,12 @@
               "title": {
                 "en": "Salam (Ending the Prayer)",
                 "ur": "سلام (نماز کا خاتمہ)",
-                "hi": "सलाम (نماز کا خاتمہ)"
+                "hi": "सलाम (नमाज़ की समाप्ति)"
               },
               "description": {
                 "en": "Turn your head over your right shoulder and say Salam, then turn your head over your left shoulder and repeat.",
                 "ur": "پہلے دائیں شانے کی طرف منہ کر کے سلام پھیریں، پھر بائیں شانے کی طرف منہ کر کے سلام پھیریں۔",
-                "hi": "पहले दाहिने कंधे की तरफ मुंह करके सलाम फेरें, फिर बाएं कंधे की तरफ मुंह करके सलाम फेरें।"
+                "hi": "पहले दाहिने कंधे की तरफ मुँह करके सलाम फेरें, फिर बाएं कंधे की तरफ मुँह करके सलाम फेरें।"
               },
               "arabic": "السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ",
               "transliteration": "As-salamu 'alaikum wa rahmatullah",
@@ -656,19 +656,19 @@
               "title": {
                 "en": "1st Rakat - Niyyah (Intention)",
                 "ur": "پہلی رکعت - نیت",
-                "hi": "पहली रकात - निय्यت (इरादा)"
+                "hi": "पहली रकात - निय्यत (इरादा)"
               },
               "description": {
                 "en": "Stand facing the Qibla and make the intention in your heart to perform 2 Rakat Sunnah after Fard of Maghrib.",
                 "ur": "دل میں قبلہ رخ ہو کر مغرب کی ۲ رکعت سنت (بعد از فرض) کی نیت کریں۔",
-                "hi": "दिल में क़िबला रुख होकर मग़रिब की 2 रकात सुन्नत (फर्ज़ के बाद) की निय्यत करें।"
+                "hi": "दिल में क़िबला की ओर मुँह करके मग़रिब की 2 रकात सुन्नत (फर्ज़ के बाद) की निय्यत करें।"
               },
               "arabic": "نَوَيْتُ أَنْ أُصَلِّيَ لِلَّهِ تَعَالَى رَكْعَتَيْ صَلاَةِ الْمَغْرِبِ سُنَّةُ رَسُولِ اللَّهِ تَعَالَى مُتَوَجِّهًا إِلَى جِهَةِ الْكَعْبَةِ الشَّرِيفَةِ",
               "transliteration": "Nawaitu an usalliya lillahi ta'ala rak'atai salatil-maghribi sunnatu rasulillahi ta'ala mutawajjihan ila jihatil-Ka'batish-Sharifah.",
               "translation": {
                 "en": "I intend to pray 2 Rakats of Maghrib Sunnah prayer, facing the direction of the Noble Kaaba.",
                 "ur": "میں نیت کرتا/کرتی ہوں دو رکعت نماز مغرب سنت رسول اللہ کی، اللہ تعالیٰ کے لیے، منہ قبلہ شریف کی طرف۔",
-                "hi": "मैं निय्यत करता/کرتی हूँ दो रकात नमाज़-ए-मग़रिब सुन्नत रसूलुल्लाह की, अल्लाह तآلا کے لیے, मुँह काबा शरीफ की तरफ।"
+                "hi": "मैं निय्यत करता/करती हूँ दो रकात नमाज़-ए-मग़रिब सुन्नत रसूलुल्लाह की, अल्लाह तआला के लिए, मुँह काबा शरीफ़ की तरफ।"
               }
             },
             {
@@ -708,7 +708,7 @@
               "translation": {
                 "en": "Glory be to You, O Allah, and praise be to You, blessed is Your name, exalted is Your majesty, and there is no deity except You.",
                 "ur": "پاک ہے تو اے اللہ! اپنی تعریفوں کے ساتھ، اور مبارک ہے تیرا نام، اور بلند ہے تیری شان، اور نہیں ہے کوئی معبود تیرے سوا۔",
-                "hi": "पाक है तू ऐ अल्लाह! अपनी तारीफों के साथ, और मुबारक है तेरा नाम, और बुलंद है तेरी शान, और नहीं है कोई माबूद तेरे सिवा।"
+                "hi": "पाक है तू ऐ अल्लाह अपनी तारीफों के साथ, और मुबारक है तेरा नाम, और बुलंद है तेरी शान, और नहीं है कोई पूज्य तेरे सिवा।"
               }
             },
             {
@@ -716,19 +716,19 @@
               "title": {
                 "en": "1st Rakat - Ta'awwudh & Basmala",
                 "ur": "پہلی رکعت - تعوذ اور تسمیہ",
-                "hi": "पहली रकात - ताऊज़ और तस्मिया"
+                "hi": "पहली रकात - तअव्वुज़ और तस्मिया"
               },
               "description": {
                 "en": "Recite Ta'awwudh and Basmala quietly before starting Surah Al-Fatiha.",
                 "ur": "سورۃ الفاتحہ شروع کرنے سے پہلے آہستگی سے تعوذ اور تسمیہ پڑھیں۔",
-                "hi": "सूरह अल-फातिहा शुरू करने से पहले आहिस्ता से ताऊज़ और तस्मिया पढ़ें।"
+                "hi": "सूरह अल-फातिहा शुरू करने से पहले आहिस्ता से तअव्वुज़ और तस्मिया पढ़ें।"
               },
               "arabic": "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ ۝ بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ",
               "transliteration": "A'udhu billahi minash-shaitanir-rajim. Bismillahir-Rahmanir-Rahim.",
               "translation": {
                 "en": "I seek refuge in Allah from Satan the outcast. In the name of Allah, Most Gracious, Most Merciful.",
                 "ur": "میں شیطان مردود سے اللہ کی پناہ مانگتا/مانگتی ہوں۔ اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔",
-                "hi": "मैं शैतान मरदूद से अल्लाह की पनाह मांगता/मांगती हूँ। अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है।"
+                "hi": "मैं शैतान मरदूद से अल्लाह की पनाह मांगता/मांगती हूँ। शुरू अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है।"
               }
             },
             {
@@ -754,21 +754,21 @@
             {
               "stepNumber": 6,
               "title": {
-                "en": "1st Rakat - Additional Surah (e.g., Surah Al-Kafirun)",
-                "ur": "پہلی رکعت - ضم سورۃ (مثلاً سورۃ الکافرون)",
-                "hi": "पहली रकात - ज़म सूरह (जैसे सूरह अल-काफिरून)"
+                "en": "1st Rakat - Additional Surah (e.g., Surah Al-Masad)",
+                "ur": "پہلی رکعت - ضم سورۃ (مثلاً سورۃ المسد)",
+                "hi": "पहली रकात - ज़म सूरह (जैसे सूरह अल-मसद)"
               },
               "description": {
-                "en": "Recite Bismillah followed by an additional Surah (e.g., Surah Al-Kafirun).",
-                "ur": "بسم اللہ پڑھ کر کوئی سورت (مثلاً سورۃ الکافرون) پڑھیں۔",
-                "hi": "बिस्मिल्लाह पढ़कर कोई सूरह (जैसे सूरह अल-काफिरून) पढ़ें।"
+                "en": "Recite Bismillah followed by an additional Surah (e.g., Surah Al-Masad) or at least 3 verses of the Quran.",
+                "ur": "بسم اللہ پڑھ کر کوئی سورت (مثلاً سورۃ المسد) یا کم از کم تین آیات پڑھیں۔",
+                "hi": "बिस्मिल्लाह पढ़कर कोई सूरह (जैसे सूरह अल-मसद) या कम से कम तीन आयतें पढ़ें।"
               },
-              "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ قُلْ يَا أَيُّهَا الْكَافِرُونَ ۝ لاَ أَعْبُدُ مَا تَعْبُدُونَ ۝ وَلاَ أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ۝ وَلاَ أَنَا عَابِدٌ مَّا عَبَدتُّمْ ۝ وَلاَ أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ۝ لَكُمْ دِينُكُمْ وَلِيَ دِينِ",
-              "transliteration": "Bismillahir-Rahmanir-Rahim. Qul ya ayyuhal-kafirun. La a'budu ma ta'budun. Wa la antum 'abiduna ma a'bud. Wa la ana 'abidum ma 'abadtum. Wa la antum 'abiduna ma a'bud. Lakum dinukum wa liya din.",
+              "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ ۝ مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ ۝ سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ ۝ وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ ۝ فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ",
+              "transliteration": "Bismillahir-Rahmanir-Rahim. Tabbat yada abi lahabiw-wa tabb. Ma aghna 'anhu maluhu wa ma kasab. Sayasla naran dhata lahab. Wamra'atuhu hammalatal-hatab. Fi jidiha hablum-mim-masad.",
               "translation": {
-                "en": "In the name of Allah, Most Gracious, Most Merciful. Say, O disbelievers, I do not worship what you worship. Nor are you worshippers of what I worship. Nor will I be a worshipper of what you worship. Nor will you be worshippers of what I worship. For you is your religion, and for me is my religion.",
-                "ur": "اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ کہہ دیجیے کہ اے کافرو! میں ان کی عبادت نہیں کرتا جن کی تم عبادت کرتے ہو...",
-                "hi": "अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है। कह दीजिए कि ऐ काफिरों! मैं उनकी इबादत नहीं करता जिनकी तुम इबादत करते हो..."
+                "en": "In the name of Allah, Most Gracious, Most Merciful. May the hands of Abu Lahab be ruined, and ruined is he. His wealth will not avail him or that which he gained. He will [enter to] burn in a Fire of [blazing] flame, and his wife [as well] - the carrier of firewood. Around her neck is a rope of twisted fiber.",
+                "ur": "اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ ابولہب کے دونوں ہاتھ ٹوٹ جائیں اور وہ برباد ہو جائے۔ نہ تو اس کا مال ہی اس کے کچھ کام آیا اور نہ وہ جو اس نے کمایا۔ وہ عنقریب شعلہ مارتی ہوئی آگ میں داخل ہوگا۔ اور اس کی عورت بھی جو لکڑیاں سر پر اٹھائے پھرتی ہے۔ اس کے گلے میں بٹی ہوئی رسی ہوگی۔",
+                "hi": "अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है। टूट गए अबू लहब के दोनों हाथ और वह बर्बाद हो गया। न उसका धन उसके किसी काम आया और न जो उसने कमाया। वह जल्द ही भड़कती हुई आग में दाख़िल होगा, और उसकी पत्नी भी जो लकड़ियां ढोने वाली है, उसके गले में बटी हुई रस्सी होगी।"
               }
             },
             {
@@ -781,14 +781,14 @@
               "description": {
                 "en": "Say Allahu Akbar, bow down holding knees, and recite Subhana Rabbiyal 'Adheem 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے رکوع میں جائیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए रुकू में जाएं और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए रुकू में जाएं और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
               "transliteration": "Subhana Rabbiyal 'Adheem (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most Great.",
                 "ur": "پاک ہے میرا پروردگار عظمت والا۔",
-                "hi": "पाक है मेरा परवरदिगार महान।"
+                "hi": "पाक है मेरा रब महानता वाला।"
               }
             },
             {
@@ -799,16 +799,16 @@
                 "hi": "पहली रकात - क़ौमा (रुकू से सीधे खड़े होना)"
               },
               "description": {
-                "en": "Rise up saying 'Sami'allahu liman hamidah', stand completely straight, and say 'Rabbana lakal-hamd'.",
+                "en": "Rise up from Ruku saying 'Sami'allahu liman hamidah', stand completely straight, and say 'Rabbana lakal-hamd'.",
                 "ur": "رکوع سے سیدھے کھڑے ہوتے ہوئے 'سمع اللہ لمن حمدہ' کہیں اور بالکل سیدھے کھڑے ہو کر 'ربنا ولك الحمد' کہیں۔",
-                "hi": "रुकू से सीधे खड़े होते हुए 'समिअल्लाहु लिमन हमिदह' कहें और बिल्कुल सीधे खड़े होकर 'रब्बना व लकल-हम्द' कहें।"
+                "hi": "रुकू से सीधे खड़े होते हुए 'समिअल्लाहु लिमन हमिदह' कहें और बिल्कुल सीधे खड़े होकर 'रब्बना लकल-हम्द' कहें।"
               },
               "arabic": "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ ۝ رَبَّنَا وَلَكَ الْحَمْدُ",
               "transliteration": "Sami'allahu liman hamidah. Rabbana wa lakal-hamd.",
               "translation": {
                 "en": "Allah hears the one who praises Him. Our Lord, to You belongs all praise.",
                 "ur": "اللہ نے سن لیا اس کی تعریف کو جس نے اس کی تعریف کی۔ اے ہمارے رب! تمام تعریفیں تیرے ہی لیے ہیں۔",
-                "hi": "अल्लाह ने सुन लिया उसकी तारीफ को जिसने उसकी तारीफ की। ऐ हमारे रब! तमाम तारीफें तेरे ही लिए हैं।"
+                "hi": "अल्लाह ने सुन ली उसकी प्रशंसा जिसने उसकी प्रशंसा की। ऐ हमारे रब! तमाम तारीफें तेरे ही लिए हैं।"
               }
             },
             {
@@ -821,14 +821,14 @@
               "description": {
                 "en": "Say Allahu Akbar and go down to prostrate, reciting Subhana Rabbiyal A'la 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے سجدے میں جائیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए सजदे में जाएं और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए सजदे में जाएं और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْأَعْلَى",
               "transliteration": "Subhana Rabbiyal A'la (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most High.",
                 "ur": "پاک ہے میرا پروردگار جو سب سے بلند ہے۔",
-                "hi": "पाक है मेरा परवरदिगार जो सबसे ऊंचा है।"
+                "hi": "पाक है मेरा रब जो सबसे ऊँचा है।"
               }
             },
             {
@@ -841,14 +841,14 @@
               "description": {
                 "en": "Say Allahu Akbar, sit up straight briefly in Jalsa, and ask Allah for forgiveness.",
                 "ur": "سجدے سے اٹھ کر جلسہ میں سیدھے بیٹھیں اور مختصر دعائے مغفرت پڑھیں۔",
-                "hi": "सजदे से उठकर जलसा में सीधे बैठें और संक्षिप्त दुआ-ए-मगफिरत पढ़ें।"
+                "hi": "सजदे से उठकर जलसा में सीधे बैठें और संक्षिप्त क्षमा प्रार्थना पढ़ें।"
               },
               "arabic": "رَبِّ اغْفِرْ لِي وَارْحَمْنِي",
               "transliteration": "Rabbighfir li warhamni",
               "translation": {
                 "en": "O my Lord! Forgive me and have mercy on me.",
                 "ur": "اے میرے رب! مجھے بخش دے اور مجھ پر رحم فرما۔",
-                "hi": "ऐ मेरे रब! मुझे बख्श दे और मुझ पर रहम फरमा।"
+                "hi": "ऐ मेरे रब! मुझे क्षमा कर दे और मुझ पर दया फरमा।"
               }
             },
             {
@@ -861,14 +861,14 @@
               "description": {
                 "en": "Say Allahu Akbar and perform the 2nd Sujood, reciting Subhana Rabbiyal A'la 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے دوبارہ سجدے میں جائیں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु अकबर कहते हुए दोबारा सजदे में जाएं और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए दोबारा सजदे में जाएं और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْأَعْلَى",
               "transliteration": "Subhana Rabbiyal A'la (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most High.",
                 "ur": "پاک ہے میرا پروردگار جو سب سے بلند ہے۔",
-                "hi": "पाक है मेरा परवरदिगार जो सबसे ऊंचा है।"
+                "hi": "पाक है मेरा रब जो सबसे ऊँचा है।"
               }
             },
             {
@@ -888,7 +888,7 @@
               "translation": {
                 "en": "In the name of Allah, Most Gracious, Most Merciful.",
                 "ur": "اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔",
-                "hi": "अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है।"
+                "hi": "शुरू अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है।"
               }
             },
             {
@@ -919,16 +919,16 @@
                 "hi": "दूसरी रकात - ज़म सूरह (जैसे सूरह अल-इखलास)"
               },
               "description": {
-                "en": "Recite Bismillah followed by an additional Surah (e.g., Surah Al-Ikhlas).",
-                "ur": "بسم اللہ پڑھ کر کوئی سورت (مثلاً سورۃ الاخلاص) پڑھیں۔",
-                "hi": "बिस्मिल्लाह पढ़कर कोई सूरह (जैसे सूरह अल-इखलास) पढ़ें।"
+                "en": "Recite Bismillah followed by an additional Surah (e.g., Surah Al-Ikhlas) or at least 3 verses of the Quran.",
+                "ur": "بسم اللہ پڑھ کر کوئی سورت (مثلاً سورۃ الاخلاص) یا کم از کم تین آیات پڑھیں۔",
+                "hi": "बिस्मिल्लाह पढ़कर कोई सूरह (जैसे सूरह अल-इखलास) या कम से कम तीन आयतें पढ़ें।"
               },
               "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
               "transliteration": "Bismillahir-Rahmanir-Rahim. Qul huwal-lahu ahad. Allahus-samad. Lam yalid wa lam yulad. Wa lam yakul-lahu kufuwan ahad.",
               "translation": {
-                "en": "In the name of Allah, Most Gracious, Most Merciful. Say, He is Allah, [who is] One. Allah, the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent.",
-                "ur": "اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ کہہ دیجیے کہ وہ اللہ ایک ہے۔ اللہ بے نیاز ہے۔ نہ اس کی کوئی اولاد ہے اور نہ وہ کسی کی اولاد ہے۔ اور نہ کوئی اس کا ہمسر ہے۔",
-                "hi": "अल्लाह के नाम से जो बड़ा मेहरबान निहायत रहम वाला है। कह दीजिए कि वह अल्लाह एक है। अल्लाह बेनियाज़ है। न उसकी कोई औलाद है और न वह किसी की औलाद है। और न कोई उसका बराबर का है।"
+                "en": "Say, He is Allah, [who is] One. Allah, the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent.",
+                "ur": "کہہ دیجیے کہ وہ اللہ ایک ہے۔ اللہ بے نیاز ہے۔ نہ اس کی کوئی اولاد ہے اور نہ وہ کسی کی اولاد ہے۔ اور نہ کوئی اس کا ہمسر ہے۔",
+                "hi": "कह दीजिए कि वह अल्लाह एक है। अल्लाह बेनियाज़ है। न उसकी कोई संतान है और न वह किसी की संतान है। और न कोई उसके बराबर का है।"
               }
             },
             {
@@ -941,14 +941,14 @@
               "description": {
                 "en": "Say Allahu Akbar, bow down for Ruku, and recite Subhana Rabbiyal 'Adheem 3 times.",
                 "ur": "اللہ اکبر کہتے ہوئے رکوع کریں اور ۳ مرتبہ تسبیح پڑھیں۔",
-                "hi": "अल्लाहु Akbar कहते हुए रुकू करें और 3 बार तसबीह पढ़ें।"
+                "hi": "अल्लाहु अकबर कहते हुए रुकू करें और 3 बार तस्बीह पढ़ें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
               "transliteration": "Subhana Rabbiyal 'Adheem (3 times)",
               "translation": {
                 "en": "Glory be to my Lord, the Most Great.",
                 "ur": "پاک ہے میرا پروردگار عظمت والا۔",
-                "hi": "पाक है मेरा परवरदिगार महान।"
+                "hi": "पाक है मेरा रब महानता वाला।"
               }
             },
             {
@@ -961,14 +961,14 @@
               "description": {
                 "en": "Stand up straight saying 'Sami'allahu liman hamidah... Rabbana lakal-hamd'.",
                 "ur": "سیدھے کھڑے ہو کر تسمیع و تحمید پڑھیں۔",
-                "hi": "सीधे खड़े होकर तस्मी व तहमीद पढ़ें।"
+                "hi": "सीधे खड़े होकर तस्मीअ और तहमीद पढ़ें।"
               },
               "arabic": "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ ۝ رَبَّنَا وَلَكَ الْحَمْدُ",
               "transliteration": "Sami'allahu liman hamidah. Rabbana wa lakal-hamd.",
               "translation": {
                 "en": "Allah hears the one who praises Him. Our Lord, to You belongs all praise.",
                 "ur": "اللہ نے سن لیا اس کی تعریف کو... اے ہمارے رب! تمام تعریفیں تیرے ہی لیے ہیں۔",
-                "hi": "अल्लाह ने सुन लिया उसकी तारीफ को... ऐ हमारे रब! तमाम तारीफें तेरे ही लिए हैं।"
+                "hi": "अल्लाह ने सुन ली उसकी प्रशंसा... ऐ हमारे रब! तमाम तारीफें तेरे ही लिए हैं।"
               }
             },
             {
@@ -981,14 +981,14 @@
               "description": {
                 "en": "Perform both Sujood with brief Jalsa sitting in between.",
                 "ur": "درمیان میں جلسہ کے ساتھ دونوں سجدے مکمل کریں۔",
-                "hi": "बीच में जलसा के साथ दोनों सजदे मुकम्मल करें।"
+                "hi": "बीच में जलसा के साथ दोनों सजदे पूरे करें।"
               },
               "arabic": "سُبْحَانَ رَبِّيَ الْأَعْلَى",
               "transliteration": "Subhana Rabbiyal A'la (3 times in each Sujood)",
               "translation": {
                 "en": "Glory be to my Lord, the Most High.",
                 "ur": "پاک ہے میرا پروردگار جو سب سے بلند ہے۔",
-                "hi": "पाक है मेरा परवरदिगार जो सबसे ऊंचा है।"
+                "hi": "पाक है मेरा रब जो सबसे ऊँचा है।"
               }
             },
             {
@@ -996,19 +996,19 @@
               "title": {
                 "en": "Final Sitting - Tashahhud (At-Tahiyyat)",
                 "ur": "قعدہ اخیرہ - التشہد (التحیات)",
-                "hi": "क़अدا अखीरा - तशहहुद (अत्तहिय्यात)"
+                "hi": "क़अदा अखीरा - तशहहुद (अत्तहिय्यात)"
               },
               "description": {
                 "en": "Sit in final Qa'dah and recite At-Tahiyyat, raising right index finger at Shahada.",
                 "ur": "قعدہ اخیرہ میں بیٹھ کر التحیات پڑھیں اور شہادت کی انگلی اٹھائیں۔",
-                "hi": "क़अدا अखीरा में बैठकर अत्तहिय्यात पढ़ें और शहादत की उंगली उठाएं।"
+                "hi": "क़अदा अखीरा में बैठकर अत्तहिय्यात पढ़ें और शहादत की उंगली उठाएं।"
               },
               "arabic": "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ السَّلاَمُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلاَمُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
               "transliteration": "At-tahiyyatu lillahi was-salawatu wat-tayyibat. As-salamu 'alaika ayyuhan-Nabiyyu wa rahmatullahi wa barakatuh. As-salamu 'alaina wa 'ala 'ibadillahis-salihin. Ash-hadu alla ilaha illallahu wa ash-hadu anna Muhammadan 'abduhu wa rasuluh.",
               "translation": {
                 "en": "All compliments, prayers, and pure worship are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah. I bear witness that there is no deity except Allah, and I bear witness that Muhammad is His servant and Messenger.",
                 "ur": "تمام زبان کی، بدن کی اور مال کی عبادتیں اللہ کے لیے ہیں۔ سلام ہو آپ پر اے نبی اور اللہ کی رحمت اور اس کی برکتیں ہوں۔ سلام ہو ہم پر اور اللہ کے نیک بندوں پر۔ میں گواہی دیتا/دیتی ہوں کہ اللہ کے سوا کوئی معبود نہیں اور میں گواہی دیتا/دیتی ہوں کہ محمد اللہ کے بندے اور اس کے رسول ہیں۔",
-                "hi": "तमाम जबान की, बदन की और माल की इबादतें अल्लाह के लिए हैं। सलाम हो आप पर ऐ नबी और अल्लाह की रहमत और उसकी बरकतें हों। सलाम हो हम पर और अल्लाह के नेक बंदों पर। मैं गवाही देता/देती हूँ कि अल्लाह के सिवा कोई माबूद नहीं और मैं गवाही देता/देती हूँ कि मोहम्मद अल्लाह के बंदे और उसके रसूल हैं।"
+                "hi": "तमाम ज़बान की, शरीर की और धन की इबादतें अल्लाह के लिए हैं। सलाम हो आप पर ऐ नबी और अल्लाह की रहमत और उसकी बरकतें हों। सलाम हो हम पर और अल्लाह के नेक बंदों पर। मैं गवाही देता/देती हूँ कि अल्लाह के सिवा कोई पूज्य नहीं और मैं गवाही देता/देती हूँ कि मुहम्मद अल्लाह के बंदे और उसके रसूल हैं।"
               }
             },
             {
@@ -1016,19 +1016,19 @@
               "title": {
                 "en": "Final Sitting - Durood-e-Ibrahim",
                 "ur": "قعدہ اخیرہ - درود ابراہیم",
-                "hi": "क़अدا अखीरा - दुरुद-ए-इब्राहिम"
+                "hi": "क़अदा अखीरा - दुरुद-ए-इब्राहीम"
               },
               "description": {
                 "en": "Recite complete Durood-e-Ibrahim in full length.",
                 "ur": "پوری لمبائی کے ساتھ درود ابراہیم پڑھیں۔",
-                "hi": "पूरी लंबाई के साथ दुरुद-ए-इब्राहिम पढ़ें।"
+                "hi": "पूरी लंबाई के साथ दुरुद-ए-इब्राहीम पढ़ें।"
               },
               "arabic": "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ ۝ اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
               "transliteration": "Allahumma salli 'ala Muhammadin wa 'ala ali Muhammadin kama sallaita 'ala Ibrahima wa 'ala ali Ibrahima innaka Hamidum-Majid. Allahumma barik 'ala Muhammadin wa 'ala ali Muhammadin kama barakta 'ala Ibrahima wa 'ala ali Ibrahima innaka Hamidum-Majid.",
               "translation": {
                 "en": "O Allah, send blessings upon Muhammad and upon the family of Muhammad, as You sent blessings upon Ibrahim and upon the family of Ibrahim; indeed, You are Praiseworthy and Glorious. O Allah, send grace upon Muhammad and upon the family of Muhammad, as You sent grace upon Ibrahim and upon the family of Ibrahim; indeed, You are Praiseworthy and Glorious.",
                 "ur": "اے اللہ! رحمت نازل فرما محمد پر اور آل محمد پر جیسے تو نے رحمت نازل فرمائی ابراہیم اور آل ابراہیم پر، بے شک تو تعریف کیا ہوا اور بزرگ ہے۔ اے اللہ! برکت نازل فرما محمد پر اور آل محمد پر جیسے تو نے برکت نازل فرمائی ابراہیم اور آل ابراہیم پر، بے شک تو تعریف کیا ہوا اور بزرگ ہے۔",
-                "hi": "ऐ अल्लाह! रहमत नाज़िल फरमा मोहम्मद पर और आल-ए-मोहम्मद पर जैसे तूने रहमत नाज़िल फरमाई इब्राहिम और आल-ए-इब्राहिम पर, बेशक तू तारीफ किया हुआ और बुजुर्ग है। ऐ अल्लाह! बरकत नाज़िल फरमा मोहम्मद पर और आल-ए-मोहम्मद पर जैसे तूने रहमत नाज़िल फरमाई इब्राहिम और आल-ए-इब्राहिम पर, बेशक तू तारीफ किया हुआ और बुजुर्ग है।"
+                "hi": "ऐ अल्लाह! रहमत नाज़िल फरमा मुहम्मद पर और आल-ए-मुहम्मद पर जैसे तूने रहमत नाज़िल फरमाई इब्राहीम और आल-ए-इब्राहीम पर, बेशक तू तारीफ के योग्य और महान है। ऐ अल्लाह! बरकत नाज़िल फरमा मुहम्मद पर और आल-ए-मुहम्मद पर जैसे तूने बरकत नाज़िल फरमाई इब्राहीम और आल-ए-इब्राहीम पर, बेशक तू तारीफ के योग्य और महान है।"
               }
             },
             {
@@ -1036,19 +1036,19 @@
               "title": {
                 "en": "Final Sitting - Dua-e-Masura",
                 "ur": "قعدہ اخیرہ - دعائے ماثورہ",
-                "hi": "क़अدا अखीरा - दुआ-ए-मासूरा"
+                "hi": "क़अदा अखीरा - दुआ-ए-मासूरा"
               },
               "description": {
                 "en": "Recite Dua-e-Masura before completing the prayer.",
                 "ur": "درود شریف کے بعد دعائے ماثورہ پڑھیں۔",
-                "hi": "दुरुद शरीफ के बाद दुआ-ए-मासूरा पढ़ें।"
+                "hi": "दुरुद शरीफ़ के बाद दुआ-ए-मासूरा पढ़ें।"
               },
               "arabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
               "transliteration": "Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan wa qina 'adhaban-nar.",
               "translation": {
                 "en": "Our Lord, grant us good in this world and good in the Hereafter, and protect us from the punishment of the Fire.",
                 "ur": "اے ہمارے رب! ہمیں دنیا میں بھی بھلائی دے اور آخرت میں بھی بھلائی دے اور ہمیں آگ کے عذاب سے بچا۔",
-                "hi": "ऐ हमारे रब! हमें दुनिया में भी भलाई दे और आखिरت में भी भलाई दे और हमें आग के अज़ाब से बचा।"
+                "hi": "ऐ हमारे रब! हमें दुनिया में भी भलाई दे और आख़िरत में भी भलाई दे और हमें आग के अज़ाब से बचा।"
               }
             },
             {
@@ -1056,12 +1056,12 @@
               "title": {
                 "en": "Salam (Ending the Prayer)",
                 "ur": "سلام (نماز کا خاتمہ)",
-                "hi": "सलाम (نماز کا خاتمہ)"
+                "hi": "सलाम (नमाज़ की समाप्ति)"
               },
               "description": {
                 "en": "Turn your head over your right shoulder and say Salam, then turn your head over your left shoulder and repeat.",
                 "ur": "پہلے دائیں شانے کی طرف منہ کر کے سلام پھیریں، پھر بائیں شانے کی طرف منہ کر کے سلام پھیریں۔",
-                "hi": "पहले दाहिने कंधे की तरफ मुंह करके सलाम फेरें, फिर बाएं कंधे की तरफ मुंह करके सलाम फेरें।"
+                "hi": "पहले दाहिने कंधे की तरफ मुँह करके सलाम फेरें, फिर बाएं कंधे की तरफ मुँह करके सलाम फेरें।"
               },
               "arabic": "السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ",
               "transliteration": "As-salamu 'alaikum wa rahmatullah",

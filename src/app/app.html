@@ -104,4 +104,6 @@
 }
 
 <!-- 🔔 Daily Reminder Top Dialog Overlay -->
-<app-daily-reminder-banner />
+@if (notificationService.isInitialized()) {
+  <app-daily-reminder-banner />
+}

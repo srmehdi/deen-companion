@@ -117,7 +117,7 @@ export class Dua {
           if (this.highlightedDuaId() === duaId) {
             this.highlightedDuaId.set(null);
           }
-        }, 6000);
+        }, 4000);
       }
     }, 200);
   }

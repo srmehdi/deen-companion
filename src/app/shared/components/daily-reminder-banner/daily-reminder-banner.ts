@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { DialogModule } from 'primeng/dialog';
 import { ApiService } from '../../../core/services/api-service/api-service';
@@ -14,7 +14,7 @@ import { NotificationService } from '../../../core/services/notification-service
   templateUrl: './daily-reminder-banner.html',
   styleUrl: './daily-reminder-banner.css',
 })
-export class DailyReminderBannerComponent implements OnInit {
+export class DailyReminderBannerComponent {
   private swPush = inject(SwPush);
   private api = inject(ApiService);
   private modal = inject(StatusModalService);
@@ -26,34 +26,54 @@ export class DailyReminderBannerComponent implements OnInit {
   isVisible = false;
   isLoading = false;
 
-  ngOnInit(): void {
-    this.checkVisibility();
+  public notificationService = inject(NotificationService);
+  constructor() {
+    effect(() => {
+      // Wait until checkSubscriptionState has completed
+      if (!this.notificationService.isInitialized()) {
+        return;
+      }
+
+      const isDismissed = localStorage.getItem(this.STORAGE_KEY) === 'true';
+      const isSubscribed = this.notificationService.isSubscribed();
+
+      if (!isDismissed && !isSubscribed && this.notificationService.isPushEnabled) {
+        setTimeout(() => {
+          this.isVisible = true;
+        }, 800);
+      } else {
+        this.isVisible = false;
+      }
+    });
   }
+  // ngOnInit(): void {
+  //   this.checkVisibility();
+  // }
 
-  notificationService = inject(NotificationService);
-  private checkVisibility(): void {
-    if (!this.swPush.isEnabled) {
-      this.isVisible = false;
-      return;
-    }
+  // notificationService = inject(NotificationService);
+  // private checkVisibility(): void {
+  //   if (!this.swPush.isEnabled) {
+  //     this.isVisible = false;
+  //     return;
+  //   }
 
-    const isDismissed = localStorage.getItem(this.STORAGE_KEY) === 'true';
-    // const isGranted = typeof Notification !== 'undefined' && Notification.permission === 'granted';
+  //   const isDismissed = localStorage.getItem(this.STORAGE_KEY) === 'true';
+  //   // const isGranted = typeof Notification !== 'undefined' && Notification.permission === 'granted';
 
-    // if (isDismissed || isGranted) {
-    //   this.isVisible = false;
-    //   return;
-    // }
-    if (isDismissed || this.notificationService.isSubscribed()) {
-      this.isVisible = false;
-      return;
-    }
+  //   // if (isDismissed || isGranted) {
+  //   //   this.isVisible = false;
+  //   //   return;
+  //   // }
+  //   if (isDismissed || this.notificationService.isSubscribed()) {
+  //     this.isVisible = false;
+  //     return;
+  //   }
 
-    // Small delay for smooth entry after page load
-    setTimeout(() => {
-      this.isVisible = true;
-    }, 800);
-  }
+  //   // Small delay for smooth entry after page load
+  //   setTimeout(() => {
+  //     this.isVisible = true;
+  //   }, 800);
+  // }
 
   activity = inject(Activity);
 

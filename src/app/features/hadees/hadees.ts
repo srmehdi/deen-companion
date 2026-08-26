@@ -332,6 +332,9 @@ export class Hadees implements OnInit {
             this.scrollToHadith(targetHadithId);
           } else {
             // window.scrollTo({ top: 0, behavior: 'smooth' });
+            const hadithId = mappedHadiths[0]?.id || 'bukhari-1';
+            this.highlightedHadithId.set(hadithId);
+            this.scrollToHadith(hadithId);
           }
         },
         error: (err) => {
@@ -482,7 +485,7 @@ export class Hadees implements OnInit {
         if (this.highlightedHadithId() === hadithId) {
           setTimeout(() => {
             this.highlightedHadithId.set(null);
-          }, 6000);
+          }, 4000);
         } else {
           this.scrollToActiveHadithPageButton();
         }

@@ -11,9 +11,10 @@ import { StatusModal } from './shared/modals/status-modal/status-modal';
 import { StatusModalService } from './core/services/status-modal-service/status-modal-service';
 import { HeaderStateService } from './core/services/header-state-service/header-state-service';
 import { filter, first } from 'rxjs';
-import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+import { SwPush, SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { DailyReminderBannerComponent } from './shared/components/daily-reminder-banner/daily-reminder-banner';
 import { MobileBottomNav } from './shared/components/mobile-bottom-nav/mobile-bottom-nav';
+import { NotificationService } from './core/services/notification-service/notification-service';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +43,8 @@ export class App {
 
   private swUpdate = inject(SwUpdate);
   private appRef = inject(ApplicationRef);
+  private swPush = inject(SwPush);
+  public notificationService = inject(NotificationService);
   constructor() {
     // Reset header state on ANY route navigation
     this.router.events
@@ -66,6 +69,30 @@ export class App {
           // }
           this.hasUpdate.set(true);
         });
+    }
+
+    // Handle Web Push Notification Clicks
+    if (this.swPush.isEnabled) {
+      this.swPush.notificationClicks.subscribe(({ action, notification }) => {
+        const data = notification?.data || {};
+        console.log('Push Action Clicked:', action, notification);
+
+        let targetUrl = '/'; // Ultimate fallback
+
+        if (action === 'open-content-page') {
+          targetUrl = data.openContentPageUrl || '/dua';
+        } else {
+          // Triggered when clicking 'go-to-content', clicking the main body, or an unknown action
+          targetUrl = data.goToContentUrl || data.url || '/';
+        }
+
+        if (targetUrl) {
+          console.log('targetUrl', targetUrl);
+
+          this.router.navigateByUrl(targetUrl);
+          // window.open(targetUrl, '_blank');
+        }
+      });
     }
   }
 

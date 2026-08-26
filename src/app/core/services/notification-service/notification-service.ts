@@ -18,13 +18,14 @@ export class NotificationService {
   readonly VAPID_PUBLIC_KEY =
     'BKHNPrhIp3-xXlBNCEFzTmlZP4oYpqfWTaydkQPJTBTA445vhxZ-phzOwLgb86_h0mVPw4i0v0PYWjYdksVwdbE';
 
+  isInitialized = signal(false); // Track readiness
   isSubscribed = signal(false);
   isLoading = signal(false);
   permissionStatus = signal<NotificationPermission>('default');
 
   constructor() {
     // Automatically runs once when the service is first injected
-    // this.checkSubscriptionState();
+    this.checkSubscriptionState();
   }
   get isPushEnabled(): boolean {
     return this.swPush.isEnabled;
@@ -57,6 +58,9 @@ export class NotificationService {
     } catch (err) {
       console.error('Error checking push subscription state:', err);
       this.isSubscribed.set(false);
+    } finally {
+      // Mark initialized regardless of success/failure
+      this.isInitialized.set(true);
     }
   }
 
@@ -176,7 +180,7 @@ export class NotificationService {
             this.isSubscribed.set(true);
             this.isLoading.set(false);
             this.modal.showSuccess({
-              message: 'Daily Hadith & Dua reminders enabled! 🔔',
+              message: 'Daily islamic reminders enabled! 🔔',
             });
           },
           error: (err: any) => {
