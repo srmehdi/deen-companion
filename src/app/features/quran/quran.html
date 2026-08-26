@@ -388,9 +388,35 @@
         <div class="space-y-[12px] sm:space-y-[16px] max-w-full mt-2 min-h-[500px]">
           <!-- Verse Blocks Loop -->
           @for (ayah of paginatedAyahs(); track ayah.numberInSurah) {
-            <div
+            <!-- <div
               [id]="'ayah-row-' + ayah.numberInSurah"
               class="scroll-mt-[130px] sm:scroll-mt-[128px] flex flex-col md:flex-row gap-2 md:gap-4 py-4 md:py-5 items-stretch! md:items-start! rounded-[12px] border border-slate-200/80 dark:border-sacred-gold/30 transition-all duration-300 px-2 sm:px-4 max-w-full shadow-lg overflow-hidden"
+              [class.ring-2]="highlightedAyahId() === ayah.numberInSurah"
+              [class.ring-[#dfb76c]]="highlightedAyahId() === ayah.numberInSurah"
+              [class.bg-[#dfb76c]/10]="highlightedAyahId() === ayah.numberInSurah"
+              [class.animate-pulse]="highlightedAyahId() === ayah.numberInSurah"
+              [class.bg-sacred-gold/6]="
+                (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
+                  selectedSurah().info.number &&
+                (globalAudio.currentPlayingAyah()?.numberInSurah ||
+                  currentBookmark()?.ayahNumber) === ayah.numberInSurah
+              "
+              [class.border-2!]="
+                (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
+                  selectedSurah().info.number &&
+                (globalAudio.currentPlayingAyah()?.numberInSurah ||
+                  currentBookmark()?.ayahNumber) === ayah.numberInSurah
+              "
+              [class.border-[#dfb76c]!]="
+                (globalAudio.playingSurahInfo()?.surahNumber || currentBookmark()?.surahNumber) ===
+                  selectedSurah().info.number &&
+                (globalAudio.currentPlayingAyah()?.numberInSurah ||
+                  currentBookmark()?.ayahNumber) === ayah.numberInSurah
+              "
+            > -->
+            <div
+              [id]="'ayah-row-' + ayah.numberInSurah"
+              class="flex flex-col md:flex-row gap-2 md:gap-4 py-4 md:py-5 items-stretch! md:items-start! rounded-[12px] border border-slate-200/80 dark:border-sacred-gold/30 transition-all duration-300 px-2 sm:px-4 max-w-full shadow-lg overflow-hidden"
               [class.ring-2]="highlightedAyahId() === ayah.numberInSurah"
               [class.ring-[#dfb76c]]="highlightedAyahId() === ayah.numberInSurah"
               [class.bg-[#dfb76c]/10]="highlightedAyahId() === ayah.numberInSurah"

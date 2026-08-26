@@ -98,7 +98,10 @@ export class AudioPlayerService {
         this.audioPlayer.load();
         this.audioPlayer.play().catch((err) => {
           console.warn('Urdu audio playback failed. Silently pausing:', err);
-          this.modal.showError({ message: 'Urdu audio playback failed. Silently pausing.' });
+          this.modal.showError({
+            message: 'Urdu audio playback failed. Silently pausing.',
+            fn: () => this.toggleAyahAudio(this.currentPlayingAyah()!),
+          });
 
           this.hasNetworkError = true;
           this.pauseAudio();

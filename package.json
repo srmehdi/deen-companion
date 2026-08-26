@@ -36,6 +36,7 @@
     "@angular/service-worker": "^21.2.20",
     "@netlify/functions": "^5.1.2",
     "@primeuix/themes": "^2.0.3",
+    "adhan": "^4.4.4",
     "pg": "^8.17.0",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.9",
