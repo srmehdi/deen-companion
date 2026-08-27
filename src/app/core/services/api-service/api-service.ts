@@ -170,4 +170,7 @@ export class ApiService {
   saveSubscription(payload: any) {
     return this.http.post<any>(Endpoints.SAVE_SUBSCRIPTION, payload);
   }
+  ackPrayer(payload: any) {
+    return this.http.post<any>(Endpoints.ACK_PRAYER, payload);
+  }
 }

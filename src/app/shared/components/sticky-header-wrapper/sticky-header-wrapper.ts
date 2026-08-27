@@ -34,6 +34,44 @@ export class StickyHeaderWrapper implements OnDestroy {
     });
   }
 
+  // private initObserver(): void {
+  //   const sentinelEl = this.sentinel()?.nativeElement;
+  //   if (!sentinelEl) return;
+
+  //   const containerSelector = this.scrollContainerSelector();
+  //   const rootEl = containerSelector
+  //     ? document.querySelector<HTMLElement>(containerSelector)
+  //     : null;
+
+  //   const offset = this.headerHeight();
+
+  //   this.ngZone.runOutsideAngular(() => {
+  //     this.observer = new IntersectionObserver(
+  //       ([entry]) => {
+  //         const isTouchingHeader = !entry.isIntersecting && entry.boundingClientRect.top <= offset;
+
+  //         // 🛡️ POINT 3 GUARD:
+  //         // If the page is scrolled way down (sentinel is far above the viewport),
+  //         // don't let rapid programmatic jumps falsely set isHeaderHidden to false.
+  //         if (!isTouchingHeader && entry.boundingClientRect.top < 0) {
+  //           return;
+  //         }
+
+  //         this.ngZone.run(() => {
+  //           this.headerState.isHeaderHidden.set(isTouchingHeader);
+  //         });
+  //       },
+  //       {
+  //         root: rootEl,
+  //         rootMargin: `-${offset}px 0px 0px 0px`,
+  //         threshold: [0, 1],
+  //       },
+  //     );
+
+  //     this.observer.observe(sentinelEl);
+  //   });
+  // }
+
   private initObserver(): void {
     const sentinelEl = this.sentinel()?.nativeElement;
     if (!sentinelEl) return;
@@ -48,17 +86,17 @@ export class StickyHeaderWrapper implements OnDestroy {
     this.ngZone.runOutsideAngular(() => {
       this.observer = new IntersectionObserver(
         ([entry]) => {
-          const isTouchingHeader = !entry.isIntersecting && entry.boundingClientRect.top <= offset;
+          // Sentinel has crossed above the header bottom boundary:
+          // entry.isIntersecting is false AND boundingClientRect.top is at/above offset
+          const rootTop = rootEl ? rootEl.getBoundingClientRect().top : 0;
+          const sentinelRelativeTop = entry.boundingClientRect.top - rootTop;
 
-          // 🛡️ POINT 3 GUARD:
-          // If the page is scrolled way down (sentinel is far above the viewport),
-          // don't let rapid programmatic jumps falsely set isHeaderHidden to false.
-          if (!isTouchingHeader && entry.boundingClientRect.top < 0) {
-            return;
-          }
+          const isTouchingHeader = sentinelRelativeTop <= offset;
 
           this.ngZone.run(() => {
-            this.headerState.isHeaderHidden.set(isTouchingHeader);
+            if (this.headerState.isHeaderHidden() !== isTouchingHeader) {
+              this.headerState.isHeaderHidden.set(isTouchingHeader);
+            }
           });
         },
         {
