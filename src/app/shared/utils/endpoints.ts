@@ -23,4 +23,5 @@ export const Endpoints = {
   GET_VIDEOS: '/api/get-videos',
   SEND_PUSH: '/api/send-push',
   SAVE_SUBSCRIPTION: '/api/save-subscription',
+  ACK_PRAYER: '/api/ack-prayer',
 };

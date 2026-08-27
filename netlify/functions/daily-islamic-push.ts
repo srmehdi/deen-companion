@@ -58,10 +58,10 @@ export const handler = schedule('0 * * * *', async () => {
                 //   action: 'dismiss',
                 //   title: '❌ Dismiss',
                 // },
-                {
-                  action: 'go-to-content',
-                  title: '👀 View Content',
-                },
+                // {
+                //   action: 'go-to-content',
+                //   title: '👀 View Content',
+                // },
                 {
                   action: 'open-content-page',
                   title: '✨ More Like This',
@@ -146,7 +146,7 @@ async function fetchDailyIslamicContent(): Promise<{
         return {
           title: `📖 Daily Hadith (${narrator})`,
           body: hadithText,
-          goToContentUrl: `/hadees/${collectionKey}?hadithNumber=${hadithNumber}&hadithId=${encodeURIComponent(hadithId)}`,
+          goToContentUrl: `/hadees/${collectionKey}?hadithNumber=${hadithNumber}&hadithId=${hadithId}`,
           openContentPageUrl: '/hadees',
         };
       }

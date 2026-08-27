@@ -300,54 +300,54 @@ export class Quran implements OnInit, OnDestroy {
     });
   }
 
-  // scrollToAyah(ayahNumber: number): void {
-  //   setTimeout(() => {
-  //     const element = document.getElementById(`ayah-row-${ayahNumber}`);
-  //     if (element) {
-  //       this.scrollToActiveAyahPageButton();
-  //       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  //       setTimeout(() => {
-  //         if (this.highlightedAyahId() === ayahNumber) {
-  //           this.highlightedAyahId.set(null);
-  //         }
-  //       }, 4000);
-  //     }
-  //   }, 100);
-  // }
-
   scrollToAyah(ayahNumber: number): void {
     setTimeout(() => {
       const element = document.getElementById(`ayah-row-${ayahNumber}`);
-      if (!element) return;
-
-      this.scrollToActiveAyahPageButton();
-
-      // Check if the Ayah is already visible in viewport to prevent jarring re-scrolls
-      const rect = element.getBoundingClientRect();
-      const isAlreadyVisible = rect.top >= 80 && rect.bottom <= window.innerHeight - 80;
-
-      if (!isAlreadyVisible) {
-        const scrollContainer = document.querySelector('main') || window;
-        const currentScrollTop =
-          scrollContainer === window ? window.scrollY : (scrollContainer as HTMLElement).scrollTop;
-
-        const stickyHeaderOffset = 130; // Compensates for the sticky bar height
-        const targetPosition = currentScrollTop + rect.top - stickyHeaderOffset;
-
-        if (scrollContainer === window) {
-          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-        } else {
-          (scrollContainer as HTMLElement).scrollTo({ top: targetPosition, behavior: 'smooth' });
-        }
+      if (element) {
+        this.scrollToActiveAyahPageButton();
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          if (this.highlightedAyahId() === ayahNumber) {
+            this.highlightedAyahId.set(null);
+          }
+        }, 4000);
       }
-
-      setTimeout(() => {
-        if (this.highlightedAyahId() === ayahNumber) {
-          this.highlightedAyahId.set(null);
-        }
-      }, 4000);
     }, 100);
   }
+
+  // scrollToAyah(ayahNumber: number): void {
+  //   setTimeout(() => {
+  //     const element = document.getElementById(`ayah-row-${ayahNumber}`);
+  //     if (!element) return;
+
+  //     this.scrollToActiveAyahPageButton();
+
+  //     // Check if the Ayah is already visible in viewport to prevent jarring re-scrolls
+  //     const rect = element.getBoundingClientRect();
+  //     const isAlreadyVisible = rect.top >= 80 && rect.bottom <= window.innerHeight - 80;
+
+  //     if (!isAlreadyVisible) {
+  //       const scrollContainer = document.querySelector('main') || window;
+  //       const currentScrollTop =
+  //         scrollContainer === window ? window.scrollY : (scrollContainer as HTMLElement).scrollTop;
+
+  //       const stickyHeaderOffset = 130; // Compensates for the sticky bar height
+  //       const targetPosition = currentScrollTop + rect.top - stickyHeaderOffset;
+
+  //       if (scrollContainer === window) {
+  //         window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+  //       } else {
+  //         (scrollContainer as HTMLElement).scrollTo({ top: targetPosition, behavior: 'smooth' });
+  //       }
+  //     }
+
+  //     setTimeout(() => {
+  //       if (this.highlightedAyahId() === ayahNumber) {
+  //         this.highlightedAyahId.set(null);
+  //       }
+  //     }, 4000);
+  //   }, 100);
+  // }
 
   resumeJourney(): void {
     const activeBookmark = this.currentBookmark();

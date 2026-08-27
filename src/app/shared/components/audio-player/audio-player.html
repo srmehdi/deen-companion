@@ -3,7 +3,7 @@
     class="fixed bottom-[60px] lg:bottom-0 left-0 right-0 z-[1005] px-[8px] sm:px-[16px] pointer-events-none"
   >
     <div
-      class="max-w-5xl mx-auto pointer-events-auto relative rounded-t-[12px] bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border border-amber-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-300"
+      class="max-w-5xl mx-auto pointer-events-auto relative rounded-t-[12px] bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border border-amber-500 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-300"
       [ngClass]="isAudioPlayerMinimized() ? 'p-[8px] sm:p-[10px]' : 'p-[12px] sm:p-[16px]'"
     >
       <!-- Top Action Badges (Minimize/Maximize & Close) -->
@@ -13,7 +13,7 @@
         <!-- Minimize / Maximize Button Badge -->
         <button
           (click)="toggleMinimize()"
-          class="bg-slate-900/90 dark:bg-slate-950/90 hover:bg-amber-950/80 text-amber-400 border border-amber-500/40 hover:border-amber-500/60 backdrop-blur-md rounded-full px-[10px] py-[4px] flex items-center gap-[5px] shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer group"
+          class="bg-slate-900/90 dark:bg-slate-950/90 hover:bg-amber-950/80 text-amber-400 border border-amber-500 hover:border-amber-500/60 backdrop-blur-md rounded-full px-[10px] py-[4px] flex items-center gap-[5px] shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer group"
           [title]="isAudioPlayerMinimized() ? 'Expand Audio Player' : 'Minimize Audio Player'"
         >
           <i
@@ -33,7 +33,7 @@
         > -->
         <button
           (click)="confirmAudioPlayerClose()"
-          class="bg-slate-900/90 dark:bg-slate-950/90 hover:bg-amber-950/80 text-red-500 border border-red-600/40 hover:border-red-600/60 backdrop-blur-md rounded-full px-[10px] py-[4px] flex items-center gap-[6px] shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer group"
+          class="bg-slate-900/90 dark:bg-slate-950/90 hover:bg-amber-950/80 text-red-500 border border-red-600 hover:border-red-600/60 backdrop-blur-md rounded-full px-[10px] py-[4px] flex items-center gap-[6px] shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer group"
           title="Close Audio Player"
         >
           <i class="pi pi-times text-[11px]! transition-transform group-hover:rotate-90"></i>
